@@ -278,7 +278,7 @@ Where the following is the association between variable names in the equation an
 
 It can be noticed there is effectively three sums, all sums are done over all traces. For this initial implementation we'll be explicitly calculating some of these sums, although it's faster to use NumPy to calculate across large arrays. We'll convert the equation into this format:
 
-<math>{r_{i,j}} = \frac{sumnum}{\sqrt{sumden1 \times sumden2}}</math
+<math>{r_{i,j}} = \frac{sumnum}{\sqrt{sumden1 \times sumden2}}</math>
 
 Let's go ahead an implement this in Python. To begin with, we initialize those three sums to zero:
 
