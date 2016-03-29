@@ -1,0 +1,344 @@
+== Introduction to Capture Hardware ==
+
+There are three versions of the ChipWhisperer Capture Rev2, also called the CWCR2. They are:
+
+* ChipWhisperer Capture Rev2 in a metal box, part of the ''ChipWhisperer Complete Kit''
+* ChipWhisperer Capture Rev2 as a PCB within tubing, part of the ''ChipWhisperer Simple Kit''
+* ChipWhisperer Capture Rev2 as a self-made PCB
+
+Fundamentally all of these units are the same. The self-made PCB may of course have dropped certain features, so some of these sections may not be relevant.
+
+== System Design ==
+
+=== ChipWhisperer Parts ===
+
+The following figure highlights some of the hardware features of the ChipWhisperer Capture Rev2. Specifics of each area will be discussed in this chapter.
+
+<blockquote>ChipWhisperer Capture PCB.
+
+This shows the ChipWhisperer main PCB. Various features are highlighted on this figure.
+</blockquote>
+=== Removing the Case ===
+
+
+It may be neccessary to access the ChipWhisperer PCB. This is done by removing the rear panel, and sliding out the bottom panel. Note that friction from the front panel may require the two lower front screws to be slightly loosened.
+
+If it's desired to complete remove the main PCB, the front panel will also need to be removed. This is neccesary to reduce the friction on the main PCB such that it can be slid out of the case.
+
+Access to the main PCB is shown in the following figures:
+
+[[File:Caseremove1.jpg|frame|none|alt=|caption Remove the four screws holding on the rear panel.]]
+
+[[File:Caseremove2.jpg|frame|none|alt=|caption It may also be possible to change a jumper setting without removing the bottom panel. If full access is needed, the bottom panel should be removed by sliding out.]]
+
+[[File:Caseremove3.jpg|frame|none|alt=|caption Two screws on the bottom front of the unit will need to be loosened, which should allow the bottom panel to slide freely. It's possible these screws do not need to be loosened, although for most units this is required.]]
+
+[[File:Caseremove4.jpg|frame|none|alt=|caption The bottom panel can now be fully removed.]]
+
+
+=== Reflashing the AVR ===
+
+The AVRUSB portion mentioned in figcwcr2, which is an AT90USB162 device. This chip is programmed to function as a programmer for the AVR or XMEGA device on the Multi-Target board. In many instances it's desired to reprogram this AVR, for example to use it for communications with a SPI target device.
+
+It should be possible to program the AVR by forcing it to revert to the bootloader, a process described below. If this doesn't work, there is also a manual override available.
+
+==== Programming Software ====
+
+Programming the AVR-USB is done via Atmel's FLIP software, available from [http://www.atmel.ca/tools/FLIP.aspx Atmel's Website]. As an alternative you can use the [http://dfu-programmer.sourceforge.net/ DFUProgrammer] software, which is open-source and works on both Windows and Linux.
+
+This programmer will interact with a ''bootloader'' that is always resident on the AVR-USB device. Once it becomes active it will require you to install a new driver, since it appears to your computer as a completely different device. Both FLIP and dfuprogrammer come with drivers, so just point your ''New Device Found'' wizard to the appropriate location if they aren't automatically picked up. For FLIP it would be something like <code>C:\Program Files (x86)\Atmel\Flip 3.4.5\usb</code>.
+
+
+
+The sequence of steps to program a new <code>.hex</code> file into the AVR are as follows:
+
+<ol style="list-style-type: decimal;">
+<li><p>Run the FLIP software. Select the ''Device-Select'' option (or press Ctrl+S) the first time you run the software</p>
+<blockquote><p>[[File:Flip1.png|image]]</p></blockquote></li>
+<li><p>And select the AT90USB162 device. You should only have to do this once.</p>
+<blockquote><p>[[File:Flip2.png|image]]</p></blockquote></li>
+<li>Force the AVR-USB Bootloader to run before the next step. Note the bootloader will automatically time out if no command is received, so once you have the bootloader running proceed to step 4. For details of getting the bootloader running see bootloader-normal.</li>
+<li><p>Press the USB button, and hit the ''USB'' option:</p>
+<blockquote><p>[[File:Flip3.png|image]]</p></blockquote></li>
+<li><p>Press the ''Open'' button, if this fails you are not in bootloader mode.</p>
+<blockquote><p>[[File:Flip4.png|image]]</p></blockquote></li>
+<li><p>The main window should light up with options! It will now look something like this:</p>
+<blockquote><p>[[File:Flip5.png|image]]</p></blockquote></li>
+<li><p>Load a new HEX file. You can find them in the ChipWhisperer git in the <code>chipwhisperer\hardware\capture\chipwhisperer-rev2\avrusb</code> folder of ChipWhisperer releases (or in GIT).</p>
+<blockquote><p>[[File:Flip6.png|image]]</p></blockquote></li>
+<li><p>Confirm that the window now reflects your selected file. Press the ''Run'' button on the left side of the screen to start the programming.</p>
+<blockquote><p>[[File:Flip7.png|image]]</p></blockquote></li>
+<li><p>You should briefly see some indication of programming and verification pop up. If not try pressing the ''Run'' button again!</p>
+<blockquote><p>[[File:Flip8.png|image]]</p></blockquote></li>
+<li><p>Finally press the ''Start Application'' button. This will cause the bootloader to exit and your application to start.</p>
+<p>[[File:Flip9.png|image]]</p></li></ol>
+
+
+==== Jumping to Bootloader ====
+
+Normally you can jump to the bootloader without requiring the manual override. If invalid or corrupt code has been loaded into the AVR, the manual override will be required. The specific method of jumping to the bootloader depends which mode the AVR is currently in, the default is the ''AVR-Programmer'' mode (e.g. all ChipWhisperer units are shipped in this mode).
+
+===== From AVR-Programmer Mode =====
+
+<ol style="list-style-type: decimal;">
+<li>Start AVRStudio</li>
+<li>Connect to the AVR Programmer. You DO NOT need an AVR connected, you may receive a message that the SPI command has failed, however you can ignore that.</li>
+<li><p>Switch to the ''HW Settings'' tab and press the ''Upgrade'' button:</p>
+<blockquote><p>[[File:Avrprog_jump.png|image]]</p></blockquote></li>
+<li>The device will now jump to the bootloader. If pressing the ''Upgrade'' button did nothing you may need to use the manual mode described below - CWCR2 devices purchased before July 1st, 2014 did not have the software-based upgrade feature.</li></ol>
+
+
+===== From SPI-Target Mode =====
+
+<ol style="list-style-type: decimal;">
+<li>Start the ChipWhisperer-Capture Hardware, select the ''SPI Target''</li>
+<li><p>Connect to the Target</p>
+<p>[[File:Spiboot1.png|image]]</p></li>
+<li>Switch to the Target tab</li>
+<li><p>Press the ''Jump to Bootloader'' button</p>
+<p>[[File:Spiboot2.png|image]]</p></li></ol>
+
+==== Forcing Bootloader to Run ====
+
+See the following figure for location of the two jumper pads. You will need to short them with something metallic such as tweezers or a small flat-head screwdriver. In a pinch a coin such as a dime can be used. The required operations are:
+
+# Plug the USB-A Cable in
+# Short the HWBOOT jumper (SJ1)
+# With the HWBOOT jumper shorted, temporarily short the RESET jumper (SJ2)
+# Release the HWBOOT jumper
+
+This will cause the AVR to jump to the bootloader, and your programming software can be run.
+
+[[File:Forcebootloader.jpg|frame|none|alt=|caption Forcing the AVR-USB Bootloader to run.]]
+
+This shows the two jumper pads (SJ1 and SJ2). SJ1 is the HWBOOT feature, and SJ2 is the RESET feature.
+
+== ChipWhisperer-Capture Rev2 Specific Software Instructions ==
+
+=== Installing Drivers for CaptureRev2 ===
+
+The following is specific to ChipWhisperer Capture Rev2 hardware. Using the mini-usb cable, plug in the ChipWhisperer Capture Rev2. Note that only an internal LED will turn on when this happens - the LEDs on the front panel are controlled by the internal FPGA. They will not be active until you actually communicate with the unit.
+
+Windows should pop up a ''New Hardware Found'' dialog, but frequently may not. In which case force the driver to update using the following:
+
+# Open the ''Device Manager''. On Windows 7 simply search ''Device Manager'' from start menu
+# Find the Cypress EZ-USB Item, which should have a yellow (!) mark
+# Click ''Update Driver''
+# Once this happens, you'll be able to point Windows to the location of the drivers. Some releases contain drivers, so you can attempt to point the wizard to the folder <code>c:\chipwhisperer\hardware\capture\chipwhisperer-rev2</code>. If you don't have drivers, you can download them from the release page on [http://chipwhisperer.com ChipWhisperer].
+
+Note as of version 0.07 of the ChipWhisperer release you DO NOT need to install Java. Previous versions required this, so you may see reference to that in videos or other documentation. Be confident you can now avoid installing Java when running ChipWhisperer.
+
+Finally, we can configure the ChipWhisperer-Capture software to communicate with the hadware. To do so you need to configure the FPGA loader program, microcontroller program, and FPGA bitstream.
+
+<ol start="5" style="list-style-type: decimal;">
+<li>Run ChipWhisperer-Capture by double-clicking CWCapture.pyw in <code>c:\chipwhisperer\software\</code>. (Note: this simply calls ChipWhispererCapture.py in <code>c:\chipwhisperer\software\chipwhisperer\capture\</code>, if you have trouble try double-clicking on the ChipWhispererCapture.py instead).</li>
+<li>As the scope, select the ''ChipWhisperer'' device, and ensure on the ''Scope'' tab ensure you have selected the appropriate hardware, such as the ''rev2'' device</li>
+<li>Under the ''Tools'' menu select ''Config CW Firmware'' (NB: If this does not appear as a menu option, double-check you have selected the correct scope).</li>
+<li>In the pop-up dialog, you may need to configure the location of several files. If they are blank set as follows:
+<ol style="list-style-type: lower-alpha;">
+<li>USB Firmware: <code>c:\chipwhisperer\hardware\capture\chipwhisperer-rev2\ezusb-firmware\ztex-sdk\examples\usb-fpga-1.11\1.11c\openadc\OpenADC.ihx</code></li>
+<li>FPGA .zip (RELEASE): <code>c:\chipwhisperer\hardware\capture\chipwhisperer-rev2\cwrev2_firmware.zip</code></li></ol>
+</li>
+<li>Under the ''Tools'' menu selection ''Download CW Firmware'' with the ChipWhisperer device attached. If this works you will see a message in the ''Debug Logging'' window about firmware upload successful. If this fails check the output of the console to see what went wrong.</li></ol>
+
+
+Note as of version 0.09 of the ChipWhisperer release the tool will ''automatically'' download firmware to unprogrammed FPGAs. You do not need to explicitly run this tool before connecting, however it is still useful for debugging or forcing the loading of new firmware. In addition you must have selected the proper scope and ChipWhisperer model for the firmware download to work - this is a change from 0.08 which just blindly presented the menu choice.
+
+You can see a [http://www.youtube.com/watch?v=ozzlcUM_-dc&hd=1 Video] of the Installation Process. Note the drivers are now signed, so you will no longer see a warning about unsigned drivers.
+
+[[File:Youtube-win7-driver.png|link=http://www.youtube.com/watch?v=ozzlcUM_-dc&hd=1]]
+
+
+=== CWCR2: Using the AVR Programmer ===
+
+<ol start="5" style="list-style-type: decimal;">
+<li><p>Next, you will need to program the AVR itself. On Windows we will make use of the free [[www.atmel.com/tools/STUDIOARCHIVE.aspx|AVR Studio 4.19]]. You can find a direct link here: [http://www.atmel.com/forms/software-download.aspx?target=tcm:26-17924 Direct Link to AVR Studio 4.19 Binary]. Note it is possible to use <code>avrdude</code>, a command-line program which is part of WinAVR instead if you wish. However since many people find the graphical interface of AVRStudio easier, this guide will use AVRStudio. Be sure to install the USB drivers as part of the package.</p>
+<blockquote><p>'''warning'''</p>
+<p>If using Windows 8.1, AVRStudio 4.19 may not work correctly. In particular DO NOT install the USB Drivers as part of the installation package as mentioned above. Instead first install the latest stand-alone [https://gallery.atmel.com/Products/Details/6873be43-0628-46ac-ba83-286869a3d97a AtmelUSBInstaller] version.</p>
+<p>You can see additional details on the following thread: [http://www.avrfreaks.net/forum/avrisp-mk2-programmer-windows-81 http://www.avrfreaks.net/forum/avrisp-mk2-programmer-windows-81]. If you have already installed AVRStudio 4.19 you may have to remove the associated drivers, please see the linked thread for details.</p></blockquote></li>
+<li>Plug in the USB-A Connector on the rear side of the ChipWhisperer Rev2. This should trigger the driver installation, which will detect the device as a ''AVR-ISP MK2''.</li>
+<li><p>Once AVR Studio is installed, open the main window. From the toolbar select either the ''Con'' or ''AVR'' icon, and select the ''AVR-ISP MK-II'' Device:</p>
+<p>[[File:Studio4-connect.png|image]]</p></li>
+<li><p>In the window that opens, select the ''Main'' tab. Select the device type as ''AtMega328P'', and hit ''Read Signature''. You should get an indication that the device signature was successfully read!</p>
+<p>[[File:Studio4-read-signature.png|image]]</p></li>
+<li><p>Finally we can program the chip. To do so switch to the ''Program'' tab, select the <code>simpleserial.hex</code> file that was generated in Step 4, and hit ''Program''. If it's successful you should see some output data saying so.</p>
+<p>[[File:Studio4-program.png|image]]</p></li></ol>
+
+You can see a [http://www.youtube.com/watch?v=gy6-MBvVvy4&hd=1 Video] of the Target Build Procedure:
+
+[[File:Youtube-win7-target.png|link=http://www.youtube.com/watch?v=gy6-MBvVvy4&hd=1]]
+
+
+
+
+== I/O Connections ==
+
+=== Target-IO Connections ===
+
+The TargetIO connector is on the rear side of the ChipWhisperer Capture R2 (CWCR2), and is a 20-pin connector. The pinout can be found on the label on the top-side of the CWCR2, or marked on the top-side silk-screen for the CWCR2.
+
+Looking into the male connector on the ChipWhisperer Capture Rev2, the following is the pinout:
+
+[[File:Rear_targetio.png|image]]
+
+The pinout is as follows:
+
+{|
+! Number
+! Name
+! Dir
+! Description
+|-
+| 1
+| +VUSB (5V)
+| O
+| Raw USB Power. Not filtered.
+|-
+| 2
+| GND
+| O
+| System GND.
+|-
+| 3
+| +3.3V
+| O
+| +3.3V from FPGA Power Supply. Very high current can be supplied.
+|-
+| 4
+| FPGA-HS1
+| I/O
+| High Speed Input (normally clock in).
+|-
+| 5
+| PROG-RESET
+| I/O
+| Target RESET Pin (AVR Programmer).
+|-
+| 6
+| FPGA-HS2
+| I/O
+| High Speed Output (normally clock or glitch out).
+|-
+| 7
+| PROG-MISO
+| I/O
+| SPI input: MISO (for SPI + AVR Programmer).
+|-
+| 8
+| VTarget
+| I
+| Drive this pin with desired I/O voltage in range 1.5V-5V.
+|-
+| 9
+| PROG-MOSI
+| I/O
+| SPI output: MOSI (for SPI + AVR Programmer).
+|-
+| 10
+| FPGA-TARG1
+| I/O
+| TargetIO Pin 1 - Usually UART TX.
+|-
+| 11
+| PROG-SCK
+| I/O
+| SPI output: SCK (for SPI + AVR Programmer).
+|-
+| 12
+| FPGA-TARG2
+| I/O
+| TargetIO Pin 2 - Usually UART RX.
+|-
+| 13
+| PROG-PDIC
+| I/O
+| PDI Programming Clock (XMEGA Programmer), or CS pin (SPI).
+|-
+| 14
+| FPGA-TARG3
+| I/O
+| TargetIO Pin 3 - Usually bidirectional IO for smartcard.
+|-
+| 15
+| PROG-PDID
+| I/O
+| PDI Programming Data (XMEGA Programmer).
+|-
+| 16
+| FPGA-TARG4
+| I/O
+| TargetIO Pin 4 - Usually trigger input.
+|-
+| 17
+| GND
+| O
+|
+
+|-
+| 18
+| +3.3V
+| O
+|
+
+|-
+| 19
+| GND
+| O
+|
+
+|-
+| 20
+| +VUSB (5V)
+| O
+|
+
+|}
+
+=== PLL Connections ===
+
+=== Expansion &amp; Power Connections ===
+
+=== Front-Panel Analog ===
+
+=== Internal Connections and Jumpers ===
+
+The main ChipWhisperer Capture Rev2 PCB has several jumpers and connectors. This section explains the use of these jumpers. Note you will need to remove the case to access these jumpers.
+
+
+==== JTAG ====
+
+==== Power Jumpers ====
+
+==== PLL Enable and I2C ====
+
+==== GND Test-Points ====
+
+== ChipWhisperer SPI Driver ==
+
+=== Installing HIDAPI ===
+
+Communication with the HID USB interface requires a Python package, hidapi. Follow these steps to install:
+
+<ol style="list-style-type: decimal;">
+
+
+<li><p>If you are using WinPython or have pip installed, try the following:</p>
+<pre>pip install hidapi</pre>
+<p>If you do not have pip, you can also try easy_install:</p>
+
+<pre>easy_install hidapi</pre>
+<blockquote><p>If you do not have a suitable C compiler installed, you will see the following error from those:</p>
+<blockquote><p>error: Unable to find vcvarsall.bat</p></blockquote></blockquote></li>
+<li>If you received the <code>vcvarsall.bat</code> error, continue with this guide. Download and install MinGW &lt;http://sourceforge.net/projects/mingw/files/latest/download?source=files&gt;</li>
+<li>Once MinGW is installed, right-click on the ''mingw32-gcc-g++'' and select ''Mark for Installation''</li>
+<li>Under the ''Installation'' menu, select ''Apply Changes''. Once this completes close the dialog &amp; mingw window.</li>
+<li><p>Create a file with the name <code>C:\PYTHONG_PATH\Lib\distutils\distutils.cfg</code>, where ''PYTHON_PATH'' is your Python path. If you have used WinPython the path might be something like <code>C:\WinPython-32bit-2.7.6.4\python-2.7.6\Lib\distutils\distutils.cfg</code>. The contents of this file must be:</p>
+<pre>[build]
+compiler=mingw32</pre></li>
+<li>Re-run the <code>pip install hidapi</code> or <code>easy_install hidapi</code>, looking for the final output '''Successfully installed hidapi'''.</li></ol>
+
+NOTE: It appears sometimes the resulting hid.pyd file causes a crash on Windows. If this is the case a pre-compiled .pyd file is available for use.
+
+=== Re-Programming the AVR ===
+
+You need to use the '''ChipWhispererSPI.hex''' file in the AVR-USB. See the details earlier in this guide for reprogramming instructions.
