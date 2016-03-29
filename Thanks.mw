@@ -1,0 +1,30 @@
+Main authors:
+* Colin O’Flynn
+
+Thanks to source contributions by:
+* Tobias Schneider
+
+Additional Thanks to:
+* Akashi Satoh for Donation of the SAKURA-G
+* Akashi Satoh & Pankaj Rohatgi (Cryptography Research Inc) for Donation of SASEBO-GII and SASEBO-W, which were the initial inspiration for this entire project!
+
+--
+
+ChipWhisperer® is built on or otherwise uses a number of open-source projects. Many thanks are given to the following projects, which may also have additional license restrictions or information:
+
+* Python
+* PySide
+* PyQtGraph
+* NumPy
+* SciPy
+* PyUSB
+* LUFA USB Library
+* ZTEX EZ-USB SDK
+* libusb-1.0
+* WinAVR
+
+Some projects may be missing from the above list - please let us know, any omission is a mistake!
+
+--
+
+ChipWhisperer is a registered trademark of NewAE Technology Inc., in the U.S and Europe. Listen to Your Inner Hardware is a Trademarks of NewAE Technology Inc.
