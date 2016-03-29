@@ -1,9 +1,100 @@
-<strong>MediaWiki has been successfully installed.</strong>
+<strong> ChipWhisperer® by NewAE Technology Inc. </strong>
 
-Consult the [//meta.wikimedia.org/wiki/Help:Contents User's Guide] for information on using the wiki software.
+Welcome to ChipWhisperer - the world's first (and so far only) complete open-source toolchain for side-channel power analysis and glitching attacks. This is the main landing page for ChipWhisperer as of April 2016, with the objective of transitioning most community material into this format. ChipWhisperer has been presented at conferences such as DEFCON and Blackhat, had a [https://www.kickstarter.com/projects/coflynn/chipwhisperer-lite-a-new-era-of-hardware-security successful Kickstarter (that delivered ahead of schedule)], and placed 2nd place in the first annual Hackaday Prize. ChipWhisperer has been used in a number of academic articles, and is featured in the Car Hacking Handbook. Portions of the design have even been used by [http://permalink.lanl.gov/object/tr?what=info:lanl-repo/lareport/LA-UR-15-26344 Los Alamos Labs for an electron accelerator]. You can see a full list of references on the [[Press]] page.
 
-== Getting started ==
-* [//www.mediawiki.org/wiki/Special:MyLanguage/Manual:Configuration_settings Configuration settings list]
-* [//www.mediawiki.org/wiki/Special:MyLanguage/Manual:FAQ MediaWiki FAQ]
-* [https://lists.wikimedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]
-* [//www.mediawiki.org/wiki/Special:MyLanguage/Localisation#Translation_resources Localise MediaWiki for your language]
+ChipWhisperer is maintained by [https://www.newae.com NewAE Technology Inc.], which sells a combination of open-source hardware, supporting tools, training, and consulting services. ChipWhisperer is trademark of NewAE Technology Inc., registered in the US and Europe. This means only NewAE can sell official products under the ChipWhisperer name, and was done to ensure products meet [[Quality Control Guidelines]], as these fairly complex products require good testing to ensure you don't have a frustrating experience.
+
+= Recent/Upcomming Events =
+
+The following events will be either be attended by someone from NewAE, or have a presentation using the ChipWhisperer.
+
+* AtlSecCon 2016 (Presentation + attendee)
+* COSADE 2016 (Paper Presentation + Exhibitor)
+* Blackhat USA 2016 (Training based on ChipWhisperer)
+
+= Getting Started =
+
+Where to begin? If you're new to this area, see the [[Getting Started]] page, which details how you can get involved in side-channel power analysis. From there you can see the hardware documentation (linked below), or take one of the [[Training Courses]].
+
+Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository].
+
+= ChipWhisperer Documentation =
+== Software Instructions ==
+
+[[ Installing ChipWhisperer ]]
+
+== Hardware Instructions ==
+
+=== Capture Hardware ===
+
+ChipWhisperer-Hardware:
+
+* [[CW1173 ChipWhisperer-Lite]]
+* [[CW1200 ChipWhisperer-Pro]]
+
+Old Hardware (not longer available)
+
+* [[CW1002 ChipWhisperer Capture Rev2]]
+
+Generic test equipment:
+
+* [[PicoScope (USB Scope) ]]
+* [[VISA Connected Oscilloscope]]
+
+=== Target Boards ===
+
+ChipWhisperer Target boards:
+
+* [[CW301 Multi-Target]]
+* [[CW303 XMEGA Target]]
+* [[CW304 Notduino Target]]
+* [[CW305 Artix FPGA Target]]
+
+3rd-Party Target Boards:
+
+* [[SAKURA-G Target]]
+* [[SASEBO-GII Target]]
+* [[SASEBO-W Target]]
+
+* [[Breadboard Arduino Target]]
+
+=== Tools ===
+
+* [[CW501 Differential Probe]]
+* [[CW502 Low Noise Amplifier]]
+* [[CW503 Probe Power Supply]]
+
+== Theory ==
+
+* [[Correlation Power Analysis]]
+
+== ChipWhisperer Tutorials ==
+
+===Basic Tutorials===
+* [[Tutorial B1 Building a SimpleSerial Project]]
+* [[Tutorial B2: Viewing Instruction Power Differences]]
+* [[Tutorial B3-1 Timing Analysis with Power for Password Bypass]]
+* [[Tutorial B3-2 Timing Analysis with Power for Attacking TSB]]
+* [[Tutorial B4 Testing Two Partitions of Traces]]
+* [[Tutorial B5 Breaking AES (Straightforward)]]
+* [[Tutorial B6 Breaking AES (Manual CPA Attack)]]
+* [[Tutorial B7 Profiling Attacks (with HW Assumption)]]
+* [[Tutorial B10 Using with SASEBO-W CardOS or DPA Contest v4.2]]
+
+===Advanced Tutorials===
+* [[Tutorial A1 Synchronization to Communication Lines]]
+* [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)]]
+* [[Tutorial A3 VCC Glitch Attacks]]
+* [[Tutorial A4 SAD Trigger for SCA and Glitch]]
+* [[Tutorial A6 Replication of Ilya Kizhvatov's XMEGA® Attack]]
+
+= ChipWhisperer Training Material =
+
+= Example Attacks / Other =
+
+[[Embedded Attacks]]
+
+= Source Code and Releases =
+
+* Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository].
+* See [[Releases]] for details of software releases.
