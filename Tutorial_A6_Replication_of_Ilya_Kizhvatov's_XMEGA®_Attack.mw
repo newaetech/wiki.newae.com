@@ -1,0 +1,281 @@
+This tutorial will demonstrate how the ChipWhisperer system can be used to replicate published academic research findings. In this case we will attempt to recreate an attack published by Dr. Ilya Kizhvatov, which was performed against the AES implementation in the Atmel® XMEGA® device.
+
+If using hardware-accelerated cryptography in your design, it is useful to understand possible vulnerabilities to side-channel power analysis attacks. It must be '''strongly''' cautioned that there are many published attacks against other hardware crypto accelerators: the XMEGA® device is likely about as secure as any other general-purpose hardware crypto accelerator (i.e. one without explicit side-channel resistance).
+
+Within the Atmel® product line some devices ''do'' mention side-channel analysis resistance. Thus when designing an embedded product, it's up to the designer to understand why they should care about side-channel analysis resistance, and to select an appropriate device if they need to defend against such an attack.
+
+== Background ==
+
+As a reference, you will need a copy of Dr. Kizhvatov's paper entitled &quot;Side Channel Analysis of AVR XMEGA Crypto Engine&quot;, published in the Proceedings of the 4th Workshop on Embedded Systems Security. If you have access to the ACM Digital Library (most likely because you are part of a university), you can read this paper on the [http://dl.acm.org/citation.cfm?id=1631724 ACM Digital Library].
+
+Otherwise, you can read this paper as part of Chapter 4 of Dr. Kizhvatov's [http://www.iacr.org/phds/106_ilyakizhvatov_physicalsecuritycryptographica.pdf PhD Thesis], starting around page 77 of that PDF file.
+
+== Setting up the Hardware ==
+
+This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site], just look for the traces titled ''XMEGA: AES128 Hardware Accelerator (ChipWhisperer Tutorial #A6)''.
+
+This example uses the XMEGA Device. You can see instructions for programming in the [[Installing ChipWhisperer]] section, this tutorial assumes you have the programmer aspect working.
+
+The Multi-Target board should be plugged into the ChipWhisperer Capture Rev2 via the 20-pin target cable. The ''VOUT'' SMA connector is wired to the ''LNA'' input on the ChipWhisperer-Capture Rev2 front panel. The general hardware setup is as follows:
+
+<blockquote># 20-Pin Header connects Multi-Target to Capture Hardware
+# VOUT Connects to SMA Cable
+# SMA Cable connects to 'LNA' on CHA input
+# USB-Mini connects to side (NB: Confirm jumper settings in next section first)
+</blockquote>
+Jumpers on the Multi-Target Victim board are as follows:
+
+<blockquote>[[File:xmegajumpers.jpg|image]]
+
+# NO jumpers mounted in AVR Portion (JP1,JP4-6,JP28) or SmartCard Portion. Note if your multi-target board does not have JP28, the TRIG jumper for the AVR, you will have to remove the AVR from the socket.
+# 3.3V IO Level (JP20 set to INT.)
+# The 7.37 MHz oscillator is selected as the CLKOSC source (JP18)
+# #; The CLKOSC is routed to the FPGAIN pin (requires jumper wire on JP17), along with routed to XTAL1 pin of XMEGA
+#: (requires jumper wire to JP4/JP15).
+# The TXD &amp; RXD jumpers are set on the XMEGA portion (JP5, JP6)
+# The TRIG jumper is set on the XMEGA portion (JP13)
+# The PWR jumper is set on the XMEGA portion (JP14)
+# Power measurement taken from VCC shunt (JP12)
+
+For more information on these jumper settings see the XMEGA section of [[CW301_Multi-Target]].
+</blockquote>
+=== Building/Programming the XMEGA Target ===
+
+As described in [[Installing ChipWhisperer]], you'll need to configure the AVR-GCC compiler. Assuming you have this setup, you can run <code>make</code> in the directory <code>chipwhisperer\hardware\victims\firmware\xmega-serial</code>, which should give you an output like this:
+
+<pre>Size after:
+AVR Memory Usage
+----------------
+Device: atxmega16a4
+
+Program:    4572 bytes (22.3% Full)
+(.text + .data + .bootloader)
+
+Data:        369 bytes (18.0% Full)
+(.data + .bss + .noinit)
+
+-------- end --------</pre>
+Using either AVRStudio or AVRDude, program the XMega16A4 device (it is connected to the programmer built into the ChipWhisperer) with the resulting simpleserial.hex file.
+
+=== Running the Capture ===
+
+<ol style="list-style-type: decimal;">
+<li>Close &amp; reopen the capture software (to clear out any previous connection which may be invalid).</li>
+<li><p>From the ''Project'' menu elect the ''Example Scripts'' and then ''ChipWhisperer-Rev2: SimpleSerial Target''</p>
+<p>[[File:runscript.png|image]]</p></li>
+<li><p>The script will automatically connect to the capture hardware and run 2 example traces. They will not yet work on the XMega as additional setup is required. You must switch the RX/TX pins:</p>
+<p>[[File:xmegarxtx.png|image]]</p></li>
+<li><p>Run a 'Capture 1', you should confirm the encryption algorithm is working:</p>
+<p>[[File:capture1_working.png|image]]</p></li>
+<li><p>Switch from software to hardware crypto. To do this change the 'Go' command to <code>h$TEXT$\n</code>:</p>
+<p>[[File:gocommand.png|image]]</p></li>
+<li><p>Finally, set the offset to 1500, and number of samples to only 1000:</p>
+<p>[[File:slength.png|image]]</p></li>
+<li><p>Confirm you now get something like this with a 'capture 1':</p>
+<p>[[File:capture1_fullworking.png|image]]</p></li>
+<li><p>To complete the tutorial, follow these steps:</p>
+<blockquote><ol style="list-style-type: decimal;">
+<li>Switch to the ''General Settings'' tab</li>
+<li>Change the number of traces to 3000.</li>
+<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
+<li>You will see each new trace plotted in the waveform display.</li>
+<li>Wait until the capture is complete.</li></ol>
+</blockquote></li>
+<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li></ol>
+
+== Analyzing of Power Traces ==
+
+As in the [[Tutorial A5 Breaking AES-256 Bootloader]] tutorial, we will be using the Python script file to override the provided HW model. This will allow us to implement the model given by Kizhvatov for performing the CPA attack.
+
+Remember that when you change settings in the GUI, the system is actually just automatically adjusting the attack script. You could modify the attack script directly instead of changing GUI settings. Every time you touch the GUI the autogenerated script is overwritten however, so it would be easy to lose your changes. As an example here is how setting the point range maps to an API call:
+
+<blockquote>[[File:autoscript1.png|image]]
+</blockquote>
+We will first automatically configure a script, and then use that as the base for our full attack.
+
+<ol style="list-style-type: decimal;">
+<li>Open the Analyzer software</li>
+<li>From the ''File --&gt; Open Project'' option, navigate to the .cwp file containing the capture of the power usage. This can be either the aes128_xmega_hardware.cwp file downloaded, or the capture you performed.</li>
+<li><p>View the trace data as before, which should look something like this:</p>
+<p>[[File:traces.png|image]]</p></li>
+<li>Set the 'Reporting Interval' to 50 or 100. We can change this later through the script.</li>
+<li><p>We are now ready to insert the custom data into the attack module. On the ''General'' tab, make a copy of the auto-generated script. Do so by clicking on the autogenerated row, hit ''Copy'', save the file somewhere. Double-click on the description of the new file and give it a better name. Finally hit ''Set Active'' after clicking on your new file. The result should look like this:</p>
+<p>[[File:customscript.png|image]]</p></li>
+<li><p>You can now edit the custom script file using the built-in editor OR with an external editor. In this example the file would be <code>C:\Users\Colin\AppData\Local\Temp\cw_testilya.py</code>.</p>
+<blockquote><p>'''warning'''</p>
+<dl>
+<dt>The API calling parameters changed in release 0.10 of the ChipWhisperer software. If using 0.09 release or older, either see the documentation that</dt>
+<dd><p>is present in the 'doc' directory (which will always correspond to your release), or see Appendix B for the full attack script.</p></dd></dl>
+</blockquote>
+<p>The following defines the required functions to implement, you should refer to the academic paper for details of the correlation model:</p>
+<pre># Imports
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import getHW
+
+class AESXMega(object):
+    numSubKeys = 16
+
+    @staticmethod
+    def leakage(pt, ct, guess, bnum, setting, state):
+        #In real life would recover this one at a time, in our case we know entire full key, so we cheat to make
+        #the iterations easier
+        knownkey = [0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c]
+
+        s1 = pt[bnum-1] ^ knownkey[bnum-1]
+        s2 = pt[bnum] ^ guess
+
+        #We subtract 8 as way measurements are taken a higher current results in a lower voltage. Normally this
+        #doesn't matter due to use of absolute values. In this attack we do not use absolute mode, so we simply
+        #&quot;flip&quot; the expected hamming weight, which results in the correlation changing signs.
+        return 8-getHW(s1 ^ s2)</pre></li>
+<li>Add the above function to your custom script file.</li>
+<li><p>Change the <code>setAnalysisAlgorithm</code> to use your custom functions by making the following call, see the full script in the Appendix:</p>
+<pre>self.attack.setAnalysisAlgorithm(CPAProgressive,AESXMega,None)</pre></li>
+<li><p>Adjust the attack bytes to ''NOT'' attack the first byte, as our hacked script will not work with it:</p>
+<pre>self.attack.setTargetBytes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])</pre></li>
+<li><p>We want to disable 'absolute mode', where by default the absolute value of the CPA attack is taken. We can do this by adding a call to self.attack.setAbsoluteMode(False) before the return statement, for example:</p>
+<pre>self.attack.setPointRange((0,996))
+self.attack.setAbsoluteMode(False)
+return self.attack</pre></li>
+<li><p>Run ''Start Attack'' as before! Wait for the attack to complete, which should show the key (except for the first byte) being recovered:</p>
+<p>[[File:analysisrunning.png|image]]</p></li>
+<li><p>At this point you can also look at the output values, which one can compare to the shape of the values published in the paper:</p>
+<p>[[File:results_output.png|image]]</p>
+<p>For more detailed plotting, turn off the 'Fast Draw' option:</p>
+<p>[[File:fastdraw.png|image]]</p>
+<p>You can also use the 'GUI Override' on the byte highlighting to change the highlighted byte.</p></li></ol>
+
+== Appendix A: Full Attack Script ==
+
+Here is the full attack script for current releases:
+
+<pre># Based on Ilya Kizhvatov's work, published as &quot;Side Channel Analysis of AVR XMEGA Crypto Engine&quot;
+from chipwhisperer.common.autoscript import AutoScriptBase
+#Imports from Preprocessing
+import chipwhisperer.analyzer.preprocessing as preprocessing
+#Imports from Capture
+from chipwhisperer.analyzer.attacks.CPA import CPA
+from chipwhisperer.analyzer.attacks.CPAProgressive import CPAProgressive
+import chipwhisperer.analyzer.attacks.models.AES128_8bit
+# Imports
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import getHW
+
+class AESXMega(object):
+    numSubKeys = 16
+
+    @staticmethod
+    def leakage(pt, ct, guess, bnum, setting, state):
+        #In real life would recover this one at a time, in our case we know entire full key, so we cheat to make
+        #the iterations easier
+        knownkey = [0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c]
+
+        s1 = pt[bnum-1] ^ knownkey[bnum-1]
+        s2 = pt[bnum] ^ guess
+
+        #We subtract 8 as way measurements are taken a higher current results in a lower voltage. Normally this
+        #doesn't matter due to use of absolute values. In this attack we do not use absolute mode, so we simply
+        #&quot;flip&quot; the expected hamming weight, which results in the correlation changing signs.
+        return 8-getHW(s1 ^ s2)
+
+class userScript(AutoScriptBase):
+    preProcessingList = []
+    def initProject(self):
+        pass
+
+    def initPreprocessing(self):
+        self.preProcessingList = []
+        return self.preProcessingList
+
+    def initAnalysis(self):
+        self.attack = CPA(self.parent, console=self.console, showScriptParameter=self.showScriptParameter)
+        self.attack.setAnalysisAlgorithm(CPAProgressive,AESXMega,None)
+        self.attack.setTraceStart(0)
+        self.attack.setTracesPerAttack(2999)
+        self.attack.setIterations(1)
+        self.attack.setReportingInterval(500)
+        self.attack.setTargetBytes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        self.attack.setTraceManager(self.traceManager())
+        self.attack.setProject(self.project())
+        self.attack.setPointRange((0,996))
+        return self.attack
+
+    def initReporting(self, results):
+        results.setAttack(self.attack)
+        results.setTraceManager(self.traceManager())
+        self.results = results
+
+    def doAnalysis(self):
+        self.attack.doAttack()</pre>
+== Appendix B: Full Attack Script for 0.09 or Older Releases ==
+
+Here is the full attack script:
+
+<pre># Based on Ilya Kizhvatov's work, published as &quot;Side Channel Analysis of AVR XMEGA Crypto Engine&quot;
+from chipwhisperer.common.autoscript import AutoScriptBase
+#Imports from Preprocessing
+import chipwhisperer.analyzer.preprocessing as preprocessing
+#Imports from Capture
+from chipwhisperer.analyzer.attacks.CPA import CPA
+from chipwhisperer.analyzer.attacks.CPAProgressive import CPAProgressive
+import chipwhisperer.analyzer.attacks.models.AES128_8bit
+#Imports from utilList
+
+# Imports
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import getHW
+
+def AES128_HD_ILYA(pt, ct, key, bnum):
+    &quot;&quot;&quot;Given either plaintext or ciphertext (not both) + a key guess, return hypothetical hamming weight of result&quot;&quot;&quot;
+
+    #In real life would recover this one at a time, in our case we know entire full key, so we cheat to make
+    #the iterations easier
+    knownkey = [0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c]
+
+    if pt != None:
+        s1 = pt[bnum-1] ^ knownkey[bnum-1]
+        s2 = pt[bnum] ^ key
+
+        #We subtract 8 as way measurements are taken a higher current results in a lower voltage. Normally this
+        #doesn't matter due to use of absolute values. In this attack we do not use absolute mode, so we simply
+        #&quot;flip&quot; the expected hamming weight, which results in the correlation changing signs.
+
+        return 8-getHW(s1 ^ s2)
+
+    elif ct != None:
+        raise ValueError(&quot;Only setup for encryption attacks&quot;)
+    else:
+        raise ValueError(&quot;Must specify PT or CT&quot;)
+
+class userScript(AutoScriptBase):
+    preProcessingList = []
+    def initProject(self):
+        pass
+
+    def initPreprocessing(self):
+        self.preProcessingList = []
+        return self.preProcessingList
+
+    def initAnalysis(self):
+        self.attack = CPA(self.parent, console=self.console, showScriptParameter=self.showScriptParameter)
+        self.attack.setAnalysisAlgorithm(CPAProgressive,chipwhisperer.analyzer.attacks.models.AES128_8bit,AES128_HD_ILYA)
+        self.attack.setTraceStart(0)
+        self.attack.setTracesPerAttack(2999)
+        self.attack.setIterations(1)
+        self.attack.setReportingInterval(50)
+        self.attack.setTargetBytes([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        self.attack.setKeyround(0)
+        self.attack.setDirection('enc')
+        self.attack.setTraceManager(self.traceManager())
+        self.attack.setProject(self.project())
+        self.attack.setPointRange((0,996))
+        self.attack.setAbsoluteMode(False)
+        return self.attack
+
+    def initReporting(self, results):
+        results.setAttack(self.attack)
+        results.setTraceManager(self.traceManager())
+        self.results = results
+
+    def doAnalysis(self):
+        self.attack.doAttack()</pre>
+== Disclaimers ==
+
+Atmel and XMEGA are registered trademarks or trademarks of Atmel Corporation or its subsidiaries, in the US and/or other countries.
