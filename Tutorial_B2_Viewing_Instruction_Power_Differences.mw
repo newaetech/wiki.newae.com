@@ -1,17 +1,3 @@
-{{Warningbox|This tutorial has been updated for ChipWhisperer 4.0.0 release. If you are using 3.x.x see the "V3" link in the sidebar.}}
-
-{{Infobox tutorial
-|name                   = B2: Viewing Instruction Power Differences
-|image                  = 
-|caption                = 
-|software versions      =
-|capture hardware       = CW-Lite, CW-Lite 2-Part, CW-Pro
-|Target Device          = 
-|Target Architecture    = XMEGA
-|Hardware Crypto        = No
-|Purchase Hardware      = 
-}}
-
 This tutorial will introduce you to measuring the power consumption of a device under attack. It will demonstrate how you can view the difference between a 'add' instruction and a 'mul' instruction.
 
 = Prerequisites =
@@ -38,7 +24,7 @@ trigger_high();
 trigger_low();
 /* End user-specific code here. *
  ********************************/</source></li>
-<li><p>Modify it to do some work with no-ops and multiplication instructions:</p>
+<li><p>Modify it to increment the value of each sent data byte:</p>
 <source lang="c">/**********************************
  * Start user-specific code here. */
 trigger_high();
@@ -80,8 +66,8 @@ asm volatile(
 trigger_low();
 /* End user-specific code here. *
  ********************************/</source></li>
-<li><p>Change the terminal to the directory with your source, and run <code>make PLATFORM=CW303</code> to build the system. Remember you can press the up arrow on the keyboard to get recently typed commands in most OSes:</p>
-<pre>make PLATFORM=CW303</pre>
+<li><p>Change the terminal to the directory with your source, and run <code>make</code> to build the system. Remember you can press the up arrow on the keyboard to get recently typed commands in most OSes:</p>
+<pre>make</pre>
 <p>Which should have the following output, you will '''want to check the build platform is what you expect''':</p>
 <pre>...Bunch of lines removed...
 Creating Extended Listing: simpleserial-base.lss
@@ -106,7 +92,7 @@ Built for platform CW-Lite XMEGA
 
 -------- end --------</pre></li>
 <li>Following the instructions given in [[Tutorial_B1_Building_a_SimpleSerial_Project]], program the AVR or XMEGA with your new code. Note you __do not__ need to close the programming window. If you will be doing frequent modifications to the source code, this can simplify your life since you only need to hit the '''Program''' button in AVRStudio to download new code.</li>
-<li>Ensure the hardware is setup as in [[Tutorial_B1_Building_a_SimpleSerial_Project]]. If using the CW1002, ensure the SMA cable is also connected as described in the previous tutorial.</li></ol>
+<li>Ensure the hardware is setup as in [[Tutorial_B1_Building_a_SimpleSerial_Project]], if using the CW1002 ensure the SMA cable is also connected as described in the previous tutorial.</li></ol>
 
 = Capturing Power Traces =
 
@@ -114,27 +100,66 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 
 <ol style="list-style-type: decimal;">
 <li>Start ChipWhisperer-Capture</li>
-<li>Under the ''Python Console'' tab, find the ''connect_cwlite_simpleserial.py'' script and double-click.</li>
-<li>Check there are no errors on the connection.</li>
-<li>Under the ''Python Console'' tab, find the ''setup_cwlite_xmega.py'' script and double-click.</li>
-<li>Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
-<li>Open the status monitor (<i>Tools > Encryption Status Monitor</i>).</li>
-<li>Hit the ''Run 1'' [[File:Capture One Button.PNG|image]] button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.</li>
+<li>As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option.</li>
+<li>As the ''Target Module'', select the ''Simple Serial'' option.</li>
+<li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer'' (for CW1002) or ''ChipWhisperer-Lite'' (for CW1173 or CW1180).</li>
+<li>Switch to the ''Scope Settings'' tab, and ensure the ''connection'' is set to either ''ChipWhisperer'' (for CW1002) or ''ChipWhisperer-Lite'' (for CW1173 or CW1180).</li>
+<li>Run the master connect (click the button labeled ''Master: DIS''). Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
+<li><p>For the CW1173/CW1180 (ChipWhisperer-Lite based systems), perform the following:</p>
+<blockquote><ol style="list-style-type: lower-alpha;">
+<li>Set the ''CLKGEN'' frequency to ''7.37 MHz''</li>
+<li>Set the*Target HS-IO Out* as ''CLKGEN''</li></ol>
+</blockquote></li>
+<li>If targetting an XMEGA board (either the ChipWhisperer-Lite XMEGA default target, or the XMEGA on the multi-target board), perform the following:
+<ol style="list-style-type: lower-alpha;">
+<li>Set ''Target IO1'' as ''Serial RXD''</li>
+<li>Set ''Target IO2'' as ''Serial TXD''</li></ol>
+</li>
+<li>Switch to the ''General Settings'' tab, and hit the ''Open Monitor'' button.</li></ol>
+
+; 10. Hit the ''Run 1'' button. You may have to hit it a few times, as the very first serial data is often lost. You should see
+: data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.
 
 At this point you've completed the same amount of information as the previous tutorial. The following section describes how to setup the analog capture hardware, which is new (to you). The following is entirely done in the ''Scope Settings'' tab:
 
-[[File:04_ADC_Clock_2_1.png|image]]</ol>
+[[File:cap1.png|image]]
 
-<ol start="8" style="list-style-type: decimal;">
+<ol start="11" style="list-style-type: decimal;">
+<li>Under ''Trigger Setup'' set the ''Mode'' to ''rising edge''. This means the system will trigger on a rising edge logic level:</li></ol>
+
+[[File:cap2.png|image]]
+
+<ol start="12" style="list-style-type: decimal;">
+<li>For the CW1002 (ChipWhisperer Capture Rev 2) hardware only, perform the following:</li></ol>
+
+<blockquote><ol style="list-style-type: lower-alpha;">
+<li>Under the ''Trigger Pins'' unselect the ''Front Panel A'' as an option, and select ''Target IO4 (Trigger Line)''. This will mean only the trigger pin coming from the AVR target is used to trigger the capture.</li>
+<li><p>In the same area, select the ''Clock Source'' as being from ''Target IO-IN''</p>
+<p>[[File:cap3.png|image]]</p></li>
+<li>You can monitor the ''Freq Counter'' option, which measures the frequency being used on the ''EXTCLK'' input. This should be 7.37 MHz, which is the oscillator on the multi-target board.</li>
+<li>Change the ''ADC Clock'' ''source'' as being ''EXTCLK x4 via DCM''. This routes the external clock through a 4x multiplier, and routes it to the ADC.</li></ol>
+</blockquote>
+<ol start="13" style="list-style-type: decimal;">
+<li>For the CW1173/CW1180 (ChipWhisperer-Lite based hardware), perform the following:</li></ol>
+
+<blockquote><ol start="4" style="list-style-type: lower-alpha;">
+<li>Change the ''ADC Clock'' ''source'' as being ''CLKGEN x4 via DCM''. This routes the device clock through a 4x multiplier, and routes it to the ADC.</li></ol>
+</blockquote>
+<ol start="14" style="list-style-type: decimal;">
+<li>Hit the '''Reset ADC DCM''' button.</li></ol>
+
+[[File:cap5.png|image]]
+
+<ol start="15" style="list-style-type: decimal;">
 <li>The ''ADC Freq'' should show 29.5 MHz (which is 4x 7.37 MHz), and the ''DCM Locked'' checkbox __MUST__ be checked. If the ''DCM Locked'' checkbox is NOT checked, try hitting the ''Reset ADC DCM'' button again.</li>
 <li><p>At this point you can hit the ''Capture 1'' button, and see if the system works! You should end up with a window looking like this:</p>
-<p>[[File:05_Low_Gain.PNG|image|1250px]]</p>
-<p>Whilst there is a waveform, you need to adjust the capture settings. There are two main settings of importance, the analog gain and number of samples to capture.</p></li>
+<p>[[File:cap6.png|image]]</p>
+<p>Whilst there is a waveform, you need to adjust the capture settings. There are two main settings of importance, the analog gain and number of samples to capture.</p></li></ol>
 
-[[File:06_high_gain.PNG|image|1250px]]</ol>
+[[File:cap7.png|image]]
 
-<ol start="16" style="list-style-type: decimal;">
-<li>Under ''Gain Setting'' set the ''Mode'' to ''high''. Increase the ''Gain Setting'' to about 25. You'll be able to adjust this further during experimentations, you may need to increase this depending on your hardware and target device.</li>
+<ol start="17" style="list-style-type: decimal;">
+<li>Under ''Gain Setting'' set the ''Mode'' to ''high''. Increase the ''Gain Setting'' to about 25. You'll be able to adjust this further during experimentations, you may need to increase this depending on your hardware and target device. For the multi-target board with the CW1002 you will probably need to set this around 40 for example.</li>
 <li>Under ''Trigger Setup'' set the ''Total Samples'' to ''500''.</li>
 <li>Try a few more ''Capture 1'' traces, and you should see a 'zoomed-in' waveform.</li></ol>
 
@@ -145,13 +170,13 @@ At this point you've completed the same amount of information as the previous tu
 This tutorial is using either an AtMega328p which is an Atmel AVR device, or AtXMEGA128D4 which is an Atmel XMEGA device. We are comparing the power consumption of two different instructions, the <code>MUL</code> (multiply) instruction and the <code>NOP</code> (no operation) instruction. Some information on these two instructions:
 
 ; mul
-* Multiples two 8-bit numbers together.
-* Takes 2 clock cycles to complete
-* Intuitively expect fairly large power consumption due to complexity of operation required
+: ;* Multiples two 8-bit numbers together.
+;* Takes 2 clock cycles to complete
+;* Intuitively expect fairly large power consumption due to complexity of operation required
 ; nop
-* Does nothing
-* Takes 1 clock cycle to complete
-* Intuitively expect low power consumption due to core doing nothing
+: ;* Does nothing
+;* Takes 1 clock cycle to complete
+;* Intuitively expect low power consumption due to core doing nothing
 
 Note that the capture clock is running at 4x the device clock. Thus a single <code>mul</code> instruction should span 8 samples on our output graph, since it takes 4 samples to cover a complete clock cycle.
 
@@ -320,6 +345,3 @@ The specifics of the capture are highly dependent on each ChipWhisperer board &a
 = Conclusion =
 
 In this tutorial you have learned how power analysis can tell you the operations being performed on a microcontroller. In future work we will move towards using this for breaking various forms of security on devices.
-
-{{Template:Tutorials}}
-[[Category:Tutorials]]
