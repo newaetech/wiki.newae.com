@@ -72,7 +72,7 @@ ChipWhisperer Target boards:
 
 ===Basic Tutorials===
 * [[Tutorial B1 Building a SimpleSerial Project]]
-* [[Tutorial B2: Viewing Instruction Power Differences]]
+* [[Tutorial B2 Viewing Instruction Power Differences]]
 * [[Tutorial B3-1 Timing Analysis with Power for Password Bypass]]
 * [[Tutorial B3-2 Timing Analysis with Power for Attacking TSB]]
 * [[Tutorial B4 Testing Two Partitions of Traces]]
