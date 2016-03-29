@@ -40,5 +40,3 @@ The following scopes have been tested with this system:
 <li><p>Set the required number of traces. You'll probably want to segment to recording to avoid issues with massive disk files or running out of memory:</p>
 <p>[[File:Tracesegment.png|image]]</p></li>
 <li>Run your capture &amp; break the system as any other target/scope would.</li></ol>
-
-{{Template:Hardware}}
