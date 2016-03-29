@@ -50,5 +50,3 @@ The triggers built into the ChipWhisperer hardware are considerably more basic t
 * Custom FPGA design to look for specific pattern of data.
 
 Simply connect this &quot;Trigger Out&quot; to one of the IO lines on the ChipWhisperer, and specify that IO line as the trigger event.
-
-{{Template:Tutorials}}
