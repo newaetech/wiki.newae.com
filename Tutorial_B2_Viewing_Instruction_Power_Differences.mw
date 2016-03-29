@@ -1,0 +1,347 @@
+This tutorial will introduce you to measuring the power consumption of a device under attack. It will demonstrate how you can view the difference between a 'add' instruction and a 'mul' instruction.
+
+= Prerequisites =
+
+You should have already completed [[Tutorial_B1_Building_a_SimpleSerial_Project]]. This tutorial assumes you are capable of building a new AVR/XMEGA code, programming the code, and connecting to the ChipWhisperer.
+
+= Setting Up the Example =
+
+<ol style="list-style-type: decimal;">
+<li><p>Copy the directory <code>simpleserial-base</code> which is found at <code>chipwhisperer\hardware\victims\firmware\</code> of the chipwhisperer release to a new directory called <code>simpleserial-base-lab2</code>. You must keep it in the same directory, as it will reference other files within that directory for the build process.</p>
+<p>If you just completed [[Tutorial_B1_Building_a_SimpleSerial_Project]], you can simply reuse that code (this builds upon it).</p>
+<p>At this point we want to modify the system to perform a number of operations. We won't actually use the input data. To do so, open the file <code>simpleserial-base.c</code> with a text editor such as Programmer's Notepad (which ships with WinAVR).</p></li>
+<li><p>Find the following code block towards the end of the file, which may look different if you just completed [[Tutorial_B1_Building_a_SimpleSerial_Project]].</p>
+<source lang="c">/**********************************
+ * Start user-specific code here. */
+trigger_high();
+
+//16 hex bytes held in 'pt' were sent
+//from the computer. Store your response
+//back into 'pt', which will send 16 bytes
+//back to computer. Can ignore of course if
+//not needed
+
+trigger_low();
+/* End user-specific code here. *
+ ********************************/</source></li>
+<li><p>Modify it to increment the value of each sent data byte:</p>
+<source lang="c">/**********************************
+ * Start user-specific code here. */
+trigger_high();
+
+//16 hex bytes held in 'pt' were sent
+//from the computer. Store your response
+//back into 'pt', which will send 16 bytes
+//back to computer. Can ignore of course if
+//not needed
+
+asm volatile(
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+::
+);
+
+asm volatile(
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"          
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+::
+);
+
+trigger_low();
+/* End user-specific code here. *
+ ********************************/</source></li>
+<li><p>Change the terminal to the directory with your source, and run <code>make</code> to build the system. Remember you can press the up arrow on the keyboard to get recently typed commands in most OSes:</p>
+<pre>make</pre>
+<p>Which should have the following output, you will '''want to check the build platform is what you expect''':</p>
+<pre>...Bunch of lines removed...
+Creating Extended Listing: simpleserial-base.lss
+avr-objdump -h -S -z simpleserial-base.elf &gt; simpleserial-base.lss
+
+Creating Symbol Table: simpleserial-base.sym
+avr-nm -n simpleserial-base.elf &gt; simpleserial-base.sym
+
+Size after:
+AVR Memory Usage
+----------------
+Device: atxmega128d3
+
+Program:    1568 bytes (1.1% Full)
+(.text + .data + .bootloader)
+
+Data:        224 bytes (2.7% Full)
+(.data + .bss + .noinit)
+
+
+Built for platform CW-Lite XMEGA
+
+-------- end --------</pre></li>
+<li>Following the instructions given in [[Tutorial_B1_Building_a_SimpleSerial_Project]], program the AVR or XMEGA with your new code. Note you __do not__ need to close the programming window. If you will be doing frequent modifications to the source code, this can simplify your life since you only need to hit the '''Program''' button in AVRStudio to download new code.</li>
+<li>Ensure the hardware is setup as in [[Tutorial_B1_Building_a_SimpleSerial_Project]], if using the CW1002 ensure the SMA cable is also connected as described in the previous tutorial.</li></ol>
+
+= Capturing Power Traces =
+
+The basic steps to connect to the ChipWhisperer device are described in [[Tutorial_B1_Building_a_SimpleSerial_Project]]. They are repeated here as well, however see [[Tutorial_B1_Building_a_SimpleSerial_Project]] for pictures &amp; mode details.
+
+<ol style="list-style-type: decimal;">
+<li>Start ChipWhisperer-Capture</li>
+<li>As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option.</li>
+<li>As the ''Target Module'', select the ''Simple Serial'' option.</li>
+<li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer'' (for CW1002) or ''ChipWhisperer-Lite'' (for CW1173 or CW1180).</li>
+<li>Switch to the ''Scope Settings'' tab, and ensure the ''connection'' is set to either ''ChipWhisperer'' (for CW1002) or ''ChipWhisperer-Lite'' (for CW1173 or CW1180).</li>
+<li>Run the master connect (click the button labeled ''Master: DIS''). Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
+<li><p>For the CW1173/CW1180 (ChipWhisperer-Lite based systems), perform the following:</p>
+<blockquote><ol style="list-style-type: lower-alpha;">
+<li>Set the ''CLKGEN'' frequency to ''7.37 MHz''</li>
+<li>Set the*Target HS-IO Out* as ''CLKGEN''</li></ol>
+</blockquote></li>
+<li>If targetting an XMEGA board (either the ChipWhisperer-Lite XMEGA default target, or the XMEGA on the multi-target board), perform the following:
+<ol style="list-style-type: lower-alpha;">
+<li>Set ''Target IO1'' as ''Serial RXD''</li>
+<li>Set ''Target IO2'' as ''Serial TXD''</li></ol>
+</li>
+<li>Switch to the ''General Settings'' tab, and hit the ''Open Monitor'' button.</li></ol>
+
+; 10. Hit the ''Run 1'' button. You may have to hit it a few times, as the very first serial data is often lost. You should see
+: data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.
+
+At this point you've completed the same amount of information as the previous tutorial. The following section describes how to setup the analog capture hardware, which is new (to you). The following is entirely done in the ''Scope Settings'' tab:
+
+[[File:cap1.png|image]]
+
+<ol start="11" style="list-style-type: decimal;">
+<li>Under ''Trigger Setup'' set the ''Mode'' to ''rising edge''. This means the system will trigger on a rising edge logic level:</li></ol>
+
+[[File:cap2.png|image]]
+
+<ol start="12" style="list-style-type: decimal;">
+<li>For the CW1002 (ChipWhisperer Capture Rev 2) hardware only, perform the following:</li></ol>
+
+<blockquote><ol style="list-style-type: lower-alpha;">
+<li>Under the ''Trigger Pins'' unselect the ''Front Panel A'' as an option, and select ''Target IO4 (Trigger Line)''. This will mean only the trigger pin coming from the AVR target is used to trigger the capture.</li>
+<li><p>In the same area, select the ''Clock Source'' as being from ''Target IO-IN''</p>
+<p>[[File:cap3.png|image]]</p></li>
+<li>You can monitor the ''Freq Counter'' option, which measures the frequency being used on the ''EXTCLK'' input. This should be 7.37 MHz, which is the oscillator on the multi-target board.</li>
+<li>Change the ''ADC Clock'' ''source'' as being ''EXTCLK x4 via DCM''. This routes the external clock through a 4x multiplier, and routes it to the ADC.</li></ol>
+</blockquote>
+<ol start="13" style="list-style-type: decimal;">
+<li>For the CW1173/CW1180 (ChipWhisperer-Lite based hardware), perform the following:</li></ol>
+
+<blockquote><ol start="4" style="list-style-type: lower-alpha;">
+<li>Change the ''ADC Clock'' ''source'' as being ''CLKGEN x4 via DCM''. This routes the device clock through a 4x multiplier, and routes it to the ADC.</li></ol>
+</blockquote>
+<ol start="14" style="list-style-type: decimal;">
+<li>Hit the '''Reset ADC DCM''' button.</li></ol>
+
+[[File:cap5.png|image]]
+
+<ol start="15" style="list-style-type: decimal;">
+<li>The ''ADC Freq'' should show 29.5 MHz (which is 4x 7.37 MHz), and the ''DCM Locked'' checkbox __MUST__ be checked. If the ''DCM Locked'' checkbox is NOT checked, try hitting the ''Reset ADC DCM'' button again.</li>
+<li><p>At this point you can hit the ''Capture 1'' button, and see if the system works! You should end up with a window looking like this:</p>
+<p>[[File:cap6.png|image]]</p>
+<p>Whilst there is a waveform, you need to adjust the capture settings. There are two main settings of importance, the analog gain and number of samples to capture.</p></li></ol>
+
+[[File:cap7.png|image]]
+
+<ol start="17" style="list-style-type: decimal;">
+<li>Under ''Gain Setting'' set the ''Mode'' to ''high''. Increase the ''Gain Setting'' to about 25. You'll be able to adjust this further during experimentations, you may need to increase this depending on your hardware and target device. For the multi-target board with the CW1002 you will probably need to set this around 40 for example.</li>
+<li>Under ''Trigger Setup'' set the ''Total Samples'' to ''500''.</li>
+<li>Try a few more ''Capture 1'' traces, and you should see a 'zoomed-in' waveform.</li></ol>
+
+= Modifying the Target =
+
+== Background on Setup ==
+
+This tutorial is using either an AtMega328p which is an Atmel AVR device, or AtXMEGA128D4 which is an Atmel XMEGA device. We are comparing the power consumption of two different instructions, the <code>MUL</code> (multiply) instruction and the <code>NOP</code> (no operation) instruction. Some information on these two instructions:
+
+; mul
+: ;* Multiples two 8-bit numbers together.
+;* Takes 2 clock cycles to complete
+;* Intuitively expect fairly large power consumption due to complexity of operation required
+; nop
+: ;* Does nothing
+;* Takes 1 clock cycle to complete
+;* Intuitively expect low power consumption due to core doing nothing
+
+Note that the capture clock is running at 4x the device clock. Thus a single <code>mul</code> instruction should span 8 samples on our output graph, since it takes 4 samples to cover a complete clock cycle.
+
+== Initial Code ==
+
+The initial code has a power signature something like this (yours will vary based on various physical considerations, and depending if you are using an XMEGA or AVR device):
+
+[[File:cap_nop_mul.png|image]]
+
+Note that the 10 <code>mul</code> instructions would be expected to take 80 samples to complete, and the 10 <code>nop</code> instructions should take 40 samples to complete. By modifying the code we can determine exactly which portion of the trace is corresponding to which operations.
+
+== Increase number of NOPs ==
+
+We will then modify the code to have twenty NOP operations in a row instead of ten. The modified code looks like this:
+
+<blockquote><source lang="c">/**********************************
+ * Start user-specific code here. */
+trigger_high();
+
+asm volatile(
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+::
+);
+
+asm volatile(
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+::
+);
+
+asm volatile(
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"          
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+::
+);
+
+trigger_low();
+/* End user-specific code here. *
+ ********************************/</source></blockquote>
+Note that the <code>mul</code> operation takes 2 clock cycles on the AVR, and the <code>nop</code> operation takes 1 clock cycles. Thus we expect to now see two areas of the power trace which appear to take approximately the same time. The resulting power trace looks like this:
+
+[[File:cap_doublenop_mul.png|image]]
+
+Pay particular attention to the section between sample number 0 &amp; sample number 180. It is in this section we can compare the two power graphs to see the modified code. We can actually 'see' the change in operation of the device! It would appear the <code>nop</code> is occuring from approximately 10-90, and the <code>mul</code> occuring from 90-170.
+
+== Add NOP loop after MUL ==
+
+Finally, we will add 10 more NOPs after the 10 MULs. The code should look something like this:
+
+<blockquote><source lang="c">/**********************************
+ * Start user-specific code here. */
+trigger_high();
+
+asm volatile(
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+::
+);
+
+asm volatile(
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+::
+);
+
+asm volatile(
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"          
+"mul r0,r1" "\n\t"
+"mul r0,r1" "\n\t"
+::
+);
+
+asm volatile(
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+"nop"       "\n\t"
+::
+);
+
+trigger_low();
+/* End user-specific code here. *
+ ********************************/</source></blockquote>
+With an output graph that looks like this:
+
+<blockquote>[[File:cap_doublenop_mul_nop.png|image]]
+</blockquote>
+== Comparison of All Three ==
+
+The following graph lines the three options up. One can see where adding loops of different operations shows up in the power consumption.
+
+<blockquote>[[File:nop_mul_comparison.png|image]]
+</blockquote>
+= Clock Phase Adjustment =
+
+A final area of interest is the clock phase adjustment. The clock phase adjustment is used to shift the ADC sample clock from the actual device clock by small amounts. This will affect the appearance of the captured waveform, and in more advanced methods is used to improve the measurement.
+
+The phase adjustment is found under the ''Phase Adjust'' option of the ''ADC Clock'' setting:
+
+<blockquote>[[File:phasesetting.png|image]]
+</blockquote>
+To see the effect this has, first consider an image of the power measured by a regular oscilloscope (at 1.25GS/s):
+
+<blockquote>[[File:scope_real.png|image]]
+</blockquote>
+And the resulting waveforms for a variety of different phase shift settings:
+
+[[File:phase_differences.png|image]]
+
+The specifics of the capture are highly dependent on each ChipWhisperer board &amp; target platform. The phase shift allows customization of the capture waveform for optimum performance, however what constitutes 'optimum performance' is highly dependent on the specifics of your algorithm.
+
+= Conclusion =
+
+In this tutorial you have learned how power analysis can tell you the operations being performed on a microcontroller. In future work we will move towards using this for breaking various forms of security on devices.
