@@ -1,118 +1,22 @@
-Correlation Power Analysis (CPA) is an attack that allows us to find a secret encryption key that is stored on a victim device. There are 4 steps to a CPA attack:
-# Write down a model for the victim's power consumption. This model will look at one specific point in the encryption algorithm. (ie: after step 2 of the encryption process, the intermediate result is <math>x</math>, so the power consumption is <math>f(x)</math>.)
-# Get the victim to encrypt several different plaintexts. Record a trace of the victim's power consumption during each of these encryptions.
-# Attack small parts (subkeys) of the secret key:
-## Consider every possible option for the subkey. For each guess and each trace, use the known plaintext and the guessed subkey to calculate the power consumption according to our model.
-## Calculate the Pearson correlation coefficient between the modeled and actual power consumption. Do this for every data point in the traces.
-## Decide which subkey guess correlates best to the measured traces.
-# Put together the best subkey guesses to obtain the full secret key.
 
-This page discusses some of the basics of these steps, describing what models are typically used in CPA attacks and how the Pearson correlation coefficient is calculated.
+Here we will assume the attack has a power trace <math>t_{d,j}</math>, where <math>j = 1,2,\cdots,T</math> is the time index in the trace, and <math>d = 1,2,\cdots,D</math> is the trace number. Thus the attacker makes <math>D</math> measurements, each one <math>T</math> points long. If the attacker knew ''exactly'' where a cryptographic operation occurred, they would need to only measure a single point such that <math>T=1</math>. For each trace <math>d</math>, the attacker also knows the plaintext or ciphertext corresponding to that power trace, defined as <math>p_d</math>.
 
-= Modeling Power Consumption =
-Electronic computers (microcontrollers, FPGAs, etc) have two components to their power consumption. First, static power consumption is the power required to keep the device running. This static power depends on things like the number of transistors inside the device. Secondly, and more importantly, dynamic power consumption depends on the data moving around inside the device. Every time a bit is changed from a 0 to a 1 (or vice versa), some current is required to (dis)charge the data lines. The dynamic power is the part that we're interested in - it can tell us what's happening inside.
+Assume also the attacker has a model of how the power consumption of the device depends on some intermediate value. For example the attacker could assume the power consumption of a microcontroller was dependent on the hamming weight of the intermediate value. We will define <math>h_{d,i} = l( w( p_d, i ))</math>, where <math>l(x)</math> is the leakage model for a given intermediate value, and <math>w(p, i)</math> generates an intermediate value given the input plaintext and the guess number <math>i = 1,2,\cdots,I</math>.
 
-One of the simplest models for power consumption is the '''Hamming Distance''' model. The Hamming Distance between two binary numbers is the number of different bits in the numbers. For example,
-<pre>
-    HammingDistance(00110000, 00100011) = 3
-</pre>
-because there are 3 unequal bits in these two numbers. An easy way to calculate the Hamming Distance is
-<pre>
-    HammingDistance(x, y) = HammingWeight(x ^ y)
-</pre>
-where <code>^</code> is the XOR operator, and the Hamming Weight is the number of 1s in a binary number. Using the example above,
-<pre>
-    HammingDistance(00110000, 00100011) 
-    = HammingWeight(00010011)
-    = 3
-</pre>
-because <code>00010011</code> has three bits set.
+This intermediate value will be selected to depend on the input plaintext and a small portion of the secret key. For example with AES, each byte of the plaintext is XOR'd with each byte (subkey) of the secret key. In this example we would have:
 
-We can use the Hamming Distance model in our CPA attacks. If we can find a point in the encryption algorithm where the victim changes a variable from <code>x</code> to <code>y</code>, then we can estimate that the power consumption is proportional to <code>Hamming Distance(x, y)</code>. Often, our model can even be a bit simpler: if we assume that the victim is replacing the value <code>x = 0</code>, then our power model is
-<pre>
-    l(y) = HammingWeight(y)
-</pre>
+<blockquote><math>l(x) = HammingWeight(x)</math><math>w(p, i) = p \oplus i</math>
+</blockquote>
+This implies that the input plaintext <math>p</math> is being attacked a single byte at a time, which means we are attacking a single byte of the AES key at a time. While we still need to enumerate all possibilities for this subkey, we now only have <math>16 \times 2^8</math> instead of <math>2^{128}</math> possibilities for AES-128.
 
-= Pearson's Correlation Coefficient =
-Once we have a way to model our power consumption, we need a way to compare our power estimate to our measured traces. A helpful tool for finding this relationship is through Pearson's correlation coefficient, which is
+We will be next using the correlation coefficient to look for a linear relationship between the predicted power consumption <math>l(x)</math> and the measured power consumption <math>t_{d,j}</math>. For this reason it is desirable to have a non-linear relationship between <math>w(p, i)</math> and either <math>p</math> or <math>i</math>, as we will otherwise see a linear relationship for all values of <math>i</math>. In this case we take advantage of the non-linear substitution boxes (S-Boxes) in the algorithm, which are simply lookup tables which have been selected to have minimal possible correlation between the input and output. The emphasis on minimum possible correlation between input and output is a requirement to avoid certain linear cryptographic attacks.
 
-<math> 
-\rho_{X,Y}
-= \frac{\text{cov}(X, Y)}{\sigma_X \sigma_Y}
-= \frac{E[(X - \mu_X)(Y - \mu_Y)]}{\sqrt{E[(X - \mu_X)^2] E[(Y - \mu_Y)^2]}}
-</math>
+Finally, we can calculate the correlation coefficient for each point <math>j</math> over all traces <math>D</math>, for each of the possible subkey values <math>I</math>, as in the following:
 
-This correlation coefficient will always be in the range [-1, 1]. It describes how closely the random variables <math>X</math> and <math>Y</math> are related:
-* If <math>Y</math> always increases when <math>X</math> increases, it will be 1;
-* If <math>Y</math> always decreases when <math>X</math> increases, it will be -1;
-* If <math>Y</math> is totally independent of <math>X</math>, it will be 0.
+<blockquote><math>{r_{i,j}} = \frac{{\sum\nolimits_{d = 1}^D {\left[ {\left( {{h_{d,i}} - \overline {{h_i}} } \right)\left( {{t_{d,j}} - \overline {{t_j}} } \right)} \right]} }}{{\sqrt {\sum\nolimits_{d = 1}^D {{{\left( {{h_{d,i}} - \overline {{h_i}} } \right)}^2}} \sum\nolimits_{d = 1}^D {{{\left( {{t_{d,j}} - \overline {{t_j}} } \right)}^2}} } }}</math>
+</blockquote>
+This is simply Pearson's correlation coefficient, given below, where <math>X = p</math>, and <math>Y = t</math>:
 
-These equations are referred to as the ''normalized cross-correlation''. There are typically used to pick out patterns in noisy signals. For example, in digital imaging, correlation can be used to find where an object is in a room. In our attack, we'll be looking for a our model (a pre-calculated pattern) in measured power traces (noisy signals).
-
-= Attacking with Correlation =
-After taking our measurements, we'll have <math>D</math> power traces <math>t</math>, and each of these traces will have <math>T</math> data points. Using subscript notation, <math>t_{d, j}</math> will refer to point <math>j</math> in trace <math>d</math> (<math>1 \le d \le D, 0 \le j < T</math>).
-
-We'll also estimate the power consumption in each trace using our model. We'll say that there are <math>I</math> different subkeys that we want to try. Then, <math>h_{d, i}</math> will refer to our power estimate in trace <math>d</math>, assuming that the subkey is <math>i</math> (<math>1 \le d \le D, 0 \le i < I</math>).
-
-With this data, we can see how well our model and measurements match for each guess <math>i</math> and time <math>j</math>. We'll do this by finding how <math>t</math> and <math>h</math> correlate over the <math>D</math> traces. One way of calculating this is:
-
-<math>
-r_{i,j}
-= \frac{{\sum\nolimits_{d = 1}^D {\left[ {\left( {{h_{d,i}} - \overline {{h_i}} } \right)\left( {{t_{d,j}} - \overline {{t_j}} } \right)} \right]} }}{{\sqrt {\sum\nolimits_{d = 1}^D {{{\left( {{h_{d,i}} - \overline {{h_i}} } \right)}^2}} \sum\nolimits_{d = 1}^D {{{\left( {{t_{d,j}} - \overline {{t_j}} } \right)}^2}} } }}
-</math>
-
-There is an alternative form of the correlation equation that we can use for ''online'' calculations - it allows us to add one trace at a time without re-summing all of the past data. This form is:
-
-<math>
-r_{i,j} 
-= \frac{D \sum_{d=1}^D h_{d,i}t_{d,j} - \sum_{d=1}^D h_{d,i} \sum_{d=1}^D t_{d,j}}{\sqrt{\Big(\big(\sum_{d=1}^D h_{d,i}\big)^2 - D\sum_{d=1}^D h_{d,i}^2\Big)\Big(\big(\sum_{d=1}^D t_{d,j}\big)^2 - D\sum_{d=1}^D t_{d,j}^2\Big)}}
-</math>
-
-Note that these two sums are equivalent.
-
-= Picking a Subkey =
-The last step is to use the values of <math>r_{i,j}</math> to decide which subkey matches our traces most closely. There are two steps to this:
-* For each subkey <math>i</math>, find the highest value of <math>|r_{i,j}|</math>. This will discard the time information - we want to know how good our guess was, but we don't care where our guess matched the trace. 
-* Looking at the maximum values for each subkey, find the highest value of <math>|r_i|</math>. The location <math>i</math> of this maximum is our best guess: it correlated more closely with the traces than any other guess.
-Note that we're only working with absolute values here because we don't care about the sign of the relationship. All we need to know is that a linear correlation exists.
-
-= Example: AES-128 =
-As an example, consider AES-128 encryption. The pseudo-code for this algorithm is:
-<pre>
-// AES-128 Cipher
-// in:  128 bits (plaintext)
-// out: 128 bits (ciphertext)
-// w:   44 words, 32 bits each (expanded key)
-state = in
-
-AddRoundKey(state, w[0, Nb-1])  
-
-for round = 1 step 1 to Nr–1
-    SubBytes(state)           // <-- Attack this point in round 1!
-    ShiftRows(state) 
-    MixColumns(state)
-    AddRoundKey(state, w[round*Nb, (round+1)*Nb-1])
-end for
-
-SubBytes(state)
-ShiftRows(state)
-AddRoundKey(state, w[Nr*Nb, (Nr+1)*Nb-1])
-
-out = state
-</pre>
-This might look pretty complex, but we only need to worry about one part of the algorithm. After the first <code>SubBytes()</code> step, the state is effectively
-<pre>
-// State after AddRoundKey() and SubBytes()
-state = sbox[in ^ key]
-</pre>
-where <code>sbox</code> is a lookup table used in AES. This is an effective point to attack. If we know that a byte of the plaintext is <math>p_d</math>, then our modeled power consumption will be
-
-<math>
-h_{d, i} = \text{Hamming Weight}(\text{sbox}[p_d \oplus i])
-</math>
-
-Then, we can proceed with the attack as described above. Since we are attacking one byte of the key at a time, we will have to try <math>I = 2^8</math> values for each subkey. Then, there are 16 bytes in the key, so our attack will take <math>16 \times 2^8 = 2^{12}</math> time. This is an enormous improvement over trying every possible key, which would take <math>2^{128}</math> time.
-
-[[Category:Theory]]
-
-[[Category:TocTheory]]
+<blockquote><math>{\rho _{X,Y}} = \frac{{{\mathop{\rm cov}} \left( {X,Y} \right)}}{{{\sigma _X}{\sigma _Y}}} = \frac{{E\left[ {\left( {X - {\mu _X}} \right)\left( {Y - {\mu _Y}} \right)} \right]}}{{\sqrt {E\left[ {{{\left( {X - {\mu _X}} \right)}^2}} \right]} \sqrt {E\left[ {{{\left( {Y - {\mu _Y}} \right)}^2}} \right]} }}</math>
+</blockquote>
+The problem of finding a known signal in a noisy measurement exists in many other fields beyond side-channel analysis. These two equations are referred to as the ''normalized cross-correlation'', and frequently used in digital imaging for matching a known `template' to an image, e.g. finding the location of some specific item in a photo of a room.
