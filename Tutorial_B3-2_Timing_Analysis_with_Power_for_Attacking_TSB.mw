@@ -233,7 +233,15 @@ u'\xff\xff\xffce\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff
 
 <p>Confirm that the <code>ce</code> sequence occurs at the start. If something else appears you may have the wrong password set in the device!</p></li>
 <li><p>We now have a bootloader with a password protection. Be aware that if you enter the wrong password you will cause the bootloader to spin into an infinite loop! You can check the password (carefully) by executing the following commands:</p>
-<blockquote><p>>>> write('q') >>> write([mailto:'@@@' '@@@']) >>> read(255) u'' >>> write('ce') >>> read(255) u'TSBx7fx1cxf0x1ex95x0f@xc0>xffx03xaaxaa!'</p></blockquote>
+<syntaxhighlight>
+   >>> write('q')
+   >>> write([mailto:'@@@' '@@@'])
+   >>> read(255) 
+   u''
+   >>> write('ce')
+   >>> read(255)
+   u'TSBx7fx1cxf0x1ex95x0f@xc0>xffx03xaaxaa!'
+</syntaxhighlight>
 <p>The <code>q</code> command causes the bootloader to quit &amp; jump to the application. Since there is no application it re-enters the bootloader. The <code>@@@</code> is our standard sign-on sequence. However the bootloader waits for the secret password before transmitting the sign-on sequence. Note how it's only after sending <code>ce</code> that the bootloader works.</p></li></ol>
 
 == Running External Tools ==
