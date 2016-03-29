@@ -1,0 +1,52 @@
+= Tutorial #A1: Synchronization to Communication Lines =
+
+One of the first requirements of attacking real devices will be to synchronize to communications from the device itself.
+
+== Using ChipWhisperer-Lite Hardware ==
+
+The ChipWhisperer-Lite does not currently have hardware triggers for I2C/SPI/UART. This is something which may be added in a future firmware release.
+
+Instead, you can use the [[#Using External Hardware Tools]] method.
+
+== Using ChipWhisperer-Capture Rev2 Hardware ==
+
+The ChipWhisperer-Capture Rev2 includes an arbitrary digital pattern trigger. The ChipWhisperer-Capture software provides an example of using this with a UART data line, to trigger on specific UART data.
+
+The following is based on the [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)]] tutorial, where you want to call a glitch when the <code>glitch1()</code> routine happens. You can use this method to trigger both glitches or side-channel power analysis measurements.
+
+We'll use an automatic digital pattern trigger, instead of the Trigger line. This will detect when the DUT sends the <code>A</code> character indicating the infinite loop is going to happen.
+
+<ol style="list-style-type: decimal;">
+<li><p>Switch the ''Trigger Module'' to ''Digital Pattern Matching'':</p>
+<p>[[File:glitchexample-iotrigger1.png|image]]</p></li>
+<li><p>Setup the system to monitor both TX &amp; RX lines, using an AND logic. The lines normally idle high, thus the AND combination allows you to trigger on either sent or received data:</p>
+<p>[[File:glitchexample-iotrigger2.png|image]]</p></li>
+<li><p>Under the ''Digital Pattern Trigger Module'', set the Baud rate to 38400. Set the ''Trigger Character'' to <code>A</code>:</p>
+<p>[[File:glitchexample-iotrigger3.png|image]]</p></li></ol>
+
+When the glitch sends an <code>A</code>, the glitch will trigger. If you want to check the trigger is occurring, you can use the normal analog capture. To do so follow these steps:
+
+<ol start="4" style="list-style-type: decimal;">
+<li><p>Set the gain setting to ''30'':</p>
+<p>[[File:glitchexample-iotrigger-analog1.png|image]]</p></li>
+<li><p>Set the trigger mode to ''rising edge'':</p>
+<p>[[File:glitchexample-iotrigger-analog2.png|image]]</p></li>
+<li><p>Set the ADC clock source to ''CLKGEN x4 via DCM'', and ensure the ''DCM Locked'' checkbox indicates the DCM is locked, along with the ADC frequency being ''29.5 MHz''. Hit the ''Reset ADC DCM'' button if this is not the case:</p>
+<p>[[File:glitchexample-iotrigger-analog3.png|image]]</p></li></ol>
+
+Finally - we can check both the triggering and the glitches. To check the triggers our occurring:
+
+<ol start="7" style="list-style-type: decimal;">
+<li><p>Hit the ''Capture 1'' box. If you have configured the automatic reset, it should send an <code>A</code> causing the trigger to occur. If the system is working the ADC will capture data, If the trigger is NOT working you will instead see a message printed about ''Timeout in OpenADC capture(), trigger FORCED'' in the ''Debug Logging'' tab:</p>
+<p>[[File:glitchexample-iotrigger-analog3.png|image]]</p></li>
+<li>The glitch trigger will occur whenever the trigger conditions are met now.</li></ol>
+
+== Using External Hardware Tools ==
+
+The triggers built into the ChipWhisperer hardware are considerably more basic than those available in normal bench test equipment. This means one of the best methods to achieve advanced triggering is by using standard bench hardware. Examples of suitable hardware are:
+
+* [http://teledynelecroy.com/logicstudio/ Teledyne Lecroy Logic Studio], a $900 logic analyzer with hardware trigger out for detection of I2C, SPI, or UART traffic.
+* Oscilloscope with I2C/Serial/SPI trigger option and trigger out capability.
+* Custom FPGA design to look for specific pattern of data.
+
+Simply connect this &quot;Trigger Out&quot; to one of the IO lines on the ChipWhisperer, and specify that IO line as the trigger event.
