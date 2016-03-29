@@ -115,7 +115,7 @@ This shows the two jumper pads (SJ1 and SJ2). SJ1 is the HWBOOT feature, and SJ2
 
 == ChipWhisperer-Capture Rev2 Specific Software Instructions ==
 
-=== Installing Drivers for CaptureRev2 on Windows ===
+=== Installing Drivers for CaptureRev2 ===
 
 The following is specific to ChipWhisperer Capture Rev2 hardware. Using the mini-usb cable, plug in the ChipWhisperer Capture Rev2. Note that only an internal LED will turn on when this happens - the LEDs on the front panel are controlled by the internal FPGA. They will not be active until you actually communicate with the unit.
 
@@ -149,10 +149,10 @@ You can see a [http://www.youtube.com/watch?v=ozzlcUM_-dc&hd=1 Video] of the Ins
 [[File:Youtube-win7-driver.png|link=http://www.youtube.com/watch?v=ozzlcUM_-dc&hd=1]]
 
 
-=== Using the AVR Programmer on Windows ===
+=== CWCR2: Using the AVR Programmer ===
 
 <ol start="5" style="list-style-type: decimal;">
-<li><p>Next, you will need to program the AVR itself. On Windows we will make use of the free [http://www.atmel.com/tools/STUDIOARCHIVE.aspx AVR Studio 4.19]. You can find a direct link here: [http://www.atmel.com/forms/software-download.aspx?target=tcm:26-17924 Direct Link to AVR Studio 4.19 Binary]. Note it is possible to use <code>avrdude</code>, a command-line program which is part of WinAVR instead if you wish. However since many people find the graphical interface of AVRStudio easier, this guide will use AVRStudio. Be sure to install the USB drivers as part of the package.</p>
+<li><p>Next, you will need to program the AVR itself. On Windows we will make use of the free [[www.atmel.com/tools/STUDIOARCHIVE.aspx|AVR Studio 4.19]]. You can find a direct link here: [http://www.atmel.com/forms/software-download.aspx?target=tcm:26-17924 Direct Link to AVR Studio 4.19 Binary]. Note it is possible to use <code>avrdude</code>, a command-line program which is part of WinAVR instead if you wish. However since many people find the graphical interface of AVRStudio easier, this guide will use AVRStudio. Be sure to install the USB drivers as part of the package.</p>
 <blockquote><p>'''warning'''</p>
 <p>If using Windows 8.1, AVRStudio 4.19 may not work correctly. In particular DO NOT install the USB Drivers as part of the installation package as mentioned above. Instead first install the latest stand-alone [https://gallery.atmel.com/Products/Details/6873be43-0628-46ac-ba83-286869a3d97a AtmelUSBInstaller] version.</p>
 <p>You can see additional details on the following thread: [http://www.avrfreaks.net/forum/avrisp-mk2-programmer-windows-81 http://www.avrfreaks.net/forum/avrisp-mk2-programmer-windows-81]. If you have already installed AVRStudio 4.19 you may have to remove the associated drivers, please see the linked thread for details.</p></blockquote></li>
@@ -168,21 +168,8 @@ You can see a [http://www.youtube.com/watch?v=gy6-MBvVvy4&hd=1 Video] of the Tar
 
 [[File:Youtube-win7-target.png|link=http://www.youtube.com/watch?v=gy6-MBvVvy4&hd=1]]
 
-=== Using the AVR Programmer on Linux ===
 
-To use the AVR Programmer from Linux, you again need to pass control of the device to a special group. Create a file called <code>/etc/udev/rules.d/99-avrisp.rules</code> . The contents of this file should be:
 
-<pre># allow users to claim the device
-SUBSYSTEM=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2104", MODE="0664", GROUP="plugdev"</pre>
-You'll have to add yourself to the plugdev group if you haven't already:
-
-<pre>$ sudo usermod -a -G plugdev YOUR-USERNAME</pre>
-And reset the udev system:
-
-<pre>$ sudo udevadm control --reload-rules</pre>
-Finally log out &amp; in again for the group change to take effect.
-
-You can now use the programmer with the 'avrdude' software.
 
 == I/O Connections ==
 
@@ -355,5 +342,3 @@ NOTE: It appears sometimes the resulting hid.pyd file causes a crash on Windows.
 === Re-Programming the AVR ===
 
 You need to use the '''ChipWhispererSPI.hex''' file in the AVR-USB. See the details earlier in this guide for reprogramming instructions.
-
-{{Template:Hardware}}
