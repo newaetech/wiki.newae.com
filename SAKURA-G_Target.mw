@@ -1,0 +1,33 @@
+= SAKURA-G Target =
+
+== Preparing the SAKURA-G Hardware ==
+
+The SAKURA-G must be prepared for use with the ChipWhisperer system. This requires the OpenADC device mounted using an interposer PCB. In addition the SMA connector must route the power measurement, and the trigger signal must be connected. This assumes the <code>FPGA #1</code> on the SAKURA-G has been programmed with the AES example.
+
+A Xilinx Platform USB Cable or similar is used for programming. The complete setup looks as follows:
+
+[[File:sakurag_hardware.jpg|image]]
+
+You must then run Xilinx Impact program, and have it detect the Spartan 6 LX9 device. You can then add a SPI Flash:
+
+[[File:addspiflash.png|image]]
+
+This will prompt you to specify the PROM file. This file is located in <code>chipwhisperer\hardware\capture\sakura-g\sakurag_ise_project\sakurag-chipwhisperer.mcs</code>.
+
+[[File:addpromfile.png|image]]
+
+Finally select the SPI Flash Type. Confirm the part number by looking at part U13 on the SAKURA-G, just to the right of the LX9 FPGA.
+
+[[File:selectflash.png|image]]
+
+You can now program the SPI Flash. This step will take some time to complete. Once this is done you have a working ChipWhisperer system.
+
+[[File:rightclick-program.png|image]]
+
+== Running SAKURA-G Example ==
+
+The SAKURA-G has an example script shipped with the ChipWhisperer release, which can be run from the ChipWhisperer-Capture environment.
+
+You can see a [http://www.youtube.com/watch?v=hykeV8DCf2M&hd=1 Video] of the system working on YouTube:
+
+[[File:sakuragyoutube.png|link=http://www.youtube.com/watch?v=hykeV8DCf2M&hd=1]]
