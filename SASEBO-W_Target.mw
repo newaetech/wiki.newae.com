@@ -1,11 +1,8 @@
-{{Warningbox|The SASEBO-W is no longer supported, as the OpenADC build had considerable reliability issues. You can instead use a separate ChipWhisperer capture hardware with the SASEBO-W.}}
+= SASEBO-W Target =
 
+== Using the SASEBO-W With the OpenADC ==
 
-[[File:SASEBO-W.jpg|800px]]
-
-= Using the SASEBO-W With the OpenADC =
-
-== Preparing the SASEBO-W Hardware ==
+=== Preparing the SASEBO-W Hardware ===
 
 The SASEBO-W must be prepared for use with the ChipWhisperer system. This requires a few steps:
 
@@ -20,7 +17,7 @@ The SASEBO-W must be prepared for use with the ChipWhisperer system. This requir
 <li><p>Using FT Prog, setup the FT2232H device on both Channel A &amp; B for 'FT 245 FIFO' mode. You MUST program the EEPROM to set both Channels A &amp; Channel B for FT 245 FIFO mode. The following image shows this being done:</p>
 <p>[[File:ft245fifo.png|image]]</p></li></ol>
 
-== Running the SASEBO-W Example ==
+=== Running the SASEBO-W Example ===
 
 The SASEBO-W example assumes you are using the SASEBO-W CardOS, and attacking the AES implementation. In this case:
 
@@ -33,7 +30,7 @@ The SASEBO-W example assumes you are using the SASEBO-W CardOS, and attacking th
 
 See the Tutorial_B10_Using_with_SASEBO-W_CardOS_or_DPA_Contest_v4.2 for details, including using different target boards.
 
-== More Information ==
+=== More Information ===
 
 Additional information is currently posted on the ChipWhisperer Wiki at these pages:
 
@@ -44,7 +41,7 @@ In addition see the following tutorial as part of this documentation:
 
 * Tutorial_B10_Using_with_SASEBO-W_CardOS_or_DPA_Contest_v4.2
 
-= Connecting the Multi-Target Board to the SASEBO-W =
+== Connecting the Multi-Target Board to the SASEBO-W ==
 
 <blockquote>'''warning'''
 
@@ -88,7 +85,7 @@ Finally, you can then use the SASEBO-W adapter to connect the Multi-Target board
 
 [[File:sasebow_scardfake.jpg|image]]
 
-== Porting Code to AtMega328P ==
+=== Porting Code to AtMega328P ===
 
 Connections to the AtMega328P are shown in the following table:
 
@@ -120,10 +117,8 @@ Connections to the AtMega328P are shown in the following table:
 
 Note this means code written for the Mega163 card will require minor changes to run on the AtMega328P.
 
-== Programming Mega328P Via SASEBO-W ==
+=== Programming Mega328P Via SASEBO-W ===
 
 The quick-start guide for the SASEBO-W includes details of using the 'avrdude' program to program the MegaCard. This will also work for the AtMega328P, it simply requires you to change the device on the command line to 'mega328p'.
 
 There appears to be an error in the programming system that requires you to remove and reinsert the SASEBO-W adapter card before the programming will succeed. Once it has occurred once, you must again power remove/reinsert the adapter, or remove/reinsert the 8-pin connector.
-
-{{Template:Hardware}}
