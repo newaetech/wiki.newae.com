@@ -1,0 +1,170 @@
+= Tutorial #B5: Breaking AES (Straightforward) =
+
+This tutorial will take you through a complete attack on a software AES implementation. The specific implementation being attacked is a well-known AES implementation written in C, which is likely to be similar to other implementations used by proprietary systems.
+
+This tutorial runs on four different hardware targets. You only need to follow the steps for your given hardware.
+
+== Capturing with ChipWhisperer-Lite with default XMEGA Target (CW1173 + CW303) ==
+
+NOTE: You can see a Quick-Start Guide and Video for this target on the [[CW1173_ChipWhisperer-Lite]] page:
+
+[[File:Cwlite_demo_video.png|link=http://www.youtube.com/watch?v=MJmkYqA-LeM&hd=1]]
+
+=== Hardware Setup ===
+
+<ol style="list-style-type: decimal;">
+<li><p>Connect the CW1173 by micro USB cable to computer.</p>
+<blockquote><p>[[File:cw1173_microusb.jpg|image]]</p></blockquote></li></ol>
+
+=== Capturing the Traces ===
+
+<ol style="list-style-type: decimal;">
+<li>Close &amp; reopen the capture software (to clear out any previous connection which may be invalid).</li>
+<li><p>From the ''Project'' menu elect the ''Example Scripts'' and then ''ChipWhisperer-Lite: AES SimpleSerial on XMEGA'' (make sure you don't select the &quot;SPA&quot; example):</p>
+<p>[[File:runscript_cw1173xmega.png|image]]</p></li>
+<li><p>The script will automatically connect to the capture hardware and run 2 example traces. You should see something that looks like the following screen:</p>
+<p>[[File:capture_cw1173xmega.png|image]]</p>
+<p>To complete the tutorial, follow these steps:</p>
+<blockquote><ol style="list-style-type: decimal;">
+<li>Switch to the ''General Settings'' tab</li>
+<li>If you wish to change the number of traces, do so here. The default of 50 should be sufficient to break AES though!</li>
+<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
+<li>You will see each new trace plotted in the waveform display.</li>
+<li>You'll see the trace count in the status bar. Once it says ''Trace 50 done'' (assuming you requested 50 traces) the capture process is complete.</li></ol>
+</blockquote></li>
+<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
+<li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
+
+== Capturing with ChipWhisperer-Lite with NOTDuino (CW1173 + CW304) ==
+
+=== Hardware Setup ===
+
+<ol style="list-style-type: decimal;">
+<li>Set jumpers on NOTDuino to default position (see silkscreen on bottom of NOTDuino for default positions).</li>
+<li>Connect the NOTDuino using the SMA cable on the &quot;measure&quot; port, and the 20-pin IDC cable:</li>
+<li><p>Connect the CW1173 by micro USB cable to computer.</p>
+<p>[[File:cw1173_avr_microusb.jpg|image]]</p></li></ol>
+
+=== Capturing the Traces ===
+
+<ol style="list-style-type: decimal;">
+<li>Close &amp; reopen the capture software (to clear out any previous connection which may be invalid).</li>
+<li><p>From the ''Project'' menu elect the ''Example Scripts'' and then ''ChipWhisperer-Lite: AES SimpleSerial on ATMega328P''</p>
+<p>[[File:runscript_cw1173avr.png|image]]</p></li>
+<li><p>The script will automatically connect to the capture hardware and run 2 example traces. You should see something that looks like the following screen:</p>
+<p>[[File:capture.png|image]]</p>
+<p>To complete the tutorial, follow these steps:</p>
+<blockquote><ol style="list-style-type: decimal;">
+<li>Switch to the ''General Settings'' tab</li>
+<li>If you wish to change the number of traces, do so here. The default of 50 should be sufficient to break AES though!</li>
+<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
+<li>You will see each new trace plotted in the waveform display.</li>
+<li>You'll see the trace count in the status bar. Once it says ''Trace 50 done'' (assuming you requested 50 traces) the capture process is complete.</li></ol>
+</blockquote></li>
+<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
+<li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
+
+== Capturing with Capture Rev2 + Multi-Target (CW1002 + CW301) ==
+
+=== Hardware Setup ===
+
+This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site].
+
+This example uses the Atmel AVR in 28-pin DIP programmed with a ''simpleserial'' communications protocol. This is the default firmware programmed into the devices, so you shouldn't need to do anything. If you've erased the device, you can see programming instructions in the [[Installing_ChipWhisperer]] section.
+
+The Multi-Target board should be plugged into the ChipWhisperer Capture Rev2 via the 20-pin target cable. The ''VOUT'' SMA connector is wired to the ''LNA'' input on the ChipWhisperer-Capture Rev2 front panel. The general hardware setup is as follows:
+
+<blockquote>[[File:hw-1.jpg|image]]
+
+# 20-Pin Header connects Multi-Target to Capture Hardware
+# VOUT Connects to SMA Cable
+# SMA Cable connects to 'LNA' on CHA input
+# USB-Mini connects to side (NB: Confirm jumper settings in next section first)
+</blockquote>
+Jumpers on the Multi-Target Victim board are as follows:
+
+<blockquote>[[File:hw-2.jpg|600px|image]]
+
+# NO jumpers mounted in XMEGA Portion or SmartCard Portion (JP10-JP15, JP19, JP7-JP8, JP17)
+# 3.3V IO Level (JP20 set to INT.)
+# The 7.37 MHz oscillator is selected as the CLKOSC source (JP18)
+# The CLKOSC is connected to the AVR CLock Network, along with connected to the FPGAIN pin (JP4)
+# The TXD &amp; RXD jumpers are set (JP5, JP6)
+# Power measurement taken from VCC shunt (JP1)
+# The TRIG jumper is set (JP28) (NOTE: Early revisions of the multi-target board do not have the TRIG jumper and you can ingore this).
+
+For more information on these jumper settings see [[CW301_Multi-Target]] .
+</blockquote>
+=== Setting up the Software ===
+
+It is assumed that you've already followed the guide in [[Installing_ChipWhisperer]]. Thus it is assumed you are able to communicate with the ChipWhisperer Capture Rev2 hardware. Note in particular you must have configured the FPGA bitstream in the ChipWhisperer-Capture software, all part of the description in the [[Installing_ChipWhisperer]] guide.
+
+=== Capturing the Traces ===
+
+This tutorial uses a simple script that ships with the ChipWhisperer Capture software. The easiest method of accomplishing the trace capture is as follows:
+
+<ol style="list-style-type: decimal;">
+<li>Close &amp; reopen the capture software (to clear out any previous connection which may be invalid).</li>
+<li><p>From the ''Project'' menu elect the ''Example Scripts'' and then ''ChipWhisperer-Rev2: SimpleSerial Target''</p>
+<p>[[File:runscript.png|image]]</p></li>
+<li><p>The script will automatically connect to the capture hardware and run 2 example traces. You should see something that looks like the following screen:</p>
+<p>[[File:capture.png|image]]</p>
+<p>To complete the tutorial, follow these steps:</p>
+<blockquote><ol style="list-style-type: decimal;">
+<li>Switch to the ''General Settings'' tab</li>
+<li>If you wish to change the number of traces, do so here. The default of 50 should be sufficient to break AES though!</li>
+<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
+<li>You will see each new trace plotted in the waveform display.</li>
+<li>You'll see the trace count in the status bar. Once it says ''Trace 50 done'' (assuming you requested 50 traces) the capture process is complete.</li></ol>
+</blockquote></li>
+<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
+<li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
+
+== Capturing with PicoScope + Multi-Target (CW301) ==
+
+&lt;TODO&gt;
+
+== Analyzing the Traces ==
+
+<ol style="list-style-type: decimal;">
+<li>Open the Analyzer software</li>
+<li>From the ''File --> Open Project'' option, navigate to the .cwp file you save previously. Open this file.</li>
+<li><p>Select the ''Project --> Manage Traces'' option to open the dialog, enable the captured traces by adding a check-mark in the box. Close the dialog with `ESC`:</p>
+<p>[[File:tracemanage.png|image]]</p></li>
+<li><p>If you wish to view the trace data, follow these steps:</p>
+
+<ol style="list-style-type: decimal;">
+<li>Switch to the ''Waveform Display'' tab</li>
+<li>Switch to the ''General'' parameter setting tab</li>
+<li>You can choose to plot a specific range of traces</li>
+<li>Hit the ''Redraw'' button when you change the trace plot range</li>
+<li>You can right-click on the waveform to change options, or left-click and drag to zoom</li>
+<li>(oops there is no 6)</li>
+<li>Use the toolbar to quickly reset the zoom back to original</li></ol>
+
+<p>[[File:traceplotting.png|image]]</p></li>
+<li><p>You can view or change the attack options on the ''Attack'' parameter settings tab:</p>
+<ol style="list-style-type: decimal;">
+<li>The ''Hardware Model'' settings are correct for the software AES by default</li>
+<li>The ''Point Setup'' makes the attack faster by looking over a more narrow range of points. Often you might have to characterize your device to determine the location of specific attack points of interest.</li>
+<li>''Traces per Attack'' allows you to use only a subset of capture traces on each attack. Or if you have for example 1000 traces, you could average the results of attacking 50 traces over 200 attack runs.</li>
+<li>''Reporting Interval'' is how often data is generated. A smaller interval generates more useful output data, but greatly increases computational complexity (e.g. slows down attack). If you only care about attacking the system, the reporting interval can be set to the number of traces. In which case the attack runs completely, and you get the results. For this tutorial you can set to a smaller number (such as 5).</li></ol>
+
+<p>[[File:attacksettings.png|image]]</p></li>
+<li><p>Finally run the attack by switching to the ''Results Table'' tab and then hitting the ''Attack'' button:</p>
+<p>[[File:attack.png|image]]</p></li>
+<li><p>If you adjusted the ''Reporting Interval'' to a smaller number such as 5, you'll see the progression of attack results as more traces are used. If not you should simply see the final results, which should have the correct key highlighted in red. In the following case the correct key ''was'' recovered:</p>
+<p>[[File:attack-done.png|image]]</p></li>
+<li><p>You can also switch to the ''Output vs Point Plot'' window to see ''where'' exactly the data was recovered:</p>
+<ol style="list-style-type: decimal;">
+<li>Switch to the ''Output vs Point Plot'' tab</li>
+<li>Turn on one of the bytes to see results.</li>
+<li>The ''known correct'' guess for the key is highlighted in red. The wrong guesses are plotted in green. You can see that the attacked operation appeared to occur around sample 40 for key 0. Remember you can click-drag to zoom in, then right-click and select ''View All'' to zoom back out.</li>
+<li>Turn on another byte to see results for it.</li>
+<li>This byte occured much later - sample 1240. By exploring where the maximum correlation was found for the correct key-guess of each byte, you can determine where exactly the attacked operation occured.</li></ol>
+
+<p>[[File:attack-done2.png|image]]</p></li></ol>
+
+== Next Steps ==
+
+This has only briefly outlined how to perform a CPA attack. You can move onto more advanced tutorials, especially showing you how the actual attack works when performed manually.
