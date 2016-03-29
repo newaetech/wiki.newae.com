@@ -4,30 +4,32 @@ This tutorial will demonstrate how to perform a CPA attack using a simple Python
 
 As a background on the CPA attack, please see the section [[Correlation Power Analysis]]. It's assumed you've read that section and come back to this. Ok, you've done that? Good let's continue.
 
-Assuming you ''actually'' read that, it should be apparent that there is a few things we need to accomplish:
+Assuming you ''actually'' read that, it should be apparant that there is a few things we need to accomplish:
 
-# Reading the data, which consists of the analog waveform (trace) and input text sent to the encryption core
+# Reading the data- the analog waveform (trace) and input text sent to the encryption core
 # Making the power leakage model, where it takes a known input text along with a guess of the key byte
-# Implementing the correlation equation, and then looping through all the traces
+# Implementing the Correlation equation, and then looping through all the traces
 # Ranking the output of the correlation equation to determine the most likely key
 
 == Setting Up the Project ==
 
-It is assumed you are experienced with Python development, or have at least run a Python program! If you are on Windows you'll probably use IDLE as a code editor, although you can use any code editor you wish.
+It is assumed you are experienced with Python development, or have at least run a Python program! If you are on Windows you'll probably use IDLE for as a code editor, although you can use any code editor you wish.
 
 Initially, we'll be using Python interactively. This means to just run <code>python</code> at the command prompt, and enter commands into the window. Later we'll move onto writing a simple script which executes these commands.
 
-Note if you want to use matplotlib, and are running a native Python installation, you may need to install that package. If the <code>import matplotlib</code> command listed in the next section fails, you'll need to install these, which again for Windows you can get from the [http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyparsing Pre-Built Windows Binaries]
+Note if you want to use matplotlib, and are running a native Python installation, you may need to install that package. If the <code>import matplotlib</code> command listed in the next section fails, you'll need to install these, which again for Windows you can get from the [http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyparsing Pre-Built Windows Binaries].
 
+
+<blockquote>matplotlib python-dateutil pyparsing six
+</blockquote>
 == Exploring the Trace Data ==
 
-The next step is to read the trace data. If you don't have any data yet, you should follow the steps in [[Tutorial B5 Breaking AES (Straightforward)]] to record some traces. 
+The next step is to read the trace data. I assume you've already have performed a capture. You need to find the source trace files, which have a <code>.npy</code> extension. You can follow the path of a <code>.cwp</code> (ChipWhisperer Project) file to find the associated trace <code>.cfg</code> file. The same directory as the <code>.cfg</code> file will have the <code>.npy</code> files.
 
-You need to find the source trace files, which have a <code>.npy</code> extension. You can follow the path of a <code>.cwp</code> (ChipWhisperer Project) file to find the associated trace <code>.cfg</code> file. The same directory as the <code>.cfg</code> file will have the <code>.npy</code> files. As an example, say that our <code>.cwp</code> file contains this line:
+As an example, consider our <code>.cwp</code> file contains this line:
 
 <pre>[Trace Management]
 tracefile0 = default-data-dir\traces\config_2013.11.18-16.40.58_.cfg</pre>
-
 Opening the <code>.cfg</code> file shows the <code>prefix=</code> line, which tells us the name of the data files:
 
 <pre>[Trace Config]
@@ -35,7 +37,7 @@ numTraces = 50
 format = native
 numPoints = 3000
 prefix = 2013.11.18-16.40.58_</pre>
-This means our trace file is in <code>default-data-dir\traces\2013.11.18-16.40.58_traces.npy</code> and the plaintext is in <code>default-data-dir\traces\2013.11.18-16.40.58_textin.npy</code>.
+This means our trace file is in <code>default-data-dir\traces\2013.11.18-16.40.58_traces.npy</code> for example, and the plaintext is in <code>default-data-dir\traces\2013.11.18-16.40.58_textin.npy</code>.
 
 Using default installs, this directory will be <code>C:\chipwhisperer\software\chipwhisperer\capture\default-data-dir\traces</code>. Let's assume you've run a capture and have 50 traces of our usual AVR target.
 
@@ -46,11 +48,9 @@ To read them, first import NumPy to your Python console, and optionally matplotl
 >>> import matplotlib.pyplot as plt</pre>
 Then use <code>np.load</code> as such (note: the '''r''' infront of the string means you don't need to escape slahes
 
-<pre>
->>> traces = np.load(r'C:chipwhisperersoftwarechipwhisperercapturedefault-data-dirtraces2013.11.18-16.40.58_traces.npy') 
->>> pt = np.load(r'C:chipwhisperersoftwarechipwhisperercapturedefault-data-dirtraces2013.11.18-16.40.58_textin.npy')
-</pre>
-You can print, for example, the first plaintext sent to the device:
+<blockquote>>>> traces = np.load(r'C:chipwhisperersoftwarechipwhisperercapturedefault-data-dirtraces2013.11.18-16.40.58_traces.npy') >>> pt = np.load(r'C:chipwhisperersoftwarechipwhisperercapturedefault-data-dirtraces2013.11.18-16.40.58_textin.npy')
+</blockquote>
+You can print for example the first plaintext sent to the device:
 
 <pre>>>> pt[0]
 array([ 63,   3,  80, 100,  21, 236,  26,  68,  88, 177, 135, 226, 198, 205,  26, 133], dtype=uint8)</pre>
@@ -65,7 +65,7 @@ And finally plot a single power trace:
 <pre>>>> plt.plot(traces[0])
 [<matplotlib.lines.Line2D object at 0x05EF3CF0>]
 >>> plt.show()</pre>
-After executing <code>plt.show()</code> you should get a window to pop up with the single power trace.
+After executing <code>plot.show()</code> you should get a window to pop up with the single power trace.
 
 == Reading the Trace Data in a Script ==
 
@@ -127,11 +127,11 @@ Note if you want to simplify your life, you can guess only keys around the known
         print &quot;Subkey %d, hyp = %02x&quot;%(bnum, kguess)</pre>
 Note that in Python we can specify hex constants directly! Now the system will only be searching from 0x26 - 0x2F for the correct key. Once we have a guess, we need to calculate the intermediate value corresponding to the guess.
 
-Looking way back to how AES works, remember we are effectively attemping to target the position at the bottom of this figure:
+Looking way back to how AES works, remember we are effectively attempint to target the position at the bottom of this figure:
 
-<blockquote>[[File:Sbox_cpa_detail.png|frame|none|alt=|The AES algorithm involves a number of rounds, this is a detail from the first round of operation. Each input byte is XOR'd with a byte of the (unknown) secret key. This is passed through an S-Box, which is simply a look-up table. The output of this S-Box is what we'll use to 'check' our guessed value of the key.]]
+<blockquote>[[File:Sbox_cpa_detail.png|frame|none|alt=|caption The AES algorithm involves a number of rounds, this is a detail from the first round of operation. Each input byte is XOR'd with a byte of the (unknown) secret key. This is passed through an S-Box, which is simply a look-up table. The output of this S-Box is what we'll use to 'check' our guessed value of the key.]]
 </blockquote>
-The objective is thus to determine the output of the S-Box, where the S-Box is defined as follows:
+The objective is thus to determine the output of the SBox, where the S-Box is defined as follows:
 
 <pre>sbox=(
     0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
@@ -278,7 +278,7 @@ Where the following is the association between variable names in the equation an
 
 It can be noticed there is effectively three sums, all sums are done over all traces. For this initial implementation we'll be explicitly calculating some of these sums, although it's faster to use NumPy to calculate across large arrays. We'll convert the equation into this format:
 
-<math>{r_{i,j}} = \frac{sumnum}{\sqrt{sumden1 \times sumden2}}</math>
+<math>{r_{i,j}} = \frac{sumnum}{\sqrt{sumden1 \times sumden2}}</math
 
 Let's go ahead an implement this in Python. To begin with, we initialize those three sums to zero:
 
@@ -301,11 +301,7 @@ Similiarly for the mean of all traces, <math>\overline {{t_j}}</math>. Remember 
 meant = np.mean(traces, axis=0, dtype=np.float64)</pre>
 Next, let's again consider the three sums to be implemented:
 
-<math>sumnum = {\sum\nolimits_{d = 1}^D {\left[ {\left( {{h_{d,i}} - \overline {{h_i}} } \right)\left( {{t_{d,j}} - \overline {{t_j}} } \right)} \right]} }</math>
-
-<math>sumdem1 = \sum\nolimits_{d = 1}^D {{{\left( {{h_{d,i}} - \overline {{h_i}} } \right)}^2}}</math>
-
-<math>sumdem2 = \sum\nolimits_{d = 1}^D {{{\left( {{t_{d,j}} - \overline {{t_j}} } \right)}^2}}</math>
+<math>sumnum = {\sum\nolimits_{d = 1}^D {\left[ {\left( {{h_{d,i}} - \overline {{h_i}} } \right)\left( {{t_{d,j}} - \overline {{t_j}} } \right)} \right]} }</math><math>sumdem1 = \sum\nolimits_{d = 1}^D {{{\left( {{h_{d,i}} - \overline {{h_i}} } \right)}^2}}</math><math>sumdem2 = \sum\nolimits_{d = 1}^D {{{\left( {{t_{d,j}} - \overline {{t_j}} } \right)}^2}}</math>
 
 Note there is some common terms in all three of these, along with a common summation index. We can thus implement them as follows:
 
@@ -320,7 +316,7 @@ for tnum in range(numtraces):
 The size of sumnum, sumden1, and sumden2 are all '''1 x numpoints''', meaning an output is generated for each point of the input. Note each of these is calculated independantly, thus we simply avoid looping through every point by using the vector notation of NumPy. Finally, we calculate the single output vector &amp; save it as a specific key guess:
 
 <pre>cpaoutput[kguess] = sumnum / np.sqrt( sumden1 * sumden2 )</pre>
-Tying it all together, we end up with the following:
+Tieing it all together, we end up with the following:
 
 <pre>import numpy as np
 
@@ -425,7 +421,6 @@ Subkey  0, hyp = 2d:  0.429089006754
 Subkey  0, hyp = ff:  0.449003229759
 Best Key Guess: 
 2b  00  00  00  00  00  00  00  00  00  00  00  00  00  00  00 </pre>
-
 == Calculating The PGE ==
 
 The Partial Guessing Entropy (PGE) is a useful metric of where the correct answer is ranked. This requires us to know the actual encryption key used during operation. If you've recorded traces with the regular ChipWhisperer system, this is stored alongside the traces &amp; textin file. Check if you have a file called either <code>_knownkey.npy</code> or <code>_keylist.npy</code>. The knownkey file contains a single line, and the keylist contains a list of the encryption key corresponding with every input.
@@ -485,14 +480,11 @@ When running the program, uncomment the <code>#numtraces = 10</code> line and se
 
 == Future Changes ==
 
-The implementation of the correlation function runs as a loop over all traces. Ideally we'd like to implement this as a 'online' calculation; that is, we can add a trace in, observe the output, add another trace in, observe the output, etc. When generating plots of the Partial Guessing Entropy (PGE) vs. number of traces this is greatly preferred, since otherwise we need to run the loop many times!
+The implementation of the correlation function runs as a loop over all traces. Ideally we'd like to implement this as a 'online' calculation; that is we can add a trace in, observe the output, add another trace in, observe the output, etc. When generating plots of the Partial Guessing Entropy (PGE) vs. number of traces this is greatly preferred, since otherwise we need to run the loop many times!
 
-We can use an alternate form of the correlation equation, which explicitly stores sums of the variables. This is easier to perform online calculation with, since when adding a new trace it's simple to update these sums. This form of the equation looks like:
-
-<math>r_{i,j} = \frac{D \sum_{d=1}^D h_{d,i}t_{d,j} - \sum_{d=1}^D h_{d,i} \sum_{d=1}^D t_{d,j}}{\sqrt{\Big(\big(\sum_{d=1}^D h_{d,i}\big)^2 - D\sum_{d=1}^D h_{d,i}^2\Big)\Big(\big(\sum_{d=1}^D t_{d,j}\big)^2 - D\sum_{d=1}^D t_{d,j}^2\Big)}}</math>
+We can use an alternate form of the [[File:rij.png]] equation, which explicitly stores sums of the variables. This is easier to perform online calculation with, since when adding a new trace it's simple to update these sums. This form of the equation looks like:
 
 <blockquote></blockquote>
-
 == Complete Program ==
 
 For reference here is the complete program. Before running you might want to make a few adjustments:
@@ -599,8 +591,3 @@ for b in pge: print "%02d "%b,
 == Conversion of Correlation Equation ==
 
 The following shows the derivation of the online correlation equation from the original form:
-
-[[File:Rij_conversion.png]]
-
-{{Template:Tutorials}}
-[[Category:Tutorials]]
