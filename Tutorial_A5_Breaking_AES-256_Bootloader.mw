@@ -1,253 +1,387 @@
-{{Warningbox|This tutorial has been updated for ChipWhisperer 4.0.0 release. If you are using 3.x.x see the "V3" link in the sidebar.}}
+'''''THIS TUTORIAL IS INCOMPLETE AND STILL BEING UPDATED'''''
 
-{{Infobox tutorial
-|name                   = A5: Breaking AES-256 Bootloader
-|image                  = 
-|caption                = 
-|software versions      =
-|capture hardware       = CW-Lite, CW-Lite 2-Part, CW-Pro
-|Target Device          = 
-|Target Architecture    = XMEGA
-|Hardware Crypto        = No
-|Purchase Hardware      = 
-}}
-
-This tutorial will take you through a complete attack on an encrypted bootloader using AES-256. This demonstrates how to using side-channel power analysis on practical systems, along with discussing how to perform analysis with custom scripts.
+This tutorial will take you through a complete attack on an encrypted bootloader using AES-256. This demonstrates how to using side-channel power analysis on practical systems, along with discussing how to perform custom scripts along with custom analysis scripts.
 
 Whilst the tutorial assumes you will be performing the entire capture of traces along with the attack, it is possible to download the traces if you don't have the hardware, in which case skip section [[#Setting up the Hardware]] and [[#Capturing the Traces]].
 
-= Background =
-In the world of microcontrollers, a bootloader is a special piece of firmware that is made to let the user upload new programs into memory. This is especially useful for devices with complex code that may need to be patched or otherwise updated in the future - a bootloader makes it possible for the user to upload a patched version of the firmware onto the micro. The bootloader receives information from a communication line (a USB port, serial port, ethernet port, WiFi connection, etc...) and stores this data into program memory. Once the full firmware has been received, the micro can happily run its updated code.
+== Background ==
 
-There is one big security issue to worry about with bootloaders. A company may want to stop their customers from writing their own firmware and uploading it onto the micro. For example, this might be for protection reasons - hackers might be able to access parts of the device that weren't meant to be accessed. One way of stopping this is to add encryption. The company can add their own secret signature to the firmware code and encrypt it with a secret key. Then, the bootloader can decrypt the incoming firmware and confirm that the incoming firmware is correctly signed. Users will not know the secret key or the signature tied to the firmware, so they won't be able to "fake" their own.
+=== Bootloader Design ===
 
-This tutorial will work with a simple AES-256 bootloader. The victim will receive data through a serial connection, decrypt the command, and confirm that the included signature is correct. Then, it will only save the code into memory if the signature check succeeded. To make this system more robust against attacks, the bootloader will use cipher-block chaining (CBC mode). Our goal is to find the secret key and the CBC initialization vector so that we could successfully fake our own firmware.
+==== Communications Protocol ====
 
-== Bootloader Communications Protocol ==
-The bootloader's communications protocol operates over a serial port at 38400 baud rate. The bootloader is always waiting for new data to be sent in this example; in real life one would typically force the bootloader to enter through a command sequence.
+The communications protocol operates over a serial port at 115200 baud rate. The bootloader is always waiting for new data to be sent in this example; in real life one would typically force the bootloader to enter through a command sequence.
 
 Commands sent to the bootloader look as follows:
 
-<pre>
-       |<-------- Encrypted block (16 bytes) ---------->|
-       |                                                |
-+------+------+------+------+------+------+ .... +------+------+------+
-| 0x00 |    Signature (4 Bytes)    |  Data (12 Bytes)   |   CRC-16    |
-+------+------+------+------+------+------+ .... +------+------+------+
-</pre>
+<pre>+------+------+------+ ... +------+------+------+------+
+| 0x00 |   Encrypted Block (16 Bytes)    |   CRC-16    |
++------+------+------+ ... +------+------+------+------+</pre>
+The CRC uses the 16-bit CRC-CCITT polynomial (0x1021). The LSB of the calculated CRC-16 is sent first, followed by the MSB. The bootloader responds with a single byte indicating if the CRC-16 was OK or not:
 
-This frame has four parts:
-* <code>0x00</code>: 1 byte of fixed header
-* Signature: A secret 4 byte constant. The bootloader will confirm that this signature is correct after decrypting the frame.
-* Data: 12 bytes of the incoming firmware. This system forces us to send the code 12 bytes at a time; more complete bootloaders may allow longer variable-length frames.
-* CRC-16: A 16-bit checksum using the CRC-CCITT polynomial (0x1021). The LSB of the CRC is sent first, followed by the MSB. The bootloader will reply over the serial port, describing whether or not this CRC check was valid.
-As described in the diagram, the 16 byte block is not sent as plaintext. Instead, it is encrypted using AES-256 in CBC mode. This encryption method will be described in the next section.
+<pre>+------+</pre>
+<blockquote><dl>
+<dt>CRC-OK: | 0xA1 |</dt>
+<dd><p>+------+</p>
+<p>+------+</p></dd>
+<dt>CRC Failed: | 0xA4 |</dt>
+<dd><p>+------+</p></dd></dl>
+</blockquote>
+==== Encrypted Block ====
 
-The bootloader responds to each command with a single byte indicating if the CRC-16 was OK or not:
+In this design each encrypted block is always 16 bytes long. In practical bootloaders a number of encrypted blocks might be sent as part of one message. To generate an encrypted block, the data is split into 12-byte chunks:
 
-<pre>
-            +------+
-CRC-OK:     | 0xA1 |
-            +------+
+<pre>+------+------+------+------+ ...  +------+------+------+------+------+
+|   Flash Data (many bytes)                                           |
++------+------+------+------+ ...  +------+------+------+------+------+
 
-            +------+
-CRC Failed: | 0xA4 |
-            +------+
-</pre>
++------+------+ ...  +------+  +------+------+ ...  +------+  +---...
+|   12 Bytes of Data        |  |   12 Bytes of Data        |  | 12...
++------+------+ ...  +------+  +------+------+ ...  +------+  +---...</pre>
+Each 12-byte chunk gets a 4-byte signature prepended to it. When the bootloader decrypts a chunk of data, it can verify the signature is as expected. This signature verification is required to ensure the correct encryption key was used, and the system is not just decrypting garbage:
 
-Then, after replying to the command, the bootloader veries that the signature is correct. If it matches the expected manufacturer's signature, the 12 bytes of data will be written to flash memory. Otherwise, the data is discarded.
+<pre>+------+------+------+------+------+ ... +------+------+
+|   Signature (4 Bytes)     | Up to 12 Bytes of Data   |
++------+------+------+------+------+ ... +------+------+</pre>
+Each of these blocks is then encrypted with AES-256 in CBC mode, discussed next.
 
-== Details of AES-256 CBC ==
+=== Details of AES-256 CBC ===
 
-The system uses the AES algorithm in Cipher Block Chaining (CBC) mode. In general one avoids using encryption 'as-is' (i.e. Electronic Code Book), since it means any piece of plaintext always maps to the same piece of ciphertext. Cipher Block Chaining ensures that if you encrypted the same thing a bunch of times it would always encrypt to a new piece of ciphertext.
+The system is using the AES algorithm in Cipher Block Chaining (CBC) mode. In general one avoids using encryption 'as-is' (i.e. Electronic Code Book), since it means any piece of plaintext always maps to the same piece of ciphertext. Cipher Block Chaining ensures that if you encrypted the same thing a bunch of times it would always encrypt to a new piece of ciphertext.
 
-You can see another reference on the design of the encryption side; we'll be only talking about the decryption side here. In this case AES-256 CBC mode is used as follows, where the details of the AES-256 Decryption block will be discussed in detail later:
+You can see another reference on the design of the encryption side, we'll be only talking about the decryption side here. In this case AES-256 CBC mode is used as follows, where the details of the AES-256 Decryption block will be discussed in detail later.
 
 [[File:aes256_cbc.png|image]]
 
-This diagram shows that the output of the decryption is no longer used directly as the plaintext. Instead, the output is XORed with a 16 byte mask, which is usually taken from the previous ciphertext. Also, the first decryption block has no previous ciphertext to use, so a secret initialization vector (IV) is used instead. If we are going to decrypt the entire ciphertext (including block 0) or correctly generate our own ciphertext, we'll need to find this IV along with the AES key.
+Specifics of the AES-256 Decryption algorithm are given below, where this AES-256 implementation was written by [[Ilya%20O.%20Levin|http://www.literatecode.com/]]:
 
+<pre>aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
+aes_shiftRows_inv(buf);
+aes_subBytes_inv(buf);
 
-== Attacking AES-256 ==
-The system in this tutorial uses AES-256 encryption, which has a 256 bit (32 byte) key - twice as large as the 16 byte key we've attacked in previous tutorials. This means that our regular AES-128 CPA attacks won't quite work. However, extending these attacks to AES-256 is fairly straightforward: the theory is explained in detail in [[Extending AES-128 Attacks to AES-256]]. 
+for (i = 14, rcon = 0x80; --i;)
+{
+    if( ( i &amp; 1 ) )
+    {
+        aes_expandDecKey(ctx-&gt;key, &amp;rcon);
+        aes_addRoundKey(buf, &amp;ctx-&gt;key[16]);
+    }
+    else aes_addRoundKey(buf, ctx-&gt;key);
+    aes_mixColumns_inv(buf);
+    aes_shiftRows_inv(buf);
+    aes_subBytes_inv(buf);
+}
+aes_addRoundKey( buf, ctx-&gt;key);</pre>
+In an AES-128 implementation there is ten rounds (after 'initially' applying the key), each round applied to the 16-byte state of the AES. With AES-256 the state is still 16 bytes, but is applied over 14 rounds (after initially applying the first part of the key).
 
-As the theory page explains, our AES-256 attack will have 4 steps:
+In AES-128 we can target the first output of the S-Box, which is sufficient to recover the entire encryption key. For AES-256 we can recover 16 bytes of the encryption key, as shown in the following figure of the initial setup of the decryption algorithm:
+
+[[File:aes128_decrypted.png|image]]
+
+This corresponds to the first 3 lines of source code in the AES-256 decryption algorithm:
+
+<pre>aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
+aes_shiftRows_inv(buf);
+aes_subBytes_inv(buf);</pre>
+As the AES-256 key is 32 bytes, we need to extend the attack to one more AES round. Looking back at the next part of the source code, this corresponds to the first round through this loop:
+
+<pre>for (i = 14, rcon = 0x80; --i;)
+  {
+      if( ( i &amp; 1 ) )
+      {
+          aes_expandDecKey(ctx-&gt;key, &amp;rcon);
+          aes_addRoundKey(buf, &amp;ctx-&gt;key[16]);
+      }
+      else aes_addRoundKey(buf, ctx-&gt;key);
+      aes_mixColumns_inv(buf);
+      aes_shiftRows_inv(buf);
+      aes_subBytes_inv(buf);
+      //Attack will focus on state of 'buf' at this
+      //point in time
+  }
+  aes_addRoundKey( buf, ctx-&gt;key);</pre>
+Which is shown in this figure:
+
+[[File:aes128_round2.png|image]]
+
+The critical difference between the initial round and this round is the addition of the mixcols operation. This operation takes four bytes of input and generates four bytes of output - any change in a single byte will result in a change of all four bytes of output!
+
+It would at first appear we need to perform a guess over 4 bytes instead of 1 byte. This would be a considerably more complicated operation! We can consider writing that last step as an equation:
+
+<blockquote><math>X^{13} &= SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(X^{13} \oplus K^{13})\right)\right)</math>
+</blockquote>
+The MixCols() operation is a linear function, meaning for example the following applies:
+
+<blockquote><math>A = MixCols(A + B) = MixCols(A) + MixCols(B)</math>
+</blockquote>
+Which means instead of determining the encryption key, we can determine the encryption key modified by the inverse MixCols.
+
+<blockquote><math>X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(X^{13} \oplus K^{13})\right)\right) \\
+X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(C)\right) \oplus Y^{13}\right) \\
+Y^{13} = MixCols^{-1}\left(ShiftRows^{-1}(K^{13})\right) \\</math>
+</blockquote>
+Once we fully determine the encryption key we can perform the MixCol and ShiftRow operation to determine the correct key.
+
+<blockquote><math>K^{13} = MixCols\left(ShiftRows(Y^{13})\right) \\</math>
+</blockquote>
+Performing the complete AES-256 side channel analysis attack will thus require the following steps:
+
 # Perform a standard attack (as in AES-128 decryption) to determine the first 16 bytes of the key, corresponding to the 14th round encryption key.
-# Using the known 14th round key, calculate the hypothetical outputs of each S-Box from the 13th round using the ciphertext processed by the 14th round, and determine the 16 bytes of the 13th round key manipulated by inverse MixColumns.
-# Perform the MixColumns and ShiftRows operation on the hypothetical key determined above, recovering the 13th round key.
+# Using the known 14th round key, calculate the hypothetical outputs of each S-Box from the 13th round using the ciphertext processed by the 14th round, and determine the 16 bytes of the 13th round key manipulated by inverse mixcols.
+# Perform the mixcol and shift-row operation on the hypothetical key determined above, which will be the 13th round key.
 # Using the AES-256 key schedule, reverse the 13th and 14th round keys to determine the original AES-256 encryption key.
 
-= Setting up the Hardware =
-This tutorial uses the [[CW1173 ChipWhisperer-Lite]] hardware. This hardware does not require any special setup - it should be ready to go out-of-the-box.
+== Setting up the Hardware ==
 
-Note that you '''don't need hardware''' to complete the tutorial. Instead, you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site]. Just look for the traces titled ''AVR: AES256 Bootloader (ChipWhisperer Tutorial #A5)''.
+This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site], just look for the traces titled ''AVR: AES256 Bootloader (ChipWhisperer Tutorial #A5)''.
 
-== Building/Programming the Bootloader ==
+This example uses the Atmel AVR in 28-pin DIP programmed with a demo bootloader. You can see instructions for programming in the [[Installing ChipWhisperer]] section, this tutorial assumes you have the programmer aspect working.
 
-{{Warningbox|Are you following this tutorial at a training event? If so ONLY use the provided hex-file with secret key already embedded, do not rebuild the firmware!}}
+The Multi-Target board should be plugged into the ChipWhisperer Capture Rev2 via the 20-pin target cable. The ''VOUT'' SMA connector is wired to the ''LNA'' input on the ChipWhisperer-Capture Rev2 front panel. The general hardware setup is as follows:
 
+<blockquote>[[File:hw-1.jpg|image]]
 
-The firmware that implements the bootloader is available inside the ChipWhisperer folder at <code>chipwhisperer\hardware\victims\firmware\bootloader-aes256</code>. If you've uploaded the firmware for any of the other tutorials, the process is identical:
+# 20-Pin Header connects Multi-Target to Capture Hardware
+# VOUT Connects to SMA Cable
+# SMA Cable connects to 'LNA' on CHA input
+# USB-Mini connects to side (NB: Confirm jumper settings in next section first)
+</blockquote>
+Jumpers on the Multi-Target Victim board are as follows:
 
-# Open a command prompt/terminal window and navigate to this folder. Enter the command <code>make PLATFORM=X</code>, where X is the name of your target. For instance, use <code>PLATFORM=CW303</code> on the ChipWhisperer Lite. Ensure that the program is successfully compiled. The output should end with a line like
-#: <pre>Built for platform CW-Lite XMEGA</pre>
-# Open the ChipWhisperer Capture software and connect to your hardware. Open the programmer window (''Tools > CW-Lite XMEGA Programmer''), find the <code>.hex</code> file that you just made, and ''Erase/Program/Verify FLASH''.
+<blockquote>[[File:hw-2.jpg|600px|image]]
 
-The firmware is now loaded onto your hardware, and you can continue onto the capture process.
+# NO jumpers mounted in XMEGA Portion or SmartCard Portion (JP10-JP15, JP19, JP7-JP8, JP17)
+# 3.3V IO Level (JP20 set to INT.)
+# The 7.37 MHz oscillator is selected as the CLKOSC source (JP18)
+# The CLKOSC is connected to the AVR CLock Network, along with connected to the FPGAIN pin (JP4)
+# The TXD &amp; RXD jumpers are set (JP5, JP6)
+# Power measurement taken from VCC shunt (JP1)
+# The TRIG jumper is set (JP28) (NOTE: Early revisions of the multi-target board do not have the TRIG jumper and you can ingore this).
 
-= Capturing the Traces =
-Once the hardware is ready, we can capture some traces for our attack using the ChipWhisperer Capture software. If you somehow got to the 5th ''Advanced Tutorial'' without getting this software ready, you can follow the helpful guide at [[Installing ChipWhisperer]].
+For more information on these jumper settings see [[CW301_Multi-Target]] .
+</blockquote>
+=== Building/Programming the Bootloader ===
 
-The first thing we need to do is add a new target to the ChipWhisperer system. (None of the existing ones know about the bootloader's data format, nor do they recognize the CRC responses that are sent back to us.) The code for this target is included in [[#Appendix A: Target Code]]. Copy/paste this into a Python file (call it whatever you want) and save it in a place where ChipWhisperer will look for it. There are two folders that you can use:
-* Your computer should have a folder called <code>chipwhisperer_projects</code> - if you don't know where this is, the ''File > Preferences'' window will tell you. The system looks in the folder <code>chipwhisperer_projects\chipwhisperer\capture\targets</code> for new targets, so you can save your file here.
-* Alternatively, all of the normal targets are stored in <code>chipwhisperer\software\chipwhisperer\capture\targets</code>, so you can also save the file here. Note that this may not be possible if you don't have access to these folders (ex: your account doesn't have admin access).
+TODO
 
-Next is the capture script. In some of the previous tutorials, we entered all of the capture settings by hand. Since we are civilized humans armed with technology, we can use a script to do all of this setup for us. A pre-written Python script is provided at [[#Appendix B: Capture Script]]. Take a look at this code and notice what it does:
-* it fills in the scope, target, and trace format that we'll use;
-* it connects to the hardware; and
-* it loads all of the hardware parameters for us. Nice!
-Copy this script into a <code>.py</code> file somewhere convenient. Then, perform the following steps to finish the capture:
-# Run the capture script, which will open a ChipWhisperer Capture window with everything connected for us.
-# Open the terminal (''Tools > Terminal'') and connect to the board. While the terminal is open, press the ''Capture 1'' button. A single byte of data should appear in the terminal. This byte will either be <code>a1</code> (CRC failed) or <code>a4</code> (CRC OK). If you see any other responses, something is wrong. 
-#: [[File:Tutorial-A5-Capture.PNG|image]]
-# Once you're happy with this, open the General Settings tab and set the Number of Traces. You should need around 100 traces to break AES.
-# Press the ''Capture Many'' button to record the 100 traces. You'll see the new traces plotted on-screen.
-# Once the program is finished capturing the traces, save the project. Put it somewhere memorable and give it a nice name.
+== Capturing the Traces ==
 
-= Finding the Encryption Key =
-Now that we have our traces, we can go ahead and perform the attack. As described in the background theory, we'll have to do two attacks - one to get the 14th round key, and another (using the first result) to get the 13th round key. Then, we'll do some post-processing to finally get the 256 bit encryption key.
+It is assumed that you've already followed the guide in [[Installing ChipWhisperer]]. Thus it is assumed you are able to communicate with the ChipWhisperer Capture Rev2 hardware (or whatever capture hardware you are using). Note in particular you must have configured the FPGA bitstream in the ChipWhisperer-Capture software, all part of the description in the [[Installing ChipWhisperer]] guide.
 
-== 14th Round Key ==
-We can attack the 14th round key with a standard, no-frills CPA attack:
+=== Communication with the Bootloader ===
 
-# Open the ChipWhisperer Analyzer program and load the <code>.cwp</code> file with the 13th and 14th round traces. This can be either the <code>aes256_round1413_key0_100.cwp</code> file downloaded or the capture you performed.
-# View and manipulate the trace data with the following steps:
-## Switch to the ''Trace Output Plot'' tab
-## Switch to the ''Results'' parameter setting tab
-## Choose the traces to be plotted and press the ''Redraw'' button to draw them
-## Right-click on the waveform to change options, or left-click and drag to zoom
-## Use the toolbar to quickly reset the zoom back to original
-##: [[File:Tutorial-A5-Plot-Traces.PNG|image]]
-##: Notice that the traces are synchronized for the first 7000 samples, but become unsynchronized later. This fact will be important later in the tutorial.
-# Set up the attack in the ''Attack'' script:
-## Make a copy of the ''attack_cpa.py'' script, call it something new (such as ''attack_aesdec14.py'')
-## Adjust the model from ''SBox_output'' to ''InvSBox_output''. This is done by finding the following line in the script:
-##: <pre>from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, SBox_output</pre>
-##: and change that line to:
-##: <pre>from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, InvBox_output</pre>
-## and then also change this further down where we set the leakage model:
-##: <pre>leak_model = AES128_8bit(InvSBox_output)</pre>
-## If you're finding the attack very slow, narrow down the attack a bit. Normally, this requires a bit of investigation to determine which ranges of the trace are important. Here, you can use the range from 2900 for 4200. The default settings will also work fine! To do this adjust the following line to look as follows:
-##: <pre>attack.setPointRange((2900, 4200))</pre>
-# Note that we do ''not'' know the secret encryption key, so we cannot highlight the correct key automatically. If you want to fix this, the ''Results'' settings tab has a Highlighted Key setting. Change this to Override mode and enter the key <code>ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</code>.
-# Finally, run the attack by switching to the ''Results Table'' tab and then hitting the ''Run'' button while your script is selected.
-#: [[File:A5_run_script_round14.png|400px]]
-There are a few ways to check the results of the attack. First, the results table will show the best guesses for each subkey. With the highlight override enabled, the red bytes should be the best guesses for every single subkey:
+=== Running the Capture ===
 
-[[File:Tutorial-A5-Results-Right-Key.PNG|image]]
+Capturing the traces will requires a special capture script. This capture script is given in [[#Appendix A Capture Script]]. Running this script will start the ChipWhisperer capture system up with the bootloader communications module inserted. Your attack should look like this:
 
-However, the correct key will still rise to the top even if the wrong bytes are highlighted. The coloring and correlation coefficients in the results table should still make it clear that the top guess is the best one:
+<ol style="list-style-type: decimal;">
+<li>Run the python program given in [[#Appendix A Capture Script]]</li>
+<li><p>The ChipWhisperer will automatically connect to the bootloader. You should see a window that looks like this, where the every time you run a 'Capture 1' the status will update. If you see another status such as CRC Error or no response, something is not working:</p>
+<p>[[File:capture_examplescript.png|image]]</p>
+<p>To complete the tutorial, follow these steps:</p>
+<blockquote><ol style="list-style-type: decimal;">
+<li>Switch to the ''General Settings'' tab</li>
+<li>Change the number of traces, you should need about 100 traces to break AES.</li>
+<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
+<li>You will see each new trace plotted in the waveform display.</li>
+<li>You'll see the trace count in the status bar. Once it says ''Trace 100 done'' (assuming you requested 100 traces) the capture process is complete.</li></ol>
+</blockquote></li>
+<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li></ol>
 
-[[File:Tutorial-A5-Results-Wrong-Key.PNG|image]]
+== Analyzing of Power Traces for Key ==
 
-{{warningbox|The default capture stores the WRONG knownkey, so you will have highlighted bytes that are not the correct key. We are looking instead for a large delta between the best-guess and all other guesses. For example for Byte 0 we have the most likely as 0.8141, and 2nd best guess as 0.3551. If our best guess was 0.8141 and 2nd best guess was 0.7981 this would indicate we likely haven't broken the key.}}
+<blockquote><blockquote>'''warning'''
 
-Finally, the ''Output vs Point Plot'' shows the correlation against all of the sample points. The spikes on this plot show exactly where the attack was successful (ie: where the sensitive data was leaked):
+; The API calling parameters changed in release 0.10 of the ChipWhisperer software. If using 0.09 release or older, see the documentation that
+: is present in the 'doc' directory (which will always correspond to your release).
+</blockquote></blockquote>
+=== 14th Round Key using GUI ===
 
-[[File:Aes14round points.png|image]]
+<ol style="list-style-type: decimal;">
+<li>Open the Analyzer software</li>
+<li>From the ''File --&gt; Open Project'' option, navigate to the .cwp file containing the 13th and 14th round power usage. This can be either the aes256_round1413_key0_100.cwp file downloaded, or the capture you performed.</li>
+<li><p>If you wish to view the trace data, follow these steps:</p>
+<ol style="list-style-type: decimal;">
+<li>Switch to the ''Waveform Display'' tab</li>
+<li>Switch to the ''General'' parameter setting tab</li>
+<li>You can choose to plot a specific range of traces</li>
+<li>Hit the ''Redraw'' button when you change the trace plot range</li>
+<li>You can right-click on the waveform to change options, or left-click and drag to zoom</li>
+<li>Use the toolbar to quickly reset the zoom back to original</li></ol>
 
-In any case, we've determined that the correct 14th round key is <code>ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</code>.
+<p>[[File:traceplottinground13.png|image]]</p></li>
+<li><p>You can view or change the attack options on the ''Attack'' parameter settings tab:</p>
+<ol style="list-style-type: decimal;">
+<li>On the ''Hardware Model'' settings, ensure you select ''Decryption''</li>
+<li>The ''Point Setup'' makes the attack faster by looking over a more narrow range of points. Often you might have to characterize your device to determine the location of specific attack points of interest, although you can use the range of 2900 to 4200 here for a faster attack. The default range of all the points will work fine too!</li></ol>
 
-''NOTE: if you're stuck, a full listing of the attack script is given in [[#Appendix C: AES-256 14th Round Key Script]].''
+<p>[[File:attacksettingsround13.png|image]]</p></li>
+<li>The saved traces ''do not'' have the known encryption key stored in them. If you want to have the correct encryption key highlighted in red, switch to the ''Results'' tab and set the override key as <code>ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</code>.</li>
+<li><p>Finally run the attack by switching to the ''Results Table'' tab and then hitting the ''Attack'' button:</p>
+<p>[[File:aes14roundstartattack.png|image]]</p></li>
+<li><p>If you adjusted the ''Reporting Interval'' to a smaller number such as 5, you'll see the progression of attack results as more traces are used. If you have enabled the GUI override you should see the correct bytes highlighted in red, as below:</p>
+<p>[[File:aes14table_highlight.png|image]]</p>
+<p>If you haven't enabled the GUI override, the wrong bytes are highlighted (since it uses some other default key). However the most likely bytes as a result of the attack are still the top bytes, the red highlighting is purely decorative. Notice the large jump in correlation between the correct guess and wrong guess:</p>
+<p>[[File:aes14table_nohighlight.png|image]]</p></li>
+<li><p>You can also switch to the ''Output vs Point Plot'' window to see ''where'' exactly the data was recovered:</p>
+<ol style="list-style-type: decimal;">
+<li>Switch to the ''Output vs Point Plot'' tab</li>
+<li>Turn on one of the bytes to see results.</li>
+<li>The ''known correct'' guess for the key is highlighted in red. If you did not enable the 'override' feature the wrong bytes are highlighted, as the system does not know the correct key. By viewing the spikes you can see where the attack succeeded.</li></ol>
 
-== 13th Round Key ==
-Unfortunately, we cannot use the GUI to attack the 13th round key. The system has no built-in model for round 13 of the AES-256 algorithm. Instead, we can write our own script and insert a custom model into the system. See [[#Appendix D: AES-256 13th Round Key Script]] for complete script used here.
+<p>[[File:aes14round_points.png|image]]</p></li></ol>
 
-# Open the ChipWhisperer Analyzer software again and reopen the project file (if closed).
-# Recall from the 14th round attack that the trace data becomes unsynchronized around sample 7000. This is due to a non-constant AES implementation: the code does not always take the same amount of time to run for every input. (It's actually possible to do a timing attack on this AES implementation! We'll stick with our CPA attack for now.)
-#: [[File:syncproblems.png|image]]
-# Resynchronize the traces, see the separate 'Preprocessing' tutorial (NB: only in slides right now!)
+=== 14th Round Key using Script ===
 
-{{warningbox|Make sure you get a nice aligned last section of the traces, as in the below figure. You may need to adjust the "input window" or "reference points" slightly. If you do not see the nice alignment the remaining attack will fail!
+TODO - see 13th round details.
 
-[[File:A5_pp_resync_end.png|400px]]}}
+=== 13th Round Key ===
 
-The next step is to program our own leakage model. The following Python code models the Hamming weight model of the 13th round S-box:
+Attacking the 13th round key requires the use of a script. We cannot configure the system through the GUI, as we have no built-in model for the second part of the AES-256 algorithm. This will demonstrate how we can insert custom models into the system. See [[#Appendix B AES-256 14th Round Key Script]] for complete script used here.
 
-<pre>
-# Imports for AES256 Attack
-from chipwhisperer.analyzer.attacks.models.AES128_8bit import AESLeakageHelper
+Remember that when you change settings in the GUI, the system is actually just automatically adjusting the attack script. You could modify the attack script directly instead of changing GUI settings. Every time you touch the GUI the autogenerated script is overwritten however, so it would be easy to lose your changes. As an example here is how setting the point range maps to an API call:
 
-class AES256_Round13_Model(AESLeakageHelper):
-    def leakage(self, pt, ct, guess, bnum):
-        #You must but YOUR recovered 14th round key here - this example may not be accurate!
-        calc_round_key = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
-        xored = [calc_round_key[i] ^ pt[i] for i in range(0, 16)]
-        block = xored
-        block = self.inv_shiftrows(block)
-        block = self.inv_subbytes(block)
-        block = self.inv_mixcolumns(block)
-        block = self.inv_shiftrows(block)
-        result = block
-        return self.inv_sbox((result[bnum] ^ guess[bnum]))
-</pre>
-You can look back at the C code of the AES-256 decryption to see how this is implementing the decryption code. Note that because of the Inverse MixColumns operation, we need the entire input ciphertext -- otherwise, we would only need to operate on one byte of the ciphertext.
+<blockquote>[[File:autoscript1.png|image]]
+</blockquote>
+We will first automatically configure a script, and then use that as the base for our full attack.
 
-The last step is to perform the attack using this model:
-# Add the above function to your custom script file.
-# Change the <code>setAnalysisAlgorithm</code> in the script to use your custom functions by making the following call:
-#:<pre>leak_model = AES128_8bit(AES256_Round13_Model)</pre>
-# As we did in the 14th round attack, reducing the point range can speed up the attack. For example, to use a smaller range of points, try changing the <code>setPointRange()</code> function call to
-#:<pre>self.attack.setPointRange((8000,10990))</pre>
-# Start the attack! Wait for the attack to complete, and you will determine the 13th round key:
-#: [[File:Tutorial-A5-Results-Round-13.PNG|image]]
+<ol style="list-style-type: decimal;">
+<li>Open the Analyzer software</li>
+<li>From the ''File --&gt; Open Project'' option, navigate to the .cwp file containing the 13th and 14th round power usage. This can be either the aes256_round1413_key0_100.cwp file downloaded, or the capture you performed.</li>
+<li><p>View the trace data as before, and notice how the data becomes unsynchronized. This is due to the prescense of a non-constant AES implementation. There is actually a timing attack in this AES implementation, but we ignore that for now!</p>
+<p>[[File:syncproblems.png|image]]</p></li>
+<li>Enable the ''Resync: Sum of Difference'' module:</li></ol>
 
-Note you can check [[#Appendix C AES-256 13th Round Key Script]] for the complete contents of the attack script.
+<blockquote>[[File:resyncsad.png|image]]
+</blockquote>
+<ol start="5" style="list-style-type: decimal;">
+<li>Configure the reference points to (9063, 9177) and the input window to (9010, 9080):</li></ol>
 
-Finally, we need to convert this hypothetical key into the actual value of the 13th round key. We can do this by passing the key through ShiftRows and MixColumns to remove the effect of these two functions. This is easy to do in the Python console (assuming we had the recovered key <code>C6 BD 4E 50 AB CA 75 77 79 87 96 CA 1C 7F C5 82</code>, if you recovered a different key replace the <code>knownkey</code> value with yours):
+<blockquote>[[File:resyncsad2.png|image]]
+</blockquote>
+<ol start="6" style="list-style-type: decimal;">
+<li>Redraw the traces, confirm we now have synchronization on the second half:</li></ol>
 
-<pre>
->>> from chipwhisperer.analyzer.attacks.models.aes.funcs import shiftrows,mixcolumns
->>> knownkey = [0xC6, 0xBD, 0x4E, 0x50, 0xAB, 0xCA, 0x75, 0x77, 0x79, 0x87, 0x96, 0xCA, 0x1C, 0x7F, 0xC5, 0x82]
->>> key = shiftrows(knownkey)
->>> key = mixcolumns(key)
->>> print &quot; &quot;.join([&quot;%02x&quot; % i for i in key])
-c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63
-</pre>
+<blockquote>[[File:resyncsad3.png|image]]
+</blockquote>
+<ol start="7" style="list-style-type: decimal;">
+<li>We will again set the AES mode to ''Decryption''. Under the ''Attack'' tab on the ''Hardware Model'' settings, ensure you select ''Decryption''</li>
+<li><p>We are now ready to insert the custom data into the attack module. On the ''General'' tab, make a copy of the auto-generated script. Do so by clicking on the autogenerated row, hit ''Copy'', save the file somewhere. Double-click on the description of the new file and give it a better name. Finally hit ''Set Active'' after clicking on your new file. The result should look like this:</p>
+<p>[[File:aes256_customscript.png|image]]</p></li>
+<li>You can now edit the custom script file using the built-in editor OR with an external editor. In this example the file would be <code>C:\Users\Colin\AppData\Local\Temp\testaes256.py</code>.</li></ol>
 
-Our hard work has rewarded us with the 13th round key, which is <code>c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63</code>.
+The following defines the required functions for our AES-256 attack on the 2nd part of the decryption key (i.e. the 13th round key):
 
-== Recovering the Encryption Key ==
-Finally, we have enough information to recover the initial encryption key. In AES-256, the initial key is used in the key expansion routine to generate 15 round keys, and we know the key for round 13 and 14. All we need to do now is reverse the key scheduling algorithm to calculate the ''0/1 Round Key'' from the ''13/14 Round Key''. 
+<pre># Imports for AES256 Attack
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import getHW
+from chipwhisperer.analyzer.models.aes.funcs import sbox, inv_sbox, inv_shiftrows, inv_mixcolumns, inv_subbytes
 
-In the ChipWhisperer Analyzer software, a key schedule calculator is provided in ''Tools > AES Key Schedule'':
+class AES256Attack(object):
+    numSubKeys = 16
+
+    @staticmethod
+    def leakage(textin, textout, guess, bnum, setting, state):
+        if setting == 13:
+           knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
+           xored = [knownkey[i] ^ textin[i] for i in range(0, 16)]
+           block = xored
+           block = inv_shiftrows(block)
+           block = inv_subbytes(block)
+           block = inv_mixcolumns(block)
+           block = inv_shiftrows(block)
+           result = block
+           return getHW(inv_sbox((result[bnum] ^ guess)))</pre>
+You can look back at the C code of the AES-256 decryption to see how this is implementing the decryption code. Note that because of the Inverse MixCols operation, we need the entire input ciphertext, and cannot use just a single byte of the input ciphertext.
+
+<ol start="10" style="list-style-type: decimal;">
+<li>Add the above function to your custom script file.</li>
+<li><p>Change the <code>setAnalysisAlgorithm</code> to use your custom functions byt making the following call:</p>
+<pre>self.attack.setAnalysisAlgorithm(CPAProgressive, AES256Attack, 13)</pre></li>
+<li><p>Check you have set the attack direction to decryption, and you can reduce the point range to speed up your attack. Simply ensure you have the following lines in the script:</p>
+<pre>#... some more lines ...
+self.attack.setDirection('dec')
+#... some more lines ...
+self.attack.setPointRange((8000,10990))
+#... some more lines ...</pre></li>
+<li>Note you can check [[#Appendix C AES-256 13th Round Key Script]] for the complete contents of that file, and just copy/paste the complete contents.</li>
+<li><p>Run ''Start Attack'' as before! Wait for the attack to complete, and you will determine the 13th round key:</p>
+<p>[[File:aes13roundresults.png|image]]</p></li></ol>
+
+Remember the key we determined was actually the key passed through inverse mixcols and inverse shiftrows. This means we need to pass the key through shiftrows and mixcols to remove the effect of those two functions, and determine the normal 13th round key. This can be done via the interactive Python console:
+
+<pre>&gt;&gt;&gt; from chipwhisperer.analyzer.models.aes.funcs import shiftrows,mixcolumns
+&gt;&gt;&gt; knownkey = [0xC6, 0xBD, 0x4E, 0x50, 0xAB, 0xCA, 0x75, 0x77, 0x79, 0x87, 0x96, 0xCA, 0x1C, 0x7F, 0xC5, 0x82]
+&gt;&gt;&gt; key = shiftrows(knownkey)
+&gt;&gt;&gt; key = mixcolumns(key)
+&gt;&gt;&gt; print &quot; &quot;.join([&quot;%02x&quot; % i for i in key])
+c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63</pre>
+At this point we have the 13th round key: <code>c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63</code>
+
+=== 13th and 14th Round Keys to Initial Key ===
+
+If you remember that AES decryption is just AES encryption performed in reverse, this means the two keys we recovered are the 13th and 14th round encryption keys. AES keys are given as an 'initial' key which is expanded to all round keys. In the case of AES-256 this initial key is directly used by the initial setup and 1st round of the algorithm.
+
+For this reason the initial key is referred to as the ''0/1 Round Key'' in this tutorial, and the key we've found is the ''13/14 Round Key''. Writing out the key we do know gives us this:
+
+<pre>c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63 ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</pre>
+You can use the the AES key scheduling tool built into ChipWhisperer to reverse this key:
 
 [[File:keyschedule_tool.png|image]]
 
-Open this tool and paste the 13/14 round keys, which are
-<pre>
-c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63 ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb
-</pre>
+The tool is accessible from the ''Tools'' menu. Copy and paste the 32-byte known key into the input text line. Tell the tool this is the 13/14 round key, and it will automatically display the complete key schedule along with the initial encryption key.
 
-Tell the tool that this key is the 13/14 round key; it will automatically display the entire key schedule and the initial encryption key. You should find the initial encryption key is:
-<pre>
-94 28 5d 4d 6d cf ec 08 d8 ac dd f6 be 25 a4 99 c4 d9 d0 1e c3 40 7e d7 d5 28 d4 09 e9 f0 88 a1
-</pre>
+You should find the initial encryption key is:
 
-Peek into <code>supersecret.h</code>, confirm that this is the right key, and celebrate!
+<pre>94 28 5d 4d 6d cf ec 08 d8 ac dd f6 be 25 a4 99 c4 d9 d0 1e c3 40 7e d7 d5 28 d4 09 e9 f0 88 a1</pre>
+== Analysis of Encrypted Files ==
 
-= Next Steps =
-If you want to go further with this tutorial, [[Tutorial A5-Bonus Breaking AES-256 Bootloader]] continues working with the same firmware to find the remaining secrets in the bootloader (the IV and the signature).
+TODO
 
-= Appendix A: Target Code =
-<pre>
-#!/usr/bin/python
+== Analysis of Power Traces for IV ==
+
+TODO
+
+Example:
+
+<pre>#Imports for IV Attack
+from Crypto.Cipher import AES
+
+def initPreprocessing(self):
+    self.preProcessingResyncSAD0 = preprocessing.ResyncSAD.ResyncSAD(self.parent)
+    self.preProcessingResyncSAD0.setEnabled(True)
+    self.preProcessingResyncSAD0.setReference(rtraceno=0, refpoints=(6300,6800), inputwindow=(6000,7200))
+    self.preProcessingResyncSAD1 = preprocessing.ResyncSAD.ResyncSAD(self.parent)
+    self.preProcessingResyncSAD1.setEnabled(True)
+    self.preProcessingResyncSAD1.setReference(rtraceno=0, refpoints=(4800,5100), inputwindow=(4700,5200))
+    self.preProcessingList = [self.preProcessingResyncSAD0,self.preProcessingResyncSAD1,]
+    return self.preProcessingList
+
+class AESIVAttack(object):
+   numSubKeys = 16
+
+   @staticmethod
+   def leakage(textin, textout, guess, bnum, setting, state):
+       knownkey = [0x94, 0x28, 0x5D, 0x4D, 0x6D, 0xCF, 0xEC, 0x08, 0xD8, 0xAC, 0xDD, 0xF6, 0xBE, 0x25, 0xA4, 0x99,
+                   0xC4, 0xD9, 0xD0, 0x1E, 0xC3, 0x40, 0x7E, 0xD7, 0xD5, 0x28, 0xD4, 0x09, 0xE9, 0xF0, 0x88, 0xA1]
+       knownkey = str(bytearray(knownkey))
+       ct = str(bytearray(textin))
+
+       aes = AES.new(knownkey, AES.MODE_ECB)
+       pt = aes.decrypt(ct)
+       return getHW(bytearray(pt)[bnum] ^ guess)</pre>
+== Timing Attacks for Signature ==
+
+== Appendix A Capture Script ==
+
+The following:
+
+<pre>#!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2013-2016, NewAE Technology Inc
+# Copyright (c) 2013-2014, NewAE Technology Inc
 # All rights reserved.
 #
-# Authors: Colin O'Flynn, Greg d'Eon
+# Authors: Colin O'Flynn
 #
 # Find this and more at newae.com - this file is part of the chipwhisperer
 # project, http://www.assembla.com/spaces/chipwhisperer
@@ -265,32 +399,56 @@ If you want to go further with this tutorial, [[Tutorial A5-Bonus Breaking AES-2
 #    GNU Lesser General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with chipwhisperer.  If not, see <http://www.gnu.org/licenses/>.
+#    along with chipwhisperer.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 #=================================================
+#
+#
+#
+# This example captures data using the ChipWhisperer Rev2 capture hardware.
+# The target is a SimpleSerial board attached to the ChipWhisperer.
+#
+# Data is saved into both a project file and a MATLAB array
+#
 
+#Setup path
 import sys
+
 import time
-import chipwhisperer.capture.ui.CWCaptureGUI as cwc
-from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
-from chipwhisperer.capture.targets.SimpleSerial import SimpleSerial
-from chipwhisperer.common.scripts.base import UserScriptBase
-from chipwhisperer.capture.targets._base import TargetTemplate
-from chipwhisperer.common.utils import pluginmanager
-from chipwhisperer.capture.targets.simpleserial_readers.cwlite import SimpleSerial_ChipWhispererLite
-from chipwhisperer.common.utils.parameter import setupSetParam
+
+#Import the ChipWhispererCapture module
+import chipwhisperer.capture.ChipWhispererCapture as cwc
+from chipwhisperer.capture.targets.TargetTemplate import TargetTemplate
+from chipwhisperer.capture.targets.SimpleSerial import SimpleSerial_ChipWhisperer
+
+#Check for PySide
+try:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
+except ImportError:
+    print &quot;ERROR: PySide is required for this program&quot;
+    sys.exit()
+
+import thread
+
+import scipy.io as sio
+
+exitWhenDone=False
+
+def pe():
+    QCoreApplication.processEvents()
 
 # Class Crc
 #############################################################
 # These CRC routines are copy-pasted from pycrc, which are:
-# Copyright (c) 2006-2013 Thomas Pircher <tehpeh@gmx.net>
+# Copyright (c) 2006-2013 Thomas Pircher &lt;tehpeh@gmx.net&gt;
 #
 class Crc(object):
-    """
+    &quot;&quot;&quot;
     A base class for CRC routines.
-    """
+    &quot;&quot;&quot;
 
     def __init__(self, width, poly):
-        """The Crc constructor.
+        &quot;&quot;&quot;The Crc constructor.
 
         The parameters are as follows:
             width
@@ -299,45 +457,45 @@ class Crc(object):
             xor_in
             reflect_out
             xor_out
-        """
+        &quot;&quot;&quot;
         self.Width = width
         self.Poly = poly
 
 
-        self.MSB_Mask = 0x1 << (self.Width - 1)
-        self.Mask = ((self.MSB_Mask - 1) << 1) | 1
+        self.MSB_Mask = 0x1 &lt;&lt; (self.Width - 1)
+        self.Mask = ((self.MSB_Mask - 1) &lt;&lt; 1) | 1
 
         self.XorIn = 0x0000
         self.XorOut = 0x0000
 
         self.DirectInit = self.XorIn
         self.NonDirectInit = self.__get_nondirect_init(self.XorIn)
-        if self.Width < 8:
+        if self.Width &lt; 8:
             self.CrcShift = 8 - self.Width
         else:
             self.CrcShift = 0
 
     def __get_nondirect_init(self, init):
-        """
+        &quot;&quot;&quot;
         return the non-direct init if the direct algorithm has been selected.
-        """
+        &quot;&quot;&quot;
         crc = init
         for i in range(self.Width):
-            bit = crc & 0x01
+            bit = crc &amp; 0x01
             if bit:
                 crc ^= self.Poly
-            crc >>= 1
+            crc &gt;&gt;= 1
             if bit:
                 crc |= self.MSB_Mask
-        return crc & self.Mask
+        return crc &amp; self.Mask
 
 
     def bit_by_bit(self, in_data):
-        """
+        &quot;&quot;&quot;
         Classic simple and slow CRC implementation.  This function iterates bit
         by bit over the augmented input message and returns the calculated CRC
         value at the end.
-        """
+        &quot;&quot;&quot;
         # If the input data is a string, convert to bytes.
         if isinstance(in_data, str):
             in_data = [ord(c) for c in in_data]
@@ -345,64 +503,57 @@ class Crc(object):
         register = self.NonDirectInit
         for octet in in_data:
             for i in range(8):
-                topbit = register & self.MSB_Mask
-                register = ((register << 1) & self.Mask) | ((octet >> (7 - i)) & 0x01)
+                topbit = register &amp; self.MSB_Mask
+                register = ((register &lt;&lt; 1) &amp; self.Mask) | ((octet &gt;&gt; (7 - i)) &amp; 0x01)
                 if topbit:
                     register ^= self.Poly
 
         for i in range(self.Width):
-            topbit = register & self.MSB_Mask
-            register = ((register << 1) & self.Mask)
+            topbit = register &amp; self.MSB_Mask
+            register = ((register &lt;&lt; 1) &amp; self.Mask)
             if topbit:
                 register ^= self.Poly
 
         return register ^ self.XorOut
 
-        
 class BootloaderTarget(TargetTemplate):
-    _name = 'AES Bootloader'
+    paramListUpdated = Signal(list)
 
-    def __init__(self):
-        TargetTemplate.__init__(self)
-
-        ser_cons = pluginmanager.getPluginsInDictFromPackage("chipwhisperer.capture.targets.simpleserial_readers", True, False)
-        self.ser = ser_cons[SimpleSerial_ChipWhispererLite._name]
-
+    def setupParameters(self):
+        self.ser = SimpleSerial_ChipWhisperer()
         self.keylength = 16
-        self.input = ""
+        self.input = &quot;&quot;
         self.crc = Crc(width=16, poly=0x1021)
-        self.setConnection(self.ser)
+
+    def setOpenADC(self, oadc):
+        try:
+            self.ser.setOpenADC(oadc)
+        except:
+            pass
 
     def setKeyLen(self, klen):
-        """ Set key length in BITS """
-        self.keylength = klen / 8        
- 
+        &quot;&quot;&quot; Set key length in BITS &quot;&quot;&quot;
+        self.keylength = klen / 8
+
     def keyLen(self):
-        """ Return key length in BYTES """
+        &quot;&quot;&quot; Return key length in BYTES &quot;&quot;&quot;
         return self.keylength
 
-    def getConnection(self):
-        return self.ser
 
-    def setConnection(self, con):
-        self.ser = con
-        self.params.append(self.ser.getParams())
-        self.ser.connectStatus.connect(self.connectStatus.emit)
-        self.ser.selectionChanged()
+    def paramList(self):
+        return []
 
-    def con(self, scope=None):
-        if not scope or not hasattr(scope, "qtadc"): Warning(
-            "You need a scope with OpenADC connected to use this Target")
-
-        self.ser.con(scope)
-        # 'x' flushes everything & sets system back to idle
-        self.ser.write("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    def con(self):
+        self.ser.con()
         self.ser.flush()
-        self.connectStatus.setValue(True)
+
+    def dis(self):
+        self.close()
 
     def close(self):
         if self.ser != None:
             self.ser.close()
+            self.ser = None
         return
 
     def init(self):
@@ -414,29 +565,18 @@ class BootloaderTarget(TargetTemplate):
     def setModeDecrypt(self):
         return
 
-    def convertVarToString(self, var):
-        if isinstance(var, str):
-            return var
-
-        sep = ""
-        s = sep.join(["%c" % b for b in var])
-        return s
-
     def loadEncryptionKey(self, key):
         pass
 
     def loadInput(self, inputtext):
         self.input = inputtext
 
-    def readOutput(self):
-        # No actual output
-        return [0] * 16
-
     def isDone(self):
         return True
 
-    def checkEncryptionKey(self, kin):
-        return kin
+    def readOutput(self):
+        #No actual output
+        return [0] * 16
 
     def go(self):
         # Starting byte is 0x00
@@ -448,18 +588,17 @@ class BootloaderTarget(TargetTemplate):
         # Append 2 bytes of CRC for input only (not including 0x00)
         crcdata = self.crc.bit_by_bit(self.input)
 
-        message.append(crcdata >> 8)
-        message.append(crcdata & 0xff)
+        message.append(crcdata &gt;&gt; 8)
+        message.append(crcdata &amp; 0xff)
 
         # Write message
-        message = self.convertVarToString(message)
         for i in range(0, 5):
             self.ser.flush()
             self.ser.write(message)
             time.sleep(0.1)
             data = self.ser.read(1)
 
-            if len(data) > 0:
+            if len(data) &gt; 0:
                 resp = ord(data[0])
 
                 if resp == 0xA4:
@@ -467,121 +606,288 @@ class BootloaderTarget(TargetTemplate):
                     break
 
                 if resp != 0xA1:
-                    raise IOError("Bad Response %x" % resp)
+                    raise IOError(&quot;Bad Response %x&quot; % resp)
 
-        if len(data) > 0:
+        if len(data) &gt; 0:
             if resp != 0xA4:
-                raise IOError("Failed to communicate, last response: %x" % resp)
+                raise IOError(&quot;Failed to communicate, last response: %x&quot; % resp)
         else:
-            raise IOError("Failed to communicate, no response")
-</pre>
+            raise IOError(&quot;Failed to communicate, no response&quot;)
 
-= Appendix B: Capture Script =
+    def checkEncryptionKey(self, kin):
+        return kin
 
-Note you need to manually CONNECT to the CW-Lite & AES Bootloader target before running this. To do this:
+class userScript(QObject):
 
-# Set the 'Scope Module' as 'ChipWhisperer/OpenADC'
-# Set the 'Target Module' as 'AES Bootloader' (you need to have that target on your system)
+    def __init__(self, capture):
+        super(userScript, self).__init__()
+        self.capture = capture
 
-<pre>
-"""Setup script for CWLite/1200 with XMEGA (CW303/CW308-XMEGA/CWLite target)
-specifically for Tutorial A5: the AES-256 bootloader attack
-"""
 
-try:
-    scope = self.scope
-except NameError:
-    pass
-    
-scope.gain.gain = 45
-scope.adc.samples = 11000
-scope.adc.offset = 0
-scope.adc.basic_mode = "rising_edge"
-scope.clock.clkgen_freq = 7370000
-scope.clock.adc_src = "clkgen_x4"
-scope.trigger.triggers = "tio4"
-scope.io.tio1 = "serial_rx"
-scope.io.tio2 = "serial_tx"
-scope.io.hs2 = "clkgen"
-</pre>
+    def run(self):
+        cap = self.capture
 
-= Appendix C: AES-256 14th Round Key Script =
-Full attack script, copy/paste into a file then run from within ChipWhisperer-Analyzer:
+        #User commands here
+        print &quot;***** Starting User Script *****&quot;
 
-<syntaxhighlight lang=python>
-import chipwhisperer as cw
-from chipwhisperer.analyzer.attacks.cpa import CPA
-from chipwhisperer.analyzer.attacks.cpa_algorithms.progressive import CPAProgressive
-from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, InvSBox_output
+        tbootloader = BootloaderTarget()
 
-#self.project = cw.openProject("2017-mar23-xmega-aes.cwp")
-traces = self.project.traceManager()
+        cap.setParameter(['Generic Settings', 'Scope Module', 'ChipWhisperer/OpenADC'])
+        cap.setParameter(['Generic Settings', 'Trace Format', 'ChipWhisperer/Native'])
 
-attack = CPA()
-leak_model = AES128_8bit(InvSBox_output)
-attack.setAnalysisAlgorithm(CPAProgressive, leak_model)
-attack.setTraceSource(traces)
-attack.setTraceStart(0)
-attack.setTracesPerAttack(-1)
-attack.setIterations(1)
-attack.setReportingInterval(10)
-attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-attack.setPointRange((2900, 3400))
+        cap.target.setDriver(tbootloader)
 
-self.results_table.setAnalysisSource(attack)
-self.correlation_plot.setAnalysisSource(attack)
-self.output_plot.setAnalysisSource(attack)
-self.pge_plot.setAnalysisSource(attack)
-attack.processTraces()
-</syntaxhighlight>
+        #Load FW (must be configured in GUI first)
+        cap.FWLoaderGo()
 
-= Appendix D: AES-256 13th Round Key Script =
+        #NOTE: You MUST add this call to pe() to process events. This is done automatically
+        #for setParameter() calls, but everything else REQUIRES this
+        pe()
 
-<syntaxhighlight lang=python>
-import chipwhisperer as cw
-from chipwhisperer.analyzer.attacks.cpa import CPA
-from chipwhisperer.analyzer.attacks.cpa_algorithms.progressive import CPAProgressive
-from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, AESLeakageHelper
-from chipwhisperer.analyzer.preprocessing.resync_sad import ResyncSAD
+        cap.doConDis()
 
-class AES256_Round13_Model(AESLeakageHelper):
-    def leakage(self, pt, ct, guess, bnum):
-        #You must but YOUR recovered 14th round key here - this example may not be accurate!
-        calc_round_key = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
-        xored = [calc_round_key[i] ^ pt[i] for i in range(0, 16)]
-        block = xored
-        block = self.inv_shiftrows(block)
-        block = self.inv_subbytes(block)
-        block = self.inv_mixcolumns(block)
-        block = self.inv_shiftrows(block)
-        result = block
-        return self.inv_sbox((result[bnum] ^ guess[bnum]))
+        pe()
 
-traces = self.project.traceManager()
+        #Example of using a list to set parameters. Slightly easier to copy/paste in this format
+        lstexample = [['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Front Panel A', False],
+                      ['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Target IO4 (Trigger Line)', True],
+                      ['CW Extra', 'CW Extra Settings', 'Clock Source', 'Target IO-IN'],
+                      ['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x4 via DCM'],
+                      ['OpenADC', 'Trigger Setup', 'Total Samples', 11000],
+                      ['OpenADC', 'Trigger Setup', 'Offset', 0],
+                      ['OpenADC', 'Gain Setting', 'Setting', 45],
+                      ['OpenADC', 'Trigger Setup', 'Mode', 'rising edge'],
+                      #Final step: make DCMs relock in case they are lost
+                      ['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
 
-resync_traces = ResyncSAD(traces)
-resync_traces.enabled = True
-resync_traces.ref_trace = 0
-resync_traces.ref_points = (9100, 9300)
-resync_traces.input_window = (8900, 9500)
+                      ['Generic Settings', 'Auxilary Module', 'Toggle FPGA-GPIO Pins'],
+                      ['GPIO Toggle', 'Standby State', 'High'],
+                      ['GPIO Toggle', 'Post-Toggle Delay', 150],
+                      ['GPIO Toggle', 'Toggle Length', 100],
+                      ]
 
-attack = CPA()
-leak_model = AES128_8bit(AES256_Round13_Model)
-attack.setAnalysisAlgorithm(CPAProgressive, leak_model)
-attack.setTraceSource(resync_traces)
-attack.setTraceStart(0)
-attack.setTracesPerAttack(-1)
-attack.setIterations(1)
-attack.setReportingInterval(10)
-attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-attack.setPointRange((0, -1))
+        # For IV: offset = 70000
 
-self.results_table.setAnalysisSource(attack)
-self.correlation_plot.setAnalysisSource(attack)
-self.output_plot.setAnalysisSource(attack)
-self.pge_plot.setAnalysisSource(attack)
-attack.processTraces()
-</syntaxhighlight>
+        #Download all hardware setup parameters
+        for cmd in lstexample: cap.setParameter(cmd)
 
-{{Template:Tutorials}}
-[[Category:Tutorials]]
+        #Let's only do a few traces
+        cap.setParameter(['Generic Settings', 'Acquisition Settings', 'Number of Traces', 50])
+
+        #Throw away first few
+        cap.capture1()
+        pe()
+        cap.capture1()
+        pe()
+
+        print &quot;***** Ending User Script *****&quot;
+
+
+if __name__ == '__main__':
+    #Make the application
+    app = cwc.makeApplication()
+
+    #If you DO NOT want to overwrite/use settings from the GUI version including
+    #the recent files list, uncomment the following:
+    #app.setApplicationName(&quot;Capture V2 Scripted&quot;)
+
+    #Get main module
+    capture = cwc.ChipWhispererCapture()
+
+    #Show window - even if not used
+    capture.show()
+
+    #NB: Must call processEvents since we aren't using proper event loop
+    pe()
+    # Call user-specific commands
+    usercommands = userScript(capture)
+
+    usercommands.run()
+
+    app.exec_()
+
+    sys.exit()</pre>
+== Appendix B AES-256 14th Round Key Script ==
+
+'''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
+
+Full attack script, copy/paste into a file then add as active attack script:
+
+<pre># AES-256 14th Round Key Attack
+from chipwhisperer.common.autoscript import AutoScriptBase
+#Imports from Preprocessing
+import chipwhisperer.analyzer.preprocessing as preprocessing
+#Imports from Capture
+from chipwhisperer.analyzer.attacks.CPA import CPA
+from chipwhisperer.analyzer.attacks.CPAProgressive import CPAProgressive
+import chipwhisperer.analyzer.attacks.models.AES128_8bit
+#Imports from utilList
+
+class userScript(AutoScriptBase):
+    preProcessingList = []
+    def initProject(self):
+        pass
+
+    def initPreprocessing(self):
+        self.preProcessingList = []
+        return self.preProcessingList
+
+    def initAnalysis(self):
+        self.attack = CPA(self.parent, console=self.console, showScriptParameter=self.showScriptParameter)
+        self.attack.setAnalysisAlgorithm(CPAProgressive,chipwhisperer.analyzer.attacks.models.AES128_8bit,chipwhisperer.analyzer.attacks.models.AES128_8bit.LEAK_HW_INVSBOXOUT_FIRSTROUND)
+        self.attack.setTraceStart(0)
+        self.attack.setTracesPerAttack(99)
+        self.attack.setIterations(1)
+        self.attack.setReportingInterval(10)
+        self.attack.setTargetBytes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        self.attack.setTraceManager(self.traceManager())
+        self.attack.setProject(self.project())
+        self.attack.setPointRange((0,10992))
+        return self.attack
+
+    def initReporting(self, results):
+        results.setAttack(self.attack)
+        results.setTraceManager(self.traceManager())
+        self.results = results
+
+    def doAnalysis(self):
+        self.attack.doAttack()</pre>
+== Appendix C AES-256 13th Round Key Script ==
+
+'''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
+
+Full attack script, copy/paste into a file then add as active attack script:
+
+<pre># AES-256 13th Round Key Script
+from chipwhisperer.common.autoscript import AutoScriptBase
+#Imports from Preprocessing
+import chipwhisperer.analyzer.preprocessing as preprocessing
+#Imports from Capture
+from chipwhisperer.analyzer.attacks.CPA import CPA
+from chipwhisperer.analyzer.attacks.CPAProgressive import CPAProgressive
+import chipwhisperer.analyzer.attacks.models.AES128_8bit
+# Imports from utilList
+
+# Imports for AES256 Attack
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import getHW
+from chipwhisperer.analyzer.models.aes.funcs import sbox, inv_sbox, inv_shiftrows, inv_mixcolumns, inv_subbytes
+
+class AES256Attack(object):
+   numSubKeys = 16
+
+   @staticmethod
+   def leakage(textin, textout, guess, bnum, setting, state):
+       if setting == 13:
+          knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
+          xored = [knownkey[i] ^ textin[i] for i in range(0, 16)]
+          block = xored
+          block = inv_shiftrows(block)
+          block = inv_subbytes(block)
+          block = inv_mixcolumns(block)
+          block = inv_shiftrows(block)
+          result = block
+          return getHW(inv_sbox((result[bnum] ^ guess)))
+
+class userScript(AutoScriptBase):
+   preProcessingList = []
+   def initProject(self):
+       pass
+
+   def initPreprocessing(self):
+       self.preProcessingResyncSAD0 = preprocessing.ResyncSAD.ResyncSAD(self.parent)
+       self.preProcessingResyncSAD0.setEnabled(True)
+       self.preProcessingResyncSAD0.setReference(rtraceno=0, refpoints=(9063,9177), inputwindow=(9010,9180))
+       self.preProcessingList = [self.preProcessingResyncSAD0,]
+       return self.preProcessingList
+
+   def initAnalysis(self):
+       self.attack = CPA(self.parent, console=self.console, showScriptParameter=self.showScriptParameter)
+       self.attack.setAnalysisAlgorithm(CPAProgressive, AES256Attack, 13)
+       self.attack.setTraceStart(0)
+       self.attack.setTracesPerAttack(100)
+       self.attack.setIterations(1)
+       self.attack.setReportingInterval(25)
+       self.attack.setTargetBytes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+       self.attack.setTraceManager(self.traceManager())
+       self.attack.setProject(self.project())
+       self.attack.setPointRange((8000,10990))
+       return self.attack
+
+   def initReporting(self, results):
+       results.setAttack(self.attack)
+       results.setTraceManager(self.traceManager())
+       self.results = results
+
+   def doAnalysis(self):
+       self.attack.doAttack()</pre>
+== Appendix D AES-256 IV Attack Script ==
+
+'''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
+
+Full attack script, copy/paste into a file then add as active attack script:
+
+<pre>#IV Attack Script
+from chipwhisperer.common.autoscript import AutoScriptBase
+#Imports from Preprocessing
+import chipwhisperer.analyzer.preprocessing as preprocessing
+#Imports from Capture
+from chipwhisperer.analyzer.attacks.CPA import CPA
+from chipwhisperer.analyzer.attacks.CPAProgressive import CPAProgressive
+import chipwhisperer.analyzer.attacks.models.AES128_8bit
+# Imports from utilList
+
+# Imports for AES256 Attack
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import getHW
+
+#Imports for IV Attack
+from Crypto.Cipher import AES
+
+class AESIVAttack(object):
+   numSubKeys = 16
+
+   @staticmethod
+   def leakage(textin, textout, guess, bnum, setting, state):
+       knownkey = [0x94, 0x28, 0x5D, 0x4D, 0x6D, 0xCF, 0xEC, 0x08, 0xD8, 0xAC, 0xDD, 0xF6, 0xBE, 0x25, 0xA4, 0x99,
+                   0xC4, 0xD9, 0xD0, 0x1E, 0xC3, 0x40, 0x7E, 0xD7, 0xD5, 0x28, 0xD4, 0x09, 0xE9, 0xF0, 0x88, 0xA1]
+       knownkey = str(bytearray(knownkey))
+       ct = str(bytearray(textin))
+
+       aes = AES.new(knownkey, AES.MODE_ECB)
+       pt = aes.decrypt(ct)
+       return getHW(bytearray(pt)[bnum] ^ guess)
+
+class userScript(AutoScriptBase):
+    preProcessingList = []
+    def initProject(self):
+        pass
+
+    def initPreprocessing(self):
+        self.preProcessingResyncSAD0 = preprocessing.ResyncSAD.ResyncSAD(self.parent)
+        self.preProcessingResyncSAD0.setEnabled(True)
+        self.preProcessingResyncSAD0.setReference(rtraceno=0, refpoints=(6300,6800), inputwindow=(6000,7200))
+        self.preProcessingResyncSAD1 = preprocessing.ResyncSAD.ResyncSAD(self.parent)
+        self.preProcessingResyncSAD1.setEnabled(True)
+        self.preProcessingResyncSAD1.setReference(rtraceno=0, refpoints=(4800,5100), inputwindow=(4700,5200))
+        self.preProcessingList = [self.preProcessingResyncSAD0,self.preProcessingResyncSAD1,]
+        return self.preProcessingList
+
+    def initAnalysis(self):
+        self.attack = CPA(self.parent, console=self.console, showScriptParameter=self.showScriptParameter)
+        self.attack.setAnalysisAlgorithm(CPAProgressive, AESIVAttack, None)
+        self.attack.setTraceStart(0)
+        self.attack.setTracesPerAttack(100)
+        self.attack.setIterations(1)
+        self.attack.setReportingInterval(25)
+        self.attack.setTargetBytes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        self.attack.setTraceManager(self.traceManager())
+        self.attack.setProject(self.project())
+        self.attack.setPointRange((4800,6500))
+        return self.attack
+
+    def initReporting(self, results):
+        results.setAttack(self.attack)
+        results.setTraceManager(self.traceManager())
+        self.results = results
+
+    def doAnalysis(self):
+        self.attack.doAttack()</pre>
