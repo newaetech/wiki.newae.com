@@ -4,7 +4,7 @@ Welcome to ChipWhisperer - the world's first (and so far only) complete open-sou
 
 ChipWhisperer is maintained by [https://www.newae.com NewAE Technology Inc.], which sells a combination of open-source hardware, supporting tools, training, and consulting services. ChipWhisperer is trademark of NewAE Technology Inc., registered in the US and Europe. This means only NewAE can sell official products under the ChipWhisperer name, and was done to ensure products meet [[Quality Control Guidelines]], as these fairly complex products require good testing to ensure you don't have a frustrating experience.
 
-= Recent/Upcoming Events =
+== Recent/Upcoming Events ==
 
 The following events will be either be attended by someone from NewAE, or have a presentation using the ChipWhisperer.
 
@@ -12,7 +12,7 @@ The following events will be either be attended by someone from NewAE, or have a
 * COSADE 2016 (Paper Presentation + Exhibitor)
 * Blackhat USA 2016 (Training based on ChipWhisperer)
 
-= Getting Started =
+== Getting Started ==
 
 Where to begin? If you're new to this area, see the [[Getting Started]] page, which details how you can get involved in side-channel power analysis. From there you can see the hardware documentation (linked below), or take one of the [[Training Courses]].
 
@@ -25,7 +25,7 @@ Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/so
 
 == Hardware Instructions ==
 
-=== Capture Hardware ===
+===== Capture Hardware =====
 
 ChipWhisperer-Hardware:
 
@@ -89,13 +89,13 @@ ChipWhisperer Target boards:
 * [[Tutorial A5 Breaking AES-256 Bootloader]]
 * [[Tutorial A6 Replication of Ilya Kizhvatov's XMEGA® Attack]]
 
+= Source Code and Releases =
+
+* Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository].
+* See [[Releases]] for details of software releases.
+
 = ChipWhisperer Training Material =
 
 = Example Attacks / Other =
 
 [[Embedded Attacks]]
-
-= Source Code and Releases =
-
-* Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository].
-* See [[Releases]] for details of software releases.
