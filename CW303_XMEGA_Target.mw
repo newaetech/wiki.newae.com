@@ -1,22 +1,16 @@
-{{Infobox cw308target
-|name                   = CW-Lite XMEGA Target
-|image                  = File:Cwlite-xmega.jpg
-|caption                = 
-|Target Device          = Atmel XMEGA128
-|Target Architecture    = 8-bit Harvard
-|Hardware Crypto        = Possible
-|Purchase Hardware      = 
-|Supported Applications = [[SimpleSerial | Simple Serial Enc/Auth]]
-|Programmer             = CW Integrated (PDI)
-|Status                 = Released
-}}
-The ChipWhisperer-Lite board has a break-away target board section. This target can be used attached to the CW-Lite or separated and connected via ribbon cable. The breakaway target board has a slightly different feature set than the CW308T-XMEGA target board. 
+= CW303 Target: CW-Lite XMEGA Target Section =
+
+The ChipWhisperer-Lite board has a break-away target board section. This is officially labeled as a separate target board, but for most users will be present on the development board.
+
+The board looks as follows:
+
+[[File:Cwlite-xmega.jpg|image]]
 
 == LEDs ==
 
 The two LEDs on the XMEGA board are active-low, which is done to reduce the impact on power consumption in the VCC power signature. The connections are as follows:
 
-{| class="wikitable"
+{|
 ! Item
 ! Connection
 ! Note
@@ -59,7 +53,3 @@ The following shows several of the connectors available on the CW301.
 == Schematic ==
 
 [[File:Cw303_schematic.png|image]]
-
-{{Template:Hardware}}
-
-[[Category:Targets]]
