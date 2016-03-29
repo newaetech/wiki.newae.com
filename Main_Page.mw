@@ -86,6 +86,7 @@ ChipWhisperer Target boards:
 * [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)]]
 * [[Tutorial A3 VCC Glitch Attacks]]
 * [[Tutorial A4 SAD Trigger for SCA and Glitch]]
+* [[Tutorial A5 Breaking AES-256 Bootloader]]
 * [[Tutorial A6 Replication of Ilya Kizhvatov's XMEGA® Attack]]
 
 = ChipWhisperer Training Material =
