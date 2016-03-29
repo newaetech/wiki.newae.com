@@ -108,7 +108,7 @@ The critical difference between the initial round and this round is the addition
 
 It would at first appear we need to perform a guess over 4 bytes instead of 1 byte. This would be a considerably more complicated operation! We can consider writing that last step as an equation:
 
-<blockquote><math>X^{13} &= SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(X^{13} \oplus K^{13})\right)\right)</math>
+<blockquote><math>X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(X^{13} \oplus K^{13})\right)\right)</math>
 </blockquote>
 The MixCols() operation is a linear function, meaning for example the following applies:
 
@@ -116,13 +116,13 @@ The MixCols() operation is a linear function, meaning for example the following 
 </blockquote>
 Which means instead of determining the encryption key, we can determine the encryption key modified by the inverse MixCols.
 
-<blockquote><math>X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(X^{13} \oplus K^{13})\right)\right) \\
-X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(C)\right) \oplus Y^{13}\right) \\
-Y^{13} = MixCols^{-1}\left(ShiftRows^{-1}(K^{13})\right) \\</math>
+<blockquote><math>X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(X^{13} \oplus K^{13})\right)\right)</math>
+<math>X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(C)\right) \oplus Y^{13}\right)</math>
+<math>Y^{13} = MixCols^{-1}\left(ShiftRows^{-1}(K^{13})\right)</math>
 </blockquote>
 Once we fully determine the encryption key we can perform the MixCol and ShiftRow operation to determine the correct key.
 
-<blockquote><math>K^{13} = MixCols\left(ShiftRows(Y^{13})\right) \\</math>
+<blockquote><math>K^{13} = MixCols\left(ShiftRows(Y^{13})\right)</math>
 </blockquote>
 Performing the complete AES-256 side channel analysis attack will thus require the following steps:
 
