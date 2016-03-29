@@ -2,7 +2,7 @@ This advanced tutorial will demonstrate power glitch attacks using the ChipWhisp
 
 You can follow along with this video for details of this page too:
 
-[[File:youtube-vccglitch.png|link=http://www.youtube.com/watch?v=hxU5uVbYCYo&hd=1]]
+[[File:youtube-vccglitch.png|YouTubeVccGlitch]]_
 
 == Background on VCC (Power) Glitching ==
 
@@ -36,7 +36,7 @@ The MOSFET glitching hardware is built into the ChipWhisperer-Lite (both CW1173 
 
 === ChipWhisperer-Lite (CW1173) with built-in XMEGA Target ===
 
-The XMEGA target will work out-of-the-box for this tutorial. As usual, no hardware setup is required - everything on the CW-Lite board is ready to go.
+The XMEGA target is currently not supported for this tutorial. The hardware is capable of being glitched, but we are still working on improving the reliability of the attack on the XMEGA. This section will be updated when details are available.
 
 === ChipWhisperer-Lite (CW1173/CW1180) with external AVR (NOTDUino/Multi-Target) ===
 
@@ -63,7 +63,7 @@ If using the ChipWhisperer-Lite with Multi-Target board, you can connect both po
 
 If using the ChipWhisperer Capture Rev2 (CW1002), you do not have a glitch output port. Instead you need the VCC glitching add-on.
 
-The VCC glitching add-on can be added to the AVR or SmartCard 6-pin headers, or connected to the XMEGA by a few additional jumper wires.
+The VCC glitching add-on can be added to the AVR or SmartCard 6-pin headers, or connected to the XMEGA by a few additional jumper wires. An example of the connection is shown in the vccglitchhwsetup section.
 
 The connection between the glitch input and FPGAOUT pin must be done via a jumper wire. This connects the glitch module output to the MOSFET input, such that whenever a glitch is requested the VCC on the target is shorted.
 
@@ -77,9 +77,9 @@ The following figure shows the clock jumper configuration, which are the same as
 </blockquote>
 In addition the VCC glitcher board must be mounted, which means removing the jumpers on the 6-pin header around the AVR. Also the 'IN' pin on the VCC glitcher board connected to the FPGAOUT pin. This is done via a jumper wire. Both of these are shown in the following figure:
 
-<blockquote>[[File:vccglitcher_routing.jpg|frame|none|alt=|The control line for the VCC glitcher board comes from the FPGAOUT pin.]]
+<blockquote>[[File:vccglitcher_routing.jpg|frame|none|alt=|caption The control line for the VCC glitcher board comes from the FPGAOUT pin.]]
 
-[[File:vccglitcher_mounted.jpg|frame|none|alt=|The VCC glitcher board must be mounted with <code>GND</code> at the bottom matching, exactly as shown here.]]
+[[File:vccglitcher_mounted.jpg|frame|none|alt=|caption The VCC glitcher board must be mounted with <code>GND</code> at the bottom matching, exactly as shown here.]]
 </blockquote>
 == Setting up Glitch Example ==
 
@@ -140,7 +140,7 @@ Programming the device is also described in Step #4 in the following section.
 <li><p>Under the ''Glitch Module'' set the ''Clock Source'' as ''CLKGEN''</p>
 <blockquote><p>[[File:glitchexample-capsetupclkgen.png|image]]</p></blockquote></li>
 <li><p>Check the box marked ''HS-Glitch Out Enable (Low Power)'':</p>
-<blockquote><p>[[File:glitchexample-capsetup2B.png|image]]</p></blockquote></li></ol>
+<blockquote><p>[[File:glitchexample-capsetup2b.png|image]]</p></blockquote></li></ol>
 </blockquote></li>
 <li><p>For the ChipWhisperer-Capture Rev 2 (CW1002):</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
@@ -210,7 +210,7 @@ False</pre>
 </blockquote>
 <p>You can test the updated color-coding seems to be working too with a few ''Capture 1'' events.</p></li>
 <li><p>Using the following table, set the ''Glitch Width (as % of period)'' and ''Repeat'' on the ''Scope Settings'' tab:</p>
-{| class="wikitable"
+<blockquote>{|
 ! Parameter
 ! AVR on Multi-Target or NOTDuino
 |-
@@ -220,13 +220,13 @@ False</pre>
 | Repeat
 | 10
 |}
-</li>
+</blockquote></li>
 <li>Finally, let's configure the Glitch Explorer to give us the required sweep of the ''Offset'' parameter.
 <ol style="list-style-type: lower-alpha;">
 <li>Adjust the ''Glitch Offset (as % of period)'' up or down by 1 in the ''Glitch Module'' settings. We do this only to get the required string printed to the ''Script Commands'' output.</li>
 <li>Set the ''Tuning Parameters'' to ''1'' in the Glitch Explorer.</li>
 <li><p>Set the parameters as appropriate:</p>
-{| class="wikitable"
+<blockquote>{|
 ! Option
 ! Value
 |-
@@ -234,7 +234,7 @@ False</pre>
 | Offset
 |-
 | Script Command
-| ['Glitch Module', 'Glitch Offset (as % of period)']
+| ['Glitch Module', 'Glitch Offset (as % of period)', 0.0]
 |-
 | Data Format
 | Float
@@ -251,7 +251,7 @@ False</pre>
 | Repeat
 | 1
 |}
-</li></ol>
+</blockquote></li></ol>
 </li>
 <li><p>On the ''General Settings'' tab:</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
@@ -353,6 +353,3 @@ Glitching the Raspberry Pi is very simple. We just need to generate an appropria
 <p>Most likely the glitch width was insufficient for a glitch to be inserted, so increase the ''Repeat'' count to increase the width, and try pressing the ''Manual Trigger'' button again. In this example a glitch was successfully inserted with a width of ''52'', so you might want to try a few larger numbers. If you do things wrong your Raspberry Pi will crash and you'll need to reboot it and continue experimenting.</p>
 <p>The following shows an example of inserting several glitches successfully:</p>
 <p>[[File:rpi-glitch.png|image]]</p></li></ol>
-
-{{Template:Tutorials}}
-[[Category:Tutorials]]
