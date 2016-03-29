@@ -63,7 +63,7 @@ If using the ChipWhisperer-Lite with Multi-Target board, you can connect both po
 
 If using the ChipWhisperer Capture Rev2 (CW1002), you do not have a glitch output port. Instead you need the VCC glitching add-on.
 
-The VCC glitching add-on can be added to the AVR or SmartCard 6-pin headers, or connected to the XMEGA by a few additional jumper wires. An example of the connection is shown in the vccglitchhwsetup section.
+The VCC glitching add-on can be added to the AVR or SmartCard 6-pin headers, or connected to the XMEGA by a few additional jumper wires.
 
 The connection between the glitch input and FPGAOUT pin must be done via a jumper wire. This connects the glitch module output to the MOSFET input, such that whenever a glitch is requested the VCC on the target is shorted.
 
