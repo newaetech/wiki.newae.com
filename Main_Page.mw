@@ -25,7 +25,7 @@ Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/so
 
 == Hardware Instructions ==
 
-===== Capture Hardware =====
+=== Capture Hardware ===
 
 ChipWhisperer-Hardware:
 
@@ -63,6 +63,12 @@ ChipWhisperer Target boards:
 * [[CW501 Differential Probe]]
 * [[CW502 Low Noise Amplifier]]
 * [[CW503 Probe Power Supply]]
+
+=== Other / Community Boards ===
+
+* [[Clock Recovery Board]]
+* [[IEEE 802.15.4 Target]]
+* [[EM Glitcher]]
 
 == Theory ==
 
