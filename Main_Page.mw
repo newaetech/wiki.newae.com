@@ -106,7 +106,9 @@ The following tutorials use the ChipWhisperer software and/or hardware. They are
 
 = Example Attacks / Other =
 
-[[Embedded Attacks]]
+While ChipWhisperer started as a side-channel power analysis platform, it has grown to be useful in other attack types. This section is designed to show you a wide variety of attacks on embedded systems, to give you an idea of what is required for building secure embedded systems.
+
+See the page [[Embedded Attacks]] for a full list of examples held on this wiki.
 
 = Extra Notes =
 
