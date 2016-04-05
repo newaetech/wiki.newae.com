@@ -103,6 +103,18 @@ The following tutorials use the ChipWhisperer software and/or hardware. They are
 * Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository].
 * See [[Releases]] for details of software releases.
 
+== Developer Documentation ==
+
+=== Software Development ===
+
+=== Hardware Development ===
+
+* [[FPGA Details]]
+
+=== Various Development Notes ===
+
+* [[CW Release Steps]]
+
 = ChipWhisperer Training Material =
 
 = Example Attacks / Other =
