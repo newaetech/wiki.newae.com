@@ -123,6 +123,10 @@ While ChipWhisperer started as a side-channel power analysis platform, it has gr
 
 See the page [[Embedded Attacks]] for a full list of examples held on this wiki.
 
+= ChipWhisperer Capture The Flag =
+
+In 2016 ChipWhisperer is used as part of the [[CHES2016 CTF]]. See details of the event on the [[CHES2016 CTF]] page.
+
 = Extra Notes =
 
 See the page [[Thanks]] for a note about the people who made this project possible.
