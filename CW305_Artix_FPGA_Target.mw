@@ -1,0 +1,35 @@
+The CW305 is a FPGA target board. It brings features including a simplified USB interface for talking to the FPGA, an external PLL for adjusting frequency response, a programmable VCC-INT supply, and diode protection for use in fault injection environments. Also available with a special BGA socket, giving you the ability to perform tests on multiple FPGA devices - perfect for checking Physically Unclonable Functions (PUFs) under the exact same environmental conditions across multiple FPGAs.
+
+This board requires an external oscilloscope or capture box for performing the power measurement. The board is designed to interface to hardware such as the ChipWhisperer-Lite 2-Part version or the CW1200 (ChipWhisperer-Pro).
+
+=Feature Overviews=
+
+==USB Interface==
+
+This board uses NewAE Technology Inc's custom USB interface firmware. This firmware gives you a simple data/address bus, which you can read/write to the FPGA. The USB chip also controls FPGA configuration (which for the 7A35T device takes just under 2 seconds), the PLL, and the VCC-INT regulator. This makes it easy to script complex jobs like performing measurements at different frequencies or voltages, or reconfiguring the FPGA after a fault attempt to avoid issues with SRAM corruption.
+
+==PLL==
+
+The CDCE906 PLL means you can easily output frequencies from about 5-160 MHz (a larger range is possible but may require more care). The PLL is programmed over USB, and 3 output channels are provided (each which can be set to a different frequency). 2 route to the FPGA and 1 routes to a SMA connector. This allows you to synchronize external devices or boards to the oscillator driving your FPGA design.
+
+==Power Supply==
+
+Three switching regulators are provided - two fixed for VCC-AUX and VCC-IO, along with a VCC-INT supply which can be programmed over the range of 0.8V-1.10V (this is a software limit to prevent you from damaging the FPGA, this can be overridden if you need to provide about a 0.65-1.5V range). Optional linear regulators can plug into the VCC-AUX and VCC-IO supplies which provide lower-noise operation (but with a reduced current limit compared to the switching supplies).
+
+External banana connectors make is simply to power the VCC-INT from a low-noise bench supply. This can improve side-channel analysis measurements by reducing noise in the shunt measurement compared to the on-board switching supply.
+
+An on-board DMM measures the VCC-INT supply and provides easy visual feedback so you can confirm settings without needing to attach a meter.
+
+==Shunt Measurement==
+
+A resistive shunt is provided in the VCC-INT supply, with an optional shunt in the VCC-AUX line. The resistive shunt can be measured using a differential probe on 0.1" spacing, using the SMAs, or using the on-board 20dB LNA. The LNA makes it easier to measure with standard oscilloscopes that don't measure the very small variations you find in power analysis.
+
+==Fault Injection==
+
+This board is designed to facilitate all forms of fault injection. Resitive and diode protection prevents transients on the VCC-IO of the FPGA from affecting the USB interface chip. The USB chip itself provides high-speed FPGA reconfiguration to simplify repetitive fault attacks where you need to reconfigure the FPGA. The USB interface can also monitor the INITB pin of the FPGA, which can be used with the continous CRC verification feature to determine when reconfiguration is required.
+
+The PCB features mounting holes and alignment features for use with an X-Y table (suitable for both EM fault injection and H-Field probes).
+
+The VCC-INT supply can be disconnected from the filtering capacitors to allow using the SMA jacks as a method of inserting voltage faults without fighting the output capacitance of the power supply.
+
+The ChipWhisperer Crowbar fault injection can also be used with this board, which requires either the ChipWhisperer-Lite 2-Part version (CW1173-2PART) or CW1200.
