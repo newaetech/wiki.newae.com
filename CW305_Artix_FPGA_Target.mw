@@ -33,3 +33,28 @@ The PCB features mounting holes and alignment features for use with an X-Y table
 The VCC-INT supply can be disconnected from the filtering capacitors to allow using the SMA jacks as a method of inserting voltage faults without fighting the output capacitance of the power supply.
 
 The ChipWhisperer Crowbar fault injection can also be used with this board, which requires either the ChipWhisperer-Lite 2-Part version (CW1173-2PART) or CW1200.
+
+=Hardware Details=
+
+
+=Software Details=
+
+The ChipWhisperer software is used to communicate with this board. This can be used either as part of the GUI (i.e., using the CW305 within the ChipWhisperer-Capture), or by importing Python modules and communicating with the CW305.
+
+==Driver and Software Installation==
+
+==Programmatic Usage==
+
+===Using from Other Languages===
+
+The provided modules are written in Python, but any language which is supported by libusb can talk to the hardware. This will require you to write your own lower-layer driver and is officially unsupported by NewAE.
+
+If using from other software (such as MATLAB), it is suggested to call the command-line interface (described below) or otherwise use the existing Python interface. The Python interface is guaranteed to maintain compatibility with future changes in the SAM3U firmware.
+
+==Simple command-line interface==
+
+=FPGA Projects=
+
+=Example Attacks=
+
+=Ordering Options=
