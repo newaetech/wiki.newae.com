@@ -1,0 +1,18 @@
+
+
+=== GIT Repo Sync ===
+
+
+1. Clone Assembla repo to "/home/someone/somewhere/chipwhisperer"
+
+2. Setup github as a remote with name "github"
+
+3. Add a script called "pushpull.sh" to "/home/someone/somewhere/chipwhisperer" with contents:
+
+  #!/bin/sh
+  git pull origin master
+  git push -u github master
+
+4. Use "crontab -e" to add task that runs every 5 mins:
+
+  0,5,10,15,20,25,30,35,40,45,50,55 * * * * cd /home/someone/somewhere/chipwhisperer; ./pullpush.sh
