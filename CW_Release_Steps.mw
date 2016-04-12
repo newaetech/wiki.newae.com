@@ -14,8 +14,12 @@ While the main GIT repo is held on Assembla, a version of it is kept updated on 
   git pull origin master
   git push -u github master
 
-4. Make above executable for user script will run as (ideally this was all setup as someone with low/no privileges since they need no access elsewhere).
+4. Add the following to the .gitignore file, as this file is in the root of the GITHub repo but we don't want to track:
 
-5. Use "crontab -e" to add task that runs every 5 mins and runs that script:
+  README.md
+
+5. Make above executable for user script will run as (ideally this was all setup as someone with low/no privileges since they need no access elsewhere).
+
+6. Use "crontab -e" to add task that runs every 5 mins and runs that script:
 
   0,5,10,15,20,25,30,35,40,45,50,55 * * * * cd /home/someone/somewhere/chipwhisperer; ./pullpush.sh
