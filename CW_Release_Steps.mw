@@ -1,36 +1,11 @@
-This page contains various information regarding the ChipWhisperer release steps. This is not designed for users, but as a note for developers regarding release information.
 
-==Release Steps==
-
-=== Pushing to PyPi ===
-
-To allow users to perform a glorious:
-
- pip install chipwhisperer
-
-We push '''part''' of the release to pypi. This partial release only includes the Python software, and not the complete ChipWhisperer repo (with hardware, docs, etc).
-
-We follow a basic tutorial from [http://peterdowns.com/posts/first-time-with-pypi.html], which includes a fairly basic setup.py. Important details to note:
-
-* Adding new modules requires adding them to setup.py to ensure they are included
-
-Once a new release is ready, it's a simple case of:
-
- python setup.py sdist upload
-
-To push to the real pypi server. This step can only be performed by someone with authentication access to pypi (probably Colin).
-
-See also: [http://peterdowns.com/posts/first-time-with-pypi.html]
-
-==Other Notes==
 
 === GIT Repo Sync ===
 
-While the main GIT repo is held on Assembla, a version of it is kept updated on GITHub. This is for convenience of those that prefer GITHub. This documents how the automatic pull/push is done on a local development server (it's quite dumb really) in case we need to duplicate it again:
 
 1. Clone Assembla repo to "/home/someone/somewhere/chipwhisperer"
 
-2. Setup github as a remote with name "github" in that pull
+2. Setup github as a remote with name "github"
 
 3. Add a script called "pushpull.sh" to "/home/someone/somewhere/chipwhisperer" with contents:
 
@@ -38,12 +13,6 @@ While the main GIT repo is held on Assembla, a version of it is kept updated on 
   git pull origin master
   git push -u github master
 
-4. Add the following to the .gitignore file, as this file is in the root of the GITHub repo but we don't want to track:
-
-  README.md
-
-5. Make above executable for user script will run as (ideally this was all setup as someone with low/no privileges since they need no access elsewhere).
-
-6. Use "crontab -e" to add task that runs every 5 mins and runs that script:
+4. Use "crontab -e" to add task that runs every 5 mins:
 
   0,5,10,15,20,25,30,35,40,45,50,55 * * * * cd /home/someone/somewhere/chipwhisperer; ./pullpush.sh
