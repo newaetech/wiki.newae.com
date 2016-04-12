@@ -1,7 +1,6 @@
-
+This page contains various information regarding the ChipWhisperer release steps. This is not designed for users, but as a note for developers regarding release information.
 
 === GIT Repo Sync ===
-
 
 1. Clone Assembla repo to "/home/someone/somewhere/chipwhisperer"
 
