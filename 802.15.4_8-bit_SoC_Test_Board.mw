@@ -1,1 +1,9 @@
-Todo
+This board contains details of hardware for experimenting with two types of IEEE 802.15.4 SoC Devices: Atmel ATMega128RFA1, and TI CC2530. Appropriate clocks are provided, along with shunts in VCCINT power rails.
+
+Connectors for 2.4 GHz antennas are provided - be aware the RF matching is very poor (to reduce BOM I use same Balun for both, even though they do NOT have some impedance match requirements). In practice if you are sending data directly the match is 'close enough'.
+
+== Schematics ==
+
+== Gerbers ==
+
+== Building ==
