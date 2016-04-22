@@ -56,9 +56,17 @@ The internal power supply provides a source of 1.0V for the VCC-INT. This supply
 
 There is also two banana jacks which can be connected to a 1.0V lab supply. You must be very careful to ensure you do not exceed 1.10V on this input, as beyond that range you risk damaging the FPGA.
 
-The choice of internal/external is selected with the switch.
+The choice of internal/external is selected with the switch. There is a ferrite bead + large capacitors after this switch, so note that you '''cannot''' use the banana jack inputs as a voltage glitch insertion method. Instead you must insert them directly into the SMA connectors
 
+=== SMA Connectors / Test Points ===
 
+=== Jumper ===
+
+=== Shunt Resistor ===
+
+=== VCC-INT Decoupling Capacitors ===
+
+=== VCC-AUX Shunt Resistor ===
 
 == Shunt Selection ==
 
