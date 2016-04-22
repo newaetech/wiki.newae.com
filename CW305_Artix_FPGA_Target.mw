@@ -36,6 +36,30 @@ The ChipWhisperer Crowbar fault injection can also be used with this board, whic
 
 =Hardware Details=
 
+== VCC-INT Routing ==
+
+The following shows details of how the power supplies are routed on the CW305 board:
+
+[[File:cw305_vccrouting.png]]
+
+Details of each section are shown here:
+
+=== DC Jack / USB Power ===
+
+There are two main sources of power which can be used for ''all'' FPGA power supplies (VCC-INT, VCC-IO, and VCC-AUX). By default this is the USB connector, but this is limited by USB specs to a maximum of 500 mA.
+
+If using a larger design in the FPGA you may exceed these limits, in which case you must move the switch to use the DC-Jack. This jack requires a 5.0V power supply capable of a suitable amount of current for your design (suggested: 2.0A).
+
+=== Internal / External VCC-INT ===
+
+The internal power supply provides a source of 1.0V for the VCC-INT. This supply can be programmed slightly above/below 1.0V to compare the effects of different VCC-INT supplies on the FPGA design. Details of the power supply are given in section TODO XREF. The internal supply can provide up to 6.0A for the VCC-INT rail.
+
+There is also two banana jacks which can be connected to a 1.0V lab supply. You must be very careful to ensure you do not exceed 1.10V on this input, as beyond that range you risk damaging the FPGA.
+
+The choice of internal/external is selected with the switch.
+
+
+
 == Shunt Selection ==
 
 =Software Details=
