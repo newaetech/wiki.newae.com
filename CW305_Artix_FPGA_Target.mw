@@ -147,7 +147,29 @@ If you wish to have the lowest-noise power source, you must mount the VCC-IO and
 
 == Fault Injection ==
 
-== IO Connectors ==
+== IO Connections ==
+
+The board contains a number of additional headers.
+
+=== GPIO Header ===
+
+A 40-pin header is mounted at JP3. This female header also comes with a dual-sided male 40-pin header which ships which each PCB, allowing you to use either gender of connectors with this header.
+
+The pinout of the header is marked on the PCB. All pins are routed to 3.3V VCC-IO banks on the Artix 7 FPGA. The layout of the header is such that the following can directly be plugged into the board:
+
+* Digilent Inc PMOD devices 
+
+* NewAE OpenADC Module
+
+=== 20-Pin ChipWhisperer Connector ===
+
+The bottom right side of the PCB contains a 20-pin connector that follows the standard ChipWhisperer pinout.
+
+=== LEDs ===
+
+=== SMA Connectors ===
+
+=== Switches ===
 
 == FPGA Configuration ==
 
