@@ -159,11 +159,12 @@ There are three modes you can use to configure the FPGA:
 
 3. From on-board SPI-Flash on power-up.
 
-These modes are selected by different FPGA mode switch settings. The mode switches are on the back-side of the PCB as shown here:
+These modes are selected by different FPGA mode switch settings. The mode switches are on the back-side of the PCB as shown below. Note if the switch is set to the left the mode bit is "0", and if the switch is set to the right the bit is set to "1". The mode bits themselves are labeled M2, M1, and M0 from top to bottom.
 
 [[File:mode_switches.jpg|200px]]
 
-The setting of the mode switches must be set as in the following table:
+The setting of the mode switches must be set as in the following table for the desired configuration mode:
+
 {| class="wikitable"
 !M0
 !M1
