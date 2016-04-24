@@ -163,13 +163,24 @@ The pinout of the header is marked on the PCB. All pins are routed to 3.3V VCC-I
 
 === 20-Pin ChipWhisperer Connector ===
 
-The bottom right side of the PCB contains a 20-pin connector that follows the standard ChipWhisperer pinout.
+The bottom right side of the PCB contains a 20-pin connector that follows the standard ChipWhisperer pinout. This connector has ESD diodes present on the PCB to protect both the FPGA from external transients, and from glitches inserted into the FPGA from exiting the board and damaging external test gear.
 
 === LEDs ===
 
 === SMA Connectors ===
 
+Three SMA connectors are present on the board. Two are routed to IO pins on the FPGA, and one routes directly to the on-board PLL.
+
 === Switches ===
+
+Two user switches are provided: one push-button, and one 4-item DIP switch.
+
+The push-button (SW4) routes to FPGA pin R1.
+
+The dip-switch (S2) routes to FPGA pins J16, K16, K15, and L14 (see PCB silkscreen). With generic designs that dip-switch has the following uses:
+
+
+See the example design documentation for more details.
 
 == FPGA Configuration ==
 
