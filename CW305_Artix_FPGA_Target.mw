@@ -58,15 +58,43 @@ There is also two banana jacks which can be connected to a 1.0V lab supply. You 
 
 The choice of internal/external is selected with the switch. There is a ferrite bead + large capacitors after this switch, so note that you '''cannot''' use the banana jack inputs as a voltage glitch insertion method. Instead you must insert them directly into the SMA connectors
 
-=== SMA Connectors / Test Points ===
+=== Shunt Resistor Connections ===
 
-=== Jumper ===
+The following shows the components around the shunt resistor:
 
-=== VCC-INT Shunt Resistor ===
+[[File:shunt.jpg|400px]]
+
+Schematically, this is shown below:
+
+[[File:cw305_vccint_shunt_sch.png|400px]]
+
+A brief description of each element is given below.
+
+==== SMA Connectors / Test Points ====
+
+The SMA connectors provide access to both sides of the shunt. The "high side" comes from the power supply with substantial filter capacitors, and the "low side" goes directly to the FPGA VCC-INT network. The VCC-INT network may or may not have decoupling capacitors mounted (this is an ordering option).
+
+In addition, two test points are provided on each side. It is '''strongly''' recommended to use a SMA to BNC cable (such as Cinch Connectivity P/N 415-0028-024 available from Digikey) to view the power measurement instead of these test points.
+
+The SMA connector can also be used when inserting faults into the FPGA. If using the ChipWhisperer crowbar fault generator, simply connect the crowbar output to connector X3. If using an external fault amplifier, you will also connect to X3 but will also need to remove the jumper (described below).
+
+==== Jumper ====
+
+In some circumstances you may wish to entirely remove the shunt resistor. This is typically the case when performing fault insertion, where the large "filter" capacitors present on the high side of the shunt resistor will drastically reduce the slew rate of your fault amplifier.
+
+Alternatively, you may wish to use a current transformer or similar current probe which requires a method of inserting a sensor into the VCC-INT path.
+
+For these uses test point TP2 and TP3 have gold-plated "nails" soldered into them, and a wire bridge soldered between the test points. This wire bridge can be removed by either cutting (with wire cutters) or desoldering. The gold-plated nails provide a mechanically strong base which allows you to perform this operation without risking damage to the CW305 PCB.
+
+If using a current probe, you can either (1) solder a wire between TP2 and TP3, or (2) use two SMA connectors to route the power between X2 and X3. Clamp your current probe onto the bare wire used to route the signal between these (you'll need a custom cable without the shield most likely).
+
+The gold-plated nails that require soldering are used instead of a switch or jumper to reduce the resistance in the measurement path. Typical switches provide too high of a contact resistance for the potential current draw of a large design in the FPGA, which would reduce the SNR at the measurement point.
+
+==== Shunt Resistor ====
 
 The shunt resistor is a 1206 size resistor mounted at position R27. The value of this resistor will vary between the various variants of the assembled board.
 
-[[File:shunt.jpg|400px]]
+Two 0.100" (2.54mm) headers are provided for measurement with a differential probe. One (JP7) is directly across the resistor, and the other (JP6) is on the top right side of the PCB. JP6 is designed to be used with a NewAE Technology Inc. differential probe (which requires a separate power supply for this differential probe).
 
 === VCC-INT Decoupling Capacitors ===
 
