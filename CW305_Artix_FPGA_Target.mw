@@ -67,6 +67,9 @@ The choice of internal/external is selected with the switch. There is a ferrite 
 === VCC-INT Decoupling Capacitors ===
 
 === VCC-AUX Shunt Resistor ===
+The VCC-INT shunt is the primarily power measurement point, as it provides power measurement for both designs inside the FPGA, along with the logic responsible for decrypting bitstreams (as reported at https://eprint.iacr.org/2016/249.pdf). 
+
+There may be additional information in the VCC-AUX power supply however, for example monitoring JTAG state transitions. There is a secondary shunt position (by default with no shunt mounted) for exploration of the VCC-AUX power supply. This can be seen in the schematic here:
 
 == Shunt Selection ==
 
