@@ -50,7 +50,7 @@ There are two main sources of power which can be used for ''all'' FPGA power sup
 
 If using a larger design in the FPGA you may exceed these limits, in which case you must move the switch to use the DC-Jack. This jack requires a 5.0V power supply capable of a suitable amount of current for your design (suggested: 2.0A).
 
-[[File:psw_1.jpg|200px]]
+[[File:psw_1.jpg|100px]]
 
 === Internal / External VCC-INT ===
 
