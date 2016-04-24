@@ -151,6 +151,16 @@ If you wish to have the lowest-noise power source, you must mount the VCC-IO and
 
 == FPGA Configuration ==
 
+There are three modes you can use to configure the FPGA:
+
+1. Over USB using ChipWhisperer software. Requires reconfiguration on every power cycle.
+2. Over JTAG from Xilinx software.  Requires reconfiguration on every power cycle.
+3. From on-board SPI-Flash on power-up.
+
+These modes are selected by different FPGA mode switch settings. The mode switches are on the back-side of the PCB as shown here:
+
+The setting of the mode switches must be set as in the following table:
+
 =Software Details=
 
 The ChipWhisperer software is used to communicate with this board. This can be used either as part of the GUI (i.e., using the CW305 within the ChipWhisperer-Capture), or by importing Python modules and communicating with the CW305.
