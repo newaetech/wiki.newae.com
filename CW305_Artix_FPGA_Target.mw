@@ -162,6 +162,27 @@ There are three modes you can use to configure the FPGA:
 These modes are selected by different FPGA mode switch settings. The mode switches are on the back-side of the PCB as shown here:
 
 The setting of the mode switches must be set as in the following table:
+{| class="wikitable"
+!M0
+!M1
+!M2
+!Configuration Mode
+|-
+|1
+|0
+|0
+|SPI Flash
+|-
+|1
+|0
+|1
+|JTAG
+|-
+|1
+|1
+|1
+|USB
+|}
 
 =Software Details=
 
