@@ -58,7 +58,7 @@ There is also two banana jacks which can be connected to a 1.0V lab supply. You 
 
 The choice of internal/external is selected with the switch. There is a ferrite bead + large capacitors after this switch, so note that you '''cannot''' use the banana jack inputs as a voltage glitch insertion method. Instead you must insert them directly into the SMA connectors, described later.
 
-[[File:psw_2.jpg|400px]]
+[[File:psw_2.jpg|200px]]
 
 === Shunt Resistor Connections ===
 
