@@ -70,6 +70,10 @@ The choice of internal/external is selected with the switch. There is a ferrite 
 
 == Shunt Selection ==
 
+== Fault Injection ==
+
+FPGA Configuration
+
 =Software Details=
 
 The ChipWhisperer software is used to communicate with this board. This can be used either as part of the GUI (i.e., using the CW305 within the ChipWhisperer-Capture), or by importing Python modules and communicating with the CW305.
