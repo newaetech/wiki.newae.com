@@ -62,7 +62,11 @@ The choice of internal/external is selected with the switch. There is a ferrite 
 
 === Jumper ===
 
-=== Shunt Resistor ===
+=== VCC-INT Shunt Resistor ===
+
+The shunt resistor is a 1206 size resistor mounted at position R27. The value of this resistor will vary between the various variants of the assembled board.
+
+[[File:shunt.jpg|400px]]
 
 === VCC-INT Decoupling Capacitors ===
 
