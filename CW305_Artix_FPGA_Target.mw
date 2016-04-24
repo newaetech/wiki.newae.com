@@ -74,7 +74,7 @@ A brief description of each element is given below.
 
 The SMA connectors provide access to both sides of the shunt. The "high side" comes from the power supply with substantial filter capacitors, and the "low side" goes directly to the FPGA VCC-INT network. The VCC-INT network may or may not have decoupling capacitors mounted (this is an ordering option).
 
-In addition, two test points are provided on each side. It is '''strongly''' recommended to use a SMA to BNC cable (such as Cinch Connectivity P/N 415-0028-024 available from Digikey) to view the power measurement instead of these test points.
+In addition, two test points are provided on each side that are suitable for use with an oscilloscope probe. It is '''strongly''' recommended to use a SMA to BNC cable (such as Cinch Connectivity P/N 415-0028-024 available from Digikey) to view the power measurement instead of these test points, as the SNR of the oscilloscope probe will typically be considerably worse than via the SMA connector.
 
 The SMA connector can also be used when inserting faults into the FPGA. If using the ChipWhisperer crowbar fault generator, simply connect the crowbar output to connector X3. If using an external fault amplifier, you will also connect to X3 but will also need to remove the jumper (described below).
 
