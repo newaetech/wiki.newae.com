@@ -121,11 +121,29 @@ The shunt is located on the rear side of the PCB, as shown here:
 
 If using this shunt, you must '''remove''' resistor R26 (which has a metal slug 0-ohm resistor mounted) and replace with an appropriately sized 0805 resistor (suggested: 1 ohm). You must also remove capacitor C98, C95, C97, C94, and C93. They can be seen in the above photo.
 
+== On-Board Power Supplies ==
+
+Three switching power supplies are present on the board, which provide the VCC-INT (1.0V), VCC-AUX (1.8V), and VCC-IO (3.3V) supplies. The external IO on the board are all operated at 3.3V.
+
+=== Power Supply Source ===
+
+You can turn the power to the FPGA on or off using the following switch:
+
+[[File:fpga_autoonoff.jpg|200px]]
+
+When in the "OFF" mode the VCC-INT, VCC-IO, and VCC-AUX supplies are turned off. In addition the communications interfaces are all disabled to avoid back-powering the FPGA via the IO pins. If you have external connections (such as driving a clock from the ChipWhisperer) you need to ensure they are also disabled when the power is turned off.
+
+When in the "AUTO" mode, the state of the power supplies can be controlled from the computer. Typically "AUTO" mode is used as it allows the computer to power cycle the device.
+
+=== Low-Noise Power Supplies ===
+
 == Shunt Selection ==
 
 == Fault Injection ==
 
-FPGA Configuration
+== IO Connectors ==
+
+== FPGA Configuration ==
 
 =Software Details=
 
