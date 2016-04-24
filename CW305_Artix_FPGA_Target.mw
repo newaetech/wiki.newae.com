@@ -137,6 +137,12 @@ When in the "AUTO" mode, the state of the power supplies can be controlled from 
 
 === Low-Noise Power Supplies ===
 
+Optional low-noise linear power supplies are available, which fit into the connectors around the switch-mode power supply. They have less power handling capabilities than the on-board switch-mode supplies, but have reduced noise that ends up injected into the PCB (and thus on the power traces).
+
+These power supplies are only used for VCC-IO and VCC-AUX. Like the on-board supplies they will be disabled when the power to the FPGA is switched off using either the API interface or the target power switch.
+
+If you wish to have the lowest-noise power source, you must mount the VCC-IO and VCC-AUX low-noise supplies, and also use an external supply for the VCC-INT supply.
+
 == Shunt Selection ==
 
 == Fault Injection ==
