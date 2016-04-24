@@ -161,6 +161,8 @@ There are three modes you can use to configure the FPGA:
 
 These modes are selected by different FPGA mode switch settings. The mode switches are on the back-side of the PCB as shown here:
 
+[[File:mode_switches.jpg|400px]]
+
 The setting of the mode switches must be set as in the following table:
 {| class="wikitable"
 !M0
