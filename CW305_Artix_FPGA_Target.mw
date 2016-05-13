@@ -226,13 +226,58 @@ The ChipWhisperer software is used to communicate with this board. This can be u
 
 ==Driver and Software Installation==
 
+== Python Example ==
+
+=== Connecting and Programming ===
+You can connect to the board using the following command:<syntaxhighlight lang="python">
+from chipwhisperer.capture.targets.CW305 import CW305
+
+cw = CW305()
+cw.con(bsfile=r"C:\chipwhisperer\hardware\victims\cw305_artixtarget\fpga\vivado_examples\aes128_verilog\aes128_verilog.runs\impl_35t\cw305_top.bit", force=False)
+</syntaxhighlight>The optional "bsfile" argument causes it to download a bitstream. If the "force" flag is set to "False", the system will only download the bitstream to an UNPROGRAMMED FPGA.
+
+If doing development, you probably want to set the force flag to "True". This will ensure you always get a newly programmed FPGA with the latest bitstream.
+
+=== Running AES-128 Example ===
+You can run the AES-128 example code (the cw305_top.bit file) with the following example:<syntaxhighlight lang="python">
+from chipwhisperer.capture.targets.CW305 import CW305
+
+cw = CW305()
+cw.con(bsfile=r"C:\chipwhisperer\hardware\victims\cw305_artixtarget\fpga\vivado_examples\aes128_verilog\aes128_verilog.runs\impl_35t\cw305_top.bit", force=False)
+
+test_key = [0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c]
+test_inp = [0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96, 0xe9, 0x3d, 0x7e, 0x11, 0x73, 0x93, 0x17, 0x2a]
+exp_result = [0x3A, 0xD7, 0x7B, 0xB4, 0x0D, 0x7A, 0x36, 0x60, 0xA8, 0x9E, 0xCA, 0xF3, 0x24, 0x66, 0xEF, 0x97]
+
+cw.loadEncryptionKey(test_key)
+cw.loadInput(test_inp)
+cw.go()
+result = cw.readOutput()
+
+print "ACT: "+" ".join(["%02X"%c for c in result])
+print "EXP: "+" ".join(["%02X"%c for c in exp_result])
+</syntaxhighlight>This will download the bitstream, run an encryption, and print the results. You could for example run 500 encryptions, storing the results to a MATLAB array with the following code:
+
+<TODO>
+
+Accessing FPGA Registers
+
+See the FPGA Projects section for importat details of the FPGA design framework.
+
+Setting PLL Frequency
+
+Setting VCC-INT<syntaxhighlight lang="python">
+#Set vcc-int to 0.95V
+cw.vccint_set(0.95)
+</syntaxhighlight>
+
 ==Programmatic Usage==
 
 ===Using from Other Languages===
 
 The provided modules are written in Python, but any language which is supported by libusb can talk to the hardware. This will require you to write your own lower-layer driver and is officially unsupported by NewAE.
 
-If using from other software (such as MATLAB), it is suggested to call the command-line interface (described below) or otherwise use the existing Python interface. The Python interface is guaranteed to maintain compatibility with future changes in the SAM3U firmware.
+If using from other software (such as MATLAB), it is suggested to use the existing Python interface, which can be done via a simple command-line interface too. The Python interface is guaranteed to maintain compatibility with future changes in the SAM3U firmware.
 
 ==Simple command-line interface==
 
