@@ -27,7 +27,7 @@ Performing the power analysis capture takes some time (5-10 mins), so if your jo
 
 The following shows the server connections. Note that the wiki (this host) and the support forum are totally disconnected from the CHES CTF. Attacking these servers will not help you (they have no connection), and will make us very sad as we don't have much time to fix them.
 
-[[File:chesctf.png|600x600px]]
+[[File:Chesctf.png|border|600x600px]]
 
 == Side Channel Power Analysis ==
 This is a capture the flag that involves both power analysis and work creating secure implementations. It's interactive because you can both submit implementations AND break them. An automated system performs some basic validation that your AES-128 implementation is working, but relies on you to not cheat the system by doing dumb things like just adding a big delay before processing encryption.
@@ -41,7 +41,7 @@ The crypto implementations are run on an ATXMEGA128D4 processor, as part of a Ch
 
 On the "Challenge" page, you'll see something that looks like this:
 
-[[File:challenges.png]]
+[[File:challenges.png|border|800x800px]]
 
 You can use the Traces, Source Code, and ".hex file" to help you in breaking the challenge.
 
