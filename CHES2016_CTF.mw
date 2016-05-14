@@ -5,6 +5,7 @@
 There are two types of cryptographic implementations available for your browsing pleasure. They are either:
 
 1. AES-128 running on Atmel XMEGA, with power analysis. Key not stored in firmware (attack via DPA).
+
 2. AES-128 running on Linux computer, without power analysis. Key stored in firmware (White box).
 
 As a user, you can submit source-code to accomplish #1, which will run the code on an embedded hardware platform.
