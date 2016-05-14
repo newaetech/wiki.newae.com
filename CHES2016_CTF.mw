@@ -39,6 +39,12 @@ The crypto implementations are run on an ATXMEGA128D4 processor, as part of a Ch
 
 === Breaking Challenges ===
 
+On the "Challenge" page, you'll see something that looks like this:
+
+[[File:challenges.png]]
+
+You can use the Traces, Source Code, and ".hex file" to help you in breaking the challenge.
+
 ==== Trace File Format ====
 The trace-file is a 7Zip file with a number of subfolders. 7Zip has free implementations on all systems (on Linux/Mac OS you can install the 'p7zip' or 'p7zip-full' from your repo).
 
