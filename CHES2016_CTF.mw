@@ -128,6 +128,32 @@ Please keep a copy of the secret key you submit if it's successful. We may need 
 Note once you submit an implementation, you do receive points for breaking it. Breaking your own implementation means you do NOT receive the time-bonus (since you have access to the traces before anyone else), but instead always receive the fixed points that a latecomer would (currently 10 points).
 
 ==== Required AES-128 Format ====
+<u>Init Call</u>
+The init call lets you setup any variables you might need. This is called once on reset (i.e., not between encryptions). It is not recorded in the power consumption traces. The following shows an example where no setup is required:<syntaxhighlight lang="c">
+void aes_indep_init(void)
+{
+    ;
+}
+</syntaxhighlight><u>Key Setup Call</u>
+The key setup call loads the encryption key. It will be called before calling the encrypt function. It is not recorded in the power consumption traces. The following shows an example where we just store the encryption key for use later.<syntaxhighlight lang="c">
+void aes_indep_key(uint8_t * key)
+{
+    for (uint8_t i = 0; i < 16; i++){
+        _stored_key[i] = key[i];
+    }
+}
+</syntaxhighlight><u>Encryption Function</u>
+
+This function call happens immediatly after the trigger for the power consumption recording goes high. You must encrypt the 16 bytes in the passed buffer, and write them back into the same buffer. The following shows an example where we call our encrypt function and copy the output back:<syntaxhighlight lang="c">
+void aes_indep_enc(uint8_t * pt)
+{
+	_stored_ct = aes(pt, _stored_key);
+    
+    for (uint8_t i = 0; i < 16; i++){
+        pt[i] = _stored_ct[i];
+    }
+}
+</syntaxhighlight>As mentioned you MUST ensure the sensitive operations occur within 10000 cycles of this function call.
 
 ==== Zip-File Contents ====
 
