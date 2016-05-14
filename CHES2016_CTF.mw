@@ -128,13 +128,17 @@ Please keep a copy of the secret key you submit if it's successful. We may need 
 Note once you submit an implementation, you do receive points for breaking it. Breaking your own implementation means you do NOT receive the time-bonus (since you have access to the traces before anyone else), but instead always receive the fixed points that a latecomer would (currently 10 points).
 
 ==== Required AES-128 Format ====
+
 <u>Init Call</u>
+
 The init call lets you setup any variables you might need. This is called once on reset (i.e., not between encryptions). It is not recorded in the power consumption traces. The following shows an example where no setup is required:<syntaxhighlight lang="c">
 void aes_indep_init(void)
 {
     ;
 }
+
 </syntaxhighlight><u>Key Setup Call</u>
+
 The key setup call loads the encryption key. It will be called before calling the encrypt function. It is not recorded in the power consumption traces. The following shows an example where we just store the encryption key for use later.<syntaxhighlight lang="c">
 void aes_indep_key(uint8_t * key)
 {
@@ -142,9 +146,11 @@ void aes_indep_key(uint8_t * key)
         _stored_key[i] = key[i];
     }
 }
-</syntaxhighlight><u>Encryption Function</u>
+</syntaxhighlight>
 
-This function call happens immediatly after the trigger for the power consumption recording goes high. You must encrypt the 16 bytes in the passed buffer, and write them back into the same buffer. The following shows an example where we call our encrypt function and copy the output back:<syntaxhighlight lang="c">
+<u>Encryption Function</u>
+
+This function call happens immediately after the trigger for the power consumption recording goes high. You must encrypt the 16 bytes in the passed buffer, and write them back into the same buffer. The following shows an example where we call our encrypt function and copy the output back:<syntaxhighlight lang="c">
 void aes_indep_enc(uint8_t * pt)
 {
 	_stored_ct = aes(pt, _stored_key);
@@ -156,5 +162,23 @@ void aes_indep_enc(uint8_t * pt)
 </syntaxhighlight>As mentioned you MUST ensure the sensitive operations occur within 10000 cycles of this function call.
 
 ==== Zip-File Contents ====
+
+For your convenience, you can download an example zip-file. This zip-file contains an AES-128 implementation in C, along with the required wrapper files.
+
+To use this zip-file, delete the "aes.c" and "aes.h" files, and modify the "aes-challenge-c.c" file as required. If you are using assembly code it must be inserted into the "aes-challenge-asm.S" file.
+
+The zip-file must contain the following files at minimum:
+
+ * aes-challenge.h
+ * aes-challenge-asm.c
+ * aes-challenge-c.S
+
+ONLY those files will be compiled by the automated system. If you require additional files, you must use #include directives to include them directly into the C source code. Download the example source code for the "Basic AES-128 Implementation" to get an idea of how this will work.
+
+You must include both the .c file and the .S file. Leave a file blank if not using (i.e., if only using C you can leave the .S file blank, as in the example).
+
+As part of the compilation & validation the server will tell you of any errors. You must resubmit a new attempt if your compilation or validation fails (even if it's a problem on our end).
+
+If you wish to compile the code on your own (HIGHLY recommended during debugging to avoid taxing the server systems), please download the full source code directory. This source code directly is the same as used on the server, where your code is automatically copied to the "firmware\simpleserial-aes\user_crypto" directory. To build run "make" in "simpleserial-aes", and have avr-gcc, avr-libc, and avr-binutils installed (or WinAVR on Windows).
 
 == White Box Cryptography ==
