@@ -104,7 +104,7 @@ scipy.io.savemat('fileout.mat', {
 </syntaxhighlight>
 
 ==== Example CPA Attack ====
-The default challenge will fall to a straight-forward CPA attack. You must determine what secret key was used during the encryption operation.
+The default challenge will fall to a straight-forward CPA attack. You must determine what secret key was used during the encryption operation. You can submit the "flag" as the hex key, for example as shown in the following photo. Be sure to select the flag you are attacking by the drop-down. Ones you've already discovered will not be populated.
 
 [[File:flag.png|border]]
 
