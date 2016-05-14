@@ -1,6 +1,6 @@
 [http://chesworkshop.org/ches2016/start.php CHES 2016] will have a brand new Capture The Flag (CTF) event, run by [http://www.oflynn.com Colin O'Flynn], with resources by [https://www.newae.com NewAE Technology Inc]. This event will challenge novice and advanced embedded security researchers alike, by providing a platform to exchange AES implementations with various countermeasures (including against power analysis, and against firmware analysis using white box crypto).
 
-Access the website at http://ctf.newae.com .
+'''Access the website at http://ctf.newae.com .'''
 
 == Attack Website ==
 
@@ -12,6 +12,110 @@ There are two types of cryptographic implementations available for your browsing
 
 As a user, you can submit source-code to accomplish #1, which will run the code on an embedded hardware platform.
 
+== Point System ==
+* 'Stage-Gate' flags (such as basic CPA) are worth 10 points for all user.
+* User-submitted flags are worth 50 points for the first person to capture the flag, 30 for the next, and 10 for all others.
+* Capturing the flag for your own implementation is worth 10 points (to encourage users to not submit impossible implementations).
+* White-box crypto is worth 75 points for all captures.
+
+== Getting Help ==
+If you have trouble, please post at [https://newae.com/forum newae.com/forum]. If the server appears to be down please email '''ctfhelp -AT- newae.com'''. Please DO NOT email the help for general questions, as we would like those to be answered on the forum where others will see the questions.
+
+Note there is 3 separate servers on the backend. This website is run by one (which hosts the database), a second server is responsible for compiling & validating your C code, and a third server is responsible for performing power analysis captures.
+
+Performing the power analysis capture takes some time (5-10 mins), so if your job has the status "running" for that long please check back later. However if your job is stuck in either "uploaded" or "queued" status, it's likely our backend server(s) have died and require a manual kick.
+
 == Side Channel Power Analysis ==
+This is a capture the flag that involves both power analysis and work creating secure implementations. It's interactive because you can both submit implementations AND break them. An automated system performs some basic validation that your AES-128 implementation is working, but relies on you to not cheat the system by doing dumb things like just adding a big delay before processing encryption.
+
+The crypto implementations are run on an ATXMEGA128D4 processor, as part of a ChipWhisperer-Lite target. If you aren't familiar with this you can see the following resources:
+* [[CW1173 ChipWhisperer-Lite|Online Documentation]]
+* [https://www.assembla.com/spaces/chipwhisperer/git/source/master/hardware/capture/chipwhisperer-lite/pcb/cw-lite-main.pdf?_format=raw Schematic]
+* [https://www.kickstarter.com/projects/coflynn/chipwhisperer-lite-a-new-era-of-hardware-security Original Kickstarter]
+
+=== Breaking Challenges ===
+
+==== Trace File Format ====
+The trace-file is a 7Zip file with a number of subfolders. 7Zip has free implementations on all systems (on Linux/Mac OS you can install the 'p7zip' or 'p7zip-full' from your repo).
+
+First, there are folders where you '''ARE''' told the encryption key. Use these to investigate the leakage of the implementation: 
+{| class="wikitable"
+!Folder Name
+!Description
+|-
+|knownfixed_rand
+|Fixed encryption key, Random plaintext. These traces would be used in a classic CPA attack.
+|-
+|knownrand_fixed
+|Random encryption key, Fixed plaintext.
+|-
+|knownrand_rand
+|Random encryption key, Random plaintext. Typically used for HW-template generation.
+|-
+|knownfixed_fixed
+|Fixed encryption key, Fixed plaintext.
+|}
+
+There is also a set of traces where you '''ARE NOT''' told the encryption key. This encryption key is the secret flag you must find. It will be submitted as a hex string. 
+{| class="wikitable"
+!
+!
+|-
+|secretfixed_rand
+|Fixed encryption key, Random plaintext (Encryption key NOT provided to you).
+|-
+|secretfixed_fixed
+|Fixed encryption key, Fixed plaintext (Encryption key NOT provided to you).
+|}
+
+Each folder also contains the exact script used to capture the traces on the ChipWhisperer-Lite, the text input/output, the trace data in NumPy format (can be converted to MATLAB easily), and the encryption key (except for the 'secret' capture options). The 'secret' key is not recorded anywhere, only a hash of the correct key is stored in the CTF database.
+
+In addition a file called firmware.hex is provided, which can be programmed into an Atmel XMEGA 128D4 (such as on the ChipWhisperer-Lite or ChipWhisperer Multi-Target board). It expects an external 7.37MHz clock and uses the ChipWhisperer 'SimpleSerial' protocol (described at this page). You can use this image if you require additional investigation or want to capture more than the provided 1000 traces.
+
+You can also convert files from .npy to matlab. The following shows a simple Python script which opens all the .npy file and saves it as a .mat file. If you don't have Python installed, you can install WinPython on Windows to quickly get this script running.<syntaxhighlight lang="python">
+import scipy.io
+import numpy as np
+
+prefix = r'2016.02.24-19.07.03'
+#Can point to full directory like:
+#prefix = r'C:\Temp\demo\traces_capdir48\knownrand_fixed\knownrand_fixed_P48_data\traces\2016.02.24-19.07.03'
+
+tracedata = np.load(prefix + '_traces.npy')
+textin = np.load(prefix + '_textin.npy')
+textout = np.load(prefix + '_textout.npy')
+key = np.load(prefix + '_keylist.npy')
+
+scipy.io.savemat('fileout.mat', {
+ "traces":tracedata,
+ "textin":textin,
+ "textout":textout,
+ "key":key
+})
+</syntaxhighlight>
+
+==== Example CPA Attack ====
+
+=== Submitting a Challenge ===
+Submitting a challenge is done by running your code through the 'virtual hardware lab'. Once the system runs the capture, you will have the opportunity to submit this AES implementation as a challenge. Flags will be removed if it's determined the challenge doesn't meet the restrictions mentioned below.
+
+In order to submit a challenge, you must have an AES-128 implementation that meets the following rules:
+* Runs on Atmel XMEGA Platform.
+* Sensitive operation occurs for all 16 bytes less than 10000 clock cycles from call to encrypt function (you can perform operations such as key expansion in an "init" call that happens before power measurements are recorded).
+* Does not modify clock settings of XMEGA device.
+* Doesn't try dumb stuff to reveal key (like saving secret key of job #1 to EEPROM and hoping you can run job #2 on the same hardware right after, and read job #1 key out).
+The requirement for performing sensitive operations (such as S-Box of input) within 10000 clock cycles is because we currently have limited the system to record a total of 10000 samples at a frequency that is 1x the clock rate.
+
+If necessary this can be increased, but will require manual intervention. To limit server bandwidth we are trying to keep the traces as small as possible! As an example the default AES-128 implementation in C only requires 3000 samples to break, so we are using 10000 as a reasonable trade-off between allowing a slower AES implementation and our internet bandwidth.
+
+We don't want you to modify the clock settings, as the objective is everyone has the same baseline acquisition environment. Making the clock asynchronous or speeding it up will make your implementation harder to break with the baseline setup, but is relatively easy to counter by tweaking the acquisition environment. Since users cannot tweak the acquisition hardware it's only fair you don't modify the clock.
+
+As you obtain a small number of points for breaking your OWN implementation, people might try to be clever to read-out the key used during a previous run. All such methods are disallowed, as is hacking the website or other attacks that do not involve using the power measurements. Trying to be clever like that is not allowed.
+Please keep a copy of the secret key you submit if it's successful. We may need to verify them to ensure no database tampering happened. Note the secret keys are NOT stored on the database - only a hash of the correct key is, so getting a dump of the database will not be useful.
+
+Note once you submit an implementation, you do receive points for breaking it. Breaking your own implementation means you do NOT receive the time-bonus (since you have access to the traces before anyone else), but instead always receive the fixed points that a latecomer would (currently 10 points).
+
+==== Required AES-128 Format ====
+
+==== Zip-File Contents ====
 
 == White Box Cryptography ==
