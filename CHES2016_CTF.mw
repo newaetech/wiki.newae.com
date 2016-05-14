@@ -43,7 +43,7 @@ On the "Challenge" page, you'll see something that looks like this:
 
 [[File:challenges.png|border|800x800px]]
 
-You can use the Traces, Source Code, and ".hex file" to help you in breaking the challenge.
+You can use the Traces, Source Code, and ".hex file" to help you in breaking the challenge. The following describes the format of the trace files, which you can use with your power-analysis attacks.
 
 ==== Trace File Format ====
 The trace-file is a 7Zip file with a number of subfolders. 7Zip has free implementations on all systems (on Linux/Mac OS you can install the 'p7zip' or 'p7zip-full' from your repo).
@@ -104,6 +104,7 @@ scipy.io.savemat('fileout.mat', {
 </syntaxhighlight>
 
 ==== Example CPA Attack ====
+The default challenge will fall to a straight-forward CPA attack. You must determine what secret key was used during the encryption operation.
 
 === Submitting a Challenge ===
 Submitting a challenge is done by running your code through the 'virtual hardware lab'. Once the system runs the capture, you will have the opportunity to submit this AES implementation as a challenge. Flags will be removed if it's determined the challenge doesn't meet the restrictions mentioned below.
