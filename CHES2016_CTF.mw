@@ -106,6 +106,8 @@ scipy.io.savemat('fileout.mat', {
 ==== Example CPA Attack ====
 The default challenge will fall to a straight-forward CPA attack. You must determine what secret key was used during the encryption operation.
 
+[[File:flag.png|border]]
+
 === Submitting a Challenge ===
 Submitting a challenge is done by running your code through the 'virtual hardware lab'. Once the system runs the capture, you will have the opportunity to submit this AES implementation as a challenge. Flags will be removed if it's determined the challenge doesn't meet the restrictions mentioned below.
 
