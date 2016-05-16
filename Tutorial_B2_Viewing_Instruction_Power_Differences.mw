@@ -115,7 +115,7 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 <li>Set ''Target IO1'' as ''Serial RXD''</li>
 <li>Set ''Target IO2'' as ''Serial TXD''</li></ol>
 </li>
-<li>Switch to the ''General Settings'' tab, and hit the ''Open Monitor'' button.</li></ol>
+<li>Open the status monitor (<i>Tools > Encryption Status Monitor</i>).</li></ol>
 
 ; 10. Hit the ''Run 1'' button. You may have to hit it a few times, as the very first serial data is often lost. You should see
 : data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.
