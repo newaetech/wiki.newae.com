@@ -294,13 +294,11 @@ We will now need to configure the clock to the XMEGA target device.
 <li><p>Using the ''Find'' button, navigate to the <code>simpleserial-base.hex</code> which you built earlier with the <code>make</code> command. You can then press the ''Erase/Program/Verify'' button, and confirm the file is programmed into the XMEGA device:</p>
 <p>[[File:cw1173_xmegaprogc.png|image]]</p>
 <p>Note the programmer dialog not only shows the successful programming status, but also shows when the <code>.hex</code> file was last modified. Always confirm this matches with when you last remember compiling the program -- if it is widely different this suggests you have selected the wrong file!</p>
+
 <p>Finally we can check communications with the programmed file:</p></li></ol>
-
-[[File:cw1173_connectrun.png|image]]
-
 <ol start="17" style="list-style-type: decimal;">
-<li>Close the XMEGA programmer dialog, and switch to the ''General Settings'' tab.</li>
-<li>Hit the ''Open Monitor'' button.</li>
+<li>Close the XMEGA programmer dialog.</li>
+<li>Open the status monitor under <i>Tools > Encryption Status Monitor</i>.</li>
 <li>Resize the monitor window. The monitor will show sent &amp; received data to the target.</li>
 <li>Hit the ''Run 1'' button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. Note that each byte of the ''Text In'' is incremented in the ''Text Out'' field.</li></ol>
 
