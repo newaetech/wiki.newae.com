@@ -1,6 +1,8 @@
 [http://chesworkshop.org/ches2016/start.php CHES 2016] will have a brand new Capture The Flag (CTF) event, run by [http://www.oflynn.com Colin O'Flynn], with resources by [https://www.newae.com NewAE Technology Inc]. This event will challenge novice and advanced embedded security researchers alike, by providing a platform to exchange AES implementations with various countermeasures (including against power analysis, and against firmware analysis using white box crypto).
 
-'''Access the website at http://ctf.newae.com .'''
+'''Access the website at https://ctf.newae.com .'''
+
+You can see a video description at https://www.youtube.com/watch?v=hmfulmIY58A&hd=1
 
 == Attack Website ==
 
@@ -68,8 +70,8 @@ First, there are folders where you '''ARE''' told the encryption key. Use these 
 
 There is also a set of traces where you '''ARE NOT''' told the encryption key. This encryption key is the secret flag you must find. It will be submitted as a hex string. 
 {| class="wikitable"
-!
-!
+!Folder Name
+!Description
 |-
 |secretfixed_rand
 |Fixed encryption key, Random plaintext (Encryption key NOT provided to you).
