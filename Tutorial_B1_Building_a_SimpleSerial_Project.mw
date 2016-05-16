@@ -1,8 +1,6 @@
-= Tutorial #B1: Building a SimpleSerial Project =
-
 This tutorial will introduce you to the 'simpleserial' communications system. It will show you how to perform different operations on data based on input from the ChipWhisperer software. This can be used for building your own system which you wish to 'break'.
 
-== What is SimpleSerial ==
+= What is SimpleSerial =
 
 SimpleSerial is the communications protocol used for almost all of the ChipWhisperer demo project. It's a very basic serial protocol which can be easily implemented on most systems. This system communicates using a standard asyncronous serial protocol, 38400 baud, 8-N-1.
 
@@ -19,7 +17,7 @@ The following message types are defined:
 ; <code>rCBBD4A2B34F2571758FF6A797E09859D\\n</code>
 : This is the response from the system. If data has been encrypted with a 'p' for example, the system will respond with the 'r' sequence automatically. So sending the earlier example means the result of the encryption was <code>cbbd4a2b34f2571758ff6a797e09859d</code>.
 
-== Building the Basic Example ==
+= Building the Basic Example =
 
 You'll need to have installed avr-gcc and avr-libc. You may have already done this by following the installation guide, or if using the ChipWhisperer-VM it comes prepared with avr-gcc already setup. See the [[Installing_ChipWhisperer]] guide for details.
 
@@ -75,7 +73,7 @@ PLATFORM = CW303
 <p>Adjust the target platform by uncommenting (comments are lines starting with <code>#</code>) the appropriate platform, and commenting out the other choices.</p></li>
 <li>Run <code>make</code> again, and ensure the correct plaform is now printed.</li></ol>
 
-== Modifying the Basic Example ==
+= Modifying the Basic Example =
 
 At this point we want to modify the system to perform 'something' with the data, such that we can confirm the system is working. To do so, open the file <code>simpleserial-base.c</code> with a code editor such as ''Programmer's Notepad'' (which ships with WinAVR).
 
@@ -114,11 +112,11 @@ trigger_low();
  ********************************/</syntaxhighlight></li>
 <li>Rebuild the example using the <code>make</code> command. Remember you can press the up arrow on the keyboard to get recently typed commands in most OSes.</li></ol>
 
-== Completing Tutorial with CW1002 (ChipWhisperer Capture Rev2) ==
+= Completing Tutorial with CW1002 (ChipWhisperer Capture Rev2) =
 
 Note the following is only applicable to the use of the ChipWhisperer-Capture Rev 2 hardware (aka the CW1002). See [[#Completing_Tutorial_with_CW1173_(ChipWhisperer-Lite_Board)]] if you are not using this hardware.
 
-= Setting up the Hardware =
+== Setting up the Hardware ==
 
 This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. This hardware is the standard setup for all basic tutorials.
 
@@ -147,7 +145,8 @@ Jumpers on the Multi-Target Victim board are as follows:
 
 For more information on these jumper settings see [[CW301_Multi-Target]] .
 </blockquote>
-= Setting up the Software =
+
+== Setting up the Software ==
 
 It is assumed that you've already followed the guide in [[Installing_ChipWhisperer]]. Thus it is assumed you are able to communicate with the ChipWhisperer Capture Rev2 hardware (or whatever capture hardware you are using). Note in particular you must have configured the FPGA bitstream in the ChipWhisperer-Capture software, all part of the description in the installing guide.
 
@@ -155,7 +154,7 @@ Assuming this setup is complete, you can confirm you are able to communicate wit
 
 
 
-=== Programming the Example ===
+== Programming the Example ==
 
 <ol style="list-style-type: decimal;">
 <li>We assume the hardware is already connected as at the beginning of this tutorial. If not go back &amp; confirm this hardware setup.</li>
@@ -174,7 +173,7 @@ Be sure to select the correct .hex file! Otherwise the system won't work &amp; i
 </blockquote>
 That's it! You've now built a custom application &amp; programmed it into the AVR. We haven't yet verified it's working, which is the next step.
 
-=== Communicating from CW-Capture Software ===
+== Communicating from CW-Capture Software ==
 
 Next, open the CW-Capture software. Then perform the following steps:
 
@@ -213,11 +212,11 @@ Now, download the FPGA Firmware:
 <li>Resize the monitor window. The monitor will show sent &amp; received data to the target.</li>
 <li>Hit the ''Run 1'' button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. Note that each byte of the ''Text In'' is incremented in the ''Text Out'' field.</li></ol>
 
-== Completing Tutorial with CW1173 (ChipWhisperer-Lite Board) ==
+= Completing Tutorial with CW1173 (ChipWhisperer-Lite Board) =
 
-Note the following is only applicable to the use of the ChipWhisperer-Lite hardware (aka the CW1173). See [#Completing_Tutorial_with_CW1002_(ChipWhisperer_Capture_Rev2)]] if you are not using this hardware.
+Note the following is only applicable to the use of the ChipWhisperer-Lite hardware (aka the CW1173). See [[#Completing_Tutorial_with_CW1002_(ChipWhisperer_Capture_Rev2)]] if you are not using this hardware.
 
-=== Setting up the Hardware ===
+== Setting up the Hardware ==
 
 This tutorial uses the [[CW1173_ChipWhisperer-Lite]] hardware. No hardware setup is required normally, simply plug in the micro-USB cable:
 
@@ -227,17 +226,17 @@ Note that under ''no circumstances'' as part of the setup should you use the CW1
 
 [[File:cw1173/nofurniture.jpg|image]]
 
-=== Setting up the Software ===
+== Setting up the Software ==
 
 It is assumed that you've already followed the guide in [[Installing_ChipWhisperer]]. Thus it is assumed you are able to communicate with the ChipWhisperer CW1173 hardware (or whatever capture hardware you are using). Note in particular you must have configured the FPGA bitstream in the ChipWhisperer-Capture software, all part of the description in the [[Installing_ChipWhisperer]] guide.
 
 Assuming this setup is complete, you can confirm you are able to communicate with the hardware by running the example capture of traces given in the [[CW1173_ChipWhisperer-Lite]] quick-start.
 
-=== Programming the Example ===
+== Programming the Example ==
 
 Note with the CW1173 you need to configure a clock before programming of the device will succeed. Programming of the target device will be done as part of the CW-Capture software setup, discussed next.
 
-=== Communicating from CW-Capture Software ===
+== Communicating from CW-Capture Software ==
 
 Next, open the CW-Capture software. Then perform the following steps:
 
@@ -305,13 +304,13 @@ We will now need to configure the clock to the XMEGA target device.
 <li>Resize the monitor window. The monitor will show sent &amp; received data to the target.</li>
 <li>Hit the ''Run 1'' button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. Note that each byte of the ''Text In'' is incremented in the ''Text Out'' field.</li></ol>
 
-== Conclusion ==
+= Conclusion =
 
 In this tutorial you have learned how to build a custom program for the microcontroller on the ChipWhisperer target board. You have programmed the built .hex file into the microcontroller, and confirmed communications with the ChipWhisperer device.
 
 In future labs you will build on this knowledge to attack specific instructions.
 
-== Troubleshooting ==
+= Troubleshooting =
 
 Issues with compilation:
 
