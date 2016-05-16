@@ -296,6 +296,9 @@ We will now need to configure the clock to the XMEGA target device.
 <p>Note the programmer dialog not only shows the successful programming status, but also shows when the <code>.hex</code> file was last modified. Always confirm this matches with when you last remember compiling the program -- if it is widely different this suggests you have selected the wrong file!</p>
 
 <p>Finally we can check communications with the programmed file:</p></li></ol>
+
+[[File:Cw1173_connectrun.png|image]]
+
 <ol start="17" style="list-style-type: decimal;">
 <li>Close the XMEGA programmer dialog.</li>
 <li>Open the status monitor under <i>Tools > Encryption Status Monitor</i>.</li>
