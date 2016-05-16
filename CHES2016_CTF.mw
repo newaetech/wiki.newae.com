@@ -182,3 +182,5 @@ As part of the compilation & validation the server will tell you of any errors. 
 If you wish to compile the code on your own (HIGHLY recommended during debugging to avoid taxing the server systems), please download the full source code directory. This source code directly is the same as used on the server, where your code is automatically copied to the "firmware\simpleserial-aes\user_crypto" directory. To build run "make" in "simpleserial-aes", and have avr-gcc, avr-libc, and avr-binutils installed (or WinAVR on Windows).
 
 == White Box Cryptography ==
+
+The CTF also includes a chance to apply techniques against white-box crypto. For this you are given a Linux binary, where the secret key is somehow encoded inside this binary! Extract the AES-128 key for victory.
