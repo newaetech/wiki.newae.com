@@ -220,11 +220,11 @@ Note the following is only applicable to the use of the ChipWhisperer-Lite hardw
 
 This tutorial uses the [[CW1173_ChipWhisperer-Lite]] hardware. No hardware setup is required normally, simply plug in the micro-USB cable:
 
-[[File:tutorials/basic/aes/cw1173_microusb.jpg|image]]
+[[File:cw1173_microusb.jpg|image]]
 
 Note that under ''no circumstances'' as part of the setup should you use the CW1173 device to hold up furniture:
 
-[[File:cw1173/nofurniture.jpg|image]]
+[[File:nofurniture.jpg|image]]
 
 == Setting up the Software ==
 
