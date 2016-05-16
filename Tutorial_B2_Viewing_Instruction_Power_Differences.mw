@@ -24,7 +24,7 @@ trigger_high();
 trigger_low();
 /* End user-specific code here. *
  ********************************/</source></li>
-<li><p>Modify it to increment the value of each sent data byte:</p>
+<li><p>Modify it to do some work with no-ops and multiplication instructions:</p>
 <source lang="c">/**********************************
  * Start user-specific code here. */
 trigger_high();
@@ -92,7 +92,7 @@ Built for platform CW-Lite XMEGA
 
 -------- end --------</pre></li>
 <li>Following the instructions given in [[Tutorial_B1_Building_a_SimpleSerial_Project]], program the AVR or XMEGA with your new code. Note you __do not__ need to close the programming window. If you will be doing frequent modifications to the source code, this can simplify your life since you only need to hit the '''Program''' button in AVRStudio to download new code.</li>
-<li>Ensure the hardware is setup as in [[Tutorial_B1_Building_a_SimpleSerial_Project]], if using the CW1002 ensure the SMA cable is also connected as described in the previous tutorial.</li></ol>
+<li>Ensure the hardware is setup as in [[Tutorial_B1_Building_a_SimpleSerial_Project]]. If using the CW1002, ensure the SMA cable is also connected as described in the previous tutorial.</li></ol>
 
 = Capturing Power Traces =
 
