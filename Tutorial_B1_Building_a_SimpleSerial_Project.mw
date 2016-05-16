@@ -133,7 +133,7 @@ The Multi-Target board should be plugged into the ChipWhisperer Capture Rev2 via
 </blockquote>
 Jumpers on the Multi-Target Victim board are as follows:
 
-<blockquote>[[File:aes/hw-2.jpg|600px|image]]
+<blockquote>[[File:hw-2.jpg|600px|image]]
 
 # NO jumpers mounted in XMEGA Portion or SmartCard Portion (JP10-JP15, JP19, JP7-JP8, JP17)
 # 3.3V IO Level (JP20 set to INT.)
