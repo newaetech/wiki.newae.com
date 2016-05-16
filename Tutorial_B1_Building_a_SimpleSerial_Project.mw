@@ -320,3 +320,5 @@ mkdir objdir</pre></li>
 <li>For the AVR Studio USB Drivers, you'll need to download a [https://gallery.atmel.com/Products/Details/004ccabd-e18e-431a-8557-83deaea23341 Special Update] from Atmel.</li>
 <li>You may wish to use the &quot;ChipWhisperer Virtual Machine&quot; on newer Windows systems, which does not require any of the above setup.</li></ol>
 </blockquote>
+
+[[Category:Tutorials]]
