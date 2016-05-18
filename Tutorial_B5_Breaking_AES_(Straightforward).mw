@@ -18,7 +18,7 @@ NOTE: You can see a Quick-Start Guide and Video for this target on the [[CW1173_
 <li> The software AES implementation that will run on the target is located in <code>chipwhisperer\hardware\victims\firmware\simpleserial-aes</code>. In a terminal window, navigate here and run the command <code>make</code> to build the firmware. 
 
 As in previous tutorials, ensure that the firmware has been built for the correct board. Here, the output of <code>make</code> should end like
-<par>
+<pre>
 AVR Memory Usage
 ----------------
 Device: atxmega128d3
@@ -33,7 +33,7 @@ Data:        352 bytes (4.3% Full)
 Built for platform CW-Lite XMEGA
 
 -------- end --------
-</par>
+</pre>
 Make sure that the platform is correct.
 </li>
 
