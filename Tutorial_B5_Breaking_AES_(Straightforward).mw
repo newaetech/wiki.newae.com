@@ -13,7 +13,37 @@ NOTE: You can see a Quick-Start Guide and Video for this target on the [[CW1173_
 
 <ol style="list-style-type: decimal;">
 <li><p>Connect the CW1173 by micro USB cable to computer.</p>
-<blockquote><p>[[File:cw1173_microusb.jpg|image]]</p></blockquote></li></ol>
+<blockquote><p>[[File:cw1173_microusb.jpg|image]]</p></blockquote>
+</li>
+<li> The software AES implementation that will run on the target is located in <code>chipwhisperer\hardware\victims\firmware\simpleserial-aes</code>. In a terminal window, navigate here and run the command <code>make</code> to build the firmware. 
+
+As in previous tutorials, ensure that the firmware has been built for the correct board. Here, the output of <code>make</code> should end like
+<par>
+AVR Memory Usage
+----------------
+Device: atxmega128d3
+
+Program:    3078 bytes (2.2% Full)
+(.text + .data + .bootloader)
+
+Data:        352 bytes (4.3% Full)
+(.data + .bss + .noinit)
+
+
+Built for platform CW-Lite XMEGA
+
+-------- end --------
+</par>
+Make sure that the platform is correct.
+</li>
+
+<li> Upload the firmware to the target chip. The process to do this is the same as the previous tutorials:
+* Open the ChipWhisperer Capture software.
+* Connect to the ChipWhisperer. (You can do this using a script or by filling out the generic settings and connecting to the board yourself.)
+* Open the XMEGA Programmer (**Tools > ChipWhisperer-Lite XMEGA Programmer**).
+* Find the hex file you compiled and program it onto the target.
+</li>
+</ol>
 
 === Capturing the Traces ===
 
