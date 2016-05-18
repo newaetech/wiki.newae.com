@@ -1,6 +1,5 @@
 This tutorial will take you through a complete attack on a software AES implementation. The specific implementation being attacked is a well-known AES implementation written in C, which is likely to be similar to other implementations used by proprietary systems.
 
-
 = Capturing =
 This tutorial runs on four different hardware targets. You only need to follow the steps for your given hardware.
 
@@ -171,4 +170,4 @@ This tutorial uses a simple script that ships with the ChipWhisperer Capture sof
 
 This has only briefly outlined how to perform a CPA attack. You can move onto more advanced tutorials, especially showing you how the actual attack works when performed manually.
 
-[Category:Tutorials]
+[[Category:Tutorials]]
