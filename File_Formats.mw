@@ -6,7 +6,7 @@ This page explains some of the file formats used in the ChipWhisperer Software.
 
 Project files are stored as a simple text-file. The most basic file will include information about stored traces, along with some basic project file information.
 
-As an example, the following shows a simple project file named "test_cw305_artix100_10k_4seg.cwp":<syntaxhighlight>
+As an example, the following shows a simple project file named "test_cw305_artix100_10k_4seg.cwp":<syntaxhighlight lang="cfg">
 [Trace Management]
 tracefile0 = test_cw305_artix100_10k_4seg_data\traces\config_2016.05.15-18.21.25_.cfg
 enabled0 = True
@@ -25,11 +25,49 @@ Project Author = Unknown
 Program Version = V3.0
 </syntaxhighlight>The most important files are the ones contained in the <code>[Trace Management]</code> section. These contain links to the trace data stored in the project. The specific link is to a configuration file, which is described below.
 
-Normally, in the same folder that the <code>.cwp</code> file is located will be a folder with the same suffix. For example if you have a file called <code>supersecret_aes_test.cwp</code>, there will be a directory called <code>supersecret_aes_test</code>. This directory will contain the trace data along with additional files generated during analysis. Note it's '''not required''' that all files are located in this directory, as you can reference another location.
+Normally, in the same folder that the <code>.cwp</code> file is located will be a folder with the same suffix. For example if you have a file called <code>supersecret_aes_test.cwp</code>, there will be a directory called <code>supersecret_aes_test</code>. This directory will contain the trace data along with additional files generated during analysis. Note it's '''not required''' that all files are located in this directory, as you can reference another  location.
 
 {{Infobox|If you perform capture before saving a project file, files will be written to a '''temporary directory'''. In this case your project file will reference this temporary directory. Files may not be automatically moved out of this temporary directory when you save a project, but you can always use the "Consolidate" option to force all data to be moved into the project file directory.}}
 
 ==Trace Files==
 Trace files in the ChipWhisperer software are defined through a configuration file, with the suffix <code>.cfg</code>. Any trace added to the ChipWhisperer project will have a configuration file - this file does not store data, but tells the software where it is stored and what format it is stored in.
 
-While ChipWhisperer has a "native" file format, you can also interface to existing files. We'll first look at the configuration file before exploring the
+While ChipWhisperer has a "native" file format, you can also interface to existing files. We'll first look at the configuration file before exploring the various trace file formats supported.
+
+The most basic trace file configuration has this format, for example this file is <code>config_2016.05.15-18.21.25_.cfg</code> that was referenced earlier:<syntaxhighlight lang="cfg">
+[Trace Config]
+numTraces = 2500
+format = native
+numPoints = 240
+prefix = 2016.05.15-18.21.25_
+date = 2016-05-15 18:21:25
+scopeSampleRate = 0
+notes = ""
+scopeName = ChipWhisperer/OpenADC
+scopeXUnits = 0
+targetSW = unknown
+targetHW = ChipWhisperer CW305 (Artix-7)
+scopeYUnits = 0
+</syntaxhighlight>The most important lines are the first three (note - order is NOT important, only the name is used as an index), shown here:
+{| class="wikitable"
+!Option Name
+!Option Description
+!Format
+|-
+|numTraces
+|Number of traces contained in this reference.
+|Int
+|-
+|format
+|The format used to store the traces.
+|String
+|-
+|numPoints
+|Number of samples (points) within each trace.
+|Int
+|}
+The remaining options are used to populate the "trace manager" window.
+
+Let's now investigate specific options for the "native" file format, along with format information.
+
+=== Native File Format ===
