@@ -591,3 +591,5 @@ for b in pge: print "%02d "%b,
 == Conversion of Correlation Equation ==
 
 The following shows the derivation of the online correlation equation from the original form:
+
+[[File:Rij_conversion.png]]
