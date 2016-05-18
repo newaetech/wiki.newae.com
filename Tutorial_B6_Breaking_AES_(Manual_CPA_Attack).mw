@@ -6,7 +6,7 @@ As a background on the CPA attack, please see the section [[Correlation Power An
 
 Assuming you ''actually'' read that, it should be apparent that there is a few things we need to accomplish:
 
-# Reading the data , which consists of the analog waveform (trace) and input text sent to the encryption core
+# Reading the data, which consists of the analog waveform (trace) and input text sent to the encryption core
 # Making the power leakage model, where it takes a known input text along with a guess of the key byte
 # Implementing the correlation equation, and then looping through all the traces
 # Ranking the output of the correlation equation to determine the most likely key
