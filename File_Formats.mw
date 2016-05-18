@@ -4,6 +4,8 @@ This page explains some of the file formats used in the ChipWhisperer Software.
 
 ==Project Files==
 
+Project files are stored as a simple text-file. The most basic file will include information about stored traces, along with some basic project file information.
 
+As an example, the following shows a simple project file named "test_cw305_artix100_10k_4seg.cwp":
 
 ==Trace Files==
