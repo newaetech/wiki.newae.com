@@ -117,5 +117,76 @@ Each of these is a [http://Docs.scipy.org/doc/numpy/reference/generated/numpy.ar
 == Load Native File Format, modify a value, Save File(s) ==
 
 == Native File Format to MATLAB Workspace ==
+The following will convert a single file into a MATLAB workspace:<syntaxhighlight lang="python">
+import scipy.io
+import numpy as np
+
+def native_to_matlab(prefix):
+    tracedata = np.load(prefix + '_traces.npy')
+    textin = np.load(prefix + '_textin.npy')
+    textout = np.load(prefix + '_textout.npy')
+    key = np.load(prefix + '_keylist.npy')
+
+    scipy.io.savemat('fileout.mat', {
+     "traces":tracedata,
+     "textin":textin,
+     "textout":textout,
+     "key":key
+    })
+
+prefix = r'2016.02.24-19.07.03'
+#Can point to full directory like:
+#prefix = r'C:\Temp\demo\traces_capdir48\knownrand_fixed\knownrand_fixed_P48_data\traces\2016.02.24-19.07.03'
+
+native_to_matlab(prefix)
+</syntaxhighlight>This file can be saved in a location where you want the output MATLAB file. You can specify the full directory link if you are not saving the MATLAB file to the same location as the .npy file. This will operate on a single trace-file only, not on an entire set. If you wish to operate on an entire set, you can load all such files and save the output once like this:<syntaxhighlight lang="python">
+import scipy.io
+import numpy as np
+
+class native_to_matlab(object):
+    
+    def __init__(self):
+        self.tracedata = None
+        self.textin = None
+        self.textout = None
+        self.key = None
+        
+    def add_trace(self, prefix):
+        _tracedata = np.load(prefix + '_traces.npy')
+        _textin = np.load(prefix + '_textin.npy')
+        _textout = np.load(prefix + '_textout.npy')
+        _key = np.load(prefix + '_keylist.npy')
+        
+        if self.tracedata is None:
+            self.tracedata = _tracedata
+            self.textin = _textin
+            self.textout = _textout
+            self.key = _key
+            
+        else:
+            self.tracedata.append(_tracedata)
+            self.textin.append(_textin)
+            self.textout.append(_textout)
+            self.key.append(_key)
+    
+    def write_matlab(self, fname):
+        scipy.io.savemat(fname, {
+         "traces":self.tracedata,
+         "textin":self.textin,
+         "textout":self.textout,
+         "key":self.key
+        })
+
+n2m = native_to_matlab()
+    
+prefix_list = [r'2016.02.24-19.07.03'
+#Can point to full directory like:
+root_dir = r'C:\Temp\demo\traces_capdir48\knownrand_fixed\knownrand_fixed_P48_data\traces\'
+
+for prefix in prefix_list:
+    n2m.add_trace(root_dir + prefix)
+    
+n2m.write_matlab('fileout.mat')
+</syntaxhighlight>
 
 == Native File Format to Text Files ==
