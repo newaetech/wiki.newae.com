@@ -72,8 +72,49 @@ Let's now investigate specific options for the "native" file format, along with 
 
 === Native File Format ===
 
+Specific options for the native file format are:
+{| class="wikitable"
+!Option Name
+!Option Description
+!Format
+|-
+|prefix
+|Prefix for the files (trace, textin, textout, etc)
+|String
+|}
 
+The prefix declares specific files. For example the prefix in the above example is <code>2016.05.15-18.21.25_</code>, which means data files will start with <code>2016.05.15-18.21.25_</code>.
+
+The suffix for data files comes from the type of file, given in this table:
+{| class="wikitable"
+!File Suffix
+!File Description
+!File Type
+|-
+|keylist.npy
+|List of encryption key used for each trace. If the same key is used for each trace, will be the same key repeated N times.
+|
+|-
+|knownkey.npy
+|If same key used for all traces, contains the encryption key.
+|
+|-
+|textin.npy
+|Input data for each trace (i.e., plaintext if encryption).
+|
+|-
+|textout.npy
+|Output data for each trace (i.e., ciphertext if encryption).
+|
+|-
+|traces.npy
+|Power measurement for each trace.
+|
+|}
+Each of these is a [http://Docs.scipy.org/doc/numpy/reference/generated/numpy.array.html NumPy array], where the first element is trace n=0, the second is trace n=1, etc. You can load this file using the NumPy load command.
 = Example Scripts =
+
+== Load Native File Format, modify a value, Save File(s) ==
 
 == Native File Format to MATLAB Workspace ==
 
