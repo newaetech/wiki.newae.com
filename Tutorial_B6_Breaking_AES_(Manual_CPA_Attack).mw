@@ -17,11 +17,8 @@ It is assumed you are experienced with Python development, or have at least run 
 
 Initially, we'll be using Python interactively. This means to just run <code>python</code> at the command prompt, and enter commands into the window. Later we'll move onto writing a simple script which executes these commands.
 
-Note if you want to use matplotlib, and are running a native Python installation, you may need to install that package. If the <code>import matplotlib</code> command listed in the next section fails, you'll need to install these, which again for Windows you can get from the [http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyparsing Pre-Built Windows Binaries].
+Note if you want to use matplotlib, and are running a native Python installation, you may need to install that package. If the <code>import matplotlib</code> command listed in the next section fails, you'll need to install these, which again for Windows you can get from the [http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyparsing Pre-Built Windows Binaries]
 
-
-<blockquote>matplotlib python-dateutil pyparsing six
-</blockquote>
 == Exploring the Trace Data ==
 
 The next step is to read the trace data. I assume you've already have performed a capture. You need to find the source trace files, which have a <code>.npy</code> extension. You can follow the path of a <code>.cwp</code> (ChipWhisperer Project) file to find the associated trace <code>.cfg</code> file. The same directory as the <code>.cfg</code> file will have the <code>.npy</code> files.
