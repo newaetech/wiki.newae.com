@@ -4,11 +4,11 @@ This tutorial will demonstrate how to perform a CPA attack using a simple Python
 
 As a background on the CPA attack, please see the section [[Correlation Power Analysis]]. It's assumed you've read that section and come back to this. Ok, you've done that? Good let's continue.
 
-Assuming you ''actually'' read that, it should be apparant that there is a few things we need to accomplish:
+Assuming you ''actually'' read that, it should be apparent that there is a few things we need to accomplish:
 
-# Reading the data- the analog waveform (trace) and input text sent to the encryption core
+# Reading the data , which consists of the analog waveform (trace) and input text sent to the encryption core
 # Making the power leakage model, where it takes a known input text along with a guess of the key byte
-# Implementing the Correlation equation, and then looping through all the traces
+# Implementing the correlation equation, and then looping through all the traces
 # Ranking the output of the correlation equation to determine the most likely key
 
 == Setting Up the Project ==
