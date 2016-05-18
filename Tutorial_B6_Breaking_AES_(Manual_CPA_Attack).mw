@@ -21,12 +21,13 @@ Note if you want to use matplotlib, and are running a native Python installation
 
 == Exploring the Trace Data ==
 
-The next step is to read the trace data. I assume you've already have performed a capture. You need to find the source trace files, which have a <code>.npy</code> extension. You can follow the path of a <code>.cwp</code> (ChipWhisperer Project) file to find the associated trace <code>.cfg</code> file. The same directory as the <code>.cfg</code> file will have the <code>.npy</code> files.
+The next step is to read the trace data. If you don't have any data yet, you should follow the steps in [[Tutorial B5 Breaking AES (Straightforward)]] to record some traces. 
 
-As an example, consider our <code>.cwp</code> file contains this line:
+You need to find the source trace files, which have a <code>.npy</code> extension. You can follow the path of a <code>.cwp</code> (ChipWhisperer Project) file to find the associated trace <code>.cfg</code> file. The same directory as the <code>.cfg</code> file will have the <code>.npy</code> files. As an example, say that our <code>.cwp</code> file contains this line:
 
 <pre>[Trace Management]
 tracefile0 = default-data-dir\traces\config_2013.11.18-16.40.58_.cfg</pre>
+
 Opening the <code>.cfg</code> file shows the <code>prefix=</code> line, which tells us the name of the data files:
 
 <pre>[Trace Config]
@@ -34,7 +35,7 @@ numTraces = 50
 format = native
 numPoints = 3000
 prefix = 2013.11.18-16.40.58_</pre>
-This means our trace file is in <code>default-data-dir\traces\2013.11.18-16.40.58_traces.npy</code> for example, and the plaintext is in <code>default-data-dir\traces\2013.11.18-16.40.58_textin.npy</code>.
+This means our trace file is in <code>default-data-dir\traces\2013.11.18-16.40.58_traces.npy</code> and the plaintext is in <code>default-data-dir\traces\2013.11.18-16.40.58_textin.npy</code>.
 
 Using default installs, this directory will be <code>C:\chipwhisperer\software\chipwhisperer\capture\default-data-dir\traces</code>. Let's assume you've run a capture and have 50 traces of our usual AVR target.
 
@@ -45,9 +46,11 @@ To read them, first import NumPy to your Python console, and optionally matplotl
 >>> import matplotlib.pyplot as plt</pre>
 Then use <code>np.load</code> as such (note: the '''r''' infront of the string means you don't need to escape slahes
 
-<blockquote>>>> traces = np.load(r'C:chipwhisperersoftwarechipwhisperercapturedefault-data-dirtraces2013.11.18-16.40.58_traces.npy') >>> pt = np.load(r'C:chipwhisperersoftwarechipwhisperercapturedefault-data-dirtraces2013.11.18-16.40.58_textin.npy')
-</blockquote>
-You can print for example the first plaintext sent to the device:
+<pre>
+>>> traces = np.load(r'C:chipwhisperersoftwarechipwhisperercapturedefault-data-dirtraces2013.11.18-16.40.58_traces.npy') 
+>>> pt = np.load(r'C:chipwhisperersoftwarechipwhisperercapturedefault-data-dirtraces2013.11.18-16.40.58_textin.npy')
+</pre>
+You can print, for example, the first plaintext sent to the device:
 
 <pre>>>> pt[0]
 array([ 63,   3,  80, 100,  21, 236,  26,  68,  88, 177, 135, 226, 198, 205,  26, 133], dtype=uint8)</pre>
@@ -62,7 +65,7 @@ And finally plot a single power trace:
 <pre>>>> plt.plot(traces[0])
 [<matplotlib.lines.Line2D object at 0x05EF3CF0>]
 >>> plt.show()</pre>
-After executing <code>plot.show()</code> you should get a window to pop up with the single power trace.
+After executing <code>plt.show()</code> you should get a window to pop up with the single power trace.
 
 == Reading the Trace Data in a Script ==
 
