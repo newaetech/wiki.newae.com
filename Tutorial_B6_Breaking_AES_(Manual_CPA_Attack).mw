@@ -480,11 +480,14 @@ When running the program, uncomment the <code>#numtraces = 10</code> line and se
 
 == Future Changes ==
 
-The implementation of the correlation function runs as a loop over all traces. Ideally we'd like to implement this as a 'online' calculation; that is we can add a trace in, observe the output, add another trace in, observe the output, etc. When generating plots of the Partial Guessing Entropy (PGE) vs. number of traces this is greatly preferred, since otherwise we need to run the loop many times!
+The implementation of the correlation function runs as a loop over all traces. Ideally we'd like to implement this as a 'online' calculation; that is, we can add a trace in, observe the output, add another trace in, observe the output, etc. When generating plots of the Partial Guessing Entropy (PGE) vs. number of traces this is greatly preferred, since otherwise we need to run the loop many times!
 
-We can use an alternate form of the [[File:rij.png]] equation, which explicitly stores sums of the variables. This is easier to perform online calculation with, since when adding a new trace it's simple to update these sums. This form of the equation looks like:
+We can use an alternate form of the correlation equation, which explicitly stores sums of the variables. This is easier to perform online calculation with, since when adding a new trace it's simple to update these sums. This form of the equation looks like:
+
+<math>r_{i,j} = \frac{D \sum_{d=1}^D h_{d,i}t_{d,j} - \sum_{d=1}^D h_{d,i} \sum_{d=1}^D t_{d,j}}{\sqrt{\Big(\big(\sum_{d=1}^D h_{d,i}\big)^2 - D\sum_{d=1}^D h_{d,i}^2\Big)\Big(\big(\sum_{d=1}^D t_{d,j}\big)^2 - D\sum_{d=1}^D t_{d,j}^2\Big)}}</math>
 
 <blockquote></blockquote>
+
 == Complete Program ==
 
 For reference here is the complete program. Before running you might want to make a few adjustments:
