@@ -71,3 +71,10 @@ The remaining options are used to populate the "trace manager" window.
 Let's now investigate specific options for the "native" file format, along with format information.
 
 === Native File Format ===
+
+
+= Example Scripts =
+
+== Native File Format to MATLAB Workspace ==
+
+== Native File Format to Text Files ==
