@@ -27,7 +27,7 @@ Program Version = V3.0
 
 Normally, in the same folder that the <code>.cwp</code> file is located will be a folder with the same suffix. For example if you have a file called <code>supersecret_aes_test.cwp</code>, there will be a directory called <code>supersecret_aes_test</code>. This directory will contain the trace data along with additional files generated during analysis. Note it's '''not required''' that all files are located in this directory, as you can reference another location.
 
-If you perform capture before saving a project file, files will be written to a '''temporary directory'''. In this case your project file will reference this temporary directory. Files may not be automatically moved out of this temporary directory when you save a project, but you can always use the "Consolidate" option to force all data to be moved into the project file directory.
+{{Infobox|If you perform capture before saving a project file, files will be written to a '''temporary directory'''. In this case your project file will reference this temporary directory. Files may not be automatically moved out of this temporary directory when you save a project, but you can always use the "Consolidate" option to force all data to be moved into the project file directory.}}
 
 ==Trace Files==
 Trace files in the ChipWhisperer software are defined through a configuration file, with the suffix <code>.cfg</code>. Any trace added to the ChipWhisperer project will have a configuration file - this file does not store data, but tells the software where it is stored and what format it is stored in.
