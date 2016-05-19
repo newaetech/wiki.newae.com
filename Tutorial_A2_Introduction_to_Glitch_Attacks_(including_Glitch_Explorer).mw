@@ -253,7 +253,7 @@ With some background, let's now check some glitches. Assuming you've setup the e
 
 <ol style="list-style-type: decimal;">
 <li><p>Adjust the settings for ''Glitch Width (as % of period)'' , ''Glitch Offset (as % of period)'', and ''Repeat'' based on your target and the following table for different targets:</p>
-{|
+{| class="wikitable"
 ! Parameter
 ! AVR on Multi-Target (CW301)
 ! CW-Lite XMEGA Board
@@ -279,6 +279,8 @@ With some background, let's now check some glitches. Assuming you've setup the e
 <li>You may also adjust the ''Repeat'' option, or cause it to glitch several instructions.</li></ol>
 
 '''Be aware that you may crash the target!''' In the previous examples the target could have reset after each glitch. It may simply go into another infinite loop however, or even enter invalid states. Again force a hardware reset of the target in these cases. It may appear like the target was never glitched, whereas in reality it was glitched into some invalid state.
+
+'''Note:''' the boards are extremely sensitive to the glitch width and offset. You may have trouble finding settings that cause a glitch. Don't get too hung up on this; the following sections provide a more reliable method of glitching a target.
 
 = Automatically Resetting Target =
 
