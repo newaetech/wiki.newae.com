@@ -253,7 +253,7 @@ With some background, let's now check some glitches. Assuming you've setup the e
 
 <ol style="list-style-type: decimal;">
 <li><p>Adjust the settings for ''Glitch Width (as % of period)'' , ''Glitch Offset (as % of period)'', and ''Repeat'' based on your target and the following table for different targets:</p>
-<blockquote>{|
+{|
 ! Parameter
 ! AVR on Multi-Target (CW301)
 ! CW-Lite XMEGA Board
@@ -270,7 +270,7 @@ With some background, let's now check some glitches. Assuming you've setup the e
 | 5
 | 105
 |}
-</blockquote></li>
+</li>
 <li>Ensure ''Glitch Trigger'' is ''Manual''</li>
 <li>Hit the ''Manual Trigger'' button</li>
 <li>See if you end up with either the target resetting (reprints <code>hello\n</code>), or if the loop count becomes wrong. You may need to press the ''Manual Trigger'' button several times quickly. The objective is to have an incorrect loop count, meaning you caused a glitch!</li>
