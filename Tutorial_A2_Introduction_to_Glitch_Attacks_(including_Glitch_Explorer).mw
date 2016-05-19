@@ -452,7 +452,7 @@ The desired response of the system if the glitch was successful is set at |3|.
 
 The expected and desired responses are expected to be Python expressions, where <code>s</code> is a str-type variable which contains the response of the system. The expression must evaulate to <code>True</code> or <code>False</code>. For example, the following shows examples of what you could use as possible expressions:
 
-{|
+{| class="wikitable"
 ! Desired Behavior
 ! Parameter Expression
 |-
