@@ -301,7 +301,11 @@ Similiarly for the mean of all traces, <math>\overline {{t_j}}</math>. Remember 
 meant = np.mean(traces, axis=0, dtype=np.float64)</pre>
 Next, let's again consider the three sums to be implemented:
 
-<math>sumnum = {\sum\nolimits_{d = 1}^D {\left[ {\left( {{h_{d,i}} - \overline {{h_i}} } \right)\left( {{t_{d,j}} - \overline {{t_j}} } \right)} \right]} }</math><math>sumdem1 = \sum\nolimits_{d = 1}^D {{{\left( {{h_{d,i}} - \overline {{h_i}} } \right)}^2}}</math><math>sumdem2 = \sum\nolimits_{d = 1}^D {{{\left( {{t_{d,j}} - \overline {{t_j}} } \right)}^2}}</math>
+<math>sumnum = {\sum\nolimits_{d = 1}^D {\left[ {\left( {{h_{d,i}} - \overline {{h_i}} } \right)\left( {{t_{d,j}} - \overline {{t_j}} } \right)} \right]} }</math>
+
+<math>sumdem1 = \sum\nolimits_{d = 1}^D {{{\left( {{h_{d,i}} - \overline {{h_i}} } \right)}^2}}</math>
+
+<math>sumdem2 = \sum\nolimits_{d = 1}^D {{{\left( {{t_{d,j}} - \overline {{t_j}} } \right)}^2}}</math>
 
 Note there is some common terms in all three of these, along with a common summation index. We can thus implement them as follows:
 
@@ -316,7 +320,7 @@ for tnum in range(numtraces):
 The size of sumnum, sumden1, and sumden2 are all '''1 x numpoints''', meaning an output is generated for each point of the input. Note each of these is calculated independantly, thus we simply avoid looping through every point by using the vector notation of NumPy. Finally, we calculate the single output vector &amp; save it as a specific key guess:
 
 <pre>cpaoutput[kguess] = sumnum / np.sqrt( sumden1 * sumden2 )</pre>
-Tieing it all together, we end up with the following:
+Tying it all together, we end up with the following:
 
 <pre>import numpy as np
 
@@ -421,6 +425,7 @@ Subkey  0, hyp = 2d:  0.429089006754
 Subkey  0, hyp = ff:  0.449003229759
 Best Key Guess: 
 2b  00  00  00  00  00  00  00  00  00  00  00  00  00  00  00 </pre>
+
 == Calculating The PGE ==
 
 The Partial Guessing Entropy (PGE) is a useful metric of where the correct answer is ranked. This requires us to know the actual encryption key used during operation. If you've recorded traces with the regular ChipWhisperer system, this is stored alongside the traces &amp; textin file. Check if you have a file called either <code>_knownkey.npy</code> or <code>_keylist.npy</code>. The knownkey file contains a single line, and the keylist contains a list of the encryption key corresponding with every input.
