@@ -684,7 +684,7 @@ The following assumes you have already completed the previous steps:
 <blockquote><ol style="list-style-type: lower-alpha;">
 <li>Set ''Tuning Parameters'' to 1</li>
 <li><p>Set Parameter 0 options to:</p>
-{|
+{| class="wikitable"
 ! Option
 ! Value
 |-
