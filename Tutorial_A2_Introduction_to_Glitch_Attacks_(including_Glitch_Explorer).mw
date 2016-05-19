@@ -527,7 +527,7 @@ The next step is to tune the glitch offset to attempt to get a successful clock 
 <ol style="list-style-type: decimal;">
 <li>Change the ''Tuning Parameters'' to be ''1''.</li>
 <li><p>Set the following in Parameter 0 options:</p>
-<blockquote>{|
+{| class="wikitable"
 ! Option
 ! Value
 |-
@@ -552,7 +552,7 @@ The next step is to tune the glitch offset to attempt to get a successful clock 
 | Repeat
 | 1
 |}
-</blockquote>
+
 <p>The ''Script Command'' option can be found by manually making an adjustment to the ''Glitch Offset (as % of period)'' in the GUI, and observing the string printed to the ''Script Commands'' tab. The numeric value of the command is ignored (i.e. the third element of the array) by the glitch explorer, instead the tuning value will always be inserted.</p></li>
 <li><p>On the main GUI in the ''Scope Settings'' tab, change the following values for the ''Glitch Module'':</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
@@ -576,7 +576,7 @@ To continue the tutorial, the following steps will be taken:
 <ol style="list-style-type: decimal;">
 <li>In the ''Glitch Explorer'', set the ''Tuning Parameters'' to ''2''.</li>
 <li><p>Configure the second parameter with the following:</p>
-<blockquote>{|
+{| class="wikitable"
 ! Option
 ! Value
 |-
@@ -601,7 +601,7 @@ To continue the tutorial, the following steps will be taken:
 | Repeat
 | 1
 |}
-</blockquote></li>
+</li>
 <li>Change the ''Range'' of the first parameter ''Glitch Offset'' to span from 1 to 25, since it appeared that negative offsets were never successful in our previous attempts. Be sure to reset the ''Value'' of this parameter to your desired starting point (probably ''1''). This will reduce the search time.</li>
 <li>On the main GUI in the ''Scope Settings'' tab, adjust the ''Glitch Module'' repeat parameter to be 1. We are now attempting to acheive success with a single clock cycle being glitched.</li>
 <li>Still in the main GUI, adjust the number of traces per capture to be 1000. This reflects the number of iterations required to run through both loops (20 x 50).</li>
