@@ -1,12 +1,10 @@
-= Tutorial #A2: Introduction to Glitch Attacks (including Glitch Explorer) =
-
 This advanced tutorial will demonstrate clock glitch attacks using the ChipWhisperer system. This will introduce you to many required features of the ChipWhisperer system when it comes to glitching. This will be built on in later tutorials to generate voltage glitching attacks, or when you wish to attack other targets.
 
 You can follow along with this video for details of this page too:
 
 [[File:youtube-glitch.png|YouTubeGlitch]]_
 
-== Background on Clock Glitching ==
+= Background on Clock Glitching =
 
 Digital hardware devices almost always expect some form of reliable clock. We can manipulate the clock being presented to the device to cause unintended behaviour. We'll be concentrating on microcontrollers here, however other digital devices (e.g. hardware encryption accelerators) can also have faults injected using this technique.
 
@@ -71,7 +69,7 @@ int auth_pam(const char *service_name, uid_t uid, const char *username)
 }</pre>
 This is the login code for the Linux OS. Note that if we could skip the check of <code>if (uid != 0)</code> and simply branch to the end, we could avoid having to enter a password. This is the power of glitch attacks - not that we are breaking encryption, but simply bypassing the entire authentication module!
 
-== Glitch Hardware ==
+= Glitch Hardware =
 
 The ChipWhisperer Glitch system uses the same synchronous methodology as it's Side Channel Analysis (SCA) capture. A system clock (which can come from either the ChipWhisperer or the Device Under Test (DUT)) is used to generate the glitches. These glitches are then inserted back into the clock, although it's possible to use the glitches alone for other purposes (i.e. for voltage glitching, EM glitching).
 
@@ -83,7 +81,7 @@ The enable line is used to determine when glitches are inserted. Glitches can be
 
 [[File:glitchgen-mux.png|frame|none]]
 
-=== Hardware Support ===
+== Hardware Support ==
 
 The phase shift blocks use the Digital Clock Manager (DCM) blocks within the FPGA. These blocks have limited support for run-time configuration of parameters such as phase delay and frequency generation, and for maximum performance the configuration must be fixed at design time. The Xilinx-provided run-time adjustment can shift the phase only by about +/- 5nS in 30pS increments (exact values vary with operating conditions).
 
@@ -91,7 +89,7 @@ For most operating conditions this is insufficient - if attacking a target at 7.
 
 If in the course of following this tutorial you find the FPGA appears to stop responding (i.e. certain features no longer work correctly), it could be the partial reconfiguration data is incorrect.
 
-=== Python GUI Interface ===
+== Python GUI Interface ==
 
 The portion of the GUI of interest to us is primarily located in this section:
 
@@ -99,9 +97,9 @@ The portion of the GUI of interest to us is primarily located in this section:
 
 If the Partial Reconfiguration system has been disabled (due to missing PR files or files differing from the FPGA bitstream) the two fields marked that say (as % of period) will be disabled. Only the fields labeled (fine adjust) will be available.
 
-== Setting up Glitch Example ==
+= Setting up Glitch Example =
 
-=== Firmware Setup ===
+== Firmware Setup ==
 
 The glitch examples requires you to program the target device. The software to program is located at <code>chipwhisperer\hardware\victims\firmware\glitch-simple</code> of your ChipWhisperer release or GIT clone. As before, open the <code>Makefile</code> and be sure to uncomment the appropriate target to reflect your hardware:
 
@@ -159,13 +157,13 @@ You should confirm that <code>glitch_infinite()</code> is actually called from t
 }</pre>
 Once the AVR/XMEGA is programmed (see previous tutorials), you may need to setup a few jumpers depending on your hardware.
 
-=== Hardware Setup ===
+== Hardware Setup ==
 
-==== XMEGA Target (CW1173 + CW303) ====
+=== XMEGA Target (CW1173 + CW303) ===
 
 The XMEGA target on the ChipWhisperer-Lite requires no configuration. If you have seperate the boards, you can attached them with the 20-pin cable.
 
-==== Multi-Target Board, AVR (CW301) ====
+=== Multi-Target Board, AVR (CW301) ===
 
 The hardware is almost as in previous incarnations. The difference is the 'FPGAOUT' is bridged to the AVR clock. This example will use the CLKGEN feature.
 
@@ -173,7 +171,7 @@ The AVR is being used as the glitch target. The following figure shows the expec
 
 [[File:glitchhw.jpg|image]]
 
-=== Software Setup ===
+== Software Setup ==
 
 <ol style="list-style-type: decimal;">
 <li><p>Connect to the ChipWhisperer device:</p>
@@ -239,7 +237,7 @@ We'll now look at glitching this routine. You should inspect the source code to 
 }</pre>
 If the routine works as expected, we would expect it to print <code>250000 500 500</code>. If a glitch interrupts the program flow, we would expect some of those values to be incorrect. This could be because a loop was skipped, an addition done incorrectly, or the program flow was exited unexpectedly.
 
-== Manual Glitch Trigger ==
+= Manual Glitch Trigger =
 
 To begin with, you'll simply use the manual glitch triggering. This works well in the examples where we have a simple loop we are breaking out of. Doing so requires modifying the glitch width and glitch offset experimentally. The exact values will vary for every device and setup.
 
@@ -282,7 +280,7 @@ With some background, let's now check some glitches. Assuming you've setup the e
 
 '''Be aware that you may crash the target!''' In the previous examples the target could have reset after each glitch. It may simply go into another infinite loop however, or even enter invalid states. Again force a hardware reset of the target in these cases. It may appear like the target was never glitched, whereas in reality it was glitched into some invalid state.
 
-== Automatically Resetting Target ==
+= Automatically Resetting Target =
 
 If we are going to start with the target at a pre-determined state, we need to reset the target. There are two ways of automatically performing this. The method used here will use the existing programmer interface to reset the device by performing that &quot;read signature&quot; operation we have already been using. The other method is to toggle a GPIO pin, which is more generic for future use.
 
@@ -376,7 +374,7 @@ We can now confirm the reset works with the &quot;Capture 1&quot; button. This r
 <blockquote><p>'''hint'''</p>
 <p>If the startup message isn't visible, it may be related to issues with the Capture software not being fast enough after reset to display the serial port contents on the terminal emulator. This happens often on the virtual machine environment, as can be seen in the demo video. You can ignore this error for now.</p></blockquote></li></ol>
 
-== Automatically Triggering Glitch ==
+= Automatically Triggering Glitch =
 
 The manual trigger used previously is suitable when the embedded system is waiting for further input. For example if the embedded system is waiting for a password, you could insert glitches without requiring accurate timing. We'll explore the use of the capture trigger for glitching here, which also improves the repeatability of your glitch attempts.
 
@@ -410,11 +408,11 @@ Finally, we can enable the trigger of the glitch to occur based on this external
 <p>[[File:basic_waveform_glitchy.png|image]]</p></li>
 <li>Play around a bit with the glitch width, offset, and repeat. You should see different effects in the power consumption traces.</li></ol>
 
-== Using the Glitch Explorer ==
+= Using the Glitch Explorer =
 
 Now that we can automatically perform the glitching, we can use the ''glitch explorer'' to automatically vary glitch parameters while recording what the target device is doing. Before continuing with the tutorial, we'll go through an overview of the the glitch explorer.
 
-=== Glitch Explorer ===
+== Glitch Explorer ==
 
 The main window of the glitch explorer looks like this:
 
@@ -428,7 +426,7 @@ Where you can see the following parts
 </blockquote>
 We'll be looking at each of these sections in more detail next.
 
-==== The Output Window ====
+=== The Output Window ===
 
 [[File:ge_top.png|image]]
 
@@ -438,7 +436,7 @@ Glitches can also be flagged as 'normal', in which case there is no highlight as
 
 In order for the glitch explorer to receive the output value, you must insert the special code <code>$GLITCH$</code> into the ''Target Settings'' --&gt; ''Output Format'' settings. This will mean data is no longer sent to the terminal emulator when using the capture 1 or capture multi buttons, but instead is logged in the glitch explorer window.
 
-==== The Main Settings ====
+=== The Main Settings ===
 
 Details of the main settings:
 
@@ -468,7 +466,7 @@ The expected and desired responses are expected to be Python expressions, where 
 
 Note that there is sometimes garbage in the first position. This occurs because if the target device is being reset before the glitch, you may see the serial lines floating. These floating lines may cause invalid characters to be recorded.
 
-==== Parameter Settings ====
+=== Parameter Settings ===
 
 Details of the parameter settings:
 
@@ -506,7 +504,7 @@ while capture_in_progress:
     param_value_1 = param_value_1_min</pre>
 Note you can quickly cause very long captures to occur! To run the glitch explorer, you need to set the appropriate number of traces on the ''General Settings'' tab, and use the ''Capture Multi'' to run the glitch explorer.
 
-=== Example Running the Glitch Explorer ===
+== Example Running the Glitch Explorer ==
 
 This example will attempt to break out the loop in <code>glitch1()</code>. Moving ahead from where you were in [[#Automatically Triggering Glitch]], we will see how we can view the output of the target device in the glitch explorer.
 
@@ -618,7 +616,7 @@ Record some of the useful parameters by scrolling through the window (WARNING: c
 
 Congrats! You've now performed some tuning to achieve a reliable glitch on the target device. The next step is to glitch something more fun - like a password check.
 
-== Glitching a Password Check ==
+= Glitching a Password Check =
 
 This assumes you now have a set of parameters which caused a reliable glitch. We'll now glitch past a password check, initially using our trigger as a crutch. The function of interest compares a received password to some known password. The <code>glitch3()</code> function looks as follows:
 
@@ -720,7 +718,7 @@ The following assumes you have already completed the previous steps:
 <li><p>If the previous step isn't successful, increase the &quot;repeat&quot; count on the ''Glitch Module'' section of the ''Scope Settings'' tab, and try again. In this example I actually needed a repeat count of &quot;3&quot; to get the successful &quot;Welcome&quot; message printed above.</p>
 <p>You can also increase the repeat count in the glitch explorer, which simply tries the same settings multiple times. You will likely find that the successful glitch does not have 100% success rate, so using a repeat count of 2 or 3 is helpful to increase your chances of success.</p></li></ol>
 
-== Glitching Onward ==
+= Glitching Onward =
 
 This basic tutorial has introduced you to glitch attacks. They are a powerful tool for bypassing authentication in embedded hardware devices. There are many ways to expand your knowledge with additional practice, such as:
 
