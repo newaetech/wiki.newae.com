@@ -161,7 +161,7 @@ Once the AVR/XMEGA is programmed (see previous tutorials), you may need to setup
 
 === XMEGA Target (CW1173 + CW303) ===
 
-The XMEGA target on the ChipWhisperer-Lite requires no configuration. If you have seperate the boards, you can attached them with the 20-pin cable.
+The XMEGA target on the ChipWhisperer-Lite requires no configuration. If you have separated the boards, you can attach them with the 20-pin cable.
 
 === Multi-Target Board, AVR (CW301) ===
 
