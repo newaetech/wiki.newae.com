@@ -127,11 +127,11 @@ Note if you want to simplify your life, you can guess only keys around the known
         print &quot;Subkey %d, hyp = %02x&quot;%(bnum, kguess)</pre>
 Note that in Python we can specify hex constants directly! Now the system will only be searching from 0x26 - 0x2F for the correct key. Once we have a guess, we need to calculate the intermediate value corresponding to the guess.
 
-Looking way back to how AES works, remember we are effectively attempint to target the position at the bottom of this figure:
+Looking way back to how AES works, remember we are effectively attemping to target the position at the bottom of this figure:
 
-<blockquote>[[File:Sbox_cpa_detail.png|frame|none|alt=|caption The AES algorithm involves a number of rounds, this is a detail from the first round of operation. Each input byte is XOR'd with a byte of the (unknown) secret key. This is passed through an S-Box, which is simply a look-up table. The output of this S-Box is what we'll use to 'check' our guessed value of the key.]]
+<blockquote>[[File:Sbox_cpa_detail.png|frame|none|alt=|The AES algorithm involves a number of rounds, this is a detail from the first round of operation. Each input byte is XOR'd with a byte of the (unknown) secret key. This is passed through an S-Box, which is simply a look-up table. The output of this S-Box is what we'll use to 'check' our guessed value of the key.]]
 </blockquote>
-The objective is thus to determine the output of the SBox, where the S-Box is defined as follows:
+The objective is thus to determine the output of the S-Box, where the S-Box is defined as follows:
 
 <pre>sbox=(
     0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
