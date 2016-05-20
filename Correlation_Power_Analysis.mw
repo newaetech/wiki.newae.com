@@ -108,7 +108,7 @@ state = sbox[in ^ key]
 where <code>sbox</code> is a lookup table used in AES. This is an effective point to attack. If we know that a byte of the plaintext is <math>p_d</math>, then our modeled power consumption will be
 
 <math>
-h_{d, i} = \text{sbox}[p_d \oplus i]
+h_{d, i} = \text{Hamming Weight}(\text{sbox}[p_d \oplus i])
 </math>
 
 Then, we can proceed with the attack as described above. Since we are attacking one byte of the key at a time, we will have to try <math>I = 2^8</math> values for each subkey. Then, there are 16 bytes in the key, so our attack will take <math>16 \times 2^8 = 2^{12}</math> time. This is an enormous improvement over trying every possible key, which would take <math>2^{128}</math> time.
