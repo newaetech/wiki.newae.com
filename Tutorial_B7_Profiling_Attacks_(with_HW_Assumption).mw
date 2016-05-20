@@ -6,7 +6,7 @@ Note that unlike the previous attack, we will require ''two'' acquisition campai
 
 == Setting up the Hardware and Software ==
 
-This tutorial uses the hwcapturerev2 hardware along with the hwmultitarget. The setup details are identical to the tutorialaes hardware setup. See details in that tutorials.
+In this tutorial, we'll be attacking AES-128 on the same devices we've worked with in previous tutorials. Take a look at [[Tutorial B5 Breaking AES (Straightforward)]] for details on how to set everything up.
 
 == Capturing the Traces ==
 
