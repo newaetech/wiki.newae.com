@@ -353,3 +353,5 @@ Glitching the Raspberry Pi is very simple. We just need to generate an appropria
 <p>Most likely the glitch width was insufficient for a glitch to be inserted, so increase the ''Repeat'' count to increase the width, and try pressing the ''Manual Trigger'' button again. In this example a glitch was successfully inserted with a width of ''52'', so you might want to try a few larger numbers. If you do things wrong your Raspberry Pi will crash and you'll need to reboot it and continue experimenting.</p>
 <p>The following shows an example of inserting several glitches successfully:</p>
 <p>[[File:rpi-glitch.png|image]]</p></li></ol>
+
+[[Category:Tutorials]]
