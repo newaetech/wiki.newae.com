@@ -1,3 +1,43 @@
+Correlation Power Analysis (CPA) is an attack that allows us to find a secret encryption key that is stored on a victim device. There are 4 steps to a CPA attack:
+# Write down a model for the victim's power consumption. This model will look at one specific point in the encryption algorithm. (ie: after step 2 of the encryption process, the intermediate result is <math>x</math>, so the power consumption is <math>f(x)</math>.)
+# Get the victim to encrypt several different plaintexts. Record a trace of the victim's power consumption during each of these encryptions.
+# Attack small parts (subkeys) of the secret key:
+## Consider every possible option for the subkey. For each guess and each trace, use the known plaintext and the guessed subkey to calculate the power consumption according to our model.
+## Calculate the Pearson correlation coefficient between the modeled and actual power consumption. Do this for every data point in the traces.
+## Decide which subkey guess correlates best to the measured traces.
+# Put together the best subkey guesses to obtain the full secret key.
+
+This page discusses some of the basics of these steps, describing what models are typically used in CPA attacks and how the Pearson correlation coefficient is calculated.
+
+= Modeling Power Consumption =
+Electronic computers (microcontrollers, FPGAs, etc) have two components to their power consumption. First, static power consumption is the power required to keep the device running. This static power depends on things like the number of transistors inside the device. Secondly, and more importantly, dynamic power consumption depends on the data moving around inside the device. Every time a bit is changed from a 0 to a 1 (or vice versa), some current is required to (dis)charge the data lines. The dynamic power is the part that we're interested in - it can tell us what's happening inside.
+
+One of the simplest models for power consumption is the '''Hamming Distance''' model. The Hamming Distance between two binary numbers is the number of different bits in the numbers. For example,
+<pre>
+    HammingDistance(00110000, 00100011) = 3
+</pre>
+because there are 3 unequal bits in these two numbers. An easy way to calculate the Hamming Distance is
+<pre>
+    HammingDistance(x, y) = HammingWeight(x ^ y)
+</pre>
+where <code>^</code> is the XOR operator, and the Hamming Weight is the number of 1s in a binary number. Using the example above,
+<pre>
+    HammingDistance(00110000, 00100011) 
+    = HammingWeight(00010011)
+    = 3
+</pre>
+because <code>00010011</code> has three bits set.
+
+We can use the Hamming Distance model in our CPA attacks. If we can find a point in the encryption algorithm where the victim changes a variable from <code>x</code> to <code>y</code>, then we can estimate that the power consumption is proportional to <code>Hamming Distance(x, y)</code>. Often, our model can even be a bit simpler: if we assume that the victim is replacing the value <code>x = 0</code>, then our power model is
+<pre>
+    l(y) = HammingWeight(y)
+</pre>
+
+= Calculating the Correlation Coefficient =
+
+= Attacking the Subkeys =
+
+= Example: AES-128 =
 
 Here we will assume the attack has a power trace <math>t_{d,j}</math>, where <math>j = 1,2,\cdots,T</math> is the time index in the trace, and <math>d = 1,2,\cdots,D</math> is the trace number. Thus the attacker makes <math>D</math> measurements, each one <math>T</math> points long. If the attacker knew ''exactly'' where a cryptographic operation occurred, they would need to only measure a single point such that <math>T=1</math>. For each trace <math>d</math>, the attacker also knows the plaintext or ciphertext corresponding to that power trace, defined as <math>p_d</math>.
 
