@@ -77,9 +77,9 @@ The following figure shows the clock jumper configuration, which are the same as
 </blockquote>
 In addition the VCC glitcher board must be mounted, which means removing the jumpers on the 6-pin header around the AVR. Also the 'IN' pin on the VCC glitcher board connected to the FPGAOUT pin. This is done via a jumper wire. Both of these are shown in the following figure:
 
-<blockquote>[[File:vccglitcher_routing.jpg|frame|none|alt=|caption The control line for the VCC glitcher board comes from the FPGAOUT pin.]]
+<blockquote>[[File:vccglitcher_routing.jpg|frame|none|alt=|The control line for the VCC glitcher board comes from the FPGAOUT pin.]]
 
-[[File:vccglitcher_mounted.jpg|frame|none|alt=|caption The VCC glitcher board must be mounted with <code>GND</code> at the bottom matching, exactly as shown here.]]
+[[File:vccglitcher_mounted.jpg|frame|none|alt=|The VCC glitcher board must be mounted with <code>GND</code> at the bottom matching, exactly as shown here.]]
 </blockquote>
 == Setting up Glitch Example ==
 
@@ -140,7 +140,7 @@ Programming the device is also described in Step #4 in the following section.
 <li><p>Under the ''Glitch Module'' set the ''Clock Source'' as ''CLKGEN''</p>
 <blockquote><p>[[File:glitchexample-capsetupclkgen.png|image]]</p></blockquote></li>
 <li><p>Check the box marked ''HS-Glitch Out Enable (Low Power)'':</p>
-<blockquote><p>[[File:glitchexample-capsetup2b.png|image]]</p></blockquote></li></ol>
+<blockquote><p>[[File:glitchexample-capsetup2B.png|image]]</p></blockquote></li></ol>
 </blockquote></li>
 <li><p>For the ChipWhisperer-Capture Rev 2 (CW1002):</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
