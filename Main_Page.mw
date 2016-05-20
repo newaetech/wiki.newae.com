@@ -86,26 +86,7 @@ ChipWhisperer Target boards:
 
 The following tutorials use the ChipWhisperer software and/or hardware. They are designed to take you through a complete attack. You may also want to check the page on [[Embedded Attacks]] for more snippets of simple attacks and other things you should verify when making a secure system.
 
-===Basic Tutorials===
-* [[Tutorial B1 Building a SimpleSerial Project]]
-* [[Tutorial B2 Viewing Instruction Power Differences]]
-* [[Tutorial B3-1 Timing Analysis with Power for Password Bypass]]
-* [[Tutorial B3-2 Timing Analysis with Power for Attacking TSB]]
-* [[Tutorial B4 Testing Two Partitions of Traces]]
-* [[Tutorial B5 Breaking AES (Straightforward)]]
-* [[Tutorial B6 Breaking AES (Manual CPA Attack)]]
-* [[Tutorial B7 Profiling Attacks (with HW Assumption)]]
-* [[Tutorial B8 Profiling Attacks (key value direct)]]
-* [[Tutorial B9 The Preprocessing Modules]]
-* [[Tutorial B10 Using with SASEBO-W CardOS or DPA Contest v4.2]]
-
-===Advanced Tutorials===
-* [[Tutorial A1 Synchronization to Communication Lines]]
-* [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)]]
-* [[Tutorial A3 VCC Glitch Attacks]]
-* [[Tutorial A4 SAD Trigger for SCA and Glitch]]
-* [[Tutorial A5 Breaking AES-256 Bootloader]]
-* [[Tutorial A6 Replication of Ilya Kizhvatov's XMEGA® Attack]]
+{{Template:Tutorials}}
 
 = Source Code and Releases =
 
