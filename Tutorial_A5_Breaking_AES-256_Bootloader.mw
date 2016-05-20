@@ -891,3 +891,5 @@ class userScript(AutoScriptBase):
 
     def doAnalysis(self):
         self.attack.doAttack()</pre>
+
+{{Template:Tutorials}}
