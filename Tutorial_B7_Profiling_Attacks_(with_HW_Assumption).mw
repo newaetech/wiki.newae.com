@@ -92,4 +92,5 @@ filename = avr_keyrand_plainrand_1000traces_data\analysis\templates-PartitionHWI
 <li><p>Press the ''Attack'' button. Observe that with only a few traces you are able to determine the encryption key:</p>
 <p>[[File:attack_working.png|image]]</p></li></ol>
 
+{{Template:Tutorials}}
 [[Category:Tutorials]]
