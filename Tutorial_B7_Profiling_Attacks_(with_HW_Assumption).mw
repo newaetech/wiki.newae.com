@@ -4,8 +4,6 @@ Under this assumption, we are attempting to accurately determine the what leakag
 
 Note that unlike the previous attack, we will require ''two'' acquisition campaigns. We must first create a template, which means we'll need a system which we control (or at least know the key for). In real life this would typically mean using another copy of the protected device; e.g. you have a protected device, but you buy another copy which you control. We use the copy we control to characterize the leakage, before applying what we have learned onto the real device with an unknown key.
 
-''Note: in the bleeding-edge version of the CW-Analyzer software, this tutorial does not work - the auto-generated scripts do not work. Proceed at your own risk!''
-
 == Setting up the Hardware and Software ==
 
 This tutorial uses the hwcapturerev2 hardware along with the hwmultitarget. The setup details are identical to the tutorialaes hardware setup. See details in that tutorials.
