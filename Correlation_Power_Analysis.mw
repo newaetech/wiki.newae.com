@@ -33,9 +33,46 @@ We can use the Hamming Distance model in our CPA attacks. If we can find a point
     l(y) = HammingWeight(y)
 </pre>
 
-= Calculating the Correlation Coefficient =
+= Pearson's Correlation Coefficient =
+Once we have a way to model our power consumption, we need a way to compare our power estimate to our measured traces. A helpful tool for finding this relationship is through Pearson's correlation coefficient, which is
 
-= Attacking the Subkeys =
+<math> 
+\rho_{X,Y}
+= \frac{\text{cov}(X, Y)}{\sigma_X \sigma_Y}
+= \frac{E[(X - \mu_X)(Y - \mu_Y)]}{\sqrt{E[(X - \mu_X)^2] E[(Y - \mu_Y)^2]}}
+</math>
+
+This correlation coefficient will always be in the range [-1, 1]. It describes how closely the random variables <math>X</math> and <math>Y</math> are related:
+* If <math>Y</math> always increases when <math>X</math> increases, it will be 1;
+* If <math>Y</math> always decreases when <math>X</math> increases, it will be -1;
+* If <math>Y</math> is totally independent of <math>X</math>, it will be 0.
+
+= Attacking with Correlation =
+After taking our measurements, we'll have <math>D</math> power traces <math>t</math>, and each of these traces will have <math>T</math> data points. Using subscript notation, <math>t_{d, j}</math> will refer to point <math>j</math> in trace <math>d</math> (<math>1 \le d \le D, 1 \le j \le T</math>).
+
+We'll also estimate the power consumption in each trace using our model. We'll say that there are <math>I</math> different subkeys that we want to try. Then, <math>h_{d, i}</math> will refer to our power estimate in trace <math>d</math>, assuming that the subkey is <math>i</math> (<math>1 \le d \le D, 1 \le i \le I</math>).
+
+With this data, we can see how well our model and measurements match for each guess <math>i</math> and time <math>j</math>. We'll do this by finding how <math>t</math> and <math>h</math> correlate over the <math>D</math> traces. One way of calculating this is:
+
+<math>
+r_{i,j}
+= \frac{{\sum\nolimits_{d = 1}^D {\left[ {\left( {{h_{d,i}} - \overline {{h_i}} } \right)\left( {{t_{d,j}} - \overline {{t_j}} } \right)} \right]} }}{{\sqrt {\sum\nolimits_{d = 1}^D {{{\left( {{h_{d,i}} - \overline {{h_i}} } \right)}^2}} \sum\nolimits_{d = 1}^D {{{\left( {{t_{d,j}} - \overline {{t_j}} } \right)}^2}} } }}
+</math>
+
+There is an alternative form of the correlation equation that we can use for ''online'' calculations - it allows us to add one trace at a time without re-summing all of the past data. This form is:
+
+<math>
+r_{i,j} 
+= \frac{D \sum_{d=1}^D h_{d,i}t_{d,j} - \sum_{d=1}^D h_{d,i} \sum_{d=1}^D t_{d,j}}{\sqrt{\Big(\big(\sum_{d=1}^D h_{d,i}\big)^2 - D\sum_{d=1}^D h_{d,i}^2\Big)\Big(\big(\sum_{d=1}^D t_{d,j}\big)^2 - D\sum_{d=1}^D t_{d,j}^2\Big)}}
+</math>
+
+Note that these two sums are equivalent.
+
+= Picking a Subkey =
+The last step is to use the values of <math>r_{i,j}</math> to decide which subkey matches our traces most closely. There are two steps to this:
+* For each subkey <math>i</math>, find the highest value of <math>|r_{i,j}|</math>. This will discard the time information - we want to know how good our guess was, but we don't care where our guess matched the trace. 
+* Looking at the maximum values for each subkey, find the highest value of <math>|r_i|</math>. The location <math>i</math> of this maximum is our best guess: it correlated more closely with the traces than any other guess.
+Note that we're only working with absolute values here because we don't care about the sign of the relationship. All we need to know is that a linear correlation exists.
 
 = Example: AES-128 =
 
