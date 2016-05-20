@@ -48,9 +48,9 @@ This correlation coefficient will always be in the range [-1, 1]. It describes h
 * If <math>Y</math> is totally independent of <math>X</math>, it will be 0.
 
 = Attacking with Correlation =
-After taking our measurements, we'll have <math>D</math> power traces <math>t</math>, and each of these traces will have <math>T</math> data points. Using subscript notation, <math>t_{d, j}</math> will refer to point <math>j</math> in trace <math>d</math> (<math>1 \le d \le D, 1 \le j \le T</math>).
+After taking our measurements, we'll have <math>D</math> power traces <math>t</math>, and each of these traces will have <math>T</math> data points. Using subscript notation, <math>t_{d, j}</math> will refer to point <math>j</math> in trace <math>d</math> (<math>1 \le d \le D, 0 \le j < T</math>).
 
-We'll also estimate the power consumption in each trace using our model. We'll say that there are <math>I</math> different subkeys that we want to try. Then, <math>h_{d, i}</math> will refer to our power estimate in trace <math>d</math>, assuming that the subkey is <math>i</math> (<math>1 \le d \le D, 1 \le i \le I</math>).
+We'll also estimate the power consumption in each trace using our model. We'll say that there are <math>I</math> different subkeys that we want to try. Then, <math>h_{d, i}</math> will refer to our power estimate in trace <math>d</math>, assuming that the subkey is <math>i</math> (<math>1 \le d \le D, 0 \le i < I</math>).
 
 With this data, we can see how well our model and measurements match for each guess <math>i</math> and time <math>j</math>. We'll do this by finding how <math>t</math> and <math>h</math> correlate over the <math>D</math> traces. One way of calculating this is:
 
