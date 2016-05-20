@@ -495,3 +495,5 @@ You will need to adjust the thresholds and possibly data point locations based o
 == Conclusion ==
 
 This tutorial has demonstrated the use of the power side-channel for performing timing attacks. A bootloader with a simple password-based security system is broken. In addition you have learned about the scripting support in the ChipWhisperer-Capture software.
+
+{{Template:Tutorials}}
