@@ -47,6 +47,8 @@ This correlation coefficient will always be in the range [-1, 1]. It describes h
 * If <math>Y</math> always decreases when <math>X</math> increases, it will be -1;
 * If <math>Y</math> is totally independent of <math>X</math>, it will be 0.
 
+These equations are referred to as the ''normalized cross-correlation''. There are typically used to pick out patterns in noisy signals. For example, in digital imaging, correlation can be used to find where an object is in a room. In our attack, we'll be looking for a our model (a pre-calculated pattern) in measured power traces (noisy signals).
+
 = Attacking with Correlation =
 After taking our measurements, we'll have <math>D</math> power traces <math>t</math>, and each of these traces will have <math>T</math> data points. Using subscript notation, <math>t_{d, j}</math> will refer to point <math>j</math> in trace <math>d</math> (<math>1 \le d \le D, 0 \le j < T</math>).
 
