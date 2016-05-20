@@ -728,4 +728,5 @@ This basic tutorial has introduced you to glitch attacks. They are a powerful to
 * Download some example source code (bootloaders, login prompts, etc) and port them to the AVR. See how you can glitch past security checks.
 * Use one of the IO triggers discussed in [[Tutorial_A1_Synchronization_to_Communication_Lines]].
 
+{{Template:Tutorials}}
 [[Category:Tutorials]]
