@@ -36,7 +36,7 @@ The MOSFET glitching hardware is built into the ChipWhisperer-Lite (both CW1173 
 
 === ChipWhisperer-Lite (CW1173) with built-in XMEGA Target ===
 
-The XMEGA target is currently not supported for this tutorial. The hardware is capable of being glitched, but we are still working on improving the reliability of the attack on the XMEGA. This section will be updated when details are available.
+The XMEGA target will work out-of-the-box for this tutorial. As usual, no hardware setup is required - everything on the CW-Lite board is ready to go.
 
 === ChipWhisperer-Lite (CW1173/CW1180) with external AVR (NOTDUino/Multi-Target) ===
 
