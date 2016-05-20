@@ -210,7 +210,7 @@ False</pre>
 </blockquote>
 <p>You can test the updated color-coding seems to be working too with a few ''Capture 1'' events.</p></li>
 <li><p>Using the following table, set the ''Glitch Width (as % of period)'' and ''Repeat'' on the ''Scope Settings'' tab:</p>
-<blockquote>{|
+{| class="wikitable"
 ! Parameter
 ! AVR on Multi-Target or NOTDuino
 |-
@@ -220,13 +220,13 @@ False</pre>
 | Repeat
 | 10
 |}
-</blockquote></li>
+</li>
 <li>Finally, let's configure the Glitch Explorer to give us the required sweep of the ''Offset'' parameter.
 <ol style="list-style-type: lower-alpha;">
 <li>Adjust the ''Glitch Offset (as % of period)'' up or down by 1 in the ''Glitch Module'' settings. We do this only to get the required string printed to the ''Script Commands'' output.</li>
 <li>Set the ''Tuning Parameters'' to ''1'' in the Glitch Explorer.</li>
 <li><p>Set the parameters as appropriate:</p>
-<blockquote>{|
+{| class="wikitable"
 ! Option
 ! Value
 |-
@@ -251,7 +251,7 @@ False</pre>
 | Repeat
 | 1
 |}
-</blockquote></li></ol>
+</li></ol>
 </li>
 <li><p>On the ''General Settings'' tab:</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
