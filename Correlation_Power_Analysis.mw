@@ -75,25 +75,38 @@ The last step is to use the values of <math>r_{i,j}</math> to decide which subke
 Note that we're only working with absolute values here because we don't care about the sign of the relationship. All we need to know is that a linear correlation exists.
 
 = Example: AES-128 =
+As an example, consider AES-128 encryption. The pseudo-code for this algorithm is:
+<pre>
+// AES-128 Cipher
+// in:  128 bits (plaintext)
+// out: 128 bits (ciphertext)
+// w:   44 words, 32 bits each (expanded key)
+state = in
 
-Here we will assume the attack has a power trace <math>t_{d,j}</math>, where <math>j = 1,2,\cdots,T</math> is the time index in the trace, and <math>d = 1,2,\cdots,D</math> is the trace number. Thus the attacker makes <math>D</math> measurements, each one <math>T</math> points long. If the attacker knew ''exactly'' where a cryptographic operation occurred, they would need to only measure a single point such that <math>T=1</math>. For each trace <math>d</math>, the attacker also knows the plaintext or ciphertext corresponding to that power trace, defined as <math>p_d</math>.
+AddRoundKey(state, w[0, Nb-1])  
 
-Assume also the attacker has a model of how the power consumption of the device depends on some intermediate value. For example the attacker could assume the power consumption of a microcontroller was dependent on the hamming weight of the intermediate value. We will define <math>h_{d,i} = l( w( p_d, i ))</math>, where <math>l(x)</math> is the leakage model for a given intermediate value, and <math>w(p, i)</math> generates an intermediate value given the input plaintext and the guess number <math>i = 1,2,\cdots,I</math>.
+for round = 1 step 1 to Nr–1
+    SubBytes(state)           // <-- Attack this point in round 1!
+    ShiftRows(state) 
+    MixColumns(state)
+    AddRoundKey(state, w[round*Nb, (round+1)*Nb-1])
+end for
 
-This intermediate value will be selected to depend on the input plaintext and a small portion of the secret key. For example with AES, each byte of the plaintext is XOR'd with each byte (subkey) of the secret key. In this example we would have:
+SubBytes(state)
+ShiftRows(state)
+AddRoundKey(state, w[Nr*Nb, (Nr+1)*Nb-1])
 
-<blockquote><math>l(x) = HammingWeight(x)</math><math>w(p, i) = p \oplus i</math>
-</blockquote>
-This implies that the input plaintext <math>p</math> is being attacked a single byte at a time, which means we are attacking a single byte of the AES key at a time. While we still need to enumerate all possibilities for this subkey, we now only have <math>16 \times 2^8</math> instead of <math>2^{128}</math> possibilities for AES-128.
+out = state
+</pre>
+This might look pretty complex, but we only need to worry about one part of the algorithm. After the first <code>SubBytes()</code> step, the state is effectively
+<pre>
+// State after AddRoundKey() and SubBytes()
+state = sbox[in ^ key]
+</pre>
+where <code>sbox</code> is a lookup table used in AES. This is an effective point to attack. If we know that a byte of the plaintext is <math>p_d</math>, then our modeled power consumption will be
 
-We will be next using the correlation coefficient to look for a linear relationship between the predicted power consumption <math>l(x)</math> and the measured power consumption <math>t_{d,j}</math>. For this reason it is desirable to have a non-linear relationship between <math>w(p, i)</math> and either <math>p</math> or <math>i</math>, as we will otherwise see a linear relationship for all values of <math>i</math>. In this case we take advantage of the non-linear substitution boxes (S-Boxes) in the algorithm, which are simply lookup tables which have been selected to have minimal possible correlation between the input and output. The emphasis on minimum possible correlation between input and output is a requirement to avoid certain linear cryptographic attacks.
+<math>
+h_{d, i} = \text{sbox}[p_d \oplus i]
+</math>
 
-Finally, we can calculate the correlation coefficient for each point <math>j</math> over all traces <math>D</math>, for each of the possible subkey values <math>I</math>, as in the following:
-
-<blockquote><math>{r_{i,j}} = \frac{{\sum\nolimits_{d = 1}^D {\left[ {\left( {{h_{d,i}} - \overline {{h_i}} } \right)\left( {{t_{d,j}} - \overline {{t_j}} } \right)} \right]} }}{{\sqrt {\sum\nolimits_{d = 1}^D {{{\left( {{h_{d,i}} - \overline {{h_i}} } \right)}^2}} \sum\nolimits_{d = 1}^D {{{\left( {{t_{d,j}} - \overline {{t_j}} } \right)}^2}} } }}</math>
-</blockquote>
-This is simply Pearson's correlation coefficient, given below, where <math>X = p</math>, and <math>Y = t</math>:
-
-<blockquote><math>{\rho _{X,Y}} = \frac{{{\mathop{\rm cov}} \left( {X,Y} \right)}}{{{\sigma _X}{\sigma _Y}}} = \frac{{E\left[ {\left( {X - {\mu _X}} \right)\left( {Y - {\mu _Y}} \right)} \right]}}{{\sqrt {E\left[ {{{\left( {X - {\mu _X}} \right)}^2}} \right]} \sqrt {E\left[ {{{\left( {Y - {\mu _Y}} \right)}^2}} \right]} }}</math>
-</blockquote>
-The problem of finding a known signal in a noisy measurement exists in many other fields beyond side-channel analysis. These two equations are referred to as the ''normalized cross-correlation'', and frequently used in digital imaging for matching a known `template' to an image, e.g. finding the location of some specific item in a photo of a room.
+Then, we can proceed with the attack as described above. Since we are attacking one byte of the key at a time, we will have to try <math>I = 2^8</math> values for each subkey. Then, there are 16 bytes in the key, so our attack will take <math>16 \times 2^8 = 2^{12}</math> time. This is an enormous improvement over trying every possible key, which would take <math>2^{128}</math> time.
