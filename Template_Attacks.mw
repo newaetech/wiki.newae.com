@@ -9,6 +9,8 @@ There are four steps to a template attack:
 # Apply the template to the attack traces. For each subkey, track which value is most likely to be the correct subkey. Continue until the key has been recovered.
 
 = Signals, Noise, and Statistics =
+Before looking at the details of the template attack, it is important to understand the statistics concepts that are involved. A template is effectively a multivariate distribution that describes several key samples in the power traces. This section will describe what a multivariate distribution is and how it can be used in this context.
+
 == Noise Distributions ==
 Electrical signals are inherently noisy. Any time we take a voltage measurement, we don't expect to see a perfect, constant level. For example, if we attached a multimeter to a 5 V source and took 4 measurements, we might expect to see a data set like (4.95, 5.01, 5.06, 4.98). One way of modelling this voltage source is
 
@@ -36,6 +38,10 @@ f(7.0) \approx 0.0003
 
 so we're very unlikely to see a reading of 7 V. We'll use this to our advantage in this attack: if <math>f(x)</math> is very small for one of our subkey guesses, it's probably a wrong guess.
 
+== Multivariate Statistics ==
+''TODO: basics of multivariable stats''
+
 = Profiling a Device =
+
 
 = Points of Interest =
