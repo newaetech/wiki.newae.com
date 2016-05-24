@@ -1,1 +1,41 @@
-''TODO: add template attack theory''
+'''Template attacks''' are a powerful type of side-channel attack. These attacks are a subset of '''profiling attacks''', where an attacker creates a "profile" of a sensitive device and applies this profile to quickly find a victim's secret key. 
+
+Template attacks require more setup than CPA attacks. To perform a template attack, the attacker must have access to another copy of the protected device that they can fully control. Then, they must perform a great deal of pre-processing to create the template - in practice, this may take dozens of thousands of power traces. However, the advantages are that template attacks require a very small number of traces from the victim to complete the attack. With enough pre-processing, the key may be able to be recovered from just a single trace. 
+
+There are four steps to a template attack:
+# Using a copy of the protected device, record a large number of power traces using many different inputs (plaintexts and keys). Ensure that enough traces are recorded to give us information about each subkey value.
+# Create a template of the device's operation. This template notes a few "points of interest" in the power traces and a multivariate distribution of the power traces at each point. 
+# On the victim device, record a small number of power traces. Use multiple plaintexts. (We have no control over the secret key, which is fixed.)
+# Apply the template to the attack traces. For each subkey, track which value is most likely to be the correct subkey. Continue until the key has been recovered.
+
+= Signals, Noise, and Statistics =
+== Noise Distributions ==
+Electrical signals are inherently noisy. Any time we take a voltage measurement, we don't expect to see a perfect, constant level. For example, if we attached a multimeter to a 5 V source and took 4 measurements, we might expect to see a data set like (4.95, 5.01, 5.06, 4.98). One way of modelling this voltage source is
+
+<math>
+\mathbf{X} = X_{actual} + \mathbf{N}
+</math>
+
+where <math>X_{actual}</math> is the noise-free level and <math>\mathbf{N}</math> is the additional noise. In our example, <math>X_{actual}</math> would be exactly 5 V. Then, <math>N</math> is a random variable: every time we take a measurement, we can expect to see a different value. Note that <math>\mathbf{X}</math> and <math>\mathbf{N}</math> are bolded to show that they are random variables.
+
+A simple model for these random variables uses a Gaussian distribution (read: a bell curve). The probability density function (PDF) of a Gaussian distribution is
+
+<math>
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-(x - \mu)^2 / 2\sigma^2}
+</math>
+
+where <math>\mu</math> is the mean and <math>\sigma</math> is the standard deviation. For instance, our voltage source might have a mean of 5 and a standard deviation of 0.5. We can use the PDF to calculate how likely a certain measurement is. Using this distribution, 
+
+<math>
+f(5.1) \approx 0.7821
+</math>
+
+<math>
+f(7.0) \approx 0.0003
+</math>
+
+so we're very unlikely to see a reading of 7 V. We'll use this to our advantage in this attack: if <math>f(x)</math> is very small for one of our subkey guesses, it's probably a wrong guess.
+
+= Profiling a Device =
+
+= Points of Interest =
