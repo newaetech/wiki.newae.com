@@ -4,6 +4,15 @@ It is '''highly recommended''' that you read the theory page on [[Template Attac
 
 Additionally, this tutorial uses some terminology from previous tutorials, such as ''Hamming weight'' and ''substitution box''. If you don't know what these are, [[Tutorial B6 Breaking AES (Manual CPA Attack)]] might be an easier starting point.
 
+= Scripting =
+All of the work in this tutorial will be done using Python scripts. All you need for this tutorial is a text editor and a command terminal that can run Python. In my example, I am editing a file called <code>manualTemplate.py</code> in a text editor and using the command
+
+<pre>
+python manualTemplate.py
+</pre>
+
+to execute the script. You can work with a full IDE if you prefer.
+
 = Capturing the Traces =
 As in the previous tutorial, this tutorial requires two sets of traces. The first set is a large number of traces (1000+) with random keys and plaintexts, assumed to come from your personal copy of the device. The second is a smaller number of traces (~50) with a fixed key and random plaintexts, assumed to come from the sensitive device that we're attacking. The goal of this tutorial is to recover the fixed key from the smaller set of traces.
 
