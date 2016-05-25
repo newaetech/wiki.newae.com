@@ -26,7 +26,11 @@ A simple model for these random variables uses a Gaussian distribution (read: a 
 f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-(x - \mu)^2 / 2\sigma^2}
 </math>
 
-where <math>\mu</math> is the mean and <math>\sigma</math> is the standard deviation. For instance, our voltage source might have a mean of 5 and a standard deviation of 0.5. We can use the PDF to calculate how likely a certain measurement is. Using this distribution, 
+where <math>\mu</math> is the mean and <math>\sigma</math> is the standard deviation. For instance, our voltage source might have a mean of 5 and a standard deviation of 0.5, making the PDF look like:
+
+[[File:Normal-Dist.png]]
+
+We can use the PDF to calculate how likely a certain measurement is. Using this distribution, 
 
 <math>
 f(5.1) \approx 0.7821
