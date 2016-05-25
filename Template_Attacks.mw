@@ -79,7 +79,26 @@ f(\mathbf{x})
 
 Don't worry if this looks crazy - the SciPy package in Python will do all the heavy lifting for us. As with the single-variable distributions, we're going to use this to find how likely a certain observation is. In other words, if we put <math>k</math> points of our power trace into <math>\mathbf{x}</math> and we find that <math>f(\mathbf{x})</math> is very high, then we've probably found a good guess.
 
-= Profiling a Device =
+= Creating the Template = 
+Description of templates
+
+== Number of Traces ==
+Why do we need thousands of traces?
+
+== Points of Interest ==
+Why we use POIs
+
+How to find them
+
+== Analyzing the Data ==
+How to find the covariance matrices
 
 
-= Points of Interest =
+= Using the Template =
+Apply the template by measuring more traces
+
+== Finding the Key ==
+How to use the template to narrow down the possibilities
+
+== Attack Time ==
+Shouldn't take long to attack
