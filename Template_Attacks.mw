@@ -80,19 +80,26 @@ f(\mathbf{x})
 Don't worry if this looks crazy - the SciPy package in Python will do all the heavy lifting for us. As with the single-variable distributions, we're going to use this to find how likely a certain observation is. In other words, if we put <math>k</math> points of our power trace into <math>\mathbf{x}</math> and we find that <math>f(\mathbf{x})</math> is very high, then we've probably found a good guess.
 
 = Creating the Template = 
-Description of templates
+A template is a set of probability distributions that describe what the power traces look like for many different keys. Effectively, a template says: "If you're going to use key <math>k</math>, your power trace will look like the distribution <math>f_k(\mathbf{x})</math>". We can use this information to find subtle differences between power traces and to make very good key guesses for a single power trace.
 
 == Number of Traces ==
-Why do we need thousands of traces?
+One of the downsides of template attacks is that they require a great number of traces to be preprocessed before the attack can begin. This is mainly for statistical reasons. In order to come up with a good distribution to model the power traces for ''every key'', we need a large number of traces for ''every key''. For example, if we're going to attack a single subkey of AES-128, then we need to create 256 power consumption models (one for every number from 0 to 255). In order to get enough data to make good models, we need tens of thousands of traces. 
+
+Note that we don't have to model every single key. One good alternative is to model a sensitive part of the algorithm, like the substitution box in AES. We can get away with a much smaller number of traces here; if we make a model for every possible Hamming weight, then we would end up with 17 models, which is an order of magnitude smaller. However, then we can't recover the key from a single attack trace - we need more information to recover the secret key.
 
 == Points of Interest ==
-Why we use POIs
+Our goal is to create a multivariate probability describing the power traces for every possible key. If we modeled the entire power trace this way (with, say, 3000 samples), then we would need a 3000-dimension distribution. This is insane, so we'll find an alternative.
 
-How to find them
+Thankfully, not every point on the power trace is important to us. There are two main reasons for this:
+* We might be taking more than one sample per clock cycle. (Through most of the ChipWhisperer tutorials, our ADC runs four times faster than the target device.) There's no real reason to use all of these samples - we can get just as much information from a single sample at the right time.
+* Our choice of key doesn't affect the entire power trace. It's likely that the subkeys only influence the power consumption at a few critical times. If we can pick these important times, then we can ignore most of the samples.
+These two points mean that we can usually live with a handful (3-5) of ''points of interest''. If we can pick out good points and write down a model using these samples, then we can use a 3D or 5D distribution - a great improvement over the original 3000D model.
+
+=== Picking POIs ===
+''TODO; want to write tutorial first''
 
 == Analyzing the Data ==
 How to find the covariance matrices
-
 
 = Using the Template =
 Apply the template by measuring more traces
