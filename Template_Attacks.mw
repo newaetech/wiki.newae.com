@@ -96,7 +96,29 @@ Thankfully, not every point on the power trace is important to us. There are two
 These two points mean that we can usually live with a handful (3-5) of ''points of interest''. If we can pick out good points and write down a model using these samples, then we can use a 3D or 5D distribution - a great improvement over the original 3000D model.
 
 === Picking POIs ===
-''TODO; want to write tutorial first''
+There are several ways to pick the most important points in each of the traces. Generally, the aim is to find points that vary strongly between different operations (subkeys or Hamming weights). The simplest method -- the one that we'll use here -- is the ''sum of differences'' method.
+
+The algorithm for the sum of difference method is:
+* For every operation <math>k</math> and every sample <math>i</math>, find the average power <math>M_{k, i}</math>. For instance, if there are <math>T_k</math> traces where we performed operation <math>k</math>, then this average is
+
+<math>
+M_{k, i} = \frac{1}{T_k} \sum_{j=1}^{T_k} t_{j, i}
+</math>
+
+* After finding all of the means, calculate all of their absolute pairwise differences. Add these up. This will give one "trace" which has peaks where the samples are usually different. The calculation looks like
+
+<math>
+D_{i} = \sum_{k_1, k_2} |M_{k_1, i} - M_{k_2, i}|
+</math>
+
+An example of this sum of differences is:
+
+[[File:Template-Sum-Of-Difference.png|600px]]
+
+* The peaks of <math>D_i</math> show the most important points, but we need to satisfy point 1 from above - we need to pick some peaks that aren't too close. One algorithm to do this is:
+# Pick the highest point in <math>D_i</math> and save this value of <math>i</math> as a point of interest. (ie: <math>i = argmax(D_i)</math>)
+# Throw out the nearest <math>N</math> points (where <math>N</math> is the minimum spacing between POIs).
+# Repeat until enough POIs have been selected.
 
 == Analyzing the Data ==
 Suppose that we've picked <math>I</math> points of interest, which are at samples <math>s_i</math> (<math>0 \le i < I</math>). Then, our goal is to find a mean and covariance matrix for every operation (every choice of subkey or intermediate Hamming weight). Let's say that there are <math>K</math> of these operations (maybe 256 subkeys or 9 possible Hamming weights). 
