@@ -99,7 +99,51 @@ These two points mean that we can usually live with a handful (3-5) of ''points 
 ''TODO; want to write tutorial first''
 
 == Analyzing the Data ==
-How to find the covariance matrices
+Suppose that we've picked <math>I</math> points of interest, which are at samples <math>s_i</math> (<math>0 \le i < I</math>). Then, our goal is to find a mean and covariance matrix for every operation (every choice of subkey or intermediate Hamming weight). Let's say that there are <math>K</math> of these operations (maybe 256 subkeys or 17 possible Hamming weights). 
+
+For now, we'll look at a single operation <math>k</math> (<math>0 \le k < K</math>). The steps are:
+* Find every power trace <math>t</math> that falls under the category of "operation <math>k</math>". (ex: find every power trace where we used a subkey of 0x01.) We'll say that there are <math>T_k</math> of these, so <math>t_{j, s_i}</math> means the value at trace <math>j</math> and POI <math>i</math>.
+* Find the average power <math>\mu_i</math> at every point of interest. This calculation will look like:
+
+<math>
+\mu_i = \frac{1}{T_k} \sum_{j=1}^{T_k} t_{j, s_i}
+</math>
+
+* Find the variance <math>v_i</math> of the power at each point of interest. One way of calculating this is:
+
+<math>
+v_i = \frac{1}{T_k} \sum_{j=1}^{T_k} (t_{j, s_i} - \mu_i)^2
+</math>
+
+* Find the covariance <math>c_{i, i^*}</math> between the power at every pair of POIs (<math>i</math> and <math>i^*</math>). One way of calculating this is:
+
+<math>
+c_{i, i^*} = \frac{1}{T_k}  \sum_{j=1}^{T_k} (t_{j, s_i} - \mu_i) (t_{j, s_{i^*}} - \mu_{i^*})
+</math>
+
+* Put together the mean and covariance matrices as:
+
+<math>
+\mathbf{\mu} = 
+\begin{bmatrix}
+\mu_1 \\
+\mu_2 \\
+\mu_3 \\
+\vdots
+\end{bmatrix}
+</math>
+
+<math>
+\mathbf{\Sigma} = 
+\begin{bmatrix}
+v_1     & c_{1,2} & c_{1,3} & \dots \\
+c_{2,1} & v_2     & c_{2,3} & \dots \\
+c_{3,1} & c_{3,2} & v_3     & \dots \\
+\vdots  & \vdots  & \vdots  & \ddots 
+\end{bmatrix}
+</math>
+
+These steps must be done for every operation <math>k</math>. At the end of this preprocessing, we'll have <math>K</math> mean and covariance matrices, modelling each of the <math>K</math> different operations that the target can do.
 
 = Using the Template =
 Apply the template by measuring more traces
