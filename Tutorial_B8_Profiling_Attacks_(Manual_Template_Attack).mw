@@ -9,6 +9,8 @@ As in the previous tutorial, this tutorial requires two sets of traces. The firs
 
 The data collected from the previous tutorial will be fine for these steps. These examples will work with 2000 random-key traces and 50 fixed-key traces. If you don't have these datasets, follow the steps in [[Tutorial B7 Profiling Attacks (with HW Assumption)]] to record these traces.
 
+Note that this tutorial will explain how to attack a single byte of the secret AES key. It would be easy to extend this to the full key by running the code 16 times. The smaller attack is used to make some of the code easier to grasp and debug.
+
 = Creating the Template =
 Steps to make the template
 
