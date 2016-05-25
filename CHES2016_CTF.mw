@@ -167,7 +167,7 @@ void aes_indep_enc(uint8_t * pt)
 
 ==== Zip-File Contents ====
 
-For your convenience, you can [http://ctf.pythonanywhere.com/media/src/realaes_wJvwine.zip download an example zip-file]. This zip-file contains an AES-128 implementation in C, along with the required wrapper files.
+For your convenience, you can [http://ctf.newae.com/media/src/realaes_wJvwine.zip download an example zip-file]. This zip-file contains an AES-128 implementation in C, along with the required wrapper files.
 
 To use this zip-file, delete the "aes.c" and "aes.h" files, and modify the "aes-challenge-c.c" file as required. If you are using assembly code it must be inserted into the "aes-challenge-asm.S" file.
 
