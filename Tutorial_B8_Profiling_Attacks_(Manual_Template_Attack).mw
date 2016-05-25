@@ -5,7 +5,9 @@ It is '''highly recommended''' that you read the theory page on [[Template Attac
 Additionally, this tutorial uses some terminology from previous tutorials, such as ''Hamming weight'' and ''substitution box''. If you don't know what these are, [[Tutorial B6 Breaking AES (Manual CPA Attack)]] might be an easier starting point.
 
 = Capturing the Traces =
-Use data from previous tutorial (fixed/random key)
+As in the previous tutorial, this tutorial requires two sets of traces. The first set is a large number of traces (1000+) with random keys and plaintexts, assumed to come from your personal copy of the device. The second is a smaller number of traces (~50) with a fixed key and random plaintexts, assumed to come from the sensitive device that we're attacking. The goal of this tutorial is to recover the fixed key from the smaller set of traces.
+
+The data collected from the previous tutorial will be fine for these steps. These examples will work with 2000 random-key traces and 50 fixed-key traces. If you don't have these datasets, follow the steps in [[Tutorial B7 Profiling Attacks (with HW Assumption)]] to record these traces.
 
 = Creating the Template =
 Steps to make the template
