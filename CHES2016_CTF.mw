@@ -186,3 +186,7 @@ If you wish to compile the code on your own (HIGHLY recommended during debugging
 == White Box Cryptography ==
 
 The CTF also includes a chance to apply techniques against white-box crypto. For this you are given a Linux binary, where the secret key is somehow encoded inside this binary! Extract the AES-128 key for victory.
+
+Looking for some white-box crypto background? As a starter you might check out the paper [https://eprint.iacr.org/2015/753.pdf Differential Computation Analysis: Hiding your White-Box Designs is Not Enough] by Joppe W. Bos, Charles Hubain, Wil Michiels, and Philippe Teuwen. 
+
+This paper has an associated series of tools & examples you can access at https://github.com/SideChannelMarvels - hopefully this gets you started in white-box analysis.
