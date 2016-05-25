@@ -85,7 +85,7 @@ A template is a set of probability distributions that describe what the power tr
 == Number of Traces ==
 One of the downsides of template attacks is that they require a great number of traces to be preprocessed before the attack can begin. This is mainly for statistical reasons. In order to come up with a good distribution to model the power traces for ''every key'', we need a large number of traces for ''every key''. For example, if we're going to attack a single subkey of AES-128, then we need to create 256 power consumption models (one for every number from 0 to 255). In order to get enough data to make good models, we need tens of thousands of traces. 
 
-Note that we don't have to model every single key. One good alternative is to model a sensitive part of the algorithm, like the substitution box in AES. We can get away with a much smaller number of traces here; if we make a model for every possible Hamming weight, then we would end up with 17 models, which is an order of magnitude smaller. However, then we can't recover the key from a single attack trace - we need more information to recover the secret key.
+Note that we don't have to model every single key. One good alternative is to model a sensitive part of the algorithm, like the substitution box in AES. We can get away with a much smaller number of traces here; if we make a model for every possible Hamming weight, then we would end up with 9 models, which is an order of magnitude smaller. However, then we can't recover the key from a single attack trace - we need more information to recover the secret key.
 
 == Points of Interest ==
 Our goal is to create a multivariate probability describing the power traces for every possible key. If we modeled the entire power trace this way (with, say, 3000 samples), then we would need a 3000-dimension distribution. This is insane, so we'll find an alternative.
@@ -99,7 +99,7 @@ These two points mean that we can usually live with a handful (3-5) of ''points 
 ''TODO; want to write tutorial first''
 
 == Analyzing the Data ==
-Suppose that we've picked <math>I</math> points of interest, which are at samples <math>s_i</math> (<math>0 \le i < I</math>). Then, our goal is to find a mean and covariance matrix for every operation (every choice of subkey or intermediate Hamming weight). Let's say that there are <math>K</math> of these operations (maybe 256 subkeys or 17 possible Hamming weights). 
+Suppose that we've picked <math>I</math> points of interest, which are at samples <math>s_i</math> (<math>0 \le i < I</math>). Then, our goal is to find a mean and covariance matrix for every operation (every choice of subkey or intermediate Hamming weight). Let's say that there are <math>K</math> of these operations (maybe 256 subkeys or 9 possible Hamming weights). 
 
 For now, we'll look at a single operation <math>k</math> (<math>0 \le k < K</math>). The steps are:
 * Find every power trace <math>t</math> that falls under the category of "operation <math>k</math>". (ex: find every power trace where we used a subkey of 0x01.) We'll say that there are <math>T_k</math> of these, so <math>t_{j, s_i}</math> means the value at trace <math>j</math> and POI <math>i</math>.
