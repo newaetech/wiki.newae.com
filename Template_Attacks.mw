@@ -43,7 +43,41 @@ f(7.0) \approx 0.0003
 so we're very unlikely to see a reading of 7 V. We'll use this to our advantage in this attack: if <math>f(x)</math> is very small for one of our subkey guesses, it's probably a wrong guess.
 
 == Multivariate Statistics ==
-''TODO: basics of multivariable stats''
+The 1-variable Gaussian distribution works well for one measurement. What if we're working with more than one random variable?
+
+Suppose we're measuring two voltages that have some amount of noise on them. We'll call them <math>\mathbf{X}</math> and <math>\mathbf{Y}</math>. As a first attempt, we could write down a model for <math>\mathbf{X}</math> using a normal distribution and a separate model for <math>\mathbf{Y}</math> using a different distribution. However, this might not always make sense. If we write two separate distributions, what we're saying is that the two variables are independent: when <math>\mathbf{X}</math> goes up, there's no guarantee that <math>\mathbf{Y}</math> will follow it.
+
+Multivariate distributions let us model multiple random variables that may or may not be correlated. In a multivariate distribution, instead of writing down a single variance <math>\sigma</math>, we keep track of a whole matrix of covariances. For example, to model three random variables (<math>\mathbf{X}, \mathbf{Y}, \mathbf{Z}</math>), this matrix would be
+
+<math>
+\mathbf{\Sigma} = 
+\begin{bmatrix}
+Var(\mathbf{X})             & Cov(\mathbf{X}, \mathbf{Y}) & Cov(\mathbf{X}, \mathbf{Z}) \\
+Cov(\mathbf{Y}, \mathbf{X}) & Var(\mathbf{Y})             & Cov(\mathbf{Y}, \mathbf{Z}) \\
+Cov(\mathbf{Z}, \mathbf{X}) & Cov(\mathbf{Z}, \mathbf{Y}) & Var(\mathbf{Z}) 
+\end{bmatrix}
+</math>
+
+Also, note that this distribution needs to have a mean for each random variable:
+
+<math>
+\mathbf{\mu} = 
+\begin{bmatrix}
+\mu_X \\
+\mu_Y \\
+\mu_Z
+\end{bmatrix}
+</math>
+
+The PDF of this distribution is more complicated: instead of using a single number as an argument, it uses a vector with all of the variables in it (<math>\mathbf{x} = [x, y, z, \dots]^T</math>). The equation for <math>k</math> random variables is
+
+<math>
+f(\mathbf{x})
+= \frac{1}{\sqrt{(2\pi)^k |\mathbf{\Sigma}|}} 
+  e^{-(\mathbf{(x - \mu)}^T \mathbf{\Sigma}^{-1} \mathbf{(x - \mu)} / 2}
+</math>
+
+Don't worry if this looks crazy - the SciPy package in Python will do all the heavy lifting for us. As with the single-variable distributions, we're going to use this to find how likely a certain observation is. In other words, if we put <math>k</math> points of our power trace into <math>\mathbf{x}</math> and we find that <math>f(\mathbf{x})</math> is very high, then we've probably found a good guess.
 
 = Profiling a Device =
 
