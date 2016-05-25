@@ -1,0 +1,28 @@
+This tutorial is a more hands-on version of the [[Tutorial B7 Profiling Attacks (with HW Assumption)|previous tutorial]]. Rather than getting the ChipWhisperer Analyzer software to generate the points of interest and the template distributions, this tutorial will work directly with the recorded trace data in Python. 
+
+It is '''highly recommended''' that you read the theory page on [[Template Attacks]] before attempting this tutorial. There is some relatively complex processing involved, and it may be helpful to get a mathematical view on the steps before attempting to program them.
+
+Additionally, this tutorial uses some terminology from previous tutorials, such as ''Hamming weight'' and ''substitution box''. If you don't know what these are, [[Tutorial B6 Breaking AES (Manual CPA Attack)]] might be an easier starting point.
+
+= Capturing the Traces =
+Use data from previous tutorial (fixed/random key)
+
+= Creating the Template =
+Steps to make the template
+
+Mention Hamming weight assumption
+
+== Loading the Traces ==
+== Sorting the Traces ==
+== Points of Interest ==
+== Covariance Matrices ==
+
+= Performing the Attack =
+Steps to crack the code (tm)
+
+== Loading the Traces ==
+== Using the Template ==
+
+= Gotchas =
+* Too little data (0 or 1 trace)
+* Flukes + statistics
