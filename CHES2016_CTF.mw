@@ -1,4 +1,4 @@
-[http://chesworkshop.org/ches2016/start.php CHES 2016] will have a brand new Capture The Flag (CTF) event, run by [http://www.oflynn.com Colin O'Flynn], with resources by [https://www.newae.com NewAE Technology Inc]. This event will challenge novice and advanced embedded security researchers alike, by providing a platform to exchange AES implementations with various countermeasures (including against power analysis, and against firmware analysis using white box crypto).
+[http://chesworkshop.org/ches2016/start.php CHES 2016] will have a brand new Capture The Flag (CTF) event. This event will challenge novice and advanced embedded security researchers alike, by providing a platform to exchange AES implementations with various countermeasures (including against power analysis, and against firmware analysis using white box crypto). See the credits below for details of who's behind this.
 
 '''Access the website at https://ctf.newae.com .'''
 
@@ -190,3 +190,9 @@ The CTF also includes a chance to apply techniques against white-box crypto. For
 Looking for some white-box crypto background? As a starter you might check out the paper [https://eprint.iacr.org/2015/753.pdf Differential Computation Analysis: Hiding your White-Box Designs is Not Enough] by Joppe W. Bos, Charles Hubain, Wil Michiels, and Philippe Teuwen. 
 
 This paper has an associated series of tools & examples you can access at https://github.com/SideChannelMarvels - hopefully this gets you started in white-box analysis.
+
+== Credits ==
+The CHES Challenge 2016 is run by [http://www.oflynn.com Colin O'Flynn] with much external help:
+* Joppe Bos, Jan Hoogerbrugge, Van Huynh Le, and Wils Michiels: Providing the whitebox crypto Implementation
+* Emmanuel Prouff and Adrian Thillard: Help with setup of rules, prizes, and overall assistance
+* Resources (server, ChipWhisperer framework, hosting, etc.) by [https://www.newae.com NewAE Technology Inc].
