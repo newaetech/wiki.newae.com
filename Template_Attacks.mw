@@ -146,10 +146,48 @@ c_{3,1} & c_{3,2} & v_3     & \dots \\
 These steps must be done for every operation <math>k</math>. At the end of this preprocessing, we'll have <math>K</math> mean and covariance matrices, modelling each of the <math>K</math> different operations that the target can do.
 
 = Using the Template =
-Apply the template by measuring more traces
+With a template in hand, we can finish our attack. For the attack, we need a smaller number of traces - we'll say that we have <math>A</math> traces. The sample values will be labeled <math>a_{j, s_i}</math> (<math>1 \le j \le A</math>).
 
-== Finding the Key ==
-How to use the template to narrow down the possibilities
+== Applying the Template ==
+First, let's apply the template to a single trace. Our job is to decide how likely all of our key guesses are. We need to do the following:
+* Put our trace values at the POIs into a vector. This vector will be
+
+<math>
+\mathbf{a_j} = 
+\begin{bmatrix}
+a_{j,1} \\
+a_{j,2} \\
+a_{j,3} \\
+\vdots
+\end{bmatrix}
+</math>
+
+* Calculate the PDF for every key guess and save these for later. This might look like:
+
+<math>
+p_{k, j} = f_k(\mathbf{a_j})
+</math>
+
+* Repeat these two steps for all of the attack traces. 
+
+This process gives us an array of <math>p_{k, j}</math>, which says: "Looking at trace <math>j</math>, how likely is it that key <math>k</math> is the correct one?"
+
+== Combining the Results ==
+The very last step is to combine our <math>p_{k, j}</math> values to decide which key is the best fit. The easiest way to do this is to combine them as
+
+<math>
+P_k = \prod_{j=1}^{A} p_{k,j}
+</math>
+
+For example, if we guessed that a subkey was equal to 0x00 and our PDF results in 3 traces were (0.9, 0.8, 0.95), then our overall result would be 0.684. Having one trace that doesn't match the template can cause this number to drop quickly, helping us eliminate the wrong guesses. Finally, we can pick the highest value of <math>P_k</math>, which tells us which guess fits the templates the best, and we're done! 
+
+This method of combining our per-trace results can suffer from precision issues. After multiplying many large or small numbers together, we could end up with numbers that are too large or small to fit into a floating point variable. An easy fix is to work with logarithms. Instead of using <math>P_k</math> directly, we can calculate
+
+<math>
+\log P_k = \sum_{j=1}^A \log p_{k,j}
+</math>
+
+Comparing these logarithms will give us the same results without the precision issues.
 
 == Attack Time ==
 The number of attack traces required to complete a template attack can vary wildly depending on the quality of the preprocessing. As described in the original papers on template attacks (Chari, Rao, and Rohatgi), when using high-quality templates made from many traces, it is possible to attack a system with a single trace. In the ChipWhisperer tutorials, we'll save ourselves a bit of processing time and only record a few thousand traces for generating the templates, meaning that we'll need more attack traces to recover the key from the victim. 
