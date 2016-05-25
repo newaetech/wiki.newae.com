@@ -110,6 +110,10 @@ Now, <code>tempTracesHW[y]</code> is a list of all of the traces with an interme
 tempTracesHW = np.array(tempTracesHW)
 </pre>
 
+One more check: make sure we have data in any one of these categories by printing
+<pre>
+print len(tempTracesHW[8])
+</pre>
 
 == Points of Interest ==
 == Covariance Matrices ==
