@@ -105,9 +105,9 @@ for i in range(len(tempTraces)):
     tempTracesHW[HW].append(tempTraces[i])
 </pre>
 
-Now, <code>tempTracesHW[y]</code> is a list of all of the traces with an intermediate Hamming weight of <code>y</code>. As our last step, let's turn this into a NumPy array to make the math easier in the rest of the tutorial:
+Now, <code>tempTracesHW[y]</code> is a list of all of the traces with an intermediate Hamming weight of <code>y</code>. As our last step, let's turn this into a list of NumPy arrays to make the math easier in the rest of the tutorial:
 <pre>
-tempTracesHW = np.array(tempTracesHW)
+tempTracesHW = [np.array(tempTracesHW[HW]) for HW in range(9)]
 </pre>
 
 One more check: make sure we have data in any one of these categories by printing
