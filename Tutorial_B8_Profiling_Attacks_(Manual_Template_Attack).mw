@@ -116,6 +116,88 @@ print len(tempTracesHW[8])
 </pre>
 
 == Points of Interest ==
+After sorting the traces by their Hamming weights, we need to find an "average trace" for each weight. We can make an array to hold 9 of these averages:
+
+<pre>
+tempMeans = np.zeros((9, len(tempTraces[0])))
+</pre>
+
+Then, we can fill up each of these traces one-by-one. NumPy's <code>average()</code> function makes this easy by including an "axis" input. We can tell NumPy to find the average at each point in time and repeat this for all 9 weights:
+
+<pre>
+for i in range(9):
+    tempMeans[i] = np.average(tempTracesHW[i], 0)
+</pre>
+
+Once again, it's a good idea to plot one of these averages to make sure that the average traces look okay:
+
+<pre>
+plt.plot(tempMeans[2])
+plt.grid()
+plt.show()
+</pre>
+
+[[File:Template-Mean-Trace.png|800px]]
+
+
+We can use these average traces to find points of interest using the ''sum of differences'' method. If this sounds unfamiliar, take a look at [[Template_Attacks#Points_of_Interest|the theory page]] for a review of the math. The first step is to create a "trace" that stores these differences:
+
+<pre>
+tempSumDiff = np.zeros(len(tempTraces[0]))
+</pre>
+
+Then, we want to look at all of the pairs of traces, subtract them, and add them to the sum of differences. This is simple to do with 2 loops:
+
+<pre>
+for i in range(9):
+    for j in range(i):
+        tempSumDiff += np.abs(tempMeans[i] - tempMeans[j])
+</pre>
+
+This sum of differences will have peaks where the average traces showed a lot of variance. Make sure that there are a handful of high peaks that we can use as points of interest:
+
+<pre>
+plt.plot(tempSumDiff)
+plt.grid()
+plt.show()
+</pre>
+
+[[File:Template-Sum-Of-Difference.png|800px]]
+
+Now, the most interesting points of interest are the highest peaks in this sum of differences plot. However, we can't just sort the array and pick the top points. Remember (because you read the theory page, right? <sup>right?</sup>) that we need to make sure our points have some space between them. For instance, it would be a bad idea to pick both 1950 and 1951 as points of interest.
+
+We can use the algorithm from the theory page to pick out some POIs:
+* Make an empty list of POIs
+* Find the biggest peak in the sum of differences trace and add it to the list of POIs
+* Zero out some of the surrounding points
+* Repeat until we have enough POIs
+Try to code this on your own - it's a good exercise. If you get stuck, here's our implementation:
+
+<pre>
+# Some settings that we can change
+numPOIs = 5        # How many POIs do we want?
+POIspacing = 5     # How far apart do the POIs have to be?
+
+# Make an empty list of POIs
+POIs = []
+
+# Repeat until we have enough POIs
+for i in range(numPOIs):
+    # Find the biggest peak and add it to the list of POIs
+    nextPOI = tempSumDiff.argmax()
+    POIs.append(nextPOI)
+    
+    # Zero out some of the surrounding points
+    # Make sure we don't go out of bounds
+    poiMin = max(0, nextPOI - POIspacing)
+    poiMax = min(nextPOI + POIspacing, len(tempSumDiff))
+    for j in range(poiMin, poiMax):
+        tempSumDiff[j] = 0
+
+# Make sure they look okay
+print POIs
+</pre>
+
 == Covariance Matrices ==
 
 = Performing the Attack =
