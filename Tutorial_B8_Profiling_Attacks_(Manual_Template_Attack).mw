@@ -249,10 +249,78 @@ print covMatrix[0]
 Note that you may not have enough data to complete the covariance matrix - check out the Gotchas at the end of this tutorial if this step blew up on you.
 
 = Performing the Attack =
-Steps to crack the code (tm)
+Our template is ready, so we can use it to perform an attack now. We'll load our fixed-key traces and apply the template PDF to see how good each guess is, keeping a running total to check which subkey guesses are the best matches.
 
 == Loading the Traces ==
+If you followed the instructions from the previous tutorial, you'll have a few dozen traces that use random plaintexts and a fixed key. We can load these in exactly the same way as the template traces:
+<pre>
+atkTraces = np.load(r'C:\chipwhisperer\software\temp_attack\fixed_key_data\traces\2016.05.24-12.10.07_traces.npy')
+atkPText  = np.load(r'C:\chipwhisperer\software\temp_attack\fixed_key_data\traces\2016.05.24-12.10.07_textin.npy')
+atkKey    = np.load(r'C:\chipwhisperer\software\temp_attack\fixed_key_data\traces\2016.05.24-12.10.07_knownkey.npy')
+</pre>
+
+In particular, let's check the key to make sure we know what our goal is:
+<pre>
+print atkKey
+</pre>
+With the default key in ChipWhisperer Capture, this prints
+<pre>
+[ 43 126  21  22  40 174 210 166 171 247  21 136   9 207  79  60]
+</pre>
+We're only attacking the first subkey, so let's see if we can get <code>43</code> to come up as the best guess.
+
 == Using the Template ==
+The very last step is to apply our template to these traces. We want to keep a running total of <math>\log P_k = \sum_j \log p_{k,j}</math>, so we'll make space for our 256 guesses:
+<pre>
+P_k = np.zeros(256)
+</pre>
+
+Then, we want to do the following for every attack trace:
+* Grab the samples from the points of interest and store them in a list <math>\mathbf{a}</math>
+* For all 256 of the subkey guesses...
+** Figure out which Hamming weight we need, according to our known plaintext and guessed subkey
+** Build a <code>multivariate_normal</code> object using the relevant mean and covariance matrices
+** Calculate the log of the PDF (<math>\log f(\mathbf{a})</math>) and add it to the running total
+* List the best guesses we've seen so far
+Our implementation is:
+<pre>
+for j in range(len(atkTraces)):
+    # Grab key points and put them in a matrix
+    a = [atkTraces[j][POIs[i]] for i in range(len(POIs))]
+    
+    # Test each key
+    for k in range(256):
+        # Find HW coming out of sbox
+        HW = hw[sbox[atkPText[j][0] ^ k]]
+    
+        # Find p_{k,j}
+        rv = multivariate_normal(meanMatrix[HW], covMatrix[HW])
+        p_kj = rv.pdf(a)
+   
+        # Add it to running total
+        P_k[k] += np.log(p_kj)
+
+    # Print our top 5 results so far
+    # Best match on the right
+    print P_k.argsort()[-5:]
+</pre>
+
+The output that appears is:
+<pre>
+[219 145 181 134 127]
+[ 37  43  76 123 235]
+[32 44 45 77 43]
+[199  45  44  77  43]
+[139  37  42  77  43]
+[45 77 37 42 43]
+[235  37  45  42  43]
+[ 37  77 139 235  43]
+</pre>
+This means:
+* After 1 trace, <code>43</code> wasn't even in the top 5 guesses. This is fine - there are probably a lot of key candidates tied for first place.
+* After 2 traces, <code>43</code> was the 4th best guess - pretty good...
+* After 3+ traces, <code>43</code> was the best candidate for the subkey.
+so we successfully attacked the first subkey in 3 traces! This is a bit lucky - most of the subkeys tend to take a bit more data. Don't be surprised if your attack takes closer to a dozen trials.
 
 = Gotchas =
 * Too little data (0 or 1 trace)
