@@ -199,6 +199,54 @@ print POIs
 </pre>
 
 == Covariance Matrices ==
+With 5 (or <code>numPOIs</code>) POIs picked out, we can build our multivariate distributions at each point for each Hamming weight. We need to write down two matrices for each weight:
+* A mean matrix (<code>1 x numPOIs</code>) which stores the mean at each POI
+* A covariance matrix (<code>numPOIs x numPOIs</code>) which stores the variances and covariances between each of the POIs
+
+The mean matrix is easy to set up because we've already found the mean at every point. All we need to do is grab the right points:
+
+<pre>
+meanMatrix = np.zeros((9, numPOIs))
+for HW in range(9):
+    for i in range(numPOIs):
+        meanMatrix[HW][i] = tempMeans[HW][POIs[i]]
+</pre>
+
+The covariance matrix is a bit more complex. We need a way to find the covariance between two 1D arrays. Helpfully, NumPy has the <code>cov(a, b)</code> function, which returns the matrix
+<pre>
+np.cov(a, b) = [[cov(a, a), cov(a, b)],
+                [cov(b, a), cov(b, b)]]
+</pre>
+
+We can use this to define our own covariance function:
+<pre>
+def cov(x, y):
+    # Find the covariance between two 1D lists (x and y).
+    # Note that var(x) = cov(x, x)
+    return np.cov(x, y)[0][1]
+</pre>
+
+As mentioned in the comments, this function can also calculate the variance of an array by passing the same array in for both <code>x</code> and <code>y</code>.
+
+We'll use our function to build the covariance matrices:
+<pre>
+covMatrix  = np.zeros((9, numPOIs, numPOIs))
+for HW in range(9):
+    for i in range(numPOIs):
+        for j in range(numPOIs):
+            x = tempTracesHW[HW][:,POIs[i]]
+            y = tempTracesHW[HW][:,POIs[j]]
+            covMatrix[HW,i,j] = cov(x, y)
+</pre>
+
+Make sure these matrices look okay before continuing:
+
+<pre>
+print meanMatrix
+print covMatrix[0]
+</pre>
+
+Note that you may not have enough data to complete the covariance matrix - check out the Gotchas at the end of this tutorial if this step blew up on you.
 
 = Performing the Attack =
 Steps to crack the code (tm)
