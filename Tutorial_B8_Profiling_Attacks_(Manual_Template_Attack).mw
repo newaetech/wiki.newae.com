@@ -323,7 +323,12 @@ This means:
 so we successfully attacked the first subkey in 3 traces! This is a bit lucky - most of the subkeys tend to take a bit more data. Don't be surprised if your attack takes closer to a dozen trials.
 
 = Gotchas =
-* Too little data (0 or 1 trace)
-* Flukes + statistics
+One problem with template attacks is that they require a large amount of data to make good templates. Remember that every output of the AES substitution box is unique, so there is only one output with a Hamming weight of 0 and only one with a weight of 8. This means that, when using random inputs, there is only a 1/256 chance of a trace using a Hamming weight of 0 or 8. 
+
+When only recording 1000 examples, it is completely possible to never see one of the weights, making it impossible to find the mean and variance. In fact, seeing a weight once is not enough - in order to calculate the variance, we need at least 2 traces, and this is hardly enough to build a good distribution.
+
+Some template attacks involve building a separate distribution for every possible subkey. This makes the problem even worse - now, we have a 1/256 chance of finding every key, so it's quite probable to have insufficient data. The only solution is to record more traces. Practical template attacks may require tens of thousands of traces to get enough information.
+
+If you ran into numerical problems while working through this tutorial, try recording another bigger data set. Instead of capturing 1000 template traces, try 5000 (on your coffee break), 10000 (on your lunch break), or 100000 (overnight). You'll probably find that the extra data makes the statistics work out better.
 
 {{Template:Tutorials}}
