@@ -1,0 +1,74 @@
+[[Template Attacks]] allow cryptography implementations to be attacked with very few assumptions about the code that is being run. These attacks use (hundreds of) thousands of traces to build some kind of statistical model, which describes how much power a device uses at various points in time. Then, to complete the attack, real power traces are compared to this model, allowing an attacker to find the secret key from a small number of traces. For a walkthrough of how to perform a template attack, check out [[Tutorial B8 Profiling Attacks (Manual Template Attack)]].
+
+A multivariate probability distribution is not the only way of modelling a device's power distribution. One idea is to train a neural network (or a ''multilayer perceptron'') to label traces. This is a classic example of a supervised learning problem:
+* We have a large amount of training inputs (traces) with known target outputs (the key values, or the Hamming weights coming out of the AES sbox, or...). These make up the training dataset, which we can use to train the neural network. Since we know the desired outputs, this learning process is supervised.
+* After the network is trained, we have a small number of traces which are not labeled - we don't know the key values that they are associated with. We can use the neural network to classify these inputs, which will give us our known key values or Hamming weights to complete the attack.
+
+Some very recent research has investigated how machine learning techniques can be used to assist in these side-channel attacks. For example, Lerman, Bontempi, and Markowitch presented "Side channel attack: an approach based on machine learning" at COSADE 2011, where they discussed the several machine learning techniques and their applicability to template attacks. 3 years later, Martinsek and Malina published "Comparison of Profiling Power Analysis Attacks Using Templates and Multi-Layer Perceptron Network" in Mathematical Methods in Science and Engineering 2014, comparing the performance of a standard template attack to this new neural network method. They concluded that the machine learning methods could not outperform the existing template attacks, but the success rates were fairly close.
+
+To test how easily these neural networks could classify input traces, a short experiment was run. 2000 traces (from [[Tutorial B8 Profiling Attacks (Manual Template Attack)]]) were used to train a feedforward neural network ([http://www.github.com/gregdeon/simple-ann from here]). After 20 minutes of training, the network was still showing large errors - it did not have any ability to classify traces. The experiment was stopped here - template attacks could produce better results in a small fraction of the time. 
+
+Python script used for experiment:
+<pre>
+# neuralProfiling.py
+# Train a neural network to classify traces with their sbox hamming weight
+
+import numpy as np
+import matplotlib.pyplot as plt
+from net import Net
+
+# Useful utilities
+sbox=(
+    0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
+    0xca,0x82,0xc9,0x7d,0xfa,0x59,0x47,0xf0,0xad,0xd4,0xa2,0xaf,0x9c,0xa4,0x72,0xc0,
+    0xb7,0xfd,0x93,0x26,0x36,0x3f,0xf7,0xcc,0x34,0xa5,0xe5,0xf1,0x71,0xd8,0x31,0x15,
+    0x04,0xc7,0x23,0xc3,0x18,0x96,0x05,0x9a,0x07,0x12,0x80,0xe2,0xeb,0x27,0xb2,0x75,
+    0x09,0x83,0x2c,0x1a,0x1b,0x6e,0x5a,0xa0,0x52,0x3b,0xd6,0xb3,0x29,0xe3,0x2f,0x84,
+    0x53,0xd1,0x00,0xed,0x20,0xfc,0xb1,0x5b,0x6a,0xcb,0xbe,0x39,0x4a,0x4c,0x58,0xcf,
+    0xd0,0xef,0xaa,0xfb,0x43,0x4d,0x33,0x85,0x45,0xf9,0x02,0x7f,0x50,0x3c,0x9f,0xa8,
+    0x51,0xa3,0x40,0x8f,0x92,0x9d,0x38,0xf5,0xbc,0xb6,0xda,0x21,0x10,0xff,0xf3,0xd2,
+    0xcd,0x0c,0x13,0xec,0x5f,0x97,0x44,0x17,0xc4,0xa7,0x7e,0x3d,0x64,0x5d,0x19,0x73,
+    0x60,0x81,0x4f,0xdc,0x22,0x2a,0x90,0x88,0x46,0xee,0xb8,0x14,0xde,0x5e,0x0b,0xdb,
+    0xe0,0x32,0x3a,0x0a,0x49,0x06,0x24,0x5c,0xc2,0xd3,0xac,0x62,0x91,0x95,0xe4,0x79,
+    0xe7,0xc8,0x37,0x6d,0x8d,0xd5,0x4e,0xa9,0x6c,0x56,0xf4,0xea,0x65,0x7a,0xae,0x08,
+    0xba,0x78,0x25,0x2e,0x1c,0xa6,0xb4,0xc6,0xe8,0xdd,0x74,0x1f,0x4b,0xbd,0x8b,0x8a,
+    0x70,0x3e,0xb5,0x66,0x48,0x03,0xf6,0x0e,0x61,0x35,0x57,0xb9,0x86,0xc1,0x1d,0x9e,
+    0xe1,0xf8,0x98,0x11,0x69,0xd9,0x8e,0x94,0x9b,0x1e,0x87,0xe9,0xce,0x55,0x28,0xdf,
+    0x8c,0xa1,0x89,0x0d,0xbf,0xe6,0x42,0x68,0x41,0x99,0x2d,0x0f,0xb0,0x54,0xbb,0x16) 
+hw = [bin(x).count("1") for x in range(256)]
+
+
+# Build profile
+# 1: Load data
+tempTraces = np.load(r'rand_key_data\traces\2016.05.24-12.53.15_traces.npy')
+tempPText  = np.load(r'rand_key_data\traces\2016.05.24-12.53.15_textin.npy')
+tempKey    = np.load(r'rand_key_data\traces\2016.05.24-12.53.15_keylist.npy')
+
+numTraces = len(tempTraces)
+traceLength = len(tempTraces[0])
+
+# 1.5: split up traces into training and validation
+numTraining = int(numTraces * 0.50)
+numValidation = numTraces - numTraining
+
+# 2: Calculate Hamming weight of sbox outputs
+tempSbox = [sbox[tempPText[i][0] ^ tempKey[i][0]] for i in range(len(tempPText))] 
+tempHW   = [hw[s] for s in tempSbox]
+   
+# 3: Build training dataset
+output = np.zeros([len(tempTraces), 9]) # One-hot signals
+for i in range(numTraces):
+    output[i, tempHW[i]] = 1
+    
+# 4: Try to make classifier
+inputRange = [-1, 1]
+POIs = [1397, 1345, 1364, 1353, 2113]
+
+net = Net([inputRange]*len(POIs), 20, 9)
+net.train_many(tempTraces[0:numTraining, POIs], output[0:numTraining], 0.01, 2000, 0.001*numTraining, True)
+
+# 5: Test it
+for i in range(numTraining, numTraining+300):
+    print net.sim(tempTraces[i, POIs])
+    print output[i]
+</pre>
