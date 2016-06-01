@@ -229,7 +229,23 @@ You must include both the .c file and the .S file. Leave a file blank if not usi
 
 As part of the compilation & validation the server will tell you of any errors. You must resubmit a new attempt if your compilation or validation fails (even if it's a problem on our end).
 
-If you wish to compile the code on your own (HIGHLY recommended during debugging to avoid taxing the server systems), please download the full source code directory. This source code directly is the same as used on the server, where your code is automatically copied to the "firmware\simpleserial-aes\user_crypto" directory. To build run "make" in "simpleserial-aes", and have avr-gcc, avr-libc, and avr-binutils installed (or WinAVR on Windows).
+If you wish to compile the code on your own (HIGHLY recommended during debugging to avoid taxing the server systems), please [http://ctf.newae.com/media/cc_aesbuild.zip download the full source code directory], described below.
+
+==== Compiling Firmware as Server Does ====
+
+To compile as the server does, simply [http://ctf.newae.com/media/cc_aesbuild.zip download the build directory]. To use this directory:
+
+1. Unzip that directory somewhere (for example in the "firmware" directory).
+2. Copy your source-codeto the "firmware\simpleserial-aes\user_crypto" directory.
+3. To build run "make" in "simpleserial-aes".
+
+Running make will require avr-gcc & avr-binutils installed. You can do this on Linux platforms with something like:
+
+sudo apt-get install avr-gcc avr-binutils
+
+On Windows platforms, install [http://winavr.sourceforge.net/ WinAVR].
+
+==== Timing your AES Implementation ====
 
 == White Box Cryptography ==
 
