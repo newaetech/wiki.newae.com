@@ -20,7 +20,7 @@ As a user, you can submit source-code to accomplish #1, which will run the code 
 * 'Stage-Gate' flags (such as basic CPA) are worth 10 points for all user.
 * User-submitted flags are worth 50 points for the first person to capture the flag, 30 for the next, and 10 for all others.
 * Capturing the flag for your own implementation is worth 30 points (to encourage users to not submit impossible implementations) for the first 4 implementations you submit (i.e., you do not receive self-points for more than 4 implementations)
-* White-box crypto is worth 70 points, and does not decrease over time.
+* White-box crypto is worth 100 points, and does not decrease over time.
 
 == Getting Help ==
 If you have trouble, please post at [https://newae.com/forum newae.com/forum]. If the server appears to be down please email '''ctfhelp -AT- newae.com'''. Please DO NOT email the help for general questions, as we would like those to be answered on the forum where others will see the questions.
