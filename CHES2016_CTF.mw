@@ -177,7 +177,7 @@ We don't want you to modify the clock settings, as the objective is everyone has
 As you obtain a small number of points for breaking your OWN implementation, people might try to be clever to read-out the key used during a previous run. All such methods are disallowed, as is hacking the website or other attacks that do not involve using the power measurements. Trying to be clever like that is not allowed.
 Please keep a copy of the secret key you submit if it's successful. We may need to verify them to ensure no database tampering happened. Note the secret keys are NOT stored on the database - only a hash of the correct key is, so getting a dump of the database will not be useful.
 
-Note once you submit an implementation, you do receive points for breaking it. Breaking your own implementation means you do NOT receive the time-bonus (since you have access to the traces before anyone else), but instead always receive the fixed points that a latecomer would (currently 10 points).
+Note once you submit an implementation, you do receive points for breaking it. Breaking your own implementation means you do NOT receive the time-bonus (since you have access to the traces before anyone else), but instead always receive some fixed points (currently 30 points).
 
 ==== Required AES-128 Format ====
 
