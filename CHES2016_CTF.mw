@@ -167,6 +167,7 @@ In order to submit a challenge, you must have an AES-128 implementation that mee
 * Sensitive operation occurs for all 16 bytes less than 10000 clock cycles from call to encrypt function (you can perform operations such as key expansion in an "init" call that happens before power measurements are recorded).
 * Does not modify clock settings of XMEGA device.
 * Doesn't try dumb stuff to reveal key (like saving secret key of job #1 to EEPROM and hoping you can run job #2 on the same hardware right after, and read job #1 key out).
+* Includes actual source code (you can't dumb a binary blob in the middle of a C wrapper). You can make the source code complicated however you want though.
 The requirement for performing sensitive operations (such as S-Box of input) within 10000 clock cycles is because we currently have limited the system to record a total of 10000 samples at a frequency that is 1x the clock rate.
 
 If necessary this can be increased, but will require manual intervention. To limit server bandwidth we are trying to keep the traces as small as possible! As an example the default AES-128 implementation in C only requires 3000 samples to break, so we are using 10000 as a reasonable trade-off between allowing a slower AES implementation and our internet bandwidth.
