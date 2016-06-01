@@ -10,9 +10,8 @@ You can see a video overview of the contest:
 
 There are two types of cryptographic implementations available for your browsing pleasure. They are either:
 
-1. AES-128 running on Atmel XMEGA, with power analysis. Key not stored in firmware (attack via DPA).
-
-2. AES-128 running on Linux computer, without power analysis. Key stored in firmware (White box).
+# AES-128 running on Atmel XMEGA, with power analysis. Key not stored in firmware (attack via DPA).
+# AES-128 running on Linux computer, without power analysis. Key stored in firmware (White box).
 
 As a user, you can submit source-code to accomplish #1, which will run the code on an embedded hardware platform.
 
@@ -235,19 +234,19 @@ If you wish to compile the code on your own (HIGHLY recommended during debugging
 
 To compile as the server does, simply [http://ctf.newae.com/media/cc_aesbuild.zip download the build directory]. To use this directory:
 
-1. Unzip that directory somewhere (for example in the "firmware" directory).
-
-2. Copy your source-codeto the "firmware\simpleserial-aes\user_crypto" directory.
-
-3. To build run "make" in "simpleserial-aes".
+# Unzip that directory somewhere (for example in the "firmware" directory).
+# Copy your source-codeto the <code>firmware\simpleserial-aes\user_crypto</code> directory.
+# To build run <code>make</code> in <code>simpleserial-aes</code>.
 
 Running make will require avr-gcc & avr-binutils installed. You can do this on Linux platforms with something like:
 
-sudo apt-get install avr-gcc avr-binutils
+ sudo apt-get install avr-gcc avr-binutils
 
 On Windows platforms, install [http://winavr.sourceforge.net/ WinAVR].
 
 ==== Timing your AES Implementation ====
+
+TODO - Check if Atmel Studio allows cycle-by-cycle timing?
 
 == White Box Cryptography ==
 
