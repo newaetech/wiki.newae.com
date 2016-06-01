@@ -86,7 +86,13 @@ Each folder also contains the exact script used to capture the traces on the Chi
 
 In addition a file called firmware.hex is provided, which can be programmed into an Atmel XMEGA 128D4 (such as on the ChipWhisperer-Lite or ChipWhisperer Multi-Target board). It expects an external 7.37MHz clock and uses the ChipWhisperer 'SimpleSerial' protocol (described at this page). You can use this image if you require additional investigation or want to capture more than the provided 1000 traces.
 
-You can also convert files from .npy to matlab. The following shows a simple Python script which opens all the .npy file and saves it as a .mat file. If you don't have Python installed, you can install WinPython on Windows to quickly get this script running.<syntaxhighlight lang="python">
+You can convert traces to a variety of formats. The following are very basic examples of such conversions, you can find more details on the [[File Formats]] page.
+
+===== Converting Traces to MATLAB =====
+
+You can also convert files from .npy to matlab. The following shows a simple Python script which opens all the .npy file and saves it as a .mat file. If you don't have Python installed, you can install WinPython on Windows to quickly get this script running.
+
+<syntaxhighlight lang="python">
 import scipy.io
 import numpy as np
 
@@ -105,6 +111,47 @@ scipy.io.savemat('fileout.mat', {
  "textout":textout,
  "key":key
 })
+</syntaxhighlight>
+
+===== Converting Traces to Binary Format (used by Daredevil attack) =====
+
+The following are specific instructions which you can use to make trace formats required by the [https://github.com/SideChannelMarvels/Daredevil/ Daredevil] open-source high-order CPA tool.
+
+The resulting binary files should be placed in the same directory as the "daredevil" binary you build. You'll have make a config file (see the [https://github.com/SideChannelMarvels/Daredevil/blob/master/CONFIG example CONFIG file]) which includes the data printed. Replace sections of the example config file which overlap, and then adjust the type of attack you request Daredevil to perform.
+
+<syntaxhighlight lang="python">
+import numpy as np
+import struct
+
+traces = np.load('2016.05.30-14.11.56_traces.npy')
+textin = np.load('2016.05.30-14.11.56_textin.npy')
+
+f = open('tracefile', 'wb')
+
+for t in traces.flatten():
+    f.write(struct.pack('f', t))
+    
+f.close()
+
+f = open('plaintext', 'wb')
+for t in textin.flatten():
+    f.write(struct.pack('B', t))
+f.close()
+
+print "Add following to CONFIG:\n"
+print "[Traces]"
+print "files=1"
+print "trace_type=f"
+print "transpose=true"
+print "index=0"
+print "nsamples=%d"%traces.shape[1]
+print "trace=tracefile %d %d"%(traces.shape[0], traces.shape[1])
+print ""
+print "[Guesses]"
+print "files=1"
+print "guess_type=u"
+print "transpose=true"
+print "guess=plaintext %d %d"%(textin.shape[0], textin.shape[1])
 </syntaxhighlight>
 
 ==== Example CPA Attack ====
