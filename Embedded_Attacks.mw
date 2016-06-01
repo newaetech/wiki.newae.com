@@ -1,5 +1,5 @@
 
-== Other Embedded Attacks ==
+= Other Embedded Attacks =
 
 [[IEEE 802.15.4 Radio Attacks]]
 
@@ -7,10 +7,14 @@
 
 [[TI ChipCon SRAM Dump]]
 
-== Example Attacks ==
+= Example Attacks =
 
 [[Atmel XMEGA Hardware AES Attack]]
 
 [[Atmel ATmega128RFA1 Hardware AES Attack]]
 
 [[TI CC2530 Hardware AES Attack]]
+
+= Ideas =
+
+[[Profiling Attacks with Neural Networks]]
