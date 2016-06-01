@@ -236,7 +236,9 @@ If you wish to compile the code on your own (HIGHLY recommended during debugging
 To compile as the server does, simply [http://ctf.newae.com/media/cc_aesbuild.zip download the build directory]. To use this directory:
 
 1. Unzip that directory somewhere (for example in the "firmware" directory).
+
 2. Copy your source-codeto the "firmware\simpleserial-aes\user_crypto" directory.
+
 3. To build run "make" in "simpleserial-aes".
 
 Running make will require avr-gcc & avr-binutils installed. You can do this on Linux platforms with something like:
