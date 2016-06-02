@@ -1,15 +1,12 @@
 Interested in side channel analysis? This page should help you get some ideas of where to start.
 
 = Hardware =
-ChipWhisperer is maintained by NewAE Technology Inc. The ChipWhisperer boards take away the frustration of setting up the hardware for side channel attacks. You can get your hands on one of the boards at [https://store.newae.com/ The NewAE Store]. 
-
-To perform a side channel attack, you need two things:
-* A '''capture''' board. This is an oscilloscope on steroids: it has special hardware that it uses to capture very small signals with a precisely synchronized clock. 
-* A '''target''' board. This is typically a processor that can be programmed to perform some kind of secure operation. 
-The simplest way to get started is to get a [[CW1173 ChipWhisperer-Lite]]: this comes with the capture hardware and the target together on a single board. For more advanced work, you can get a [[CW308 UFO Target]], which is a base board that supports many types of targets. Alternatively, you can attack an FPGA target with the [[CW305 Artix FPGA Target]].
+ChipWhisperer is maintained by NewAE Technology Inc. The ChipWhisperer boards take away the frustration of setting up the hardware for side channel attacks.. You can get your hands on one of the boards at [https://store.newae.com/ The NewAE Store]. As of June 2016, The ChipWhisperer Lite (CW1173) is a great way to get started: it comes with a "victim" already connected, so you can start the tutorials out-of-the-box.
 
 = Software =
-ChipWhisperer's software is open-source and freely available online. To get everything set up, follow the instructions at [[Installing ChipWhisperer]]. If you know what you're doing, you can head straight to the [https://github.com/newaetech/chipwhisperer Github page].
+ChipWhisperer's software is open-source and freely available online.
+* If you want a nice, tidy download, check out the [https://www.assembla.com/wiki/show/chipwhisperer/ChipWhisperer_Software_Firmware_Releases ChipWhisperer Releases]. The information on this page will explain how to download and install the software.
+* If you're familiar with Git, you can directly clone the [https://www.assembla.com/spaces/chipwhisperer/git/source ChipWhisperer Repository]. This will get you a bleeding-edge copy of the software, which has the most recent bug fixes and the most recent bugs.
 
 = Tutorials =
 The tutorials on this wiki provide an introduction to ChipWhisperer. The main focus in these tutorials is breaking AES-128; if this is your main goal, start with these three tutorials:
@@ -28,6 +25,3 @@ Some various papers, slides, books, and other places to look to get you excited 
 * Colin's [http://www.newae.com/files/CHES2013_Tutorial.pptx Slides from CHES2013]
 * The book [http://www.amazon.com/Power-Analysis-Attacks-Revealing-Secrets/dp/1441940391/n0fa0-20 Power Analysis Attacks], which is a great overview of the math involved and provides tons of examples of attacks
 * The book [http://www.amazon.com/Understanding-Cryptography-Textbook-Practitioners-ebook/dp/B00475ARKM/n0fa0-20 Understanding Cryptography] for an introduction to cryptography algorthms
-* [[Academic Papers]] that use ChipWhisperer for various attacks and security testing.
-
-[[Category:Introduction]]
