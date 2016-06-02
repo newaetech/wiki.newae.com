@@ -53,7 +53,7 @@ You can see another reference on the design of the encryption side, we'll be onl
 
 [[File:aes256_cbc.png|image]]
 
-Specifics of the AES-256 Decryption algorithm are given below, where this AES-256 implementation was written by [[Ilya%20O.%20Levin|http://www.literatecode.com/]]:
+Specifics of the AES-256 Decryption algorithm are given below, where this AES-256 implementation was written by [http://www.literatecode.com/ Ilya O. Levin]:
 
 <pre>aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
 aes_shiftRows_inv(buf);
