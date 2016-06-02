@@ -152,7 +152,7 @@ You can see a [http://www.youtube.com/watch?v=ozzlcUM_-dc&hd=1 Video] of the Ins
 === CWCR2: Using the AVR Programmer ===
 
 <ol start="5" style="list-style-type: decimal;">
-<li><p>Next, you will need to program the AVR itself. On Windows we will make use of the free [[www.atmel.com/tools/STUDIOARCHIVE.aspx|AVR Studio 4.19]]. You can find a direct link here: [http://www.atmel.com/forms/software-download.aspx?target=tcm:26-17924 Direct Link to AVR Studio 4.19 Binary]. Note it is possible to use <code>avrdude</code>, a command-line program which is part of WinAVR instead if you wish. However since many people find the graphical interface of AVRStudio easier, this guide will use AVRStudio. Be sure to install the USB drivers as part of the package.</p>
+<li><p>Next, you will need to program the AVR itself. On Windows we will make use of the free [http://www.atmel.com/tools/STUDIOARCHIVE.aspx AVR Studio 4.19]. You can find a direct link here: [http://www.atmel.com/forms/software-download.aspx?target=tcm:26-17924 Direct Link to AVR Studio 4.19 Binary]. Note it is possible to use <code>avrdude</code>, a command-line program which is part of WinAVR instead if you wish. However since many people find the graphical interface of AVRStudio easier, this guide will use AVRStudio. Be sure to install the USB drivers as part of the package.</p>
 <blockquote><p>'''warning'''</p>
 <p>If using Windows 8.1, AVRStudio 4.19 may not work correctly. In particular DO NOT install the USB Drivers as part of the installation package as mentioned above. Instead first install the latest stand-alone [https://gallery.atmel.com/Products/Details/6873be43-0628-46ac-ba83-286869a3d97a AtmelUSBInstaller] version.</p>
 <p>You can see additional details on the following thread: [http://www.avrfreaks.net/forum/avrisp-mk2-programmer-windows-81 http://www.avrfreaks.net/forum/avrisp-mk2-programmer-windows-81]. If you have already installed AVRStudio 4.19 you may have to remove the associated drivers, please see the linked thread for details.</p></blockquote></li>
@@ -167,9 +167,6 @@ You can see a [http://www.youtube.com/watch?v=ozzlcUM_-dc&hd=1 Video] of the Ins
 You can see a [http://www.youtube.com/watch?v=gy6-MBvVvy4&hd=1 Video] of the Target Build Procedure:
 
 [[File:Youtube-win7-target.png|link=http://www.youtube.com/watch?v=gy6-MBvVvy4&hd=1]]
-
-
-
 
 == I/O Connections ==
 
