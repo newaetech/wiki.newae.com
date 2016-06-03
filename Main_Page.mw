@@ -112,7 +112,35 @@ The following tutorials use the ChipWhisperer software and/or hardware. They are
 
 While ChipWhisperer started as a side-channel power analysis platform, it has grown to be useful in other attack types. This section is designed to show you a wide variety of attacks on embedded systems, to give you an idea of what is required for building secure embedded systems.
 
-See the page [[Embedded Attacks]] for a full list of examples held on this wiki.
+== Tools ==
+
+Note that ChipWhisperer isn't the only side-channel analysis project out there! You'd be a fool for not checking out these other great projects:
+
+* [https://github.com/SideChannelMarvels Side Channel Marvels] Includes a number of tools. This includes a higher-order CPA tool (which supports distributed use). The binary format used by the higher-order CPA tool can be exported from ChipWhisperer traces (see [[File Format]] page).
+
+* [http://opensca.sourceforge.net/ OpenSCA] is a MATLAB tool-box full of SCA goodies & examples. Again you can export ChipWhisperer traces to this format.
+
+* [http://dpacontest.org/ DPAContest] isn't strictly a project per-say, but it includes a lot of useful examples of attacks, capture tools, etc. Again a great resource.
+
+== General Embedded Attacks (Side-Channel & Others) ==
+
+[[IEEE 802.15.4 Radio Attacks]]
+
+[[AES Bootloader Attack]]
+
+[[TI ChipCon SRAM Dump]]
+
+== Example Attacks with ChipWhisperer ==
+
+[[Atmel XMEGA Hardware AES Attack]]
+
+[[Atmel ATmega128RFA1 Hardware AES Attack]]
+
+[[TI CC2530 Hardware AES Attack]]
+
+== Half-Baked Ideas ==
+
+[[Profiling Attacks with Neural Networks]]
 
 = Capture The Flag =
 
