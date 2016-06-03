@@ -17,9 +17,42 @@ To begin, we'll be opening the existing .elf file. This file contains all the de
 
 From the File --> Open menu, select Open Object File For Debugging:
 
-[[File:sim1_openobject.png|400px]]
+[[File:sim1_openobject.png]]
 
 == Simulating ==
+
+[[File:sim2_selectelf.png]]
+
+[[File:sim3_saveproject.png]]
+
+[[File:sim4_selectxmega.png]]
+
+[[File:sim5_openfile.png]]
+
+[[File:sim6_setbreakpoint.png]]
+
+[[File:sim7_selecttoolA.png]]
+
+[[File:sim8_selecttoolB.png]]
+
+[[File:sim9_startdebug.png]]
+
+[[File:sim10_insertcall.png]]
+
+[[File:sim11_reload1.png]]
+
+[[File:sim11_reload2.png]]
+
+[[File:sim12_pstatus.png]]
+
+[[File:sim13_cyclecount.png]]
+
+[[File:sim14_resettozero.png]]
+
+[[File:sim15_bpnothit.png]]
+
+[[File:sim16_stepin.png]]
+
 
 == Timing ==
 
