@@ -246,7 +246,11 @@ On Windows platforms, install [http://winavr.sourceforge.net/ WinAVR].
 
 ==== Timing your AES Implementation ====
 
-TODO - Check if Atmel Studio allows cycle-by-cycle timing?
+One of the requirements is that leakage occurs before 10 000 cycles. How can you test this? Luckily it's possible with the Atmel Studio simulator (you can also try other simulators, but it's unknown their support for the XMEGA device).
+
+Details of running the simulator are on the page [[Simulating the XMEGA Target Code]].
+
+Note what it means that "leakage" is occurring is somewhat vague. For example Stage-gate #3B does NOT cover all the first-round S-Boxs in 10 000 cycles, but people were still able to break it. Generally your AES should have somehow touched all the secret material inside that window is the objective.
 
 == White Box Cryptography ==
 
