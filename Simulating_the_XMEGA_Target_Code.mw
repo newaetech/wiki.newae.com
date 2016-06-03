@@ -73,3 +73,7 @@ That's it! Using the Atmel Studio, you can easily simulate your code to determin
 
 
 =Building=
+
+At this time, it is recommended to use WinAVR to build. The version of certain tools provided with Atmel Studio does not directly work with the provided Makefile.
+
+See [[http://wiki.newae.com/CHES2016_CTF#Compiling_Firmware_as_Server_Does]] for brief details. You can use the built ELF-file as above.
