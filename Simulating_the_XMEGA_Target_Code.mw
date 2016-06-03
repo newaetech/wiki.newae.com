@@ -1,0 +1,12 @@
+This page describes how to simulate the XMEGA target code in order to determine the length of time AES takes. This was designed for the CHES CTF 2016, but may be valuable in other circumstances.
+
+=Required Tools=
+
+You will require the following tools:
+
+* [http://www.atmel.com/Microsite/atmel-studio/ Atmel Studio 7]
+* avr-gcc (suggested to use WinAVR, but you can actually build with Atmel Studio)
+
+=Simulating=
+
+=Building=
