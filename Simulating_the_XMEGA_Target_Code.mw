@@ -9,7 +9,7 @@ You will require the following tools:
 
 =Simulating=
 
-The following assumes you have an EXTERNAL build environment (such as WinAVR, or avr-gcc). If you'd like to use Atmel Studio to build the project, see instructions at the end of this page.
+The following assumes you have an EXTERNAL build environment (such as WinAVR, or avr-gcc). Building with Atmel Studio is possible, but not documented/supported right now.
 
 == Opening Object File ==
 
@@ -70,7 +70,6 @@ That's it! Using the Atmel Studio, you can easily simulate your code to determin
 * Use the framework described by the CTF page, which provides the required makefile + supporting files.
 * You'll have to modify the <code>simpleserial-aes.c</code> file to directly call your encryption function.
 * Set a breakpoint at the higher-level code, as this is where the trigger starts. Check how many cycles it takes to reach the first vulnerable portion of your code.
-
 
 =Building=
 
