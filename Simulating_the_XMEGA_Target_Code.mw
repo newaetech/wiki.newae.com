@@ -9,4 +9,21 @@ You will require the following tools:
 
 =Simulating=
 
+The following assumes you have an EXTERNAL build environment (such as WinAVR, or avr-gcc). If you'd like to use Atmel Studio to build the project, see instructions at the end of this page.
+
+== Opening Object File ==
+
+To begin, we'll be opening the existing .elf file. This file contains all the debug information created during the build process.
+
+From the File --> Open menu, select Open Object File For Debugging:
+
+[[File:sim1_openobject.png|400px]]
+
+== Simulating ==
+
+== Timing ==
+
+
+
+
 =Building=
