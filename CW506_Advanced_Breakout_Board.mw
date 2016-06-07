@@ -8,7 +8,11 @@ The breakout board features a variety of voltage translators, test points, conne
 
 [[File:cw506_annotate1.png]]
 
-== Data Flow ==
+== Connection Routing ==
+
+The following shows the routing of various connections on the breakout board:
+
+[[File:cw506_route.png|400px]]
 
 == Switch Settings ==
 
