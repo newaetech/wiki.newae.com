@@ -63,7 +63,7 @@ The following shows an example where we've disconnected GPIO4 (the trigger) from
 |☑
 |☑
 |
-|-
+|- style="background-color: white;"
 |OFF
 |HS1-HS2
 |☑
@@ -72,7 +72,7 @@ The following shows an example where we've disconnected GPIO4 (the trigger) from
 |
 |
 |☑
-|-
+|- style="background-color: white;"
 |ON
 |HS1-HS2
 |☑
