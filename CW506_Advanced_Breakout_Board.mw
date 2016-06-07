@@ -130,6 +130,12 @@ Setting SW3 to the LEFT position will drive the 3.3V power supply on the target 
 
 == Use Cases ==
 
+=== Probing Target Board Signals ===
+
+=== Using Target Board Stand-Alone ===
+
+=== Inserting External Equipment into Test Path ===
+
 == Schematic ==
 
 The schematic is available in two formats - PDF and schematic images. Click the images for full resolution.
