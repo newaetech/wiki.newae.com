@@ -94,6 +94,22 @@ The following shows an example where we've disconnected GPIO4 (the trigger) from
 
 === VCC-IO Settings ===
 
+The VCC-IO level defines what voltage the inputs/outputs on the RIGHT side operate at (the target side). The inputs/outputs on the LEFT side (the ChipWhisperer capture side) are always 3.3V.
+
+The VCC-IO level can be set to one of:
+
+* Fixed 3.3V.
+* Based on voltage on VREF pin of JP2 (20-pin target connector).
+* Based on external voltage reference.
+
+Normally you would use either "JP2.VREF" or "+3V3". All NewAE target boards will provide a signal on JP2.VREF which indicates the correct translation voltage. If using a simple breakout or your own target board, you may just wish to force use of 3.3V IO voltages however.
+
+These settings are configured with switch SW1 and SW2. In addition, three LEDs will confirm your setting. For example here the board is set to output 3.3V reference signals:
+
+[[File:cw506_vccio.jpg|400px]]
+
+The current VCC-IO voltage is available on test point TP11 (just beside the 3 LEDs).
+
 === JP2.+3v3 Settings ===
 
 == Use Cases ==
