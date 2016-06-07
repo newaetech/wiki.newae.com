@@ -34,13 +34,8 @@ The following shows an example where we've disconnected GPIO4 (the trigger) from
 [[File:Cw506_dip_nogpio4.jpg|none|Setting the DIP switch to the LEFT causes the 20-pin target to be disconnected.|thumb|400x400px]]The following summarizes the connection for different SW4 settings. Note the 20-pin connector and the test-points to the right of that connector (marked TIO1, TIO2, TIO3, TIO4) are the only things disconnected.
 {| class="wikitable"
 !
-!3.3V Logic (span-2)
-!Remove
-!VCC-IO Logic (span=5)
-!Remove
-!Remove
-!Remove
-!Remove
+!scope="row" colspan="2"|3.3V Logic
+!scope="row" colspan="5"|VCC-IO Logic
 |-
 !SW4 Setting
 !JP1 (Left 20-Pin)
