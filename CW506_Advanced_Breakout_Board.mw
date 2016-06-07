@@ -14,6 +14,8 @@ The following shows the routing of various connections on the breakout board:
 
 [[File:cw506_route.png]]
 
+=== Voltage Translation ===
+
 The voltage translation is done with three different parts:
 
 * SN74LVC1T45DBVT for high-speed clock lines (unidirectional, approx 200 Mbps max speed, 1.65V - 5.5V)
@@ -22,7 +24,19 @@ The voltage translation is done with three different parts:
 
 Note the clock translators limit lower operating voltage, if not using HS1 or HS2 you can safely use this board down to 1.2V. The maximum speed of the voltage translators varies with different output voltages, see datasheet for details.
 
-== Switch Settings ==
+The VCCIO net on the board defines what logic level the target (i.e., the signals on the jumpers and headers on the right side of the board) section operates at. There is a vertical double-line on the breakout board, everything on the right side of the double-line operates at VCC-IO levels.
+
+=== SW4 (Target Disconnect) ===
+
+A DIP switch can be used to disconnect certain pins of the 20-pin header. The DIP switch has small text marked "ON", when the DIP switch is moved to this position the 20-pin connector is ENABLED.
+
+The following shows an example where we've disconnected GPIO4 (the trigger) from our target device, and am feeding an external trigger in with the header (JP4) to the left of the DIP switch. This new trigger signal will be routed to the attached ChipWhisperer, and can be used instead of the trigger coming from the target device.
+
+[[File:cw506_dip_nogpio4.jpg|600px]]
+
+=== VCC-IO Settings ===
+
+=== JP2.+3v3 Settings ===
 
 == Use Cases ==
 
