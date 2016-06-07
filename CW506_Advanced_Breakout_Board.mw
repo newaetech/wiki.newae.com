@@ -30,8 +30,72 @@ The VCCIO net on the board defines what logic level the target (i.e., the signal
 
 A DIP switch can be used to disconnect certain pins of the 20-pin header. The DIP switch has small text marked "ON", when the DIP switch is moved to this position the 20-pin connector is ENABLED.
 
-The following shows an example where we've disconnected GPIO4 (the trigger) from our target device, and am feeding an external trigger in with the header (JP4) to the left of the DIP switch. This new trigger signal will be routed to the attached ChipWhisperer, and can be used instead of the trigger coming from the target device. Notice the DIP switch for GPIO4 (TIO4) is set to the LEFT, and the rest are set to the RIGHT (ON).
-[[File:Cw506_dip_nogpio4.jpg|none|Setting the DIP switch to the LEFT causes the 20-pin target to be disconnected.|thumb|400x400px]]
+The following shows an example where we've disconnected GPIO4 (the trigger) from our target device, and am feeding an external trigger in with the header (JP4) to the left of the DIP switch. This new trigger signal will be routed to the attached ChipWhisperer, and can be used instead of the trigger coming from the target device. Notice the DIP switch for TIO4 (GPIO4/IO4) is set to the LEFT, and the rest are set to the RIGHT (ON).
+[[File:Cw506_dip_nogpio4.jpg|none|Setting the DIP switch to the LEFT causes the 20-pin target to be disconnected.|thumb|400x400px]]The following summarizes the connection for different SW4 settings. Note the 20-pin connector and the test-points to the right of that connector (marked TIO1, TIO2, TIO3, TIO4) are the only things disconnected.
+{| class="wikitable"
+!
+!3.3V Logic (span-2)
+!Remove
+!VCC-IO Logic (span=5)
+!Remove
+!Remove
+!Remove
+!Remove
+|-
+!SW4 Setting
+!JP1 (Left 20-Pin)
+!JP3
+!JP4
+!JP5/JP6
+!JP2 (Right 20-Pin)
+!TIO1-TIO4 Test Points
+!TP7/TP8, SMA Connectors
+|-
+|OFF
+|TIO1-TIO4
+|☑
+|☑
+|
+|
+|
+|
+|-
+|ON
+|TIO1-TIO4
+|☑
+|☑
+|
+|☑
+|☑
+|
+|-
+|OFF
+|HS1-HS2
+|☑
+|
+|
+|
+|
+|☑
+|-
+|ON
+|HS1-HS2
+|☑
+|
+|
+|☑
+|
+|☑
+|-
+|?
+|SPI/PDI/Other
+|☑
+|
+|☑
+|☑
+|
+|
+|}
 
 === VCC-IO Settings ===
 
