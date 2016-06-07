@@ -6,7 +6,9 @@ The CW506 is a simple but powerful breakout board for devices using NewAE Techno
 
 The breakout board features a variety of voltage translators, test points, connectors, and switches that makes it simple to interface various test equipment and target devices together. This includes both connecting other lab equipment, along with connecting ChipWhisperer capture hardware to your own targets.
 
-== Specifications ==
+[[File:cw506_annotate1.png]]
+
+== Data Flow ==
 
 == Switch Settings ==
 
