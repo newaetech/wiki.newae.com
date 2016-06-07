@@ -102,13 +102,21 @@ The VCC-IO level can be set to one of:
 * Based on voltage on VREF pin of JP2 (20-pin target connector).
 * Based on external voltage reference.
 
+The current VCC-IO voltage is available on test point TP11 (just beside the 3 LEDs).
+
+==== Normal Usage ====
+
 Normally you would use either "JP2.VREF" or "+3V3". All NewAE target boards will provide a signal on JP2.VREF which indicates the correct translation voltage. If using a simple breakout or your own target board, you may just wish to force use of 3.3V IO voltages however.
 
 These settings are configured with switch SW1 and SW2. In addition, three LEDs will confirm your setting. For example here the board is set to output 3.3V reference signals:
 
 [[File:cw506_vccio.jpg|400px]]
 
-The current VCC-IO voltage is available on test point TP11 (just beside the 3 LEDs).
+==== Using External VREF ====
+
+The final setting allows you to use the banana jack (BJACK) or test point TP9 as the voltage reference. This allows usage of an external lab supply for setting the output signal level to any supported level.
+
+If using the BJACK feature, be sure to check switch SW3 is set in the correct position. The BJACK can also be used to provide the 3.3V rail for the target device.
 
 === JP2.+3v3 Settings ===
 
