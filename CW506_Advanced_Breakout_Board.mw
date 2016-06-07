@@ -112,6 +112,14 @@ The current VCC-IO voltage is available on test point TP11 (just beside the 3 LE
 
 === JP2.+3v3 Settings ===
 
+The 20-pin target connector (JP2) has two power supplies: a +5.0V signal, and a +3.3V signal. Normally these signals would come from a power supply in the ChipWhisperer-Capture target board (on JP1).
+
+However if using the breakout board stand-alone, these will not be present. Switch SW3 allows you to route an external power supply onto the +3.3V power supply pins of JP2, allowing you to power a target expecting this supply voltage. This can also be used to power a target that draws more current than the ChipWhisperer-Capture hardware can provide.
+
+Note it's possible but not recommended to also use this feature to adjust the supply voltage of the target (i.e., experiment running the target at 2.5V or 5.0V). The 3.3V supply may power 3.3V-only logic on the target board.
+
+Setting SW3 to the LEFT position will drive the 3.3V power supply on the target board from the banana jack connector, which also connect to test point TP9 (the large red test point).
+
 == Use Cases ==
 
 == Schematic ==
