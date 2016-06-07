@@ -31,7 +31,7 @@ The VCCIO net on the board defines what logic level the target (i.e., the signal
 A DIP switch can be used to disconnect certain pins of the 20-pin header. The DIP switch has small text marked "ON", when the DIP switch is moved to this position the 20-pin connector is ENABLED.
 
 The following shows an example where we've disconnected GPIO4 (the trigger) from our target device, and am feeding an external trigger in with the header (JP4) to the left of the DIP switch. This new trigger signal will be routed to the attached ChipWhisperer, and can be used instead of the trigger coming from the target device. Notice the DIP switch for GPIO4 (TIO4) is set to the LEFT, and the rest are set to the RIGHT (ON).
-[[File:Cw506_dip_nogpio4.jpg|none|Setting the DIP switch to the LEFT causes the 20-pin target to be disconnected.|thumb|500x500px]]
+[[File:Cw506_dip_nogpio4.jpg|none|Setting the DIP switch to the LEFT causes the 20-pin target to be disconnected.|thumb|400x400px]]
 
 === VCC-IO Settings ===
 
