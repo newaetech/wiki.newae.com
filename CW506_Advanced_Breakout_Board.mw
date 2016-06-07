@@ -14,6 +14,14 @@ The following shows the routing of various connections on the breakout board:
 
 [[File:cw506_route.png]]
 
+The voltage translation is done with three different parts:
+
+* SN74LVC1T45DBVT for high-speed clock lines (unidirectional, approx 200 Mbps max speed, 1.65V - 5.5V)
+* PI4ULS5V201TAEX for GPIO1/2 (bidirectional, approx 20 Mbps max speed, 1.2V - 5.5V)
+* GTL2003PW for GPIO2/3 + Others (bidirectional, 1.0V - 5.5V)
+
+Note the clock translators limit lower operating voltage, if not using HS1 or HS2 you can safely use this board down to 1.2V. The maximum speed of the voltage translators varies with different output voltages, see datasheet for details.
+
 == Switch Settings ==
 
 == Use Cases ==
