@@ -41,7 +41,7 @@ ChipWhisperer-Hardware:
 * [[CW1173 ChipWhisperer-Lite]]
 * [[CW1200 ChipWhisperer-Pro]]
 
-Old Hardware (not longer available)
+Old Hardware (no longer available, still supported)
 
 * [[CW1002 ChipWhisperer Capture Rev2]]
 
@@ -58,13 +58,13 @@ ChipWhisperer Target boards:
 * [[CW303 XMEGA Target]]
 * [[CW304 Notduino Target]]
 * [[CW305 Artix FPGA Target]]
+* [[CW307 UFO Target]]
 
 3rd-Party Target Boards:
 
 * [[SAKURA-G Target]]
 * [[SASEBO-GII Target]]
 * [[SASEBO-W Target]]
-
 * [[Breadboard Arduino Target]]
 
 === Tools ===
