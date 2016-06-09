@@ -44,7 +44,7 @@ The first step in the attack is to generate the template. Again for generating t
 <li>Open the Analyzer software</li>
 <li>From the ''File --&gt; Open Project'' option, navigate to the <code>tut_randkey_randplain.cwp</code> file you save previously. Open this file, ensure it is the file corresponding with the '''randomly changing encryption key'''!</li>
 <li>Open the ''Trace Explorer'' tab and Enable it.</li>
-<li><p>Change the ''Partition Mode'' to ''HW AES Intermediate'', and select the ''Auto-Save Data to Project'' option:</p>
+<li><p>Change the "Comparison Mode" to "Sum of Absolute Difference" and the ''Partition Mode'' to ''HW AES Intermediate'', and select the ''Auto-Save Data to Project'' option:</p>
 <p>[[File:traceexplorer1.png|image]]</p></li>
 <li><p>Hit the ''Display'' button, and then select ''All On''. This displays the differences between the various groups of Hamming Weight (HW) values:</p>
 <p>[[File:traceexplorer2.png|image]]</p></li>
