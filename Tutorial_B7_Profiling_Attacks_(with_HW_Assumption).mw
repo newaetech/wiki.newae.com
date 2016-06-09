@@ -84,7 +84,7 @@ filename = avr_keyrand_plainrand_1000traces_data\analysis\templates-PartitionHWI
 <li><p>Append the ''Template Data'' section you copied from the previous project to your project file:</p>
 <p>[[File:projecteditor_addtemplate.png|image]]</p></li>
 <li>Use the ''Save Editor to Disk'' button to write these changes (and '''not the Save Project option'''). Note this assumes that both the <code>tut_fixedkey_randplain.cwp</code> and <code>tut_randkey_randplain.cwp</code> were saved in the same directory, as otherwise the reference to the template file will break!</li>
-<li>Close the Analyzer software. Re-open the software and reload the same project file (e.g. <code>tut_fixedkey_randplain.cwp</code>), this step is needed to ensure the changes you added in are loaded into memory.</li>
+<li>Re-open the same project file (e.g. <code>tut_fixedkey_randplain.cwp</code>), this step is needed to ensure the changes you added in are loaded into memory.</li>
 <li><p>Change the attack module to ''Profiling'':</p>
 <p>[[File:selectprofiling.png|image]]</p></li>
 <li><p>Change the ''Reporting Interval'' to 1, since we want to observe what happens on each added trace:</p>
