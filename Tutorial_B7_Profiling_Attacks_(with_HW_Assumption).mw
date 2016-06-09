@@ -25,11 +25,11 @@ As mentioned, you will need to perform ''two'' capture campaigns. This tutorial 
 <li>Save the project now, giving it a name indicating the '''key and text is random'''. For example you could call it <code>tut_randkey_randplain.cwp</code>. Note by saving the project ''before'' running the capture you will force all trace data to be saved into a directory with the same name. This will make it easier to find the data at a later time.</li>
 <li>Change the number of traces to be ''1000'': more traces are needed to form the profile. In this case 1000 is a very small capture, however for this unprotected implementation will be sufficient. An interesting experiment is to see how using more or less traces impacts your templates!</li>
 <li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process. You will see each new trace plotted in the waveform display. Once the capture is complete, save the project file again.</li>
-<li>Exit the capture application, again being sure to first save the project.</li></ol>
+</ol>
 
 === Capturing the Attack Traces ===
 
-# Follow steps 1-3 of the previous section. Leave the ''Key/Text Pattern'' as default, where the encryption key is fixed and the plaintext is random.
+# Make a new project and follow steps 1-3 of the previous section. Leave the ''Key/Text Pattern'' as default, where the encryption key is fixed and the plaintext is random.
 # Save the project now in the same directory as the <code>.cwp</code> file from the previous section, giving it a name indicating the key is '''fixed''' and text is '''random'''. For example you could call it <code>tut_fixedkey_randplain.cwp</code>, again saving it in the same directory as the previous file.
 # Change the number of traces to be ''20'': by comparison the profiling attack will require less attack traces compared to the CPA attack.
 # Hit the ''Capture Many'' button (M in a green triangle) to start the capture process. You will see each new trace plotted in the waveform display. Once the capture is complete, save the project file again.
