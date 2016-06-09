@@ -62,7 +62,7 @@ The first step in the attack is to generate the template. Again for generating t
 <li>Disable the Trace Explorer.</li>
 <li><p>Change the attack module to ''Profiling'':</p>
 <p>[[File:selectprofiling.png|image]]</p></li>
-<li><p>Go to the ''Template Generation'' section, and ensure you select the appropriate trace range (0-999 in this example). Select the ''TraceExplorer Table'' as the POI source, since we had just populated this with a valid POI data. Notice that if you view the analysis script it will list the poi you selected, if not hit the ''Read POI'' button:</p>
+<li><p>Go to the ''Template Generation'' section in the Attack tab, and ensure you select the appropriate trace range (0-999 in this example). Select the ''TraceExplorer Table'' as the POI source, since we had just populated this with a valid POI data. Notice that if you view the analysis script it will list the poi you selected, if not hit the ''Read POI'' button:</p>
 <p>[[File:templategeneration.png|image]]</p></li>
 <li>Click the ''Generate Templates'' button. This will dynamically load and run the <code>def generateTemplates(self):</code> function in the scripting window.</li>
 <li>Save the project file, which will save the location of the template file. We need to copy this information over to our second project, which is the traces we actually plan on attacking.</li>
