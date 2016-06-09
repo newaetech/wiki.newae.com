@@ -29,7 +29,7 @@ As mentioned, you will need to perform ''two'' capture campaigns. This tutorial 
 
 === Capturing the Attack Traces ===
 
-# Make a new project. Leave the ''Key/Text Pattern'' as Basic, where the encryption key is fixed and the plaintext is random.
+# Make a new project. Leave the ''Key/Text Pattern'' as Basic, the encryption key as fixed and the plaintext as random.
 # Save the project now in the same directory as the <code>.cwp</code> file from the previous section, giving it a name indicating the key is '''fixed''' and text is '''random'''. For example you could call it <code>tut_fixedkey_randplain.cwp</code>, again saving it in the same directory as the previous file.
 # Change the number of traces to be ''20'': by comparison the profiling attack will require less attack traces compared to the CPA attack.
 # Hit the ''Capture Many'' button (M in a green triangle) to start the capture process. You will see each new trace plotted in the waveform display. Once the capture is complete, save the project file again.
