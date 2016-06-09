@@ -74,7 +74,7 @@ traceend = 999
 poi = &quot;[38, 30, 2290]&quot;, &quot;[138, 1658, 1650]&quot;, &quot;[2134, 238, 2402]&quot;, &quot;[338, 2618, 2626]&quot;, &quot;[438, 430, 2766]&quot;, &quot;[1806, 538, 1690]&quot;, &quot;[638, 2174, 2462]&quot;, &quot;[738, 2886, 2658]&quot;, &quot;[838, 830, 2282]&quot;, &quot;[938, 1722, 1858]&quot;, &quot;[2290, 1038, 2206]&quot;, &quot;[1138, 2690, 2946]&quot;, &quot;[1238, 1650, 1798]&quot;, &quot;[1338, 1918, 1754]&quot;, &quot;[1438, 2342, 2238]&quot;, &quot;[2774, 1538, 2722]&quot;
 partitiontype = PartitionHWIntermediate
 filename = avr_keyrand_plainrand_1000traces_data\analysis\templates-PartitionHWIntermediate-0-999.npz</pre></li>
-<li>Close the Analyzer software, as we will now apply this template.</li></ol>
+</ol>
 
 == Applying the Template ==
 
