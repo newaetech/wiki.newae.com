@@ -296,9 +296,22 @@ See the FPGA Projects section for important details of the FPGA design framework
 
 === Setting PLL Frequency ===
 
-Note you can use the ChipWhisperer-Capture GUI to control the board, and translate your commands there into commands fed into the API. Doing this requires looking at the "Scripting Output" window. For example when performing a certain series of actions, the following might be printed to the window:
+The CW305 contains a 3-channel PLL. This is provided by a CDCE906 chip, which as the following routing diagram:
 
+In the software, PLL1 and PLL2 are fixed to FPGA pins N13 and E12 respectively. The SMA output connector X6 can be connected to any of the PLLs (PLL0, PLL1, PLL2). This allows you to get a phase-matched clock on X6 that corresponds perfectly with a clock being fed to the FPGA. Due to the relative complexity of the PLL architecture, it's recommended to use an indirect API call method described below:
 
+You can use the ChipWhisperer-Capture GUI to control the board, and translate your commands there into commands fed into the API. Doing this requires looking at the "Scripting Output" window. For example when performing a certain series of actions, the following might be printed to the window:
+ ['Target Settings', 'ChipWhisperer CW305 (Artix-7)', 'PLL Settings', 'CLK-SMA (X6)', 'PLL0 Frequency', 15000000.0]
+ ['Target Settings', 'ChipWhisperer CW305 (Artix-7)', 'PLL Settings', 'CLK-SMA (X6)', 'CLK-SMA Enabled', True]
+The middle part of the command identifies the parameter being modified, which you can use with <code>findParam()</code> to identify the specific parameter to modify, and the last value specifies what you should send to <code>setValue()</code>. For example the following would be the associated Python code you could use with the cw object based on the above two lines:<syntaxhighlight lang="python">
+cw.findParam(['PLL Settings', 'CLK-SMA (X6)', 'PLL0 Frequency']).setValue(15000000.0)
+cw.findParam(['PLL Settings', 'CLK-SMA (X6)', 'CLK-SMA Enabled']).setValue(True)
+</syntaxhighlight>This configured the SMA connector clock output for a 15 MHz clock, and turns it on. This method (using <code>findParam()</code> and <code>setValue()</code>) is the recommended way of interacting with the Python object, as it allows you to first use the GUI to get the desired response, and then directly copy those actions into a code block. Interacting directly with the API requires more knowledge of the underlying PLL architecture.
+
+Optionally, you can directly access the PLL object at cw.pll - this allows complete control of routing options (beyond what is exposed in the more basic API). You can see the source file at <code>chipwhisperer/hardware/naeusb/pll_cdce906.py</code> for details.<syntaxhighlight lang="python">
+>>> cw.pll
+<chipwhisperer.hardware.naeusb.pll_cdce906.PLLCDCE906 object at 0x068CBDD0>
+</syntaxhighlight>
 
 === Setting VCC-INT ===
 
