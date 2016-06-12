@@ -297,8 +297,7 @@ See the FPGA Projects section for important details of the FPGA design framework
 === Setting PLL Frequency ===
 
 The CW305 contains a 3-channel PLL. This is provided by a CDCE906 chip, which as the following routing diagram shows contains an extremely flexible architecture:
-
-[[File:cw305_pll.png|400px]]
+[[File:Cw305_pll.png|none|thumb|400x400px|CDCE906 PLL Architecture, with CW305 Connections Marked]]
 
 In the software, PLL1 and PLL2 are fixed to FPGA pins N13 and E12 respectively. The SMA output connector X6 can be connected to any of the PLLs (PLL0, PLL1, PLL2). This allows you to get a phase-matched clock on X6 that corresponds perfectly with a clock being fed to the FPGA. Due to the relative complexity of the PLL architecture, it's recommended to use an indirect API call method described below:
 
