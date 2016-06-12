@@ -298,8 +298,7 @@ See the FPGA Projects section for important details of the FPGA design framework
 
 You can disable the USB interface clock (i.e., the clock used by Address/Data lines). Generally this is recommended during the power measurement, as a separate clock is provided for clocking the cryptographic module. The clock can be turned off with:
 
-<syntaxhighlight lang="python">
-cw.usb_clk_setenabled(False)
+<syntaxhighlight lang="python">cw.usb_clk_setenabled(False)
 </syntaxhighlight>
 
 This will reduce noise in the power measurement. 
@@ -308,15 +307,14 @@ Once the USB clock is off, you must use a special trigger IO pin (since the addr
 
 A complete example of a power measurement might look like this:
 
-<syntaxhighlight lang="python">
-#arm scope here
+<syntaxhighlight lang="python">#arm scope here
 cw.usb_clk_setenabled(False)
 cw.usb_trigger_toggle()
 #wait for scope to complete here
 cw.usb_clk_setenabled(True)
 </syntaxhighlight>
 
-You may wish to add a small delay (such as ''time.sleep(0.05)'') after turning off the clock.
+You may wish to add a small delay (such as {time.sleep(0.05)}) after turning off the clock.
 
 You may also need to add a delay after triggering the pin - you don't want to turn the clock back on right away, but depending on your scope module it may report the trigger event has occurred before the capture is complete.
 
