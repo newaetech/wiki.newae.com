@@ -286,9 +286,47 @@ result = cw.readOutput()
 
 print "ACT: "+" ".join(["%02X"%c for c in result])
 print "EXP: "+" ".join(["%02X"%c for c in exp_result])
-</syntaxhighlight>This will download the bitstream, run an encryption, and print the results. You could for example run 500 encryptions, storing the results to a MATLAB array with the following code:
+</syntaxhighlight>This will download the bitstream, run an encryption, and print the results. You could for example run 500 encryptions, storing the results to a textfile and MATLAB array with the following code:
 
-<TODO>
+<syntaxhighlight lang="python">from chipwhisperer.capture.targets.CW305 import CW305
+import random
+
+cw = CW305()
+cw.con(bsfile=r"C:\chipwhisperer\hardware\victims\cw305_artixtarget\fpga\vivado_examples\aes128_verilog\aes128_verilog.runs\impl_35t\cw305_top.bit", force=False)
+
+test_key = [0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c]
+
+plaintexts = []
+ciphertexts = []
+
+for tnum in range(0, 20):
+    pt = [random.randint(0, 255) for i in range(0, 16)]
+    cw.loadEncryptionKey(test_key)
+    cw.loadInput(pt)
+    cw.go()
+    ct = cw.readOutput()
+
+    plaintexts.append(pt)
+    ciphertexts.append(ct)
+
+    print "result %d:"%tnum
+    print " pt: " + " ".join(["%02x"%d for d in pt])
+    print " ct: " + " ".join(["%02x"%d for d in ct])
+
+#Example - saving to text
+ptfile = open("plaintexts.txt", "w")
+ctfile = open("ciphertexts.txt", "w")
+for i in range(0, len(plaintexts)):
+    ptfile.write(" ".join(["%02x"%d for d in plaintexts[i]]) + "\n")
+    ctfile.write(" ".join(["%02x"%d for d in ciphertexts[i]]) + "\n")
+
+ptfile.close()
+ctfile.close()
+
+#Example - saving to MATLAB workspace
+import scipy.io
+scipy.io.savemat('pt_ct_mat', {'plaintexts':plaintexts, 'ciphertexts':ciphertexts, 'key':test_key})
+</syntaxhighlight>
 
 Accessing FPGA Registers
 
