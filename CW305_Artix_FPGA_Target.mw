@@ -245,7 +245,7 @@ The setting of the mode switches must be set as in the following table for the d
 |1
 |1
 |1
-|USB
+|USB (Default)
 |}
 
 =Software Details=
@@ -255,6 +255,7 @@ The ChipWhisperer software is used to communicate with this board. This can be u
 ==Driver and Software Installation==
 
 == Python Example ==
+Note: The following examples reference the 
 
 === Connecting and Programming ===
 You can connect to the board using the following command:<syntaxhighlight lang="python">
@@ -262,7 +263,7 @@ from chipwhisperer.capture.targets.CW305 import CW305
 
 cw = CW305()
 cw.con(bsfile=r"C:\chipwhisperer\hardware\victims\cw305_artixtarget\fpga\vivado_examples\aes128_verilog\aes128_verilog.runs\impl_35t\cw305_top.bit", force=False)
-</syntaxhighlight>The optional "bsfile" argument causes it to download a bitstream. If the "force" flag is set to "False", the system will only download the bitstream to an UNPROGRAMMED FPGA.
+</syntaxhighlight>The optional "bsfile" argument causes it to download a bitstream. If the "force" flag is set to "False", the system will only download the bitstream to an UNPROGRAMMED FPGA. You can use the force flag to ensure your FPGA is always reconfigured (or if was corrupted, has been recovered).
 
 If doing development, you probably want to set the force flag to "True". This will ensure you always get a newly programmed FPGA with the latest bitstream.
 
