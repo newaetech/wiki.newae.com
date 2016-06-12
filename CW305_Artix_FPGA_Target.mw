@@ -100,6 +100,34 @@ The shunt resistor is a 1206 size resistor mounted at position R27. The value of
 
 Two 0.100" (2.54mm) headers are provided for measurement with a differential probe. One (JP7) is directly across the resistor, and the other (JP6) is on the top right side of the PCB. JP6 is designed to be used with a NewAE Technology Inc. differential probe (which requires a separate power supply for this differential probe).
 
+Examples of resistors used are the following:
+{| class="wikitable"
+!Value
+!Manufacture
+!Part Number
+!Digikey P/N
+|-
+|500mOhm
+|Stackpole
+|CSR1206FKR500
+|CSR1206FKR500CT-ND
+|-
+|250mOhm
+|Stackpole
+|CSR1206FKR250
+|CSR1206FKR250CT-ND
+|-
+|100mOhm
+|Samsung
+|RUW3216FR100CS
+|1276-6187-1-ND
+|-
+|50mOhm
+|Vishay
+|WSLP1206R0500FEA
+|WSLP-.05CT-ND
+|}
+
 === VCC-INT Decoupling Capacitors ===
 
 The optional decoupling capacitors for the VCC-INT rail are shown on the underside of the PCB here:
