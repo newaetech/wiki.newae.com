@@ -292,14 +292,28 @@ print "EXP: "+" ".join(["%02X"%c for c in exp_result])
 
 Accessing FPGA Registers
 
-See the FPGA Projects section for importat details of the FPGA design framework.
+See the FPGA Projects section for important details of the FPGA design framework.
 
-Setting PLL Frequency
+=== Setting PLL Frequency ===
 
-Setting VCC-INT<syntaxhighlight lang="python">
+Note you can use the ChipWhisperer-Capture GUI to control the board, and translate your commands there into commands fed into the API. Doing this requires looking at the "Scripting Output" window. For example when performing a certain series of actions, the following might be printed to the window:
+
+
+
+=== Setting VCC-INT ===
+
+You can adjust the VCC-INT voltage using the following command:
+
+<syntaxhighlight lang="python">
 #Set vcc-int to 0.95V
 cw.vccint_set(0.95)
 </syntaxhighlight>
+
+=== Turning Power On/Off ===
+
+In addition to adjusting the VCC-INT supply, you can power cycle the FPGA target section. This can be used when you might expect faults to occur (such as after performing a glitch attack), where you want to ensure there are no errors such as CMOS latch-up occurring that can only be cleared by a power cycle.
+
+=== Checking FPGA Status ===
 
 ==Programmatic Usage==
 
