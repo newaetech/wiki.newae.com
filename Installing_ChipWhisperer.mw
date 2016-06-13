@@ -56,15 +56,13 @@ cd c:\chipwhisperer\software
 python setup.py develop</pre>
 If you wish to confirm the installation worked, you can run ChipWhispererAnalyzer in the same terminal:
 
-<pre>cd c:\chipwhisperer\software\chipwhisperer\analyzer
-python ChipWhispererAnalyzer.py</pre>
-Alternatively you can just double-click on <code>ChipWhispererAnalyzer.py</code> from Windows explorer, which should run the file using Python, ''provided you've registered Python to execute the .py extension''.
+<pre>cd c:\chipwhisperer\software\chipwhisperer\
+python CWAnalyzer.pyw</pre>
+Alternatively you can just double-click on <code>CWAnalyzer.py</code> from Windows explorer, which should run the file using Python, ''provided you've registered Python to execute the .py extension''.
 
 You can see a [http://www.youtube.com/watch?v=qd86cUD8iBs&hd=1 Video] of the Installation Procedure:
 
 [[File:Youtube-win7-install.png|YouTubeWin7Install]]_
-
-
 
 === Installing Hardware Drivers ===
 
