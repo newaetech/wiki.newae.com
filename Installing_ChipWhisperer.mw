@@ -190,3 +190,11 @@ The easiest method is to use brew again:
 You will also need to follow the instructions as above (inserting the link to the brew site-packages location). You will finally need to run the following:
 
  brew link --overwrite numpy
+
+=== AVR-GCC Install ===
+
+You can easily use brew to install avr-gcc, as decribed at [https://github.com/osx-cross/homebrew-avr/ OSX-Cross Project]:
+
+ $ brew tap osx-cross/avr
+ 
+ $ brew install avr-libc
