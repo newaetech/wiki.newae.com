@@ -328,7 +328,7 @@ The CW1173 contains two 8-pin connectors, which use our standard 8-pin Smart-Car
 
 Header J7 (Connects to SAM3U):
 
-{|
+{| class="wikitable"
 ! Number
 ! Name
 ! Dir
@@ -377,7 +377,7 @@ Header J7 (Connects to SAM3U):
 
 Header J6 (Connects to FPGA):
 
-{|
+{| class="wikitable"
 ! Number
 ! Name
 ! Dir
