@@ -136,7 +136,6 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="221a", ATTRS{idProduct}=="0100", MODE="0664"
 </pre>
 Then add your username to the plugdev group:
 
-
 <pre>$ sudo usermod -a -G plugdev YOUR-USERNAME</pre>
 And reset the udev system:
 
