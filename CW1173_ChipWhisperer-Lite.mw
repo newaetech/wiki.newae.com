@@ -57,8 +57,8 @@ cd c:\chipwhisperer\software
 python setup.py develop</pre></li></ul>
 
 <blockquote><p>If you wish to confirm the installation worked, you can run ChipWhispererAnalyzer in the same terminal:</p>
-<pre>cd c:\chipwhisperer\software\chipwhisperer\analyzer
-python ChipWhispererAnalyzer.py</pre></blockquote></li>
+<pre>cd c:\chipwhisperer\software\chipwhisperer
+python CWAnalyzer.pyw</pre></blockquote></li>
 <li>Connect ChipWhisperer-Lite, install USB Drivers:
 <dl>
 <dt>Windows:</dt>
