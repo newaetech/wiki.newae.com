@@ -144,20 +144,6 @@ Finally log out &amp; in again for the group change to take effect.
 
 You can always find the latest version of this file in [https://app.assembla.com/spaces/chipwhisperer/git/source/master/hardware/99-newae.rules GIT].
 
-=== AVR-USB Programmer ===
-
-To use the AVR Programmer from Linux, you again need to pass control of the device to a special group. Create a file called <code>/etc/udev/rules.d/99-avrisp.rules</code> . The contents of this file should be:
-
-<pre># allow users to claim the device
-SUBSYSTEM=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2104", MODE="0664", GROUP="plugdev"</pre>
-You'll have to add yourself to the plugdev group if you haven't already:
-
-<pre>$ sudo usermod -a -G plugdev YOUR-USERNAME</pre>
-And reset the udev system:
-
-<pre>$ sudo udevadm control --reload-rules</pre>
-Finally log out &amp; in again for the group change to take effect.
-
 
 === FTDI Hardware Driver (SASEBO-W, SAKURA-G, SASEBO-GII) ===
 
