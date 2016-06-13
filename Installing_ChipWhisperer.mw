@@ -191,9 +191,9 @@ $ echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' 
 
 You may need to upgrade your scipy from the base install, if you wish to do template attacks. This is not needed for other attacks, so please only proceed with the following if you receive an error that your version of scipy is too old.
 
- The easiest method is to use brew again:
+The easiest method is to use brew again:
 
-brew install scipy
+ brew install scipy
 
 You will also need to follow the instructions as above (inserting the link to the brew site-packages location). You will finally need to run the following:
 
