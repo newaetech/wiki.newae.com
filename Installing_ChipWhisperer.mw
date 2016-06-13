@@ -110,14 +110,10 @@ As in the Windows release, you can download a complete ChipWhisperer software re
 $ cd chipwhisperer
 $ git clone git://git.assembla.com/openadc.git</syntaxhighlight >
 Be aware that the git code may be broken, although we try not to commit completely untested code to the master branch. Either way once you have the chipwhisperer directory somewhere, do the following from within that directory:
-
-
 <syntaxhighlight lang="bash">$ cd software
 $ sudo python setup.py develop
 $ cd ../openadc/controlsw/python
 $ sudo python setup.py develop</syntaxhighlight >
-
-
 
 '''NB''': This assumes the python command links to Python-2.7, and not Python-3.x. You may need to specify either python2.7 or python27 as the command instead of python to force this.
 
