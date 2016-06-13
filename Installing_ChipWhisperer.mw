@@ -119,13 +119,23 @@ $ sudo python setup.py develop</syntaxhighlight >
 
 '''NB''': This assumes the python command links to Python-2.7, and not Python-3.x. You may need to specify either python2.7 or python27 as the command instead of python to force this.
 
-=== ChipWhisperer Rev2 Capture Hardware Driver ===
+=== Hardware Drivers ===
 
-The ''driver'' for Linux is built in, however you need to allow your user account to access the peripheral. To do so, you'll have to make a file called <code>/etc/udev/rules.d/99-ztex.rules</code> . The contents of this file should be:
+The ''driver'' for Linux is built in, however you need to allow your user account to access the peripheral. To do so, you'll have to make a file called <code>/etc/udev/rules.d/99-newae.rules</code> . The contents of this file should be:
 
-<pre># allow users to claim the device
+<pre># CW-Lite
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="ace2", MODE="0664", GROUP="plugdev"
+
+# CW-1200
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="ace3", MODE="0664", GROUP="plugdev"
+
+# CW-305 (Artix Target)
+SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="c305", MODE="0664", GROUP="plugdev"
+
+# CW-CR2
 SUBSYSTEM=="usb", ATTRS{idVendor}=="04b4", ATTRS{idProduct}=="8613", MODE="0664", GROUP="plugdev"
-SUBSYSTEM=="usb", ATTRS{idVendor}=="221a", ATTRS{idProduct}=="0100", MODE="0664", GROUP="plugdev"</pre>
+SUBSYSTEM=="usb", ATTRS{idVendor}=="221a", ATTRS{idProduct}=="0100", MODE="0664", GROUP="plugdev"
+</pre>
 Then add your username to the plugdev group:
 
 
@@ -134,6 +144,8 @@ And reset the udev system:
 
 <pre>$ sudo udevadm control --reload-rules</pre>
 Finally log out &amp; in again for the group change to take effect.
+
+You can always find the latest version of this file in [https://app.assembla.com/spaces/chipwhisperer/git/source/master/hardware/99-newae.rules GIT].
 
 === AVR-USB Programmer ===
 
