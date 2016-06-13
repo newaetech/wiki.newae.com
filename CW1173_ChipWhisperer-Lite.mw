@@ -207,7 +207,7 @@ The &quot;MEASURE&quot; port is the input to the low-noise amplifier and ADC.
 
 The pinout is as follows:
 
-{|
+{| class="wikitable"
 ! Number
 ! Name
 ! Dir
