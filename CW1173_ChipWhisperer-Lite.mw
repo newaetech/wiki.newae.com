@@ -321,11 +321,11 @@ The pinout is as follows:
 
 The CW1173 contains two 8-pin connectors, which use our standard 8-pin Smart-Card header pinout. One header connects to the SAM3U device (which has ISO-7816 drivers), one header connects to the FPGA. Note there is currently no firmware support for these devices, but the hardware is designed for any of the following:
 
-<blockquote>* Emulating a smart card (use interposer board), or fuzzing a smart card reader
+* Emulating a smart card (use interposer board), or fuzzing a smart card reader
 * Communicating to a smart card
 * Sniffing traffic between a legitimate reader and smart card
 * Side-channel analysis of smart card device
-</blockquote>
+
 Header J7 (Connects to SAM3U):
 
 {|
