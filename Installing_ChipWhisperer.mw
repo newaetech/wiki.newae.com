@@ -93,12 +93,14 @@ make</pre>
 
 On Linux, installing Python &amp; all the associated packages is much easier than on Windows. Typically you can install them from a package manager, if you are using Fedora Core or similar, just type:
 
-<pre>$ sudo yum install python27 python27-devel python27-libs python-pyside numpy scipy python-configobj pyusb</pre>
+<pre>$ sudo yum install python27 python27-devel python27-libs python-pyside numpy scipy python-configobj pyusb
+$ sudo pip install pyqtgraph</pre>
 On Ubuntu or similar:
 
-<blockquote>$ sudo apt-get install python2.7 python2.7-dev python2.7-libs python-numpy python-scipy python-pyside python-configobj python-setuptools python-pip $ sudo pip install pyusb-1.0.0b1
-</blockquote>
-You also need to install [http://www.pyqtgraph.org/ PyQtGraph] which is not normally in those repositories. See the PyQtGraph website for either a Debian/Ubuntu package, or information about installing from source.
+<pre>$ sudo apt-get install python2.7 python2.7-dev python2.7-libs python-numpy python-scipy python-pyside python-configobj python-setuptools python-pip
+$ sudo pip install pyusb
+$ sudo pip install pyqtgraph
+</pre>
 
 === Getting ChipWhisperer ===
 
@@ -179,7 +181,6 @@ And reset the udev system:
 
 <pre>$ sudo udevadm control --reload-rules</pre>
 Finally log out &amp; in again for the group change to take effect.
-
 
 == MAC OS X ==
 
