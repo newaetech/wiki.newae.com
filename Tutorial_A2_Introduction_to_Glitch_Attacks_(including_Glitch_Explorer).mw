@@ -534,8 +534,8 @@ The next step is to tune the glitch offset to attempt to get a successful clock 
 | Name
 | Offset
 |-
-| Script Command
-| ['Glitch Module', 'Glitch Offset (as % of period)', 0.0]
+| Parameter Path
+| ['Glitch Module', 'Glitch Offset (as % of period)']
 |-
 | Data Format
 | Float
@@ -553,7 +553,7 @@ The next step is to tune the glitch offset to attempt to get a successful clock 
 | 1
 |}
 
-<p>The ''Script Command'' option can be found by manually making an adjustment to the ''Glitch Offset (as % of period)'' in the GUI, and observing the string printed to the ''Script Commands'' tab. The numeric value of the command is ignored (i.e. the third element of the array) by the glitch explorer, instead the tuning value will always be inserted.</p></li>
+<p>The ''Parameter Path'' option can be found by manually making an adjustment to the ''Glitch Offset (as % of period)'' in the GUI, and observing the string printed to the ''Script Commands'' tab. The numeric value of the command is not included in the parameter path (i.e., do not copy the value).</p></li>
 <li><p>On the main GUI in the ''Scope Settings'' tab, change the following values for the ''Glitch Module'':</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
 <li>''Repeat'' set to 10.</li>
@@ -583,8 +583,8 @@ To continue the tutorial, the following steps will be taken:
 | Name
 | Width
 |-
-| Script Command
-| ['Glitch Module', 'Glitch Width (as % of period)', 0.0]
+| Parameter Path
+| ['Glitch Module', 'Glitch Width (as % of period)']
 |-
 | Data Format
 | Float
@@ -691,8 +691,8 @@ The following assumes you have already completed the previous steps:
 | Name
 | Trigger Offset
 |-
-| Script Command
-| ['Glitch Module', 'Ext Trigger Offset', 97]
+| Parameter Path
+| ['Glitch Module', 'Ext Trigger Offset']
 |-
 | Data Format
 | Int
