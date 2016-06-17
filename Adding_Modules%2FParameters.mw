@@ -1,6 +1,6 @@
 =Adding New Modules=
 
-In the new CW plugin architecture, all modules are scanned during the tool inialization, so new modules can added by just dropping the files inside its respective folder:
+In the new CW plugin architecture, all modules are scanned during the tool inialization, so new modules can be added by just dropping the files inside its respective folder:
 
 * chipwhisperer/software/chipwhisperer/common/results
 * chipwhisperer/software/chipwhisperer/common/traces
