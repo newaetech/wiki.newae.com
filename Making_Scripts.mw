@@ -1,119 +1,19 @@
-=The Basic=
-User scripts allows partial (i.e.: setting up the environment) or total automation of the execution flow. 
+New scripts can be added to the tool's menu automatically by saving it its respective script folder:
+- chipwhisperer/software/chipwhisperer/capture/scripts
+- chipwhisperer/software/chipwhisperer/analyzer/scripts
 
-A basic script would look like this:
-
-<pre>
-from chipwhisperer.common.scripts.base import UserScriptBase
-
-
-class UserScript(UserScriptBase):
-    _name = "ChipWhisperer-Lite: AES SimpleSerial on XMEGA"
-    _description = "SimpleSerial with Standard Target for AES (XMEGA)"
-
-    def __init__(self, api):
-        super(UserScript, self).__init__(api)
-
-    def run(self):
-        #User commands here
-        self.api.setParameter(['Generic Settings', 'Scope Module', 'ChipWhisperer/OpenADC'])
-        self.api.setParameter(['Generic Settings', 'Target Module', 'Simple Serial'])
-        self.api.setParameter(['Generic Settings', 'Trace Format', 'ChipWhisperer/Native'])
-        self.api.setParameter(['Simple Serial', 'Connection', 'ChipWhisperer-Lite'])
-        self.api.setParameter(['ChipWhisperer/OpenADC', 'Connection', 'ChipWhisperer-Lite'])
-                
-        self.api.connect()
-        
-        #Example of using a list to set parameters. Slightly easier to copy/paste in this format
-        lstexample = [['CW Extra Settings', 'Trigger Pins', 'Target IO4 (Trigger Line)', True],
-                      ['CW Extra Settings', 'Target IOn Pins', 'Target IO1', 'Serial RXD'],
-                      ['CW Extra Settings', 'Target IOn Pins', 'Target IO2', 'Serial TXD'],
-                      ['OpenADC', 'Clock Setup', 'CLKGEN Settings', 'Desired Frequency', 7370000.0],
-                      ['CW Extra Settings', 'Target HS IO-Out', 'CLKGEN'],
-                      ['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'CLKGEN x4 via DCM'],
-                      ['OpenADC', 'Trigger Setup', 'Total Samples', 3000],
-                      ['OpenADC', 'Trigger Setup', 'Offset', 1250],
-                      ['OpenADC', 'Gain Setting', 'Setting', 45],
-                      ['OpenADC', 'Trigger Setup', 'Mode', 'rising edge'],
-                      #Final step: make DCMs relock in case they are lost
-                      ['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
-                      ]
-        for cmd in lstexample: self.api.setParameter(cmd)
-        
-        #Let's only do a few traces
-        self.api.setParameter(['Generic Settings', 'Acquisition Settings', 'Number of Traces', 50])
-                      
-        #The environment is already set, lets do our first capture
-        self.api.capture1()
-</pre>
+These directories already have some examples which can be used as a reference to create new ones. Files put in these directories are scanned during the tool initialization and all plugin classes (subclass of Plugin) in all public files (not starting with "_") are loaded.
 
 User scripts should inherit from UserScriptBase that specifies the run() method that is called when clicking it in the menu or pressing the attack button (in the analyzer tool).
+The API is passed as an argument by the GUI throught the constructor in order to allow the script to "remote control" the existing section. A name and a description should also be specified, the description will be used as a tooltip in the GUI.
+The section "if __name__ == '__main__':" is not mandatory, but is recommended if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using the API only. Ex.:
 
-The API is passed as an argument by the GUI through the constructor in order to allow the script to "remote control" the existing section. A name and a description should also be specified.
-
-==Running from the Terminal==
-This step is only needed if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using only the API. In order to do it, you should add the following lines to the end of your script file:
-
-<pre>
 if __name__ == '__main__':
+    import sys
     from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
     api = CWCoreAPI()               # Instantiate the API
     api.runScriptClass(UserScript)  # Run UserScript through the API
-</pre>
-or if you want the GUI:
 
-<pre>
-if __name__ == '__main__':
-    from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
-    import chipwhisperer.capture.ui.CWCaptureGUI as cwc       # Import the ChipWhispererCapture GUI
-    from chipwhisperer.common.utils.parameter import Parameter
-    app = cwc.makeApplication()  
-    Parameter.usePyQtGraph = True 
-    api = CWCoreAPI()               # Instantiate the API
-    gui = cwc.CWAnalyzerGUI(api)    # Instantiate the GUI
-    gui.show() 
-    api.runScriptClass(UserScript)  # Run UserScript through the API
 
-    app.exec_()
-</pre>
-
-==Adding user scripts to the GUI menu==
-New scripts can be added to the tool menu automatically by saving it in its respective script folder inside the chipwhisperer installation folder or user projects folder:
-
-* chipwhisperer/software/chipwhisperer/capture/scripts
-* chipwhisperer/software/chipwhisperer/analyzer/scripts
-* ~/chipwhisperer_projects/chipwhisperer/capture/scripts
-* ~/chipwhisperer_projects/chipwhisperer/analyzer/scripts
-
-Files put in these directories are scanned during the GUI initialization and all UserScriptBase classes are added to the menu. You can copy and past the content of the ''Analysis Script'' window to a text editor or use the ''Attack Script Generator''->''Attack Script''->''Copy'' option.
-
-== Other examples==
-The directories listed above already have some examples which can be used as a reference to create new scripts. More advanced scripts can be located in the chipwhisperer/software/chipwhisperer/tests folder. 
-
-Scripts auto-generated by the analyzer tool can also be executed standalone or saved into the scripts directory so that it will show up in the next GUI execution.
-
-=Advanced=
-
-If you decide to run both tools in sequence, do as follows:
-
-<pre>
-if __name__ == '__main__':
-    from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
-    import chipwhisperer.capture.ui.CWCaptureGUI as cwc
-    import chipwhisperer.analyzer.ui.CWAnalyzerGUI as cwa
-    from chipwhisperer.common.utils.parameter import Parameter
-    app = cwc.makeApplication()
-    Parameter.usePyQtGraph = True
-    api = CWCoreAPI()             # Instantiate the API
-    gui = cwc.CWCaptureGUI(api)   # Instantiate the Capture GUI
-    gui.show()
-    api.runScriptClass(Capture)
-    gui.close()
-    gui.reset()                   # Delete saved geometry settings in the Capture tool so it will not be used by the Analyzer
-
-    gui = cwa.CWAnalyzerGUI(api)  # Instantiate the Analyzer GUI
-    gui.show()
-    api.runScriptClass(Attack)    # Run the script (default is the "run" method)
-
-    app.exec_()
-</pre>
+Examples of how to build a new script can be found at:
+-
