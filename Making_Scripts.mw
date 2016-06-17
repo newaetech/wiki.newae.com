@@ -97,16 +97,16 @@ if __name__ == '__main__':
     from chipwhisperer.common.utils.parameter import Parameter
     app = cwc.makeApplication()
     Parameter.usePyQtGraph = True
-    api = CWCoreAPI()               # Instantiate the API
-    gui = cwc.CWCaptureGUI(api)        # Instantiate the Capture GUI
+    api = CWCoreAPI()             # Instantiate the API
+    gui = cwc.CWCaptureGUI(api)   # Instantiate the Capture GUI
     gui.show()
     api.runScriptClass(Capture)
     gui.close()
-    gui.reset()                           # Delete saved geometry settings in the Capture tool so it will not be used by the Analyzer
+    gui.reset()                   # Delete saved geometry settings in the Capture tool so it will not be used by the Analyzer
 
-    gui = cwa.CWAnalyzerGUI(api)    # Instantiate the Analyzer GUI
+    gui = cwa.CWAnalyzerGUI(api)  # Instantiate the Analyzer GUI
     gui.show()
-    api.runScriptClass(Attack)      # Run the script (default is the "run" method)
+    api.runScriptClass(Attack)    # Run the script (default is the "run" method)
 
     app.exec_()
 </pre>
