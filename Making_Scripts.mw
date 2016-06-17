@@ -63,7 +63,6 @@ or if you want the GUI:
 
 <pre>
 if __name__ == '__main__':
-    import sys
     from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
     import chipwhisperer.capture.ui.CWCaptureGUI as cwc       # Import the ChipWhispererCapture GUI
     from chipwhisperer.common.utils.parameter import Parameter
@@ -74,7 +73,7 @@ if __name__ == '__main__':
     gui.show() 
     api.runScriptClass(UserScript)  # Run UserScript through the API
 
-    sys.exit(app.exec_()) 
+    app.exec_()
 </pre>
 
 New scripts can be added to the tool's menu automatically by saving it in its respective script folder:
