@@ -2,11 +2,8 @@ User scripts allows partial (i.e.: setting up the environment) or total automati
 
 A basic script would look like this:
 
-import sys
-from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI  # Import the ChipWhisperer API
-import chipwhisperer.capture.ui.CWCaptureGUI as cwc       # Import the ChipWhispererCapture GUI
+<pre>
 from chipwhisperer.common.scripts.base import UserScriptBase
-from chipwhisperer.common.utils.parameter import Parameter
 
 
 class UserScript(UserScriptBase):
@@ -47,20 +44,22 @@ class UserScript(UserScriptBase):
                       
         #The environment is already set, lets do our first capture
         self.api.capture1()
-
+</pre>
 
 User scripts should inherit from UserScriptBase that specifies the run() method that is called when clicking it in the menu or pressing the attack button (in the analyzer tool).
 The API is passed as an argument by the GUI throught the constructor in order to allow the script to "remote control" the existing section. A name and a description should also be specified.
 The section "if __name__ == '__main__':" is not mandatory, but is recommended if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using only the API. Ex.:
 
+<pre>
 if __name__ == '__main__':
     import sys
     from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
     api = CWCoreAPI()               # Instantiate the API
     api.runScriptClass(UserScript)  # Run UserScript through the API
-
+</pre>
 or if you want the GUI:
 
+<pre>
 if __name__ == '__main__':
     import sys
     from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
@@ -69,11 +68,12 @@ if __name__ == '__main__':
     app = cwc.makeApplication()  
     Parameter.usePyQtGraph = True 
     api = CWCoreAPI()               # Instantiate the API
-    gui = cwc.CWAnalyzerGUI(api) # Instantiate the GUI
+    gui = cwc.CWAnalyzerGUI(api)    # Instantiate the GUI
     gui.show() 
     api.runScriptClass(UserScript)  # Run UserScript through the API
 
     sys.exit(app.exec_()) 
+</pre>
 
 New scripts can be added to the tool's menu automatically by saving it in its respective script folder:
 - chipwhisperer/software/chipwhisperer/capture/scripts
