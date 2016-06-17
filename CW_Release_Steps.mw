@@ -1,5 +1,27 @@
 This page contains various information regarding the ChipWhisperer release steps. This is not designed for users, but as a note for developers regarding release information.
 
+==Release Steps==
+
+=== Pushing to PyPi ===
+
+To allow users to perform a glorious:
+
+ pip install chipwhisperer
+
+We push '''part''' of the release to pypi. This partial release only includes the Python software, and not the complete ChipWhisperer repo (with hardware, docs, etc).
+
+We follow a basic tutorial from [http://peterdowns.com/posts/first-time-with-pypi.html], which includes a fairly basic setup.py. Important details to note:
+
+* Adding new modules requires adding them to setup.py to ensure they are included
+
+Once a new release is ready, it's a simple case of:
+
+ python setup.py sdist upload
+
+To push to the real pypi server.
+
+==Other Notes==
+
 === GIT Repo Sync ===
 
 While the main GIT repo is held on Assembla, a version of it is kept updated on GITHub. This is for convenience of those that prefer GITHub. This documents how the automatic pull/push is done on a local development server (it's quite dumb really) in case we need to duplicate it again:
