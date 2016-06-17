@@ -16,7 +16,7 @@ In the new CW software architecture, all plugin modules are scanned during the t
 
 The CW tools scan these directories looking for classes that inherits from the ''Plugin'' class in each public file (that don't beggins with "_").
 
-These folders usually have a file called base.py or _base.py that contains the base class to all modules in these directories. Ex.:
+These folders usually have a file called ''base.py'' or ''_base.py'' that contains the base class to all modules in these directories. Ex.:
 
 <pre>
 from .base import PreprocessingBase
@@ -30,9 +30,9 @@ class AddNoiseRandom(PreprocessingBase, Plugin):
 ...
 </pre>
 
-=Adding parameters=
+=Adding Parameters=
 
-Another important thing, is the Parameter architecture. It is used to allow easy access and manipulation of all object's main attibutes and actions. All parameters can be accessed statically throught the Parameter class. It means that if you want to set/get any parameter, you can do it easily adding the follow lines to your code:
+Parameters are used to allow easy access and manipulation of all object's main attibutes and actions. All parameters can be accessed anywhere in the code throught the Parameter class. It means that if you want to set/get any parameter, you can do it easily adding the follow lines to your code:
 <pre>
 from chipwhisperer.common.utils.parameter import Parameter
 ...
@@ -47,14 +47,15 @@ api.setParameter([path,..., value])
 value = api.getParameter([path,...])
 </pre>
 
-The easiest way to add parameters to your class, is to make it Parameterized (extending this class). It is an abstract class that declares a public interface and implements two manipulation methods to create/get the Parameters and find it. As a general rule, you just need to:
-* import the Parameterized class: from chipwhisperer.common.utils.parameter import Parameterized
-* make your class extend it
+The easiest way to add parameters to your class, is to make it ''Parameterized'' (extending this class). It is an abstract class that declares a public interface and implements two manipulation methods to create/get the parameters and find it. As a general rule, you just need to:
+
+* import the ''Parameterized'' class: from chipwhisperer.common.utils.parameter import Parameterized
+* make your class extend it (no construtor call is needed here since the idea is to use it as an interface to avoid the problems with multiple inheritance - i.e.: the diamont one)
 * define a _name and a _description
 * register it if it is not readily accessible through a higher parameter hierarchy: self.getParams().register() 
-* and call self.getParams().addChildren([...])
+* call self.getParams().addChildren([...])
 
-The method getParams() whild do four things: create a new Parameter if it doesn't exist; create a group called _name; create a child description parameter with the specified _description; and return a reference to the group parameter. Search in the parameters can be performed using the findParam([fullpath]) method.
+The getParams() method does three things: create a new Parameter if it doesn't exist; create a group called _name; create a child description parameter with the specified _description label; and return a reference to the parent group parameter. Search is performed using the findParam([fullpath]) method.
 Each parameter stores the data internally or externally using a set/get (usefull to retrieve dynamic data). In this case, the @setupSetParam(nameOrPath) decorator should be used in the set method in order to syncronize the GUI when the parameter value changes.
 
 More information about the Parameterized and the Parameter class can be found in its docstrings.
@@ -75,6 +76,9 @@ class ResultsSave(Parameterized):
             {'name':'Save Raw Results', 'type':'bool', 'get':self.getEnabled, 'set':self.setEnabled},  # With value saved externally
             {'name':'Symbol', 'type':'list', 'values':['o', 's', 't', 'd', '+'], 'value':'o'},                     # With value saved internally
         ])
+
+        self.findParam("Symbol").setValue('t')
+        s = self.findParam("Symbol").getValue()  # s = 't'
 
     def getEnabled(self):
         return self._enabled
