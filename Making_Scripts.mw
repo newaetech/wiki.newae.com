@@ -52,7 +52,6 @@ The section "if __name__ == '__main__':" is not mandatory, but is recommended if
 
 <pre>
 if __name__ == '__main__':
-    import sys
     from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
     api = CWCoreAPI()               # Instantiate the API
     api.runScriptClass(UserScript)  # Run UserScript through the API
