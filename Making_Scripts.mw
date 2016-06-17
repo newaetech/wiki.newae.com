@@ -1,0 +1,19 @@
+New scripts can be added to the tool's menu automatically by saving it its respective script folder:
+- chipwhisperer/software/chipwhisperer/capture/scripts
+- chipwhisperer/software/chipwhisperer/analyzer/scripts
+
+These directories already have some examples which can be used as a reference to create new ones. Files put in these directories are scanned during the tool initialization and all plugin classes (subclass of Plugin) in all public files (not starting with "_") are loaded.
+
+User scripts should inherit from UserScriptBase that specifies the run() method that is called when clicking it in the menu or pressing the attack button (in the analyzer tool).
+The API is passed as an argument by the GUI throught the constructor in order to allow the script to "remote control" the existing section. A name and a description should also be specified, the description will be used as a tooltip in the GUI.
+The section "if __name__ == '__main__':" is not mandatory, but is recommended if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using the API only. Ex.:
+
+if __name__ == '__main__':
+    import sys
+    from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+    api = CWCoreAPI()               # Instantiate the API
+    api.runScriptClass(UserScript)  # Run UserScript through the API
+
+
+Examples of how to build a new script can be found at:
+-
