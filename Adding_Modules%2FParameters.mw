@@ -14,7 +14,7 @@ In the new CW plugin architecture, all modules are scanned during the tool inial
 * chipwhisperer/software/chipwhisperer/analyzer/scripts
 * and some of its subfolders.
 
-The CW tools scan these directories looking for classes that inherits from the ''Plugin'' class in each public file (that don't begins with "_").
+The CW tools scan these directories looking for classes that inherits from the ''Plugin'' class (a Marker Interface actually) in each public file (that don't begins with "_").
 
 These folders usually have a file called ''base.py'' or ''_base.py'' that contains the base class to all modules in these directories. Ex.:
 
