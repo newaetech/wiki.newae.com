@@ -1,6 +1,6 @@
 =Adding New Modules=
 
-In the new CW plugin architecture, all modules are scanned during the tool initialization, so new functionalities can be added by just dropping its file inside the respective folder:
+In the new CW software archytecture, all modules scanned during the inialization, so new modules can used by just dropping the files inside the respective folder. Example of plugin modules are:
 
 * chipwhisperer/software/chipwhisperer/common/results
 * chipwhisperer/software/chipwhisperer/common/traces
@@ -12,13 +12,10 @@ In the new CW plugin architecture, all modules are scanned during the tool initi
 * chipwhisperer/software/chipwhisperer/analyzer/attacks
 * chipwhisperer/software/chipwhisperer/analyzer/preprocessing
 * chipwhisperer/software/chipwhisperer/analyzer/scripts
-* and some of the above subfolders.
+* and also some of the folders inside the ones listed above.
 
-These paths are checked both inside the tool's root directory (where the tool is installed), and in the Project Folder (default is ~/chipwhisperer_projects), allowing the usage of custom modules without the requirement of being system administer. The CW tools scan these directories looking for classes that inherits from the ''Plugin'' class (a marker interface actually) in each public module (that doesn't begin with "_").
-
-'''IMPORTANT''': Accessing "Help->List Enabled/Disabled Plugins" in the tool's menu you'll find a list with all modules it tried to load. In case of any problem, you can check in the table the error message and its details. It should be easier to visuallise if you copy and paste the cell cotent to a text editor (example: notepad).
-
-These folders usually have a file called ''base.py'' or ''_base.py'' that contains the base class to all plugins in these directories. Ex.:
+The CW tools scan these directories looking for classes that inherits from Plugin in each public file (that do not start with "_").
+These folders usually have a file called basic.py or _basic.py. These files have the base class to all modules in these directories. Ex.:
 
 <pre>
 from .base import PreprocessingBase
@@ -32,9 +29,9 @@ class AddNoiseRandom(PreprocessingBase, Plugin):
 ...
 </pre>
 
-=Adding Parameters=
+=Adding parameters=
 
-Parameters are used to allow easy access and manipulation of all object's main attibutes and actions. All parameters can be accessed anywhere in the code throught the Parameter class. It means that if you want to set/get any parameter, you can do it easily adding the follow lines to your code:
+Another important thing, is the Parameter architecture. It is used to allow easy access and manipulation of all object's main attibutes and actions. All parameters can be accessed statically throught the Parameter class. It means that if you want to set/get any parameter, you can do it easily adding the follow lines to your code:
 <pre>
 from chipwhisperer.common.utils.parameter import Parameter
 ...
@@ -49,26 +46,19 @@ api.setParameter([path,..., value])
 value = api.getParameter([path,...])
 </pre>
 
-The easiest way to add parameters to your class, is to make it ''Parameterized'' (extending this class). It is an abstract class that declares a public interface and implements two manipulation methods to create/get the parameters and find it. As a general rule, you just need to:
-
-* import the ''Parameterized'' class: from chipwhisperer.common.utils.parameter import Parameterized
-* make your class extend it (no construtor call is needed here since the idea is to use it as an interface to avoid the problems with multiple inheritance - i.e.: the diamont one)
+The easiest way to add parameters to your class, is to make it Parameterized (extending this class). It is an abstract class that declares a public interface and implements two manipulation methods to create/get the Parameters and find it. As a general rule, you just need to:
+* import the Parameterized class: from chipwhisperer.common.utils.parameter import Parameterized
+* make your class extend it
 * define a _name and a _description
 * register it if it is not readily accessible through a higher parameter hierarchy: self.getParams().register() 
-* call self.getParams().addChildren([...])
+* and call self.getParams().addChildren([...])
 
-The getParams() method does four things: 
-* create a new Parameter if it doesn't exist; 
-* create a group called _name; 
-* create a child description parameter with the specified _description label; 
-* return a reference to the parent group parameter. 
-Search is performed using the findParam([fullpath]) method.
-
-Each parameter stores the data internally or externally, using a set/get pair - usefull to retrieve dynamic data. In this case, the @setupSetParam(nameOrPath) decorator should be used in the set method in order to syncronize the GUI when the method is called directly without using the parameter class.
+The method getParams() whild do four things: create a new Parameter if it doesn't exist; create a group called _name; create a child description parameter with the specified _description; and return a reference to the group parameter. Search in the parameters can be performed using the findParam([fullpath]) method.
+Each parameter stores the data internally or externally using a set/get (usefull to retrieve dynamic data). In this case, the @setupSetParam(nameOrPath) decorator should be used in the set method in order to syncronize the GUI when the parameter value changes.
 
 More information about the Parameterized and the Parameter class can be found in its docstrings.
 
-Basic example:
+Basic exemple:
 
 <pre>
 from chipwhisperer.common.utils.parameter import Parameterized, setupSetParam
@@ -82,105 +72,13 @@ class ResultsSave(Parameterized):
         # self.getParams().register()
         self.getParams().addChildren([
             {'name':'Save Raw Results', 'type':'bool', 'get':self.getEnabled, 'set':self.setEnabled},  # With value saved externally
-            {'name':'Symbol', 'type':'list', 'values':['o', 's', 't', 'd', '+'], 'value':'o'},         # With value saved internally
+            {'name':'Symbol', 'type':'list', 'values':['o', 's', 't', 'd', '+'], 'value':'o'},                     # With value saved internally
         ])
-
-        self.findParam("Symbol").setValue('t')
-        s = self.findParam("Symbol").getValue()  # s = 't'
 
     def getEnabled(self):
         return self._enabled
 
     @setupSetParam("Save Raw Results")
     def setEnabled(self, enabled):
-        self._enabled = enabled</pre>
-
-== What to tweak? ==
-
-=== acq_patterns ===
-Has the modules that generate the keys. If you want to generate custom key or plaintext sequences, or read it from a file, this is the place to go.
-
-=== auxiliary ===
-Usefull if you want to execute something before, during or after the capture.
-
-Exemple ([http://newae.com/forum/viewtopic.php?f=7&t=202#p1026 provided by GABRIEL_F]):
- import logging
- import time
- from chipwhisperer.capture.auxiliary._base import AuxiliaryTemplate
- from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
- from chipwhisperer.common.utils import util, timer
- 
- 
- class SerialBeforeArm(AuxiliaryTemplate):
-     <nowiki>'''</nowiki> 
-     This auxillary module allows for serial data to be sent to the target
-     during the capture process i.e., before and after arming the scope
-     and after the trace has recorded. This enables the ability for the
-     scope to trigger on serial communication that need to start after a
-     reset but before the scope is armed and after.
-     
-     Compare to SimpleSerial send Go Command.
-     
-     TODO:
-     Parser to chop up multiple commands sent in single string seperated by
-     whitespace. Modify to iterate over returned lists.
- 
-     Uses non-blocking sleep methods poached from ResetCW1173Read.
-     <br>    Gabe 25-NOV-16
-     <nowiki>'''</nowiki>    
-     _name = "Send Serial During Capture"<br>
-     def __init__(self):
-         AuxiliaryTemplate.__init__(self)
-         self.getParams().addChildren([
-             {'name':'Pre-Arm Message', 'type':'str', 'key':'prearmmssg', 'value':''},''
-             {'name':'Post-Arm Message', 'type':'str', 'key':'postarmmssg', 'value':''},''
-             {'name':'Post-Capture Message', 'type':'str', 'key':'postcapmssg', 'value':''},''
-             {'name':'Delay (Pre-Message)' , 'type':'int',  'key':'predelay',  'limits':(0, 10E3), 'value':0, 'suffix':' ms'},
-             {'name':'Delay (Post-Message)', 'type':'int',  'key':'postdelay', 'limits':(0, 10E3), 'value':0, 'suffix':' ms'},
-             {'name':'Test Reset', 'type':'action', 'action':self.testSend}
-         ])
- 
-     def traceArm(self):
-         """Before arming the scope, send some serial messages and wait"""
-         string = self.findParam('prearmmssg').getValue()
-         self.sendSerial(string)
- 
-     def traceArmPost(self):
-         """After arming the scope, send some serial message and wait"""
-         string = self.findParam('postarmmssg').getValue()
-         self.sendSerial(string)
- 
-     def traceDone(self):
-         """After the trace is captured, send some serial messages and wait"""
-         string = self.findParam('postcapmssg').getValue()
-         self.sendSerial(string)
- 
-     def sendSerial(self, string):
-         """Send a string!"""
- 
-         if string is None or len(string) == 0:
-             return
- 
-         dly = self.findParam('predelay').getValue()
-         if dly > 0:
-             self.nonblockingSleep(dly / 1000.0)
- 
-         CWCoreAPI.getInstance().getTarget().ser.write(string)
-         
-         dly = self.findParam('postdelay').getValue()
-         if dly > 0:
-             self.nonblockingSleep(dly / 1000.0)
- 
-     def nonblockingSleep_done(self):
-         self._sleeping = False
- 
-     def nonblockingSleep(self, stime):
-         """Sleep for given number of seconds (~50mS resolution), but don't block GUI while we do it"""
-         timer.Timer.singleShot(stime * 1000, self.nonblockingSleep_done)
-         self._sleeping = True
-         while(self._sleeping):
-             time.sleep(0.01)
-             util.updateUI()
- 
-     def testSend(self, _=None):
-         self.sendSerial('Hello')
+        self._enabled = enabled
+</pre>
