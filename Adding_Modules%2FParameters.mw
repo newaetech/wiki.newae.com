@@ -1,0 +1,84 @@
+=Adding New Modules=
+
+In the new CW software archytecture, all modules scanned during the inialization, so new modules can used by just dropping the files inside the respective folder. Example of plugin modules are:
+
+* chipwhisperer/software/chipwhisperer/common/results
+* chipwhisperer/software/chipwhisperer/common/traces
+* chipwhisperer/software/chipwhisperer/capture/acq_patterns
+* chipwhisperer/software/chipwhisperer/capture/auxiliary
+* chipwhisperer/software/chipwhisperer/capture/scopes
+* chipwhisperer/software/chipwhisperer/capture/scripts
+* chipwhisperer/software/chipwhisperer/capture/targets
+* chipwhisperer/software/chipwhisperer/analyzer/attacks
+* chipwhisperer/software/chipwhisperer/analyzer/preprocessing
+* chipwhisperer/software/chipwhisperer/analyzer/scripts
+* and also some of the folders inside the ones listed above.
+
+The CW tools scan these directories looking for classes that inherits from Plugin in each public file (that do not start with "_").
+These folders usually have a file called basic.py or _basic.py. These files have the base class to all modules in these directories. Ex.:
+
+<pre>
+from .base import PreprocessingBase
+from chipwhisperer.common.utils.pluginmanager import Plugin
+
+
+class AddNoiseRandom(PreprocessingBase, Plugin):
+    _name = "Add Noise: Amplitude"
+    _description = "Add random noise"
+     
+...
+</pre>
+
+=Adding parameters=
+
+Another important thing, is the Parameter architecture. It is used to allow easy access and manipulation of all object's main attibutes and actions. All parameters can be accessed statically throught the Parameter class. It means that if you want to set/get any parameter, you can do it easily adding the follow lines to your code:
+<pre>
+from chipwhisperer.common.utils.parameter import Parameter
+...
+Parameter.setParameter([path,..., value])
+value = Parameter.getParameter([path,...])
+</pre>
+
+or, if you have access to the api:
+
+<pre>
+api.setParameter([path,..., value])
+value = api.getParameter([path,...])
+</pre>
+
+The easiest way to add parameters to your class, is to make it Parameterized (extending this class). It is an abstract class that declares a public interface and implements two manipulation methods to create/get the Parameters and find it. As a general rule, you just need to:
+* import the Parameterized class: from chipwhisperer.common.utils.parameter import Parameterized
+* make your class extend it
+* define a _name and a _description
+* register it if it is not readily accessible through a higher parameter hierarchy: self.getParams().register() 
+* and call self.getParams().addChildren([...])
+
+The method getParams() whild do four things: create a new Parameter if it doesn't exist; create a group called _name; create a child description parameter with the specified _description; and return a reference to the group parameter. Search in the parameters can be performed using the findParam([fullpath]) method.
+Each parameter stores the data internally or externally using a set/get (usefull to retrieve dynamic data). In this case, the @setupSetParam(nameOrPath) decorator should be used in the set method in order to syncronize the GUI when the parameter value changes.
+
+More information about the Parameterized and the Parameter class can be found in its docstrings.
+
+Basic exemple:
+
+<pre>
+from chipwhisperer.common.utils.parameter import Parameterized, setupSetParam
+
+
+class ResultsSave(Parameterized):
+    _name = "Save to Files"
+    _description = "Save correlation output to files."
+
+    def __init__(self):
+        # self.getParams().register()
+        self.getParams().addChildren([
+            {'name':'Save Raw Results', 'type':'bool', 'get':self.getEnabled, 'set':self.setEnabled},  # With value saved externally
+            {'name':'Symbol', 'type':'list', 'values':['o', 's', 't', 'd', '+'], 'value':'o'},                     # With value saved internally
+        ])
+
+    def getEnabled(self):
+        return self._enabled
+
+    @setupSetParam("Save Raw Results")
+    def setEnabled(self, enabled):
+        self._enabled = enabled
+</pre>
