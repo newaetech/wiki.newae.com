@@ -77,7 +77,7 @@ if __name__ == '__main__':
     app.exec_()
 </pre>
 
-=Adding new scripts==
+==Adding new scripts==
 New scripts can be added to the tool's menu automatically by saving it in its respective script folder:
 * chipwhisperer/software/chipwhisperer/capture/scripts
 
