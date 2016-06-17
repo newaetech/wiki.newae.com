@@ -18,7 +18,7 @@ Once a new release is ready, it's a simple case of:
 
  python setup.py sdist upload
 
-To push to the real pypi server.
+To push to the real pypi server. This step can only be performed by someone with authentication access to pypi (probably Colin).
 
 ==Other Notes==
 
