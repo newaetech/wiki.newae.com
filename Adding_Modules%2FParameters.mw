@@ -14,8 +14,9 @@ In the new CW software architecture, all plugin modules are scanned during the t
 * chipwhisperer/software/chipwhisperer/analyzer/scripts
 * and some of its subfolders.
 
-The CW tools scan these directories looking for classes that inherits from Plugin in each public file (that do not start with "_").
-These folders usually have a file called basic.py or _basic.py. These files have the base class to all modules in these directories. Ex.:
+The CW tools scan these directories looking for classes that inherits from the ''Plugin'' class in each public file (that don't beggins with "_").
+
+These folders usually have a file called base.py or _base.py that contains the base class to all modules in these directories. Ex.:
 
 <pre>
 from .base import PreprocessingBase
