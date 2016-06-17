@@ -1,6 +1,6 @@
 =Adding New Modules=
 
-In the new CW software architecture, all modules scanned during the inialization, so new modules can used by just dropping the files inside the respective folder. Example of plugin modules are:
+In the new CW software architecture, all plugin modules are scanned during the tool inialization, so new modules can added by just dropping the files inside its respective folder:
 
 * chipwhisperer/software/chipwhisperer/common/results
 * chipwhisperer/software/chipwhisperer/common/traces
