@@ -1,0 +1,9 @@
+== PyQt is imported when importing ChipWhisperer ==
+The PyQtGraph parameter can use PySide or PyQt to display information, but we instead require PySide to be used. Currently you can get errors if PyQt is imported (this happens when running from an iPython notebook for example).
+
+While the specific error message varies, it typically looks something like the following, where it complains the passed argument is NOT of a PySide.Qtxxxx type:<syntaxhighlight lang="python">
+TypeError: 'PySide.QtGui.QBoxLayout.addWidget' called with wrong argument types:
+  PySide.QtGui.QBoxLayout.addWidget(ParameterTree)
+Supported signatures:
+  PySide.QtGui.QBoxLayout.addWidget(PySide.QtGui.QWidget, int = 0, PySide.QtCore.Qt.Alignment = 0)
+</syntaxhighlight>It's also possible this is a bug, but most likely it's related to PyQtGraph using the wrong backend (PyQt vs. PySide) in our program.
