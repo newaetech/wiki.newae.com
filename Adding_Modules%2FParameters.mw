@@ -74,7 +74,7 @@ class ResultsSave(Parameterized):
         # self.getParams().register()
         self.getParams().addChildren([
             {'name':'Save Raw Results', 'type':'bool', 'get':self.getEnabled, 'set':self.setEnabled},  # With value saved externally
-            {'name':'Symbol', 'type':'list', 'values':['o', 's', 't', 'd', '+'], 'value':'o'},                     # With value saved internally
+            {'name':'Symbol', 'type':'list', 'values':['o', 's', 't', 'd', '+'], 'value':'o'},         # With value saved internally
         ])
 
         self.findParam("Symbol").setValue('t')
