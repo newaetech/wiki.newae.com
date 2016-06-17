@@ -51,7 +51,8 @@ User scripts should inherit from UserScriptBase that specifies the run() method 
 
 The API is passed as an argument by the GUI throught the constructor in order to allow the script to "remote control" the existing section. A name and a description should also be specified.
 
-The section "if __name__ == '__main__':" is not mandatory, but is recommended if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using only the API. Ex.:
+==Running from the Terminal==
+This step is needed if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using only the API. I order to do it, add the following lines at the end of your script file:
 
 <pre>
 if __name__ == '__main__':
@@ -76,6 +77,7 @@ if __name__ == '__main__':
     app.exec_()
 </pre>
 
+=Adding new scripts==
 New scripts can be added to the tool's menu automatically by saving it in its respective script folder:
 * chipwhisperer/software/chipwhisperer/capture/scripts
 
