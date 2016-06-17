@@ -12,7 +12,7 @@ In the new CW software architecture, all plugin modules are scanned during the t
 * chipwhisperer/software/chipwhisperer/analyzer/attacks
 * chipwhisperer/software/chipwhisperer/analyzer/preprocessing
 * chipwhisperer/software/chipwhisperer/analyzer/scripts
-* and also some of the folders inside the ones listed above.
+* and some of its subfolders.
 
 The CW tools scan these directories looking for classes that inherits from Plugin in each public file (that do not start with "_").
 These folders usually have a file called basic.py or _basic.py. These files have the base class to all modules in these directories. Ex.:
