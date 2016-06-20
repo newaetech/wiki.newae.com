@@ -45,17 +45,24 @@ CRC Failed: | 0xA4 |
 
 Then, after replying to the command, the bootloader veries that the signature is correct. If it matches the expected manufacturer's signature, the 12 bytes of data will be written to flash memory. Otherwise, the data is discarded.
 
-=== Details of AES-256 CBC ===
+== Details of AES-256 CBC ==
 
-The system is using the AES algorithm in Cipher Block Chaining (CBC) mode. In general one avoids using encryption 'as-is' (i.e. Electronic Code Book), since it means any piece of plaintext always maps to the same piece of ciphertext. Cipher Block Chaining ensures that if you encrypted the same thing a bunch of times it would always encrypt to a new piece of ciphertext.
+The system uses the AES algorithm in Cipher Block Chaining (CBC) mode. In general one avoids using encryption 'as-is' (i.e. Electronic Code Book), since it means any piece of plaintext always maps to the same piece of ciphertext. Cipher Block Chaining ensures that if you encrypted the same thing a bunch of times it would always encrypt to a new piece of ciphertext.
 
-You can see another reference on the design of the encryption side, we'll be only talking about the decryption side here. In this case AES-256 CBC mode is used as follows, where the details of the AES-256 Decryption block will be discussed in detail later.
+You can see another reference on the design of the encryption side; we'll be only talking about the decryption side here. In this case AES-256 CBC mode is used as follows, where the details of the AES-256 Decryption block will be discussed in detail later:
 
 [[File:aes256_cbc.png|image]]
 
-Specifics of the AES-256 Decryption algorithm are given below, where this AES-256 implementation was written by [http://www.literatecode.com/ Ilya O. Levin]:
+This diagram shows that the output of the decryption is no longer used directly as the plaintext. Instead, the output is XORed with a 16 byte mask, which is usually taken from the previous ciphertext. Also, the first decryption block has no previous ciphertext to use, so a secret initialization vector (IV) is used instead. If we are going to decrypt the entire ciphertext (including block 0) or correctly generate our own ciphertext, we'll need to find this IV along with the AES key.
 
-<pre>aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
+
+== Attacking AES-256 ==
+The system in this tutorial uses AES-256 encryption, which has a 256 bit (32 byte) key - twice as large as the 16 byte key we've attacked in previous tutorials. This section describes how we can use our knowledge of the AES-128 attacks on AES-256.
+
+Specifics of the AES-256 decryption algorithm are given below, where this AES-256 implementation was written by [http://www.literatecode.com/ Ilya O. Levin]:
+
+<pre>
+aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
 aes_shiftRows_inv(buf);
 aes_subBytes_inv(buf);
 
@@ -71,21 +78,27 @@ for (i = 14, rcon = 0x80; --i;)
     aes_shiftRows_inv(buf);
     aes_subBytes_inv(buf);
 }
-aes_addRoundKey( buf, ctx-&gt;key);</pre>
-In an AES-128 implementation there is ten rounds (after 'initially' applying the key), each round applied to the 16-byte state of the AES. With AES-256 the state is still 16 bytes, but is applied over 14 rounds (after initially applying the first part of the key).
+aes_addRoundKey( buf, ctx-&gt;key);
+</pre>
 
-In AES-128 we can target the first output of the S-Box, which is sufficient to recover the entire encryption key. For AES-256 we can recover 16 bytes of the encryption key, as shown in the following figure of the initial setup of the decryption algorithm:
+Recall that the AES-128 implementation was made up of ten rounds (after 'initially' applying the key), with each round modifying a 16-byte state. In AES-256, the state is still 16 bytes, but the encryption routine includes 14 rounds (after initially applying the first part of the key). Beyond this, much of the AES operation stays the same (<code>subBytes()</code>, <code>mixColumns</code>, etc).
+
+In AES-128, we targeted the first output of the S-Box, which was sufficient to recover the entire encryption key. For AES-256, we can still use this attack point, but we will only recover 16 bytes of the key. This point of the algorithm is shown in the following figure of the initial setup of the decryption algorithm:
 
 [[File:aes128_decrypted.png|image]]
 
 This corresponds to the first 3 lines of source code in the AES-256 decryption algorithm:
 
-<pre>aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
+<pre>
+aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
 aes_shiftRows_inv(buf);
-aes_subBytes_inv(buf);</pre>
+aes_subBytes_inv(buf);
+</pre>
+
 As the AES-256 key is 32 bytes, we need to extend the attack to one more AES round. Looking back at the next part of the source code, this corresponds to the first round through this loop:
 
-<pre>for (i = 14, rcon = 0x80; --i;)
+<pre>
+  for (i = 14, rcon = 0x80; --i;)
   {
       if( ( i &amp; 1 ) )
       {
@@ -100,35 +113,38 @@ As the AES-256 key is 32 bytes, we need to extend the attack to one more AES rou
       //point in time
   }
   aes_addRoundKey( buf, ctx-&gt;key);</pre>
-Which is shown in this figure:
+
+which is shown in this figure:
 
 [[File:aes128_round2.png|image]]
 
-The critical difference between the initial round and this round is the addition of the mixcols operation. This operation takes four bytes of input and generates four bytes of output - any change in a single byte will result in a change of all four bytes of output!
+The critical difference between the initial round and this round is the addition of the <code>mixColumns</code> operation. This operation takes four bytes of input and generates four bytes of output - any change in a single byte will result in a change of all four bytes of output!
 
 It would at first appear we need to perform a guess over 4 bytes instead of 1 byte. This would be a considerably more complicated operation! We can consider writing that last step as an equation:
 
 <blockquote><math>X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(X^{13} \oplus K^{13})\right)\right)</math>
 </blockquote>
-The MixCols() operation is a linear function, meaning for example the following applies:
+The MixColumns() operation is a linear function, meaning for example the following applies:
 
 <blockquote><math>A = MixCols(A + B) = MixCols(A) + MixCols(B)</math>
 </blockquote>
-Which means instead of determining the encryption key, we can determine the encryption key modified by the inverse MixCols.
+This means that, instead of determining the encryption key, we can determine the encryption key modified by the inverse MixCols:
 
 <blockquote><math>X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(X^{13} \oplus K^{13})\right)\right)</math>
 <math>X^{13} = SBytes^{-1}\left(MixCols^{-1}\left(ShiftRows^{-1}(C)\right) \oplus Y^{13}\right)</math>
 <math>Y^{13} = MixCols^{-1}\left(ShiftRows^{-1}(K^{13})\right)</math>
 </blockquote>
+
 Once we fully determine the encryption key we can perform the MixCol and ShiftRow operation to determine the correct key.
 
 <blockquote><math>K^{13} = MixCols\left(ShiftRows(Y^{13})\right)</math>
 </blockquote>
+
 Performing the complete AES-256 side channel analysis attack will thus require the following steps:
 
 # Perform a standard attack (as in AES-128 decryption) to determine the first 16 bytes of the key, corresponding to the 14th round encryption key.
-# Using the known 14th round key, calculate the hypothetical outputs of each S-Box from the 13th round using the ciphertext processed by the 14th round, and determine the 16 bytes of the 13th round key manipulated by inverse mixcols.
-# Perform the mixcol and shift-row operation on the hypothetical key determined above, which will be the 13th round key.
+# Using the known 14th round key, calculate the hypothetical outputs of each S-Box from the 13th round using the ciphertext processed by the 14th round, and determine the 16 bytes of the 13th round key manipulated by inverse MixColumns.
+# Perform the MixColumns and ShiftRows operation on the hypothetical key determined above, recovering the 13th round key.
 # Using the AES-256 key schedule, reverse the 13th and 14th round keys to determine the original AES-256 encryption key.
 
 == Setting up the Hardware ==
