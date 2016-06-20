@@ -11,19 +11,27 @@ There is one big security issue to worry about with bootloaders. A company may w
 
 This tutorial will work with a simple AES-256 bootloader. The victim will receive data through a serial connection, decrypt the command, and confirm that the included signature is correct. Then, it will send back a reply, either stating that the firmware was or was not correctly signed. To make this system more robust against attacks, the bootloader will use cipher-block chaining (CBC mode). Our goal is to find the secret key and the CBC initialization vector so that we could successfully fake our own firmware.
 
-=== Bootloader Design ===
-
-==== Communications Protocol ====
-
-The communications protocol operates over a serial port at 115200 baud rate. The bootloader is always waiting for new data to be sent in this example; in real life one would typically force the bootloader to enter through a command sequence.
+== Bootloader Communications Protocol ==
+The bootloader's communications protocol operates over a serial port at 38400 baud rate. The bootloader is always waiting for new data to be sent in this example; in real life one would typically force the bootloader to enter through a command sequence.
 
 Commands sent to the bootloader look as follows:
 
 <pre>
-+------+------+------+ ... +------+------+------+------+
-| 0x00 |   Encrypted Block (16 Bytes)    |   CRC-16    |
-+------+------+------+ ... +------+------+------+------+</pre>
-The CRC uses the 16-bit CRC-CCITT polynomial (0x1021). The LSB of the calculated CRC-16 is sent first, followed by the MSB. The bootloader responds with a single byte indicating if the CRC-16 was OK or not:
+       |<-------- Encrypted block (16 bytes) ---------->|
+       |                                                |
++------+------+------+------+------+------+ .... +------+------+------+
+| 0x00 |    Signature (4 Bytes)    |  Data (12 Bytes)   |   CRC-16    |
++------+------+------+------+------+------+ .... +------+------+------+
+</pre>
+
+This frame has four parts:
+* <code>0x00</code>: 1 byte of fixed header
+* Signature: A secret 4 byte constant. The bootloader will confirm that this signature is correct after decrypting the frame.
+* Data: 12 bytes of the incoming firmware. This system forces us to send the code 12 bytes at a time; more complete bootloaders may allow longer variable-length frames.
+* CRC-16: A 16-bit checksum using the CRC-CCITT polynomial (0x1021). The LSB of the CRC is sent first, followed by the MSB. The bootloader will reply over the serial port, describing whether or not this CRC check was valid.
+As described in the diagram, the 16 byte block is not sent as plaintext. Instead, it is encrypted using AES-256 in CBC mode. This encryption method will be described in the next section.
+
+The bootloader responds to each command with a single byte indicating if the CRC-16 was OK or not:
 
 <pre>
             +------+
@@ -32,25 +40,10 @@ CRC-OK:     | 0xA1 |
 
             +------+
 CRC Failed: | 0xA4 |
-            +------+</pre>
+            +------+
+</pre>
 
-==== Encrypted Block ====
-
-In this design each encrypted block is always 16 bytes long. In practical bootloaders a number of encrypted blocks might be sent as part of one message. To generate an encrypted block, the data is split into 12-byte chunks:
-
-<pre>+------+------+------+------+ ...  +------+------+------+------+------+
-|   Flash Data (many bytes)                                           |
-+------+------+------+------+ ...  +------+------+------+------+------+
-
-+------+------+ ...  +------+  +------+------+ ...  +------+  +---...
-|   12 Bytes of Data        |  |   12 Bytes of Data        |  | 12...
-+------+------+ ...  +------+  +------+------+ ...  +------+  +---...</pre>
-Each 12-byte chunk gets a 4-byte signature prepended to it. When the bootloader decrypts a chunk of data, it can verify the signature is as expected. This signature verification is required to ensure the correct encryption key was used, and the system is not just decrypting garbage:
-
-<pre>+------+------+------+------+------+ ... +------+------+
-|   Signature (4 Bytes)     | Up to 12 Bytes of Data   |
-+------+------+------+------+------+ ... +------+------+</pre>
-Each of these blocks is then encrypted with AES-256 in CBC mode, discussed next.
+Then, after replying to the command, the bootloader veries that the signature is correct. If it matches the expected manufacturer's signature, the 12 bytes of data will be written to flash memory. Otherwise, the data is discarded.
 
 === Details of AES-256 CBC ===
 
