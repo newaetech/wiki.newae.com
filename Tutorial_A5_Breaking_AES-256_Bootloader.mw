@@ -14,19 +14,21 @@ The communications protocol operates over a serial port at 115200 baud rate. The
 
 Commands sent to the bootloader look as follows:
 
-<pre>+------+------+------+ ... +------+------+------+------+
+<pre>
++------+------+------+ ... +------+------+------+------+
 | 0x00 |   Encrypted Block (16 Bytes)    |   CRC-16    |
 +------+------+------+ ... +------+------+------+------+</pre>
 The CRC uses the 16-bit CRC-CCITT polynomial (0x1021). The LSB of the calculated CRC-16 is sent first, followed by the MSB. The bootloader responds with a single byte indicating if the CRC-16 was OK or not:
 
-<pre>+------+</pre>
-<blockquote><dl>
-<dt>CRC-OK: | 0xA1 |</dt>
-<dd><p>+------+</p>
-<p>+------+</p></dd>
-<dt>CRC Failed: | 0xA4 |</dt>
-<dd><p>+------+</p></dd></dl>
-</blockquote>
+<pre>
+            +------+
+CRC-OK:     | 0xA1 |
+            +------+
+
+            +------+
+CRC Failed: | 0xA4 |
+            +------+</pre>
+
 ==== Encrypted Block ====
 
 In this design each encrypted block is always 16 bytes long. In practical bootloaders a number of encrypted blocks might be sent as part of one message. To generate an encrypted block, the data is split into 12-byte chunks:
