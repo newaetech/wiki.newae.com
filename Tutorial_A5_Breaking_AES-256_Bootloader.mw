@@ -4,7 +4,12 @@ This tutorial will take you through a complete attack on an encrypted bootloader
 
 Whilst the tutorial assumes you will be performing the entire capture of traces along with the attack, it is possible to download the traces if you don't have the hardware, in which case skip section [[#Setting up the Hardware]] and [[#Capturing the Traces]].
 
-== Background ==
+= Background =
+In the world of microcontrollers, a bootloader is a special piece of firmware that is made to let the user upload new programs into memory. This is especially useful for devices with complex code that may need to be patched or otherwise updated in the future - a bootloader makes it possible for the user to upload a patched version of the firmware onto the micro. The bootloader receives information from a communication line (a USB port, serial port, ethernet port, WiFi connection, etc...) and stores this data into program memory. Once the full firmware has been received, the micro can happily run its updated code.
+
+There is one big security issue to worry about with bootloaders. A company may want to stop their customers from writing their own firmware and uploading it onto the micro. For example, this might be for protection reasons - hackers might be able to access parts of the device that weren't meant to be accessed. One way of stopping this is to add encryption. The company can add their own secret signature to the firmware code and encrypt it with a secret key. Then, the bootloader can decrypt the incoming firmware and confirm that the incoming firmware is correctly signed. Users will not know the secret key or the signature tied to the firmware, so they won't be able to "fake" their own.
+
+This tutorial will work with a simple AES-256 bootloader. The victim will receive data through a serial connection, decrypt the command, and confirm that the included signature is correct. Then, it will send back a reply, either stating that the firmware was or was not correctly signed. To make this system more robust against attacks, the bootloader will use cipher-block chaining (CBC mode). Our goal is to find the secret key and the CBC initialization vector so that we could successfully fake our own firmware.
 
 === Bootloader Design ===
 
