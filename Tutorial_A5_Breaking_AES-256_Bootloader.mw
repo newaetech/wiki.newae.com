@@ -229,8 +229,6 @@ Peek into <code>supersecret.h</code>, confirm that this is the right key, and ce
 = Next Steps =
 If you want to go further with this tutorial, [[Tutorial A5-Bonus: Breaking AES-256 Bootloader]] continues working with the same firmware to find the remaining secrets in the bootloader (the IV and the signature). 
 
-= Timing Attacks for Signature =
-
 = Appendix A: Capture Script =
 
 The following:
