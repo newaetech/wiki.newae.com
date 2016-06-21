@@ -78,28 +78,18 @@ TODO. Notes to self:
 * Describe code (aes, bootloader, supersecret)
 
 = Capturing the Traces =
+Once the hardware is ready, we can capture some traces for our attack using the ChipWhisperer Capture software. If you somehow got to the 5th ''Advanced Tutorial'' without getting this software ready, you can follow the helpful guide at [[Installing ChipWhisperer]].
 
-It is assumed that you've already followed the guide in [[Installing ChipWhisperer]]. Thus it is assumed you are able to communicate with the ChipWhisperer Capture Rev2 hardware (or whatever capture hardware you are using). Note in particular you must have configured the FPGA bitstream in the ChipWhisperer-Capture software, all part of the description in the [[Installing ChipWhisperer]] guide.
-
-== Communication with the Bootloader ==
-
-== Running the Capture ==
-
-Capturing the traces will requires a special capture script. This capture script is given in [[#Appendix A Capture Script]]. Running this script will start the ChipWhisperer capture system up with the bootloader communications module inserted. Your attack should look like this:
-
-<ol style="list-style-type: decimal;">
-<li>Run the python program given in [[#Appendix A Capture Script]]</li>
-<li><p>The ChipWhisperer will automatically connect to the bootloader. You should see a window that looks like this, where the every time you run a 'Capture 1' the status will update. If you see another status such as CRC Error or no response, something is not working:</p>
-<p>[[File:capture_examplescript.png|image]]</p>
-<p>To complete the tutorial, follow these steps:</p>
-<blockquote><ol style="list-style-type: decimal;">
-<li>Switch to the ''General Settings'' tab</li>
-<li>Change the number of traces, you should need about 100 traces to break AES.</li>
-<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
-<li>You will see each new trace plotted in the waveform display.</li>
-<li>You'll see the trace count in the status bar. Once it says ''Trace 100 done'' (assuming you requested 100 traces) the capture process is complete.</li></ol>
-</blockquote></li>
-<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li></ol>
+In some of the previous tutorials, we entered all of the capture settings by hand. Since we are civilized humans armed with technology, we can use a script to do all of this setup for us. A pre-written Python script is provided at [[#Appendix A: Capture Script]]. Take a look at this code and notice what it does:
+* it fills in the scope, target, and trace format that we'll use;
+* it connects to the hardware; and
+* it loads all of the hardware parameters for us. Nice!
+Copy this script into a <code>.py</code> file somewhere convenient. Then, perform the following steps to finish the capture:
+# Run the capture script, which will open a ChipWhisperer Capture window with everything connected for us.
+# Open the terminal (''Tools > Terminal'') and connect to the board. While the terminal is open, press the ''Capture 1'' button. A single byte of data should appear in the terminal. This byte will either be <code>a1</code> (CRC failed) or <code>a4</code> (CRC OK). If you see any other responses, something is wrong.
+# Once you're happy with this, open the General Settings tab and set the Number of Traces. You should need around 100 traces to break AES.
+# Press the ''Capture Many'' button to record the 100 traces. You'll see the new traces plotted on-screen.
+# Once the program is finished capturing the traces, save the project. Put it somewhere memorable and give it a nice name.
 
 = Analyzing of Power Traces for Key =
 
