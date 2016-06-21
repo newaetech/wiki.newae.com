@@ -66,38 +66,16 @@ As the theory page explains, our AES-256 attack will have 4 steps:
 # Using the AES-256 key schedule, reverse the 13th and 14th round keys to determine the original AES-256 encryption key.
 
 = Setting up the Hardware =
+This tutorial uses the [[CW1173 ChipWhisperer-Lite]] hardware. This hardware does not require any special setup - it should be ready to go out-of-the-box.
 
-This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site], just look for the traces titled ''AVR: AES256 Bootloader (ChipWhisperer Tutorial #A5)''.
+Note that you '''don't need hardware''' to complete the tutorial. Instead, you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site]. Just look for the traces titled ''AVR: AES256 Bootloader (ChipWhisperer Tutorial #A5)''.
 
-This example uses the Atmel AVR in 28-pin DIP programmed with a demo bootloader. You can see instructions for programming in the [[Installing ChipWhisperer]] section, this tutorial assumes you have the programmer aspect working.
-
-The Multi-Target board should be plugged into the ChipWhisperer Capture Rev2 via the 20-pin target cable. The ''VOUT'' SMA connector is wired to the ''LNA'' input on the ChipWhisperer-Capture Rev2 front panel. The general hardware setup is as follows:
-
-<blockquote>[[File:hw-1.jpg|image]]
-
-# 20-Pin Header connects Multi-Target to Capture Hardware
-# VOUT Connects to SMA Cable
-# SMA Cable connects to 'LNA' on CHA input
-# USB-Mini connects to side (NB: Confirm jumper settings in next section first)
-</blockquote>
-Jumpers on the Multi-Target Victim board are as follows:
-
-<blockquote>[[File:hw-2.jpg|600px|image]]
-
-# NO jumpers mounted in XMEGA Portion or SmartCard Portion (JP10-JP15, JP19, JP7-JP8, JP17)
-# 3.3V IO Level (JP20 set to INT.)
-# The 7.37 MHz oscillator is selected as the CLKOSC source (JP18)
-# The CLKOSC is connected to the AVR CLock Network, along with connected to the FPGAIN pin (JP4)
-# The TXD &amp; RXD jumpers are set (JP5, JP6)
-# Power measurement taken from VCC shunt (JP1)
-# The TRIG jumper is set (JP28) (NOTE: Early revisions of the multi-target board do not have the TRIG jumper and you can ingore this).
-
-For more information on these jumper settings see [[CW301_Multi-Target]] .
-</blockquote>
 == Building/Programming the Bootloader ==
 
-TODO
-
+TODO. Notes to self:
+* Make sure bootloader code is in repo
+* Makefile
+* Describe code (aes, bootloader, supersecret)
 
 = Capturing the Traces =
 
