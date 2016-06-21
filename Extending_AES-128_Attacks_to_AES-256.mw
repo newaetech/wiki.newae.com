@@ -107,7 +107,4 @@ Using these new equations, we can perform a full attack on AES-256 with the foll
 # Using the known values of the 14th round key, calculate the outputs of the second S-box. Use this attack point to recover all 16 bytes of the hypothetical 13th round key.
 # Transform the hypothetical round key into the actual value of the 13th round key.
 # Reverse the 13th and 14th round keys using the AES-256 key schedule to determine the 256 bit secret encryption key.
-
-== Attacking Round Key 14 ==
-== Attacking Round Key 13 ==
-== Recovering the Full Key ==
+Once this is done, we have successfully attacked an AES-256 implementation by looking at two separate AES S-boxes.
