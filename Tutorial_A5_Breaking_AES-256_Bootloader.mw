@@ -86,7 +86,8 @@ In some of the previous tutorials, we entered all of the capture settings by han
 * it loads all of the hardware parameters for us. Nice!
 Copy this script into a <code>.py</code> file somewhere convenient. Then, perform the following steps to finish the capture:
 # Run the capture script, which will open a ChipWhisperer Capture window with everything connected for us.
-# Open the terminal (''Tools > Terminal'') and connect to the board. While the terminal is open, press the ''Capture 1'' button. A single byte of data should appear in the terminal. This byte will either be <code>a1</code> (CRC failed) or <code>a4</code> (CRC OK). If you see any other responses, something is wrong.
+# Open the terminal (''Tools > Terminal'') and connect to the board. While the terminal is open, press the ''Capture 1'' button. A single byte of data should appear in the terminal. This byte will either be <code>a1</code> (CRC failed) or <code>a4</code> (CRC OK). If you see any other responses, something is wrong. 
+#: [[File:Tutorial-A5-Capture.PNG|image]]
 # Once you're happy with this, open the General Settings tab and set the Number of Traces. You should need around 100 traces to break AES.
 # Press the ''Capture Many'' button to record the 100 traces. You'll see the new traces plotted on-screen.
 # Once the program is finished capturing the traces, save the project. Put it somewhere memorable and give it a nice name.
