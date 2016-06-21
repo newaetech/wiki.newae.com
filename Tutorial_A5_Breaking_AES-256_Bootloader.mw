@@ -226,10 +226,6 @@ You should find the initial encryption key is:
 
 <pre>94 28 5d 4d 6d cf ec 08 d8 ac dd f6 be 25 a4 99 c4 d9 d0 1e c3 40 7e d7 d5 28 d4 09 e9 f0 88 a1</pre>
 
-= Analysis of Encrypted Files =
-
-TODO
-
 = Analysis of Power Traces for IV =
 
 TODO
