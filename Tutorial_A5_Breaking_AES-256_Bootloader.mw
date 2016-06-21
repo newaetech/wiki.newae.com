@@ -81,7 +81,11 @@ The firmware is now loaded onto your hardware, and you can continue onto the cap
 = Capturing the Traces =
 Once the hardware is ready, we can capture some traces for our attack using the ChipWhisperer Capture software. If you somehow got to the 5th ''Advanced Tutorial'' without getting this software ready, you can follow the helpful guide at [[Installing ChipWhisperer]].
 
-In some of the previous tutorials, we entered all of the capture settings by hand. Since we are civilized humans armed with technology, we can use a script to do all of this setup for us. A pre-written Python script is provided at [[#Appendix A: Capture Script]]. Take a look at this code and notice what it does:
+The first thing we need to do is add a new target to the ChipWhisperer system. (None of the existing ones know about the bootloader's data format, nor do they recognize the CRC responses that are sent back to us.) The code for this target is included in [[#Appendix A: Target Code]]. Copy/paste this into a Python file (call it whatever you want) and save it in a place where ChipWhisperer will look for it. There are two folders that you can use:
+* Your computer should have a folder called <code>chipwhisperer_projects</code> - if you don't know where this is, the ''File > Preferences'' window will tell you. The system looks in the folder <code>chipwhisperer_projects\chipwhisperer\capture\targets</code> for new targets, so you can save your file here.
+* Alternatively, all of the normal targets are stored in <code>chipwhisperer\software\chipwhisperer\capture\targets</code>, so you can also save the file here. Note that this may not be possible if you don't have access to these folders (ex: your account doesn't have admin access).
+
+Next is the capture script. In some of the previous tutorials, we entered all of the capture settings by hand. Since we are civilized humans armed with technology, we can use a script to do all of this setup for us. A pre-written Python script is provided at [[#Appendix B: Capture Script]]. Take a look at this code and notice what it does:
 * it fills in the scope, target, and trace format that we'll use;
 * it connects to the hardware; and
 * it loads all of the hardware parameters for us. Nice!
