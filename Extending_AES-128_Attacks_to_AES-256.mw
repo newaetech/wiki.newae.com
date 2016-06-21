@@ -40,73 +40,8 @@ aes_addRoundKey( buf, ctx-&gt;key);
 </pre>
 Note that this implementation chooses to expand the key during the decryption process. This order of events isn't a big deal to us - the <code>subBytes()</code> operation will still be visible in a power trace.
 
+
 = Attacking AES-256 Decryption =
-From our experience with AES-128, we know that the AES substitution boxes are a good attack point. These boxes are non-linear, so we don't have any problems with nearly-correct key guesses. Since there are S-boxes operating on 1 byte each, we should be able to recover 16 bytes from the <code>SubBytes()</code> function. In the decryption code, this part of the algorithm corresponds to the first three lines:
-
-<pre>
-aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
-aes_shiftRows_inv(buf);
-aes_subBytes_inv(buf);
-</pre>
-
-A diagram of this CPA attack point is:
-
-[[File:aes128_decrypted.png|image]]
-
-This was enough for a complete AES-128 attack because there are only 16 bytes of key to look for. However, in AES-256, this only gets us half of the key! We'll need to continue by attacking the next round of the algorithm, which consists of one iteration through the following loop:
-
-<pre>
-for (i = 14, rcon = 0x80; --i;)
-{
-    if( ( i &amp; 1 ) )
-    {
-        aes_expandDecKey(ctx-&gt;key, &amp;rcon);
-        aes_addRoundKey(buf, &amp;ctx-&gt;key[16]);
-    }
-    else aes_addRoundKey(buf, ctx-&gt;key);
-    aes_mixColumns_inv(buf);
-    aes_shiftRows_inv(buf);
-    aes_subBytes_inv(buf);
-    // <--- Attack the contents of buf at this point
-}
-</pre>
-
-A diagram of this second attack point is:
-
-[[File:aes128_round2.png|image]]
-
-The critical difference between the initial round and this round is the addition of the <code>mixColumns()</code> operation. This operation takes four bytes of input and generates four bytes of output - any change in a single byte will result in a change of all four bytes of output! It would at first appear that we need to perform a guess over 4 bytes instead of 1 byte. This would be a considerably more complicated operation! To solve this, we can consider writing that last step as an equation. The state at the end of round 13 is
-
-<math>
-X_{13} = \text{SubBytes}^{-1}\left(\text{MixColumns}^{-1}\left(\text{ShiftRows}^{-1}(X_{14} \oplus K_{13})\right)\right)
-</math>
-
-where <math>X_{14}</math> is the output of round 14, <math>K_{13}</math> is the 16 byte round key for round 13, and <math>X_{13}</math> is the output of round 13 (our attack point). We can simplify this by noticing that <code>MixColumns()</code> is a linear function; that is,
-
-<math>\text{MixColumns}(A + B) = \text{MixColumns}(A) + \text{MixColumns}(B)</math> 
-
-Using this property, we can write down the hypothetical key for round 13, which is
-
-<math>
-K'_{13} = \text{MixColumns}^{-1}\left(\text{ShiftRows}^{-1}(K_{13})\right)
-</math>
-
-and we can use this hypothetical key to calculate the output as
-
-<math>
-X_{13} = \text{SubBytes}^{-1}\left(\text{MixColumns}^{-1}\left(\text{ShiftRows}^{-1}(X_{14})\right) \oplus K'_{13})\right)
-</math>
-
-Using this hypothetical key, we can perform a regular attack to recover each subkey one byte at a time. Then, we can recover the actual round key by calculating
-<math>
-K_{13} = \text{MixColumns}\left(\text{ShiftRows}(K'_{13})\right)
-</math>
-
-Using these new equations, we can perform a full attack on AES-256 with the following steps:
-# Perform a regular attack on the first S-box output to recover all 16 bytes of the 14th round key.
-# Using the known values of the 14th round key, calculate the outputs of the second S-box. Use this attack point to recover all 16 bytes of the hypothetical 13th round key.
-# Transform the hypothetical round key into the actual value of the 13th round key.
-# Reverse the 13th and 14th round keys using the AES-256 key schedule to determine the 256 bit secret encryption key.
-Once this is done, we have successfully attacked an AES-256 implementation by looking at two separate AES S-boxes.
-
-[[Category:Theory]]
+== Attacking Round Key 14 ==
+== Attacking Round Key 13 ==
+== Recovering the Full Key ==
