@@ -785,3 +785,4 @@ class userScript(AutoScriptBase):
         self.attack.doAttack()</pre>
 
 {{Template:Tutorials}}
+[[Category:Tutorials]]
