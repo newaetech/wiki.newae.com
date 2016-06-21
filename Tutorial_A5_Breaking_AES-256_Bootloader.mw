@@ -205,21 +205,23 @@ c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63
 Our hard work has rewarded us with the 13th round key, which is <code>c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63</code>.
 
 == Recovering the Encryption Key ==
+Finally, we have enough information to recover the initial encryption key. In AES-256, the initial key is used in the key expansion routine to generate 15 round keys, and we know the key for round 13 and 14. All we need to do now is reverse the key scheduling algorithm to calculate the ''0/1 Round Key'' from the ''13/14 Round Key''. 
 
-If you remember that AES decryption is just AES encryption performed in reverse, this means the two keys we recovered are the 13th and 14th round encryption keys. AES keys are given as an 'initial' key which is expanded to all round keys. In the case of AES-256 this initial key is directly used by the initial setup and 1st round of the algorithm.
-
-For this reason the initial key is referred to as the ''0/1 Round Key'' in this tutorial, and the key we've found is the ''13/14 Round Key''. Writing out the key we do know gives us this:
-
-<pre>c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63 ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</pre>
-You can use the the AES key scheduling tool built into ChipWhisperer to reverse this key:
+In the ChipWhisperer Analyzer software, a key schedule calculator is provided in ''Tools > AES Key Schedule'':
 
 [[File:keyschedule_tool.png|image]]
 
-The tool is accessible from the ''Tools'' menu. Copy and paste the 32-byte known key into the input text line. Tell the tool this is the 13/14 round key, and it will automatically display the complete key schedule along with the initial encryption key.
+Open this tool and paste the 13/14 round keys, which are
+<pre>
+c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63 ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb
+</pre>
 
-You should find the initial encryption key is:
+Tell the tool that this key is the 13/14 round key; it will automatically display the entire key schedule and the initial encryption key. You should find the initial encryption key is:
+<pre>
+94 28 5d 4d 6d cf ec 08 d8 ac dd f6 be 25 a4 99 c4 d9 d0 1e c3 40 7e d7 d5 28 d4 09 e9 f0 88 a1
+</pre>
 
-<pre>94 28 5d 4d 6d cf ec 08 d8 ac dd f6 be 25 a4 99 c4 d9 d0 1e c3 40 7e d7 d5 28 d4 09 e9 f0 88 a1</pre>
+Peek into <code>supersecret.h</code>, confirm that this is the right key, and celebrate!
 
 = Analysis of Power Traces for IV =
 
