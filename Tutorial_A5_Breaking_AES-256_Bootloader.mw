@@ -229,7 +229,7 @@ Peek into <code>supersecret.h</code>, confirm that this is the right key, and ce
 = Next Steps =
 If you want to go further with this tutorial, [[Tutorial A5-Bonus: Breaking AES-256 Bootloader]] continues working with the same firmware to find the remaining secrets in the bootloader (the IV and the signature). 
 
-= Appendix A: Capture Script =
+= Appendix A: Target Code =
 
 The following:
 
@@ -566,7 +566,107 @@ if __name__ == '__main__':
 
     sys.exit()</pre>
 
-= Appendix B AES-256 14th Round Key Script =
+
+= Appendix B: Capture Script =
+<pre>
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2013-2016, NewAE Technology Inc
+# All rights reserved.
+#
+# Authors: Colin O'Flynn, Greg d'Eon
+#
+# Find this and more at newae.com - this file is part of the chipwhisperer
+# project, http://www.assembla.com/spaces/chipwhisperer
+#
+#    This file is part of chipwhisperer.
+#
+#    chipwhisperer is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    chipwhisperer is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with chipwhisperer.  If not, see <http://www.gnu.org/licenses/>.
+#=================================================
+
+import sys
+import chipwhisperer.capture.ui.CWCaptureGUI as cwc
+from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+from chipwhisperer.common.scripts.base import UserScriptBase
+from chipwhisperer.common.utils.parameter import Parameter
+
+# Check for PySide
+try:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
+except ImportError:
+    print "ERROR: PySide is required for this program"
+    sys.exit()
+
+class UserScript(UserScriptBase):
+    def __init__(self, api):
+        super(UserScript, self).__init__(api)
+
+    def run(self):
+        #User commands here
+        print "***** Starting User Script *****"
+    
+        # Set up board and target
+        self.api.setParameter(['Generic Settings', 'Scope Module', 'ChipWhisperer/OpenADC'])
+        self.api.setParameter(['Generic Settings', 'Trace Format', 'ChipWhisperer/Native'])
+        self.api.setParameter(['Generic Settings', 'Target Module', 'AES Bootloader'])
+        self.api.connect()
+
+        # Fill in our other settings
+        lstexample = [['CW Extra Settings', 'Trigger Pins', 'Target IO4 (Trigger Line)', True],
+                      ['CW Extra Settings', 'Clock Source', 'Target IO-IN'],
+                      ['CW Extra Settings', 'Target IOn Pins', 'Target IO2', 'Serial TXD'],
+                      ['CW Extra Settings', 'Target IOn Pins', 'Target IO1', 'Serial RXD'],
+                      ['CW Extra Settings', 'Target HS IO-Out', 'CLKGEN'],
+                      ['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'CLKGEN x4 via DCM'],
+                      ['OpenADC', 'Trigger Setup', 'Total Samples', 11000],
+                      ['OpenADC', 'Trigger Setup', 'Offset', 0],
+                      ['OpenADC', 'Gain Setting', 'Setting', 45],
+                      ['OpenADC', 'Trigger Setup', 'Mode', 'rising edge'],
+                      ['OpenADC', 'Clock Setup', 'CLKGEN Settings', 'Multiply', 2],
+                      ['OpenADC', 'Clock Setup', 'CLKGEN Settings', 'Divide', 26],
+                      ['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
+                      ]
+
+        # NOTE: For IV: offset = 70000
+        #Download all hardware setup parameters
+        for cmd in lstexample:
+            self.api.setParameter(cmd)
+
+        # Try a couple of captures
+        self.api.capture1()
+        self.api.capture1()
+
+        print "***** Ending User Script *****"
+
+
+if __name__ == '__main__':
+    # Run the program
+    app = cwc.makeApplication()
+    Parameter.usePyQtGraph = True 
+    api = CWCoreAPI()             
+    gui = cwc.CWCaptureGUI(api)                
+    gui.show()                                 
+    
+    # Run our program and let the GUI take over
+    api.runScriptClass(UserScript)             
+    sys.exit(app.exec_())
+</pre>
+
+
+= Appendix C: AES-256 14th Round Key Script =
 
 '''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
 
@@ -612,7 +712,9 @@ class userScript(AutoScriptBase):
     def doAnalysis(self):
         self.attack.doAttack()</pre>
 
-= Appendix C AES-256 13th Round Key Script =
+
+
+= Appendix D: AES-256 13th Round Key Script =
 
 '''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
 
