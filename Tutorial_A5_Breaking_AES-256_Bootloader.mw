@@ -1,4 +1,4 @@
-This tutorial will take you through a complete attack on an encrypted bootloader using AES-256. This demonstrates how to using side-channel power analysis on practical systems, along with discussing how to perform custom scripts along with custom analysis scripts.
+This tutorial will take you through a complete attack on an encrypted bootloader using AES-256. This demonstrates how to using side-channel power analysis on practical systems, along with discussing how to perform analysis with custom scripts.
 
 Whilst the tutorial assumes you will be performing the entire capture of traces along with the attack, it is possible to download the traces if you don't have the hardware, in which case skip section [[#Setting up the Hardware]] and [[#Capturing the Traces]].
 
