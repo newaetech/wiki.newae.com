@@ -130,7 +130,7 @@ Finally, the ''Output vs Point Plot'' shows the correlation against all of the s
 
 In any case, we've determined that the correct 14th round key is <code>ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</code>.
 
-''NOTE: if you're stuck, a full listing of the attack script is given in [[#Appendix C: 14th Round Attack Script]].''
+''NOTE: if you're stuck, a full listing of the attack script is given in [[#Appendix C: AES-256 14th Round Key Script]].''
 
 == 13th Round Key ==
 Unfortunately, we cannot use the GUI to attack the 13th round key. The system has no built-in model for round 13 of the AES-256 algorithm. Instead, we can write our own script and insert a custom model into the system. See [[#Appendix B: AES-256 14th Round Key Script]] for complete script used here.
