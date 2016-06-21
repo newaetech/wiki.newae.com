@@ -639,24 +639,23 @@ if __name__ == '__main__':
 </pre>
 
 = Appendix D: AES-256 13th Round Key Script =
-
-'''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
-
 Full attack script, copy/paste into a file then add as active attack script:
 
-<pre># AES-256 13th Round Key Script
-from chipwhisperer.common.autoscript import AutoScriptBase
-#Imports from Preprocessing
+<pre>
+# AES-256 13th Round Key Script
+from chipwhisperer.common.scripts.base import UserScriptBase
+# Imports from Preprocessing
 import chipwhisperer.analyzer.preprocessing as preprocessing
-#Imports from Capture
-from chipwhisperer.analyzer.attacks.CPA import CPA
-from chipwhisperer.analyzer.attacks.CPAProgressive import CPAProgressive
+# Imports from Attack
+from chipwhisperer.analyzer.attacks.cpa import CPA
+from chipwhisperer.analyzer.attacks.cpa_algorithms.progressive import CPAProgressive
 import chipwhisperer.analyzer.attacks.models.AES128_8bit
 # Imports from utilList
 
 # Imports for AES256 Attack
 from chipwhisperer.analyzer.attacks.models.AES128_8bit import getHW
 from chipwhisperer.analyzer.models.aes.funcs import sbox, inv_sbox, inv_shiftrows, inv_mixcolumns, inv_subbytes
+
 
 class AES256Attack(object):
    numSubKeys = 16
@@ -674,38 +673,65 @@ class AES256Attack(object):
           result = block
           return getHW(inv_sbox((result[bnum] ^ guess)))
 
-class userScript(AutoScriptBase):
-   preProcessingList = []
-   def initProject(self):
-       pass
 
-   def initPreprocessing(self):
-       self.preProcessingResyncSAD0 = preprocessing.ResyncSAD.ResyncSAD(self.parent)
-       self.preProcessingResyncSAD0.setEnabled(True)
-       self.preProcessingResyncSAD0.setReference(rtraceno=0, refpoints=(9063,9177), inputwindow=(9010,9180))
-       self.preProcessingList = [self.preProcessingResyncSAD0,]
-       return self.preProcessingList
+class UserScript(UserScriptBase):
+    name = "Auto-generated"
+    description = "Auto-generated Attack Script"
+    def __init__(self, api):
+        UserScriptBase.__init__(self, api)
+        self.initProject()
+        self.initPreprocessing()
+        self.initAnalysis()
+        self.initReporting()
 
-   def initAnalysis(self):
-       self.attack = CPA(self.parent, console=self.console, showScriptParameter=self.showScriptParameter)
-       self.attack.setAnalysisAlgorithm(CPAProgressive, AES256Attack, 13)
-       self.attack.setTraceStart(0)
-       self.attack.setTracesPerAttack(100)
-       self.attack.setIterations(1)
-       self.attack.setReportingInterval(25)
-       self.attack.setTargetBytes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-       self.attack.setTraceManager(self.traceManager())
-       self.attack.setProject(self.project())
-       self.attack.setPointRange((8000,10990))
-       return self.attack
+    def initProject(self):
+        pass
 
-   def initReporting(self, results):
-       results.setAttack(self.attack)
-       results.setTraceManager(self.traceManager())
-       self.results = results
+    def initPreprocessing(self):
+        ppMod0 = preprocessing.ResyncSAD.ResyncSAD(None, self.api.project().traceManager())
+        ppMod0.setEnabled(True)
+        ppMod0.setReference(rtraceno=0, refpoints=(8973,9089), inputwindow=(8841,9124))
+        ppMod0.init()
+        self.traces = ppMod0
 
-   def doAnalysis(self):
-       self.attack.doAttack()</pre>
+    def initAnalysis(self):
+        self.attack = CPA()
+        self.attack.setTraceSource(self.traces, blockSignal=True)
+        self.attack.setAnalysisAlgorithm(CPAProgressive, AES256Attack, 13)
+        self.attack.setTraceStart(0)
+        self.attack.setTracesPerAttack(200)
+        self.attack.setIterations(1)
+        self.attack.setReportingInterval(10)
+        self.attack.setTargetBytes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        self.attack.setPointRange((0,10991))
+
+    def initReporting(self):
+        # Configures the attack observers (usually a set of GUI widgets)
+        self.api.getResults("Attack Settings").setAnalysisSource(self.attack)
+        self.api.getResults("Correlation vs Traces in Attack").setAnalysisSource(self.attack)
+        self.api.getResults("Output vs Point Plot").setAnalysisSource(self.attack)
+        self.api.getResults("PGE vs Trace Plot").setAnalysisSource(self.attack)
+        self.api.getResults("Results Table").setAnalysisSource(self.attack)
+        self.api.getResults("Save to Files").setAnalysisSource(self.attack)
+        self.api.getResults("Trace Output Plot").setTraceSource(self.traces)
+        self.api.getResults("Trace Recorder").setTraceSource(self.traces)
+
+    def run(self):
+        self.attack.processTraces()
+
+if __name__ == '__main__':
+    from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+    import chipwhisperer.analyzer.ui.CWAnalyzerGUI as cwa
+    from chipwhisperer.common.utils.parameter import Parameter
+    app = cwa.makeApplication()     # Comment if you don't need the GUI
+    Parameter.usePyQtGraph = True   # Comment if you don't need the GUI
+    api = CWCoreAPI()               # Instantiate the API
+    gui = cwa.CWAnalyzerGUI(api)    # Comment if you don't need the GUI
+    gui.show()                      # Comment if you don't need the GUI
+    api.runScriptClass(UserScript)  # Run UserScript through the API
+    app.exec_()                     # Comment if you don't need the GUI
+
+</pre>
 
 {{Template:Tutorials}}
 [[Category:Tutorials]]
