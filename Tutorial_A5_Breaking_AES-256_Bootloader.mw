@@ -96,40 +96,38 @@ Copy this script into a <code>.py</code> file somewhere convenient. Then, perfor
 Now that we have our traces, we can go ahead and perform the attack. As described in the background theory, we'll have to do two attacks - one to get the 14th round key, and another (using the first result) to get the 13th round key. Then, we'll do some post-processing to finally get the 256 bit encryption key.
 
 == 14th Round Key ==
+We can attack the 14th round key with a standard, no-frills CPA attack:
 
-<ol style="list-style-type: decimal;">
-<li>Open the Analyzer software</li>
-<li>From the ''File --&gt; Open Project'' option, navigate to the .cwp file containing the 13th and 14th round power usage. This can be either the aes256_round1413_key0_100.cwp file downloaded, or the capture you performed.</li>
-<li><p>If you wish to view the trace data, follow these steps:</p>
-<ol style="list-style-type: decimal;">
-<li>Switch to the ''Waveform Display'' tab</li>
-<li>Switch to the ''General'' parameter setting tab</li>
-<li>You can choose to plot a specific range of traces</li>
-<li>Hit the ''Redraw'' button when you change the trace plot range</li>
-<li>You can right-click on the waveform to change options, or left-click and drag to zoom</li>
-<li>Use the toolbar to quickly reset the zoom back to original</li></ol>
+# Open the ChipWhisperer Analyzer program and load the <code>.cwp</code> file with the 13th and 14th round traces. This can be either the <code>aes256_round1413_key0_100.cwp</code> file downloaded or the capture you performed.
+# View and manipulate the trace data with the following steps:
+## Switch to the ''Trace Output Plot'' tab
+## Switch to the ''General'' parameter setting tab
+## Choose the traces to be plotted and press the ''Redraw'' button to draw them
+## Right-click on the waveform to change options, or left-click and drag to zoom
+## Use the toolbar to quickly reset the zoom back to original
+##: [[File:Tutorial-A5-Plot-Traces.PNG|image]]
+##: Notice that the traces are synchronized for the first 7000 samples, but become unsynchronized later. This fact will be important later in the tutorial.
+# Set up the attack in the ''Attack'' settings tab:
+## Leave the Crypto Algorithm set to AES-128. (Remember that we're applying the AES-128 attack to half of the AES-256 key!)
+## Change the Leakage Model to ''HW: AES Inv SBox Output, First Round (Dec)''. 
+## If you're finding the attack very slow, narrow down the attack a bit. Normally, this requires a bit of investigation to determine which ranges of the trace are important. Here, you can use the range from 2900 for 4200. The default settings will also work fine!
+##: [[File:Tutorial-A5-Hardware-Model.PNG|image]]
+# Note that we do ''not'' know the secret encryption key, so we cannot highlight the correct key automatically. If you want to fix this, the ''Results'' settings tab has a Highlighted Key setting. Change this to Override mode and enter the key <code>ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</code>.
+# Finally, run the attack by switching to the ''Results Table'' tab and then hitting the ''Attack'' button.
 
-<p>[[File:traceplottinground13.png|image]]</p></li>
-<li><p>You can view or change the attack options on the ''Attack'' parameter settings tab:</p>
-<ol style="list-style-type: decimal;">
-<li>On the ''Hardware Model'' settings, ensure you select ''Decryption''</li>
-<li>The ''Point Setup'' makes the attack faster by looking over a more narrow range of points. Often you might have to characterize your device to determine the location of specific attack points of interest, although you can use the range of 2900 to 4200 here for a faster attack. The default range of all the points will work fine too!</li></ol>
+There are a few ways to check the results of the attack. First, the results table will show the best guesses for each subkey. With the highlight override enabled, the red bytes should be the best guesses for every single subkey:
 
-<p>[[File:attacksettingsround13.png|image]]</p></li>
-<li>The saved traces ''do not'' have the known encryption key stored in them. If you want to have the correct encryption key highlighted in red, switch to the ''Results'' tab and set the override key as <code>ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</code>.</li>
-<li><p>Finally run the attack by switching to the ''Results Table'' tab and then hitting the ''Attack'' button:</p>
-<p>[[File:aes14roundstartattack.png|image]]</p></li>
-<li><p>If you adjusted the ''Reporting Interval'' to a smaller number such as 5, you'll see the progression of attack results as more traces are used. If you have enabled the GUI override you should see the correct bytes highlighted in red, as below:</p>
-<p>[[File:aes14table_highlight.png|image]]</p>
-<p>If you haven't enabled the GUI override, the wrong bytes are highlighted (since it uses some other default key). However the most likely bytes as a result of the attack are still the top bytes, the red highlighting is purely decorative. Notice the large jump in correlation between the correct guess and wrong guess:</p>
-<p>[[File:aes14table_nohighlight.png|image]]</p></li>
-<li><p>You can also switch to the ''Output vs Point Plot'' window to see ''where'' exactly the data was recovered:</p>
-<ol style="list-style-type: decimal;">
-<li>Switch to the ''Output vs Point Plot'' tab</li>
-<li>Turn on one of the bytes to see results.</li>
-<li>The ''known correct'' guess for the key is highlighted in red. If you did not enable the 'override' feature the wrong bytes are highlighted, as the system does not know the correct key. By viewing the spikes you can see where the attack succeeded.</li></ol>
+[[File:Tutorial-A5-Results-Right-Key.PNG|image]]
 
-<p>[[File:aes14round_points.png|image]]</p></li></ol>
+However, the correct key will still rise to the top even if the wrong bytes are highlighted. The coloring and correlation coefficients in the results table should still make it clear that the top guess is the best one:
+
+[[File:Tutorial-A5-Results-Wrong-Key.PNG|image]]
+
+Finally, the ''Output vs Point Plot'' shows the correlation against all of the sample points. The spikes on this plot show exactly where the attack was successful (ie: where the sensitive data was leaked):
+
+[[File:Aes14round points.png|image]]
+
+In any case, we've determined that the correct 14th round key is <code>ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</code>.
 
 == 13th Round Key ==
 
