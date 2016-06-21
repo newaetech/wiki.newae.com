@@ -65,7 +65,7 @@ As the theory page explains, our AES-256 attack will have 4 steps:
 # Perform the MixColumns and ShiftRows operation on the hypothetical key determined above, recovering the 13th round key.
 # Using the AES-256 key schedule, reverse the 13th and 14th round keys to determine the original AES-256 encryption key.
 
-== Setting up the Hardware ==
+= Setting up the Hardware =
 
 This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site], just look for the traces titled ''AVR: AES256 Bootloader (ChipWhisperer Tutorial #A5)''.
 
@@ -94,17 +94,18 @@ Jumpers on the Multi-Target Victim board are as follows:
 
 For more information on these jumper settings see [[CW301_Multi-Target]] .
 </blockquote>
-=== Building/Programming the Bootloader ===
+== Building/Programming the Bootloader ==
 
 TODO
 
-== Capturing the Traces ==
+
+= Capturing the Traces =
 
 It is assumed that you've already followed the guide in [[Installing ChipWhisperer]]. Thus it is assumed you are able to communicate with the ChipWhisperer Capture Rev2 hardware (or whatever capture hardware you are using). Note in particular you must have configured the FPGA bitstream in the ChipWhisperer-Capture software, all part of the description in the [[Installing ChipWhisperer]] guide.
 
-=== Communication with the Bootloader ===
+== Communication with the Bootloader ==
 
-=== Running the Capture ===
+== Running the Capture ==
 
 Capturing the traces will requires a special capture script. This capture script is given in [[#Appendix A Capture Script]]. Running this script will start the ChipWhisperer capture system up with the bootloader communications module inserted. Your attack should look like this:
 
@@ -122,14 +123,14 @@ Capturing the traces will requires a special capture script. This capture script
 </blockquote></li>
 <li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li></ol>
 
-== Analyzing of Power Traces for Key ==
+= Analyzing of Power Traces for Key =
 
 <blockquote><blockquote>'''warning'''
 
 ; The API calling parameters changed in release 0.10 of the ChipWhisperer software. If using 0.09 release or older, see the documentation that
 : is present in the 'doc' directory (which will always correspond to your release).
 </blockquote></blockquote>
-=== 14th Round Key using GUI ===
+== 14th Round Key using GUI ==
 
 <ol style="list-style-type: decimal;">
 <li>Open the Analyzer software</li>
@@ -165,11 +166,11 @@ Capturing the traces will requires a special capture script. This capture script
 
 <p>[[File:aes14round_points.png|image]]</p></li></ol>
 
-=== 14th Round Key using Script ===
+== 14th Round Key using Script ==
 
 TODO - see 13th round details.
 
-=== 13th Round Key ===
+== 13th Round Key ==
 
 Attacking the 13th round key requires the use of a script. We cannot configure the system through the GUI, as we have no built-in model for the second part of the AES-256 algorithm. This will demonstrate how we can insert custom models into the system. See [[#Appendix B AES-256 14th Round Key Script]] for complete script used here.
 
@@ -251,7 +252,7 @@ Remember the key we determined was actually the key passed through inverse mixco
 c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63</pre>
 At this point we have the 13th round key: <code>c6 6a a6 12 4a ba 4d 04 4a 22 03 54 5b 28 0e 63</code>
 
-=== 13th and 14th Round Keys to Initial Key ===
+== 13th and 14th Round Keys to Initial Key ==
 
 If you remember that AES decryption is just AES encryption performed in reverse, this means the two keys we recovered are the 13th and 14th round encryption keys. AES keys are given as an 'initial' key which is expanded to all round keys. In the case of AES-256 this initial key is directly used by the initial setup and 1st round of the algorithm.
 
@@ -267,11 +268,11 @@ The tool is accessible from the ''Tools'' menu. Copy and paste the 32-byte known
 You should find the initial encryption key is:
 
 <pre>94 28 5d 4d 6d cf ec 08 d8 ac dd f6 be 25 a4 99 c4 d9 d0 1e c3 40 7e d7 d5 28 d4 09 e9 f0 88 a1</pre>
-== Analysis of Encrypted Files ==
+= Analysis of Encrypted Files =
 
 TODO
 
-== Analysis of Power Traces for IV ==
+= Analysis of Power Traces for IV =
 
 TODO
 
@@ -303,9 +304,9 @@ class AESIVAttack(object):
        aes = AES.new(knownkey, AES.MODE_ECB)
        pt = aes.decrypt(ct)
        return getHW(bytearray(pt)[bnum] ^ guess)</pre>
-== Timing Attacks for Signature ==
+= Timing Attacks for Signature =
 
-== Appendix A Capture Script ==
+= Appendix A: Capture Script =
 
 The following:
 
@@ -641,7 +642,8 @@ if __name__ == '__main__':
     app.exec_()
 
     sys.exit()</pre>
-== Appendix B AES-256 14th Round Key Script ==
+
+= Appendix B AES-256 14th Round Key Script =
 
 '''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
 
@@ -686,7 +688,8 @@ class userScript(AutoScriptBase):
 
     def doAnalysis(self):
         self.attack.doAttack()</pre>
-== Appendix C AES-256 13th Round Key Script ==
+
+= Appendix C AES-256 13th Round Key Script =
 
 '''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
 
@@ -754,7 +757,8 @@ class userScript(AutoScriptBase):
 
    def doAnalysis(self):
        self.attack.doAttack()</pre>
-== Appendix D AES-256 IV Attack Script ==
+
+= Appendix D AES-256 IV Attack Script =
 
 '''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
 
