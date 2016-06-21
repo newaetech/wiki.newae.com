@@ -226,6 +226,9 @@ Tell the tool that this key is the 13/14 round key; it will automatically displa
 
 Peek into <code>supersecret.h</code>, confirm that this is the right key, and celebrate!
 
+= Next Steps =
+If you want to go further with this tutorial, [[Tutorial A5-Bonus: Breaking AES-256 Bootloader]] continues working with the same firmware to find the remaining secrets in the bootloader (the IV and the signature). 
+
 = Analysis of Power Traces for IV =
 
 TODO
@@ -258,6 +261,7 @@ class AESIVAttack(object):
        aes = AES.new(knownkey, AES.MODE_ECB)
        pt = aes.decrypt(ct)
        return getHW(bytearray(pt)[bnum] ^ guess)</pre>
+
 = Timing Attacks for Signature =
 
 = Appendix A: Capture Script =
