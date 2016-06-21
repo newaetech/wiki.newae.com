@@ -667,7 +667,6 @@ if __name__ == '__main__':
     sys.exit(app.exec_())
 </pre>
 
-
 = Appendix C: AES-256 14th Round Key Script =
 
 '''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
