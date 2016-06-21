@@ -1,0 +1,47 @@
+Many of the tutorials in this wiki discuss attacks on AES-128 encryption. It turns out that its big brother, AES-256, can be attacked by extending the same attacks. This page discusses AES-256 and how to reuse an AES-128 attack to obtain the key. 
+
+= The AES-256 Algorithm =
+In AES-128, we used the following steps to encrypt 16 bytes of plaintext:
+# Use a 16 byte key to generate a key schedule, which is 176 bytes long (11 words made up of 16 bytes).
+# Put the 16 bytes of plaintext into a 4x4 state matrix.
+# Combine the first word of the key schedule with the state.
+# Apply 10 rounds of transformations to the state, involving the key schedule. 
+# Retrieve 16 bytes of ciphertext from the state matrix.
+The transformations involve several functions which mix together the bytes of the state. These functions are <code>SubBytes()</code>, <code>MixColumns()</code>, and <code>ShiftRows()</code>.
+
+AES-'''<font color=blue>256</font>''' is not much different from AES-128. The encryption process is:
+# Use a '''<font color=blue>32</font>''' byte key to generate a key schedule, which is '''<font color=blue>240</font>''' bytes long ('''<font color=blue>15</font>''' words made up of 16 bytes).
+# Put the 16 bytes of plaintext into a 4x4 state matrix.
+# Combine the first word of the key schedule with the state.
+# Apply '''<font color=blue>14</font>''' rounds of transformations to the state, involving the key schedule. 
+# Retrieve 16 bytes of ciphertext from the state matrix.
+Notice that most of this algorithm is the same. Earlier, we could attack a target by examining the output of a substitution box; since AES-256 uses these same S-boxes, we should have no problem finding a sensitive point to attack.
+
+The following code is an example of the AES-256 decryption algorithm, written by [http://www.literatecode.com/ Ilya O. Levin]:
+
+<pre>
+aes_addRoundKey_cpy(buf, ctx-&gt;deckey, ctx-&gt;key);
+aes_shiftRows_inv(buf);
+aes_subBytes_inv(buf);
+
+for (i = 14, rcon = 0x80; --i;)
+{
+    if( ( i &amp; 1 ) )
+    {
+        aes_expandDecKey(ctx-&gt;key, &amp;rcon);
+        aes_addRoundKey(buf, &amp;ctx-&gt;key[16]);
+    }
+    else aes_addRoundKey(buf, ctx-&gt;key);
+    aes_mixColumns_inv(buf);
+    aes_shiftRows_inv(buf);
+    aes_subBytes_inv(buf);
+}
+aes_addRoundKey( buf, ctx-&gt;key);
+</pre>
+Note that this implementation chooses to expand the key during the decryption process. This order of events isn't a big deal to us - the <code>subBytes()</code> operation will still be visible in a power trace.
+
+
+= Attacking AES-256 Decryption =
+== Attacking Round Key 14 ==
+== Attacking Round Key 13 ==
+== Recovering the Full Key ==
