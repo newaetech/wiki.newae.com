@@ -13,6 +13,24 @@ This tutorial is an add-on to [[Tutorial A5 Breaking AES-256 Bootloader]]. It co
 
 
 = Attacking the IV =
+Steps:
+* Investigation
+** Look at bootloader code
+** Move trigger
+** Record 1
+** Show different instructions in trace
+* Making the attack feasible
+** Capture a bunch (500?)
+** Apply decryption
+** Look at one bit
+** Find means + plot
+** Find differences + plot
+* Automating the attack
+** Finding the attack points
+** Getting a single bit
+** Building the IV bytes
+* Full script in appendix
+
 Example:
 
 <pre>#Imports for IV Attack
