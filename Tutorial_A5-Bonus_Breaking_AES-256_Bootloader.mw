@@ -289,6 +289,48 @@ checkIfBitSet = (byteToCheck >> bit) & 0x01
 </pre>
 If you're ''really, really'' stuck, there's a working attack in [[#Appendix A: IV Attack Script]]. You should find that the secret IV is <code>C1 25 68 DF E7 D3 19 DA 10 E2 41 71 33 B0 EB 3C</code>.
 
+= Attacking the Signature =
+The last thing we can do with this bootloader is attack the signature. This final section will show how one byte of the signature could be recovered. If you want more of this kind of analysis, a more complete timing attack is shown in [[Tutorial B3-1 Timing Analysis with Power for Password Bypass]].
+
+== Attack Theory ==
+Recall from earlier that the signature check in C looks like:
+
+<pre>
+if ((tmp32[0] == SIGNATURE1) &&
+    (tmp32[1] == SIGNATURE2) &&
+    (tmp32[2] == SIGNATURE3) &&
+    (tmp32[3] == SIGNATURE4)){
+</pre>
+or, in assembly,
+<pre>
+ 37a:	89 89       	ldd	r24, Y+17	; 0x11
+ 37c:	88 23       	and	r24, r24
+ 37e:	09 f0       	breq	.+2      	;  0x382
+ 380:	98 cf       	rjmp	.-208    	;  0x2b2
+
+ 382:	8a 89       	ldd	r24, Y+18	; 0x12
+ 384:	8b 3e       	cpi	r24, 0xEB	; 235
+ 386:	09 f0       	breq	.+2      	;  0x38a
+ 388:	94 cf       	rjmp	.-216    	;  0x2b2
+
+ 38a:	8b 89       	ldd	r24, Y+19	; 0x13
+ 38c:	82 30       	cpi	r24, 0x02	; 2
+ 38e:	09 f0       	breq	.+2      	;  0x392
+ 390:	90 cf       	rjmp	.-224    	;  0x2b2
+
+ 392:	8c 89       	ldd	r24, Y+20	; 0x14
+ 394:	8d 31       	cpi	r24, 0x1D	; 29
+ 396:	09 f0       	breq	.+2      	;  0x39a
+ 398:	8c cf       	rjmp	.-232    	;  0x2b2
+</pre>
+In C, boolean expressions support ''short-circuiting''. When checking multiple conditions, the program will stop evaluating these booleans as soon as it can tell what the final value will be. In this case, unless all four of the equality checks are true, the result will be false. Thus, as soon as the program finds a single false condition, it's done.
+
+The assembly code confirms this short-circuiting operation. Each of the four assembly blocks include a comparison (<code>and</code> or <code>cpi</code>), a ''branch if equal'' (<code>brqe</code>), and a relative jump (<code>rjmp</code>). All four of the relative jumps return the program to the same location (the start of the <code>while(1)</code> loop), and all four of the branches try to avoid these relative jumps. If any of the comparisons are false, the relative jumps will return the program back to the start of the loop. All four branches must succeed to get into the body of the <code>if</code> block.
+
+The short-circuiting conditions are perfect for us. We can use our power traces to watch how long it takes for the signature check to fail. If the check takes longer than usual, then we know that the first byte of our signature was right.
+
+== Finding a Single Byte ==
+
 = Appendix A: IV Attack Script =
 This is the author's script to automatically attack the secret IV. If you've completed [[#The Other 127]], you can paste this snippet immediately after it:
 
