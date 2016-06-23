@@ -199,6 +199,8 @@ void aes_indep_key(uint8_t * key)
 }
 </syntaxhighlight>
 
+'''NOTE:''' If the key setup takes longer than 100mS, there is a chance the AES core will miss some of the plaintext sent. Commonly this results in incorrect encryption outputs even though your implementation seems to be correct. Please contact us if this happens, but it's preferable to keep your key setup call < 737000 cycles to avoid this issue. You can do a lot in 737000 cycles so it shouldn't be an issue in most systems.
+
 <u>Encryption Function</u>
 
 This function call happens immediately after the trigger for the power consumption recording goes high. You must encrypt the 16 bytes in the passed buffer, and write them back into the same buffer. The following shows an example where we call our encrypt function and copy the output back:<syntaxhighlight lang="c">
