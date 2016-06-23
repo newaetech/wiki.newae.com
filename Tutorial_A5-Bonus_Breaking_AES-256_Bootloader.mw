@@ -243,15 +243,45 @@ print dr
 That's a lot of data to print! Now, let's split the traces into two groups by comparing bit 0 of the DR:
 
 <pre>
+# Split traces into 2 groups
 groupedTraces = [[] for _ in range(2)]
 for i in range(numTraces):
     bit0 = dr[i][0] & 0x01
     groupedTraces[bit0].append(traces[i])
-groupedTraces = np.array(groupedTraces)
 print len(groupedTraces[0])
 </pre>
 
-If you have 1000 traces, you should expect this to print a number around 500 - roughly half of the traces should fit into each group.
+If you have 1000 traces, you should expect this to print a number around 500 - roughly half of the traces should fit into each group. Now, NumPy's <code>average</code> function lets us easily calculate the average at each point:
+
+<pre>
+# Find averages and differences
+means = []
+for i in range(2):
+    means.append(np.average(groupedTraces[i], axis=0))
+diff = means[1] - means[0]
+</pre>
+
+Finally, we can plot this difference to see if we can spot the IV:
+
+<pre>
+plt.plot(diff)
+plt.grid()
+plt.show()
+</pre>
+
+This makes a plot with some pretty obvious spikes:
+
+[[File:Tutorial-A5-Bonus-Diff-0.PNG]]
+
+However, one of these spikes is meaningless to us. The spike around sample 1600 is caused by the signature check, which we aren't attacking yet. Let's ignore this peak and zoom in on the smaller spikes at the start of the trace: 
+
+[[File:A5-Bonus-Diff-0-Zoom.PNG]]
+
+This is it! We've got a pretty clear signal telling us where the decryption result is used. You can make sure this isn't a coincidence by using the second byte instead:
+
+[[File:Tutorial-A5-Bonus-Diff-1.PNG]]
+
+These peaks are about 60 samples later (or 15 cycles, since we're using an ADC clock that's 4 times faster than the microcontroller). Also, most of these peaks are upside down! This is a pretty clear indicator that we can find the IV bits from these differential traces. The only thing that we can't tell is the polarity of these signals; there's no way to tell if right-side-up peaks indicate a bit that's set or cleared. However, that means we can narrow down the IV to two possibilities, which is a lot better than <math>2^{128}</math>.
 
 == The Other 127 ==
 
