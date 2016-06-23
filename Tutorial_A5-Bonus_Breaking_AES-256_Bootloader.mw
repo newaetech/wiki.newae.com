@@ -330,6 +330,123 @@ The assembly code confirms this short-circuiting operation. Each of the four ass
 The short-circuiting conditions are perfect for us. We can use our power traces to watch how long it takes for the signature check to fail. If the check takes longer than usual, then we know that the first byte of our signature was right.
 
 == Finding a Single Byte ==
+Okay, we know that our power trace will look a lot different for one of our choices of signatures. Let's figure out which one. We'll start by finding the average over all of our 1000 traces:
+
+<pre>
+# Find the average over all of the traces
+mean = np.average(traces, axis=0)
+</pre>
+
+Then, we'll split our traces into 256 different groups (one for each plaintext). Since we know the IV, we can now use it to recover the actual plaintext that the bootloader checks:
+
+<pre>
+# Split the traces into groups
+groupedTraces = [[] for _ in range(256)]
+for i in range(numTraces):
+    group = dr[i][0] ^ 0xC1
+    groupedTraces[group].append(traces[i])
+</pre>
+
+Next, we can find the mean for each group and see how much they differ from the overall mean:
+
+<pre>
+# Find the mean for each group
+means = np.zeros([256, traceLen])
+for i in range(256):
+    if len(groupedTraces[i]) > 0:
+        means[i] = np.average(groupedTraces[i], axis=0)
+
+plt.plot(means[0] - mean)
+plt.plot(means[1] - mean)
+plt.plot(means[2] - mean)
+plt.plot(means[3] - mean)
+plt.grid()
+plt.show()
+</pre>
+
+The plot that comes out of this should look a bit like:
+
+[[File:Tutorial-A5-Bonus-Signature.PNG]]
+
+Wow - looks like we found it! However, let's clean this up with some statistics. We can use the correlation coefficient to see which bytes are the furthest away from the average:
+
+<pre>
+corr = []
+for i in range(256):
+    corr.append(np.corrcoef(mean[1500:1700], means[i][1500:1700])[0, 1])
+print np.sort(corr)
+print np.argsort(corr)
+</pre>
+
+This should print something that looks like:
+
+<pre>
+[ 0.67663819  0.9834704   0.98855246  0.98942869  0.98994226  0.99019698
+  0.99082752  0.99159262  0.99166859  0.99169598  0.99216366  0.99229359
+  0.99239152  0.99240231  0.99246389  0.99254908  0.99258285  0.9926239
+  0.99280577  0.99302107  0.99339631  0.99394492  0.99396965  0.99403114
+  0.99408231  0.99410649  0.99424916  0.99460312  0.99464971  0.99468856
+  0.99483947  0.99512576  0.99553707  0.99570373  0.99572752  0.99577311
+  0.99582226  0.99587666  0.99590395  0.99623462  0.99630861  0.99639056
+  0.99644546  0.99646228  0.99653183  0.99661089  0.9966309   0.99665822
+  0.9966832   0.99670105  0.99673815  0.99679397  0.99690167  0.99692316
+  0.9969269   0.99694459  0.99703105  0.99704228  0.99705158  0.99708642
+  0.99709179  0.9971024   0.99710707  0.99711091  0.99711536  0.99715928
+  0.99720665  0.99721363  0.99721902  0.99722437  0.99722547  0.99723478
+  0.99724198  0.997244    0.99724712  0.99728416  0.99728622  0.99729196
+  0.99734564  0.99737952  0.99739401  0.99742793  0.99745246  0.99747648
+  0.99750044  0.9975651   0.99760837  0.99762965  0.99763106  0.99763222
+  0.99765327  0.9976662   0.9976953   0.99769761  0.99771007  0.99773553
+  0.99775314  0.99777414  0.99782335  0.99785114  0.99786062  0.99787688
+  0.99788584  0.99788938  0.9978924   0.99793722  0.99797874  0.99798273
+  0.9980249   0.99807047  0.99807947  0.99810194  0.99813208  0.9982722
+  0.99838807  0.99843216  0.99856034  0.99856295  0.99863064  0.9987529
+  0.99878124  0.99882028  0.99884917  0.99890103  0.99890116  0.99890879
+  0.99891135  0.99891317  0.99893291  0.99893508  0.99894488  0.99894848
+  0.99897892  0.99898304  0.9989834   0.99898804  0.99901833  0.99905207
+  0.99905642  0.99905798  0.99908281  0.99910538  0.99911272  0.99911782
+  0.99912193  0.99912223  0.9991229   0.99914415  0.99914732  0.99916885
+  0.99917188  0.99917941  0.99918178  0.99919009  0.99921141  0.99923463
+  0.99924823  0.99924986  0.99925438  0.99925524  0.99926407  0.99927205
+  0.99927364  0.99928305  0.99928533  0.99929447  0.99929925  0.99930205
+  0.99930243  0.99930623  0.99931579  0.99932861  0.99933414  0.99933806
+  0.99933992  0.99934213  0.99935681  0.99935721  0.9993594   0.9993601
+  0.99936267  0.99936373  0.99936482  0.99937458  0.99937665  0.99937706
+  0.99938049  0.99938241  0.99938251  0.999391    0.99940622  0.9994087
+  0.99940929  0.9994159   0.99941886  0.99942033  0.99942274  0.99942601
+  0.9994279   0.99943674  0.99943796  0.99944123  0.99944152  0.99944193
+  0.99944859  0.9994499   0.99945661  0.9994776   0.99948316  0.99949018
+  0.9994928   0.99949457  0.99949475  0.99949542  0.99949547  0.99949835
+  0.99950941  0.99951938  0.99951941  0.99953141  0.9995379   0.99954004
+  0.99954337  0.99954548  0.99955606  0.9995565   0.99956179  0.99956494
+  0.99956494  0.99956716  0.99957014  0.99957477  0.99957663  0.99958413
+  0.99958574  0.99958651  0.99958795  0.99958879  0.99959042  0.99959141
+  0.99959237  0.99959677  0.99961313  0.99962923  0.99963177  0.9996504
+  0.99968832  0.99969333  0.99969583  0.99969834  0.99970998  0.99972495
+  0.99972646         nan         nan         nan]
+[  0  32 128 255 160 223   8  16  48  96  40   1  95 215   2  33  34  64
+   4  36 127 207 239 254 253 247 222 251 159 191 221 219  80 129 136 176
+ 168 192 144  56 224 162 130 119  87  72 132  24 126   9  17 111 123  18
+ 112  68  63 125  79   3  66  93  94  49  42 161 237 206  31  35 104  20
+  98 245  37 238  10  65  52  50 246 231 243  44  41 183   5   6 214  97
+ 190  12 250 220  91 175 199 252 205 249 189 151 235 143 218 157 158 213
+ 203  38 100 211 187 217 155  55 200 226  11 107 138 120 152  23 103 137
+  81 145  25  30 118 109 110  60   7 184 202 146 117  21 225 177 131 208
+  77 148  78 193  71  85 140 196 133  47 185 115  15  86 233 169  61 172
+ 194 232 122 186  62  92 102  75 124 212 116  29 150 180 156  57 230 121
+  90 182 240 167  76 170 165  88  43 229 166  46 147  27 188 163 149  19
+ 198  51 210  53  73  83 142 135  59 114  22 197 241  45 236 227  89 174
+  82  67  13 244  14 181 228  69 195  58  39  26 242 173 113  74 179 141
+ 106  99 234 105 216  28 139 153 209 201 204 248  54 108  84 171 101  70
+ 154 164 134 178]
+</pre>
+
+This output tells us two things:
+* The first list says that almost every trace looks very similar to the overall mean (98% correlated or higher). However, there's one trace that is totally different, with 68% correlation. This is probably our correct guess.
+* The second list gives the signature guess that matches each of the above correlations. The first number in the list is 0x00, which is the correct signature!
+Note that three numbers in this output show a correlation of <code>nan</code> because none of the captured traces had any data on them. However, this doesn't matter to us - we found our byte.
+
+To finish this attack, you could force the capture software to send more specific text. To find the next byte of the signature, you'd want to fix byte 0 at 0x00 and make byte 1 random. Then, the plaintext should be XORed with the known IV and encrypted with the known AES-256 key. This is left as an exercise for the reader.
 
 = Appendix A: IV Attack Script =
 This is the author's script to automatically attack the secret IV. If you've completed [[#The Other 127]], you can paste this snippet immediately after it:
