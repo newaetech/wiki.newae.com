@@ -284,48 +284,20 @@ This is it! We've got a pretty clear signal telling us where the decryption resu
 These peaks are about 60 samples later (or 15 cycles, since we're using an ADC clock that's 4 times faster than the microcontroller). Also, most of these peaks are upside down! This is a pretty clear indicator that we can find the IV bits from these differential traces. The only thing that we can't tell is the polarity of these signals; there's no way to tell if right-side-up peaks indicate a bit that's set or cleared. However, that means we can narrow down the IV to two possibilities, which is a lot better than <math>2^{128}</math>.
 
 == The Other 127 ==
-
-Steps:
-* Making the attack feasible
-** Capture a bunch (500?)
-** Apply decryption
-** Look at one bit
-** Find means + plot
-** Find differences + plot
-* Automating the attack
-** Finding the attack points
-** Getting a single bit
-** Building the IV bytes
-* Full script in appendix
-
-Example:
-
-<pre>#Imports for IV Attack
-from Crypto.Cipher import AES
-
-def initPreprocessing(self):
-    self.preProcessingResyncSAD0 = preprocessing.ResyncSAD.ResyncSAD(self.parent)
-    self.preProcessingResyncSAD0.setEnabled(True)
-    self.preProcessingResyncSAD0.setReference(rtraceno=0, refpoints=(6300,6800), inputwindow=(6000,7200))
-    self.preProcessingResyncSAD1 = preprocessing.ResyncSAD.ResyncSAD(self.parent)
-    self.preProcessingResyncSAD1.setEnabled(True)
-    self.preProcessingResyncSAD1.setReference(rtraceno=0, refpoints=(4800,5100), inputwindow=(4700,5200))
-    self.preProcessingList = [self.preProcessingResyncSAD0,self.preProcessingResyncSAD1,]
-    return self.preProcessingList
-
-class AESIVAttack(object):
-   numSubKeys = 16
-
-   @staticmethod
-   def leakage(textin, textout, guess, bnum, setting, state):
-       knownkey = [0x94, 0x28, 0x5D, 0x4D, 0x6D, 0xCF, 0xEC, 0x08, 0xD8, 0xAC, 0xDD, 0xF6, 0xBE, 0x25, 0xA4, 0x99,
-                   0xC4, 0xD9, 0xD0, 0x1E, 0xC3, 0x40, 0x7E, 0xD7, 0xD5, 0x28, 0xD4, 0x09, 0xE9, 0xF0, 0x88, 0xA1]
-       knownkey = str(bytearray(knownkey))
-       ct = str(bytearray(textin))
-
-       aes = AES.new(knownkey, AES.MODE_ECB)
-       pt = aes.decrypt(ct)
-       return getHW(bytearray(pt)[bnum] ^ guess)</pre>
+The best way to attack the IV would be to repeat the 1-bit conceptual attack for each of the bits. Try to do this yourself! (Really!) If you're stuck, here are a few hints to get you going:
+* One easy way of looping through the bits is by using two nested loops, like this:
+<pre>
+for byte in range(16):
+    for bit in range(8):
+        # Attack bit number (byte*8 + bit)
+</pre>
+* The sample that you'll want to look at will depend on which byte you're attacking. We had success when we used <code>location = 51 + byte*60</code>, but your mileage will vary.
+* The bitshift operator and the bitwise-AND operator are useful for getting at a single bit:
+<pre>
+# This will either result in a 0 or a 1
+checkIfBitSet = (byteToCheck >> bit) & 0x01
+</pre>
+If you're ''really, really'' stuck, there's a working attack in Appendix ?. You should find that the secret IV is <code>C1 25 68 DF E7 D3 19 DA 10 E2 41 71 33 B0 EB 3C</code>.
 
 = Appendix D AES-256 IV Attack Script =
 
