@@ -297,7 +297,7 @@ for byte in range(16):
 # This will either result in a 0 or a 1
 checkIfBitSet = (byteToCheck >> bit) & 0x01
 </pre>
-If you're ''really, really'' stuck, there's a working attack in Appendix ?. You should find that the secret IV is <code>C1 25 68 DF E7 D3 19 DA 10 E2 41 71 33 B0 EB 3C</code>.
+If you're ''really, really'' stuck, there's a working attack in [[#Appendix A: IV Attack Script]]. You should find that the secret IV is <code>C1 25 68 DF E7 D3 19 DA 10 E2 41 71 33 B0 EB 3C</code>.
 
 = Appendix A: IV Attack Script =
 This is the author's script to automatically attack the secret IV. If you've completed [[#The Other 127]], you can paste this snippet immediately after it:
