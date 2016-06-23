@@ -447,7 +447,7 @@ Note that three numbers in this output show a correlation of <code>nan</code> be
 To finish this attack, you could force the capture software to send more specific text. To find the next byte of the signature, you'd want to fix byte 0 at 0x00 and make byte 1 random. Then, the plaintext should be XORed with the known IV and encrypted with the known AES-256 key. This is left as an exercise for the reader.
 
 = Appendix A: IV Attack Script =
-This is the author's script to automatically attack the secret IV. If you've completed [[#The Other 127]], you can paste this snippet immediately after it:
+This is the author's script to automatically attack the secret IV. If you've completed [[#A 1-Bit Attack]], you can paste this snippet immediately after it:
 
 <pre>
 # Attack!
