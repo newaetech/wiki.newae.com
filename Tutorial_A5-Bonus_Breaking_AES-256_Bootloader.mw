@@ -144,6 +144,8 @@ If everything worked out, you should be able to see all of the code's features:
 
 [[File:Tutorial-A5-Bonus-Trace-Notes.PNG]]
 
+With all of these things clearly visible, we have a pretty good idea of how to attack the IV and the signature. We should be able to look at each of the XOR spikes to find each of the IV bytes - each byte is processed on its own. Then, the signature check uses a short-circuiting comparison: as soon as it finds a byte in error, it stops checking the remaining bytes. This type of check is susceptible to a timing attack.
+
 = Attacking the IV =
 Steps:
 * Making the attack feasible
