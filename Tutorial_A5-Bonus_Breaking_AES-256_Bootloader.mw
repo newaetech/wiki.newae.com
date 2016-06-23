@@ -299,6 +299,57 @@ checkIfBitSet = (byteToCheck >> bit) & 0x01
 </pre>
 If you're ''really, really'' stuck, there's a working attack in Appendix ?. You should find that the secret IV is <code>C1 25 68 DF E7 D3 19 DA 10 E2 41 71 33 B0 EB 3C</code>.
 
+= Appendix A: IV Attack Script =
+This is the author's script to automatically attack the secret IV. If you've completed [#Section], you can paste this snippet immediately after it:
+
+<pre>
+# Attack!
+for byte in range(16):
+    location = 51 + byte * 60
+    iv = 0
+    for bit in range(8):
+        # Check if the decrypted bits are 0 or 1
+        pt_bits = [((dr[i][byte] >> (7 - bit)) & 0x01) for i in range(numTraces)]
+    
+        # Split the traces into two groups
+        groupedPoints = [[] for _ in range(2)]
+        for i in range(numTraces):
+            groupedPoints[pt_bits[i]].append(traces[i][location])
+    
+        # Get the means for each bit and subtract them
+        means = []
+        for i in range(2):
+            means.append(np.average(groupedPoints[i]))
+        diff = means[1] - means[0]
+        
+        # Look in point of interest location
+        iv_bit = 1 if diff > 0 else 0
+        iv = (iv << 1) | iv_bit
+    
+        print iv_bit,
+    print "%02x" % iv
+</pre>
+
+The output from this script is:
+<pre>
+1 1 0 0 0 0 0 1 c1
+0 0 1 0 0 1 0 1 25
+0 1 1 0 1 0 0 0 68
+1 1 0 1 1 1 1 1 df
+1 1 1 0 0 1 1 1 e7
+1 1 0 1 0 0 1 1 d3
+0 0 0 1 1 0 0 1 19
+1 1 0 1 1 0 1 0 da
+0 0 0 1 0 0 0 0 10
+1 1 1 0 0 0 1 0 e2
+0 1 0 0 0 0 0 1 41
+0 1 1 1 0 0 0 1 71
+0 0 1 1 0 0 1 1 33
+1 0 1 1 0 0 0 0 b0
+1 1 1 0 1 0 1 1 eb
+0 0 1 1 1 1 0 0 3c
+</pre>
+
 = Appendix D AES-256 IV Attack Script =
 
 '''NB: This script works for 0.10 release or later, see local copy in doc/html directory of chipwhisperer release if you need earlier versions'''
