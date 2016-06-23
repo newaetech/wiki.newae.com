@@ -149,11 +149,6 @@ If everything worked out, you should be able to see all of the code's features:
 
 = Attacking the IV =
 Steps:
-* Investigation
-** Look at bootloader code
-** Move trigger
-** Record 1
-** Show different instructions in trace
 * Making the attack feasible
 ** Capture a bunch (500?)
 ** Apply decryption
