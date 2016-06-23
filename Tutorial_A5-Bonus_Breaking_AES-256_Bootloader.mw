@@ -116,7 +116,33 @@ This will convert the hex file into assembly code, making it more human-readable
 We'll use both of the source files throughout the tutorial.
 
 == Power Traces ==
+After the bootloader is finished the decryption process, it executes a couple of distinct pieces of code:
+* To apply the IV, it uses an XOR operation;
+* To store the new IV, it copies the previous ciphertext into the IV array;
+* It sends two bytes on the serial port;
+* It checks the bytes of the signature one by one.
+We should be able to recognize these four parts of the code in the power traces. Let's modify our capture routine to find them.
 
+Re-run the capture script and change a few settings:
+<ol>
+<li> We'd like to skip over all of the decryption process. The source code around this point is:
+<pre>
+trigger_high(); 
+aes256_decrypt_ecb(&ctx, tmp32); /* encrypting the data block */
+trigger_low();
+</pre>
+so we can skip straight over the AES-256 function by triggering on a falling edge instead of a rising edge. Change this in the scope settings.
+<li> We don't need as many samples now. Change the number of samples to 3000.
+<li> If we decrypt multiple ciphertexts in a row, only the first one will use the secret IV - all of the others will use the previous ciphertext instead. To avoid this, we'll have to automatically reset the board.
+<ol>
+<li> In the ''General Settings'' tab, change the Auxiliary Module to ''Reset AVR/XMEGA via CW-Lite''.
+<li> In the ''Aux Settings'' tab, change both delays to around 100 ms.
+</ol>
+<li> Capture one trace and make sure that everything works.
+</ol>
+If everything worked out, you should be able to see all of the code's features:
+
+[[File:Tutorial-A5-Bonus-Trace-Notes.PNG]]
 
 == Matching Power to Code ==
 
