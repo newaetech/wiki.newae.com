@@ -149,6 +149,112 @@ With all of these things clearly visible, we have a pretty good idea of how to a
 Let's grab a lot of traces so that we don't have to come back later. Save the project somewhere memorable, set up the capture routine to record 1000 traces, hit ''Capture Many'', and grab a coffee.
 
 = Attacking the IV =
+We need to find the IV before we can look at the signature, so the first half of the attack will look at the IV bytes.
+
+== Attack Theory ==
+The bootloader applies the IV to the AES decryption result by calculating
+
+<math>
+\text{PT} = \text{DR} \oplus \text{IV}
+</math>
+
+where DR is the decrypted ciphertext, IV is the secret vector, and PT is the plaintext that the bootloader will use later. We only have access to one of these: since we know the AES-256 key, we can calculate DR.
+
+Specifically, the assembly code to calculate the plaintext is the loop
+<pre>
+ 344:	d3 01       	movw	r26, r6
+ 346:	93 01       	movw	r18, r6
+ 348:	f6 01       	movw	r30, r12
+ 34a:	80 81       	ld	r24, Z
+ 34c:	f9 01       	movw	r30, r18
+ 34e:	91 91       	ld	r25, Z+
+ 350:	9f 01       	movw	r18, r30
+ 352:	89 27       	eor	r24, r25
+ 354:	f6 01       	movw	r30, r12
+ 356:	81 93       	st	Z+, r24
+ 358:	6f 01       	movw	r12, r30
+ 35a:	ee 15       	cp	r30, r14
+ 35c:	ff 05       	cpc	r31, r15
+ 35e:	a1 f7       	brne	.-24     	;  0x348
+</pre>
+This code includes two <code>ld</code> instructions, one <code>eor</code>, and one <code>st</code>: the DR and IV are loaded and XORed to get PT, which is then stored back where DR was. All of these instructions should be visible in the power traces.
+
+This is enough information for us to attack a single bit of the IV. Suppose we only wanted to get the first bit (number 0) of the IV. We could do the following:
+* Split all of the traces into two groups: those with DR[0] = 0, and those with DR[0] = 1.
+* Calculate the average trace for both groups.
+* Find the difference between the two averages. It should include a noticeable spike during the first iteration of the loop.
+* Look at the direction of the spike to decide if the IV bit is 0 (<code>PT[0] = DR[0]</code>) or if the IV bit is 1 (<code>PT[0] = ~DR[0]</code>).
+This is effectively a DPA attack on a single bit of the IV. We can repeat this attack 128 times to recover the entire IV.
+
+== A 1-Bit Attack ==
+Unfortunately, we can't use the ChipWhisperer Analyzer to attack this XOR function. Instead, we'll write our own Python code. One thing that we ''don't'' need to do is write our own AES-256 implementation: there's some perfectly fine code in the PyCrypto library. [https://pypi.python.org/pypi/pycrypto Install PyCrypto] and make sure you can use its functions:
+<pre>
+python
+Python 2.7.10 (default, May 23 2015, 09:40:32) [MSC v.1500 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from Crypto.Cipher import AES
+>>> AES
+<module 'Crypto.Cipher.AES' from 'C:\WinPython-32bit-2.7.10.3\python-2.7.10\lib\site-packages\Crypto\Cipher\AES.pyc'>
+</pre>
+
+Next, open a new Python script wherever you like and load your data that you recorded earlier. You might want to rename the files to make them easier to work with. It'll also be helpful to know how many traces we have and how long they are:
+
+<pre>
+# Load data
+import numpy as np
+
+traces = np.load(r'traces\traces.npy')
+textin = np.load(r'traces\textin.npy')
+numTraces = len(traces)
+traceLen = len(traces[0])
+
+print numTraces
+print traceLen
+</pre>
+
+It's also a good idea to plot some traces and make sure they look okay:
+
+<pre>
+# Plot some traces 
+import matplotlib.pyplot as plt
+for i in range(10):
+    plt.plot(traces[i])
+plt.show()
+</pre>
+
+Since we know the AES-256 key, we can decrypt all of this data and store it in a list of decryption results:
+
+<pre>
+# Decrypt ciphertext with the key that we now know
+from Crypto.Cipher import AES
+knownkey = [0x94, 0x28, 0x5D, 0x4D, 0x6D, 0xCF, 0xEC, 0x08, 0xD8, 0xAC, 0xDD, 0xF6, 0xBE, 0x25, 0xA4, 0x99,
+            0xC4, 0xD9, 0xD0, 0x1E, 0xC3, 0x40, 0x7E, 0xD7, 0xD5, 0x28, 0xD4, 0x09, 0xE9, 0xF0, 0x88, 0xA1]
+knownkey = str(bytearray(knownkey))
+dr = []
+aes = AES.new(knownkey, AES.MODE_ECB)
+for i in range(numTraces):
+    ct = str(bytearray(textin[i]))
+    d = aes.decrypt(ct)
+    d = [bytearray(pt)[i] for i in range(16)]
+    dr.append(d)
+print dr
+</pre>
+
+That's a lot of data to print! Now, let's split the traces into two groups by comparing bit 0 of the DR:
+
+<pre>
+groupedTraces = [[] for _ in range(2)]
+for i in range(numTraces):
+    bit0 = dr[i][0] & 0x01
+    groupedTraces[bit0].append(traces[i])
+groupedTraces = np.array(groupedTraces)
+print len(groupedTraces[0])
+</pre>
+
+If you have 1000 traces, you should expect this to print a number around 500 - roughly half of the traces should fit into each group.
+
+== The Other 127 ==
+
 Steps:
 * Making the attack feasible
 ** Capture a bunch (500?)
