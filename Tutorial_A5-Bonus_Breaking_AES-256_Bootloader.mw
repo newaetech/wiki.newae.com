@@ -5,12 +5,110 @@ This tutorial is an add-on to [[Tutorial A5 Breaking AES-256 Bootloader]]. It co
 = Background =
 == AES in CBC Mode ==
 * Repeat of theory from tutorial
+
+== Bootloader Source Code ==
+In this tutorial, we have the luxury of seeing the source code of the bootloader. This is generally not something we would have access to in the real world, so we'll try not to use it to cheat. (Peeking at <code>supersecret.h</code> counts as cheating.)
+
+The important part of the bootloader code includes the decryption, the IV application, and the signature check. This snippet from <code>bootloader.c</code> shows all three:
+
+<pre>
+// Continue with decryption
+trigger_high();                
+aes256_decrypt_ecb(&ctx, tmp32);
+trigger_low();
+             
+// Apply IV (first 16 bytes)
+for (i = 0; i < 16; i++){
+    tmp32[i] ^= iv[i];
+}
+
+//Save IV for next time from original ciphertext                
+for (i = 0; i < 16; i++){
+    iv[i] = tmp32[i+16];
+}
+
+// Tell the user that the CRC check was okay
+putch(COMM_OK);
+putch(COMM_OK);
+
+//Check the signature
+if ((tmp32[0] == SIGNATURE1) &&
+   (tmp32[1] == SIGNATURE2) &&
+   (tmp32[2] == SIGNATURE3) &&
+   (tmp32[3] == SIGNATURE4)){
+   
+   // Delay to emulate a write to flash memory
+   _delay_ms(1);
+}   
+</pre>
+
+This gives us a pretty good idea of how the microcontroller is going to do its job. However, we can go one step further and find the exact assembly code that the target will execute. If you have Atmel Studio and its toolchain on your computer, you can get the assembly file from the command line with
+<pre>
+avr-objdump -m avr -D bootloader.hex > disassembly.txt
+</pre>
+This will convert the hex file into assembly code, making it more human-readable. The important part of this assembly code is:
+<pre>
+ 344:	d3 01       	movw	r26, r6
+ 346:	93 01       	movw	r18, r6
+ 348:	f6 01       	movw	r30, r12
+ 34a:	80 81       	ld	r24, Z
+ 34c:	f9 01       	movw	r30, r18
+ 34e:	91 91       	ld	r25, Z+
+ 350:	9f 01       	movw	r18, r30
+ 352:	89 27       	eor	r24, r25
+ 354:	f6 01       	movw	r30, r12
+ 356:	81 93       	st	Z+, r24
+ 358:	6f 01       	movw	r12, r30
+ 35a:	ee 15       	cp	r30, r14
+ 35c:	ff 05       	cpc	r31, r15
+ 35e:	a1 f7       	brne	.-24     	;  0x348
+ 
+ 360:	fe 01       	movw	r30, r28
+ 362:	b1 96       	adiw	r30, 0x21	; 33
+ 364:	81 91       	ld	r24, Z+
+ 366:	8d 93       	st	X+, r24
+ 368:	e4 15       	cp	r30, r4
+ 36a:	f5 05       	cpc	r31, r5
+ 36c:	d9 f7       	brne	.-10     	;  0x364
+
+ 36e:	84 ea       	ldi	r24, 0xA4	; 164
+ 370:	0e 94 16 02 	call	0x42c	;  0x42c
+ 374:	84 ea       	ldi	r24, 0xA4	; 164
+ 376:	0e 94 16 02 	call	0x42c	;  0x42c
+
+ 37a:	89 89       	ldd	r24, Y+17	; 0x11
+ 37c:	88 23       	and	r24, r24
+ 37e:	09 f0       	breq	.+2      	;  0x382
+ 380:	98 cf       	rjmp	.-208    	;  0x2b2
+
+ 382:	8a 89       	ldd	r24, Y+18	; 0x12
+ 384:	8b 3e       	cpi	r24, 0xEB	; 235
+ 386:	09 f0       	breq	.+2      	;  0x38a
+ 388:	94 cf       	rjmp	.-216    	;  0x2b2
+
+ 38a:	8b 89       	ldd	r24, Y+19	; 0x13
+ 38c:	82 30       	cpi	r24, 0x02	; 2
+ 38e:	09 f0       	breq	.+2      	;  0x392
+ 390:	90 cf       	rjmp	.-224    	;  0x2b2
+
+ 392:	8c 89       	ldd	r24, Y+20	; 0x14
+ 394:	8d 31       	cpi	r24, 0x1D	; 29
+ 396:	09 f0       	breq	.+2      	;  0x39a
+ 398:	8c cf       	rjmp	.-232    	;  0x2b2
+
+ 39a:	83 e3       	ldi	r24, 0x33	; 51
+ 39c:	97 e0       	ldi	r25, 0x07	; 7
+ 39e:	01 97       	sbiw	r24, 0x01	; 1
+ 3a0:	f1 f7       	brne	.-4      	;  0x39e
+ 3a2:	87 cf       	rjmp	.-242    	;  0x2b2
+</pre>
+Let's examine this code in more detail.
+
 == The IV ==
 * Suggest some ideas
 == The Signature ==
 * Timing attack
 * Show firmware
-
 
 = Attacking the IV =
 Steps:
