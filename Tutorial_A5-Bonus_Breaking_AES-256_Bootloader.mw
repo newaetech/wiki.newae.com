@@ -6,10 +6,21 @@ This tutorial is an add-on to [[Tutorial A5 Breaking AES-256 Bootloader]]. It co
 == AES in CBC Mode ==
 * Repeat of theory from tutorial
 
-== Bootloader Source Code ==
-In this tutorial, we have the luxury of seeing the source code of the bootloader. This is generally not something we would have access to in the real world, so we'll try not to use it to cheat. (Peeking at <code>supersecret.h</code> counts as cheating.)
+== The IV ==
+* Suggest some ideas
+== The Signature ==
+* Timing attack
+* Show firmware
 
-The important part of the bootloader code includes the decryption, the IV application, and the signature check. This snippet from <code>bootloader.c</code> shows all three:
+= Exploring the Bootloader =
+In this tutorial, we have the luxury of seeing the source code of the bootloader. This is generally not something we would have access to in the real world, so we'll try not to use it to cheat. (Peeking at <code>supersecret.h</code> counts as cheating.) Instead, we'll use the source to help us identify important parts of the power traces.
+
+== Bootloader Source Code ==
+Inside the bootloader's main loop, it does three tasks that we're interested in:
+* it decrypts the incoming ciphertext;
+* it applies the IV to the decryption's result; and
+* it checks for the signature in the resulting plaintext.
+This snippet from <code>bootloader.c</code> shows all three of these tasks:
 
 <pre>
 // Continue with decryption
@@ -41,7 +52,6 @@ if ((tmp32[0] == SIGNATURE1) &&
    _delay_ms(1);
 }   
 </pre>
-
 This gives us a pretty good idea of how the microcontroller is going to do its job. However, we can go one step further and find the exact assembly code that the target will execute. If you have Atmel Studio and its toolchain on your computer, you can get the assembly file from the command line with
 <pre>
 avr-objdump -m avr -D bootloader.hex > disassembly.txt
@@ -102,13 +112,14 @@ This will convert the hex file into assembly code, making it more human-readable
  3a0:	f1 f7       	brne	.-4      	;  0x39e
  3a2:	87 cf       	rjmp	.-242    	;  0x2b2
 </pre>
-Let's examine this code in more detail.
 
-== The IV ==
-* Suggest some ideas
-== The Signature ==
-* Timing attack
-* Show firmware
+We'll use both of the source files throughout the tutorial.
+
+== Power Traces ==
+
+
+== Matching Power to Code ==
+
 
 = Attacking the IV =
 Steps:
