@@ -1,7 +1,5 @@
 This tutorial is an add-on to [[Tutorial A5 Breaking AES-256 Bootloader]]. It continues working on the same firmware, showing how to obtain the hidden IV and signature in the bootloader. '''It is not possible to do this bonus tutorial without first completing the regular tutorial''', so please finish Tutorial A5 first.
 
-''This tutorial is under construction! Check back in a few days.''
-
 = Exploring the Bootloader =
 In this tutorial, we have the luxury of seeing the source code of the bootloader. This is generally not something we would have access to in the real world, so we'll try not to use it to cheat. (Peeking at <code>supersecret.h</code> counts as cheating.) Instead, we'll use the source to help us identify important parts of the power traces.
 
@@ -498,3 +496,6 @@ The output from this script is:
 1 1 1 0 1 0 1 1 eb
 0 0 1 1 1 1 0 0 3c
 </pre>
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
