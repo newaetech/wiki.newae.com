@@ -2,16 +2,6 @@ This tutorial is an add-on to [[Tutorial A5 Breaking AES-256 Bootloader]]. It co
 
 ''This tutorial is under construction! Check back in a few days.''
 
-= Background =
-== AES in CBC Mode ==
-* Repeat of theory from tutorial
-
-== The IV ==
-* Suggest some ideas
-== The Signature ==
-* Timing attack
-* Show firmware
-
 = Exploring the Bootloader =
 In this tutorial, we have the luxury of seeing the source code of the bootloader. This is generally not something we would have access to in the real world, so we'll try not to use it to cheat. (Peeking at <code>supersecret.h</code> counts as cheating.) Instead, we'll use the source to help us identify important parts of the power traces.
 
