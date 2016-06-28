@@ -114,5 +114,111 @@ There's one quirk to notice in this code. In the C source, the for loop checks w
 * Change hex file to use BRLT
 * Use volatile loop variables
 
+= Appendix: Setup Script =
+The following script is used to set up the ChipWhisperer-Lite with all of the necessary settings:
+<pre>
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2013-2016, NewAE Technology Inc
+# All rights reserved.
+#
+# Authors: Colin O'Flynn, Greg d'Eon
+#
+# Find this and more at newae.com - this file is part of the chipwhisperer
+# project, http://www.assembla.com/spaces/chipwhisperer
+#
+#    This file is part of chipwhisperer.
+#
+#    chipwhisperer is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    chipwhisperer is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with chipwhisperer.  If not, see <http://www.gnu.org/licenses/>.
+#=================================================
+
+import sys
+import chipwhisperer.capture.ui.CWCaptureGUI as cwc
+from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+from chipwhisperer.common.scripts.base import UserScriptBase
+from chipwhisperer.common.utils.parameter import Parameter
+
+# Check for PySide
+try:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
+except ImportError:
+    print "ERROR: PySide is required for this program"
+    sys.exit()
+
+class UserScript(UserScriptBase):
+    def __init__(self, api):
+        super(UserScript, self).__init__(api)
+
+    def run(self):
+        #User commands here
+        print "***** Starting User Script *****"
+    
+        # Set up board and target
+        self.api.setParameter(['Generic Settings', 'Scope Module', 'ChipWhisperer/OpenADC'])
+        self.api.setParameter(['Generic Settings', 'Trace Format', 'ChipWhisperer/Native'])
+        self.api.setParameter(['Generic Settings', 'Target Module', 'Simple Serial'])
+        self.api.connect()
+
+        # Fill in our other settings
+        lstexample = [['OpenADC', 'Gain Setting', 'Mode', 'high'],
+                      ['OpenADC', 'Gain Setting', 'Setting', 30],
+                      ['OpenADC', 'Trigger Setup', 'Mode', 'rising edge'],
+                      ['OpenADC', 'Trigger Setup', 'Total Samples', 500],
+                      ['OpenADC', 'Trigger Setup', 'Offset', 0],
+                      ['OpenADC', 'Clock Setup', 'CLKGEN Settings', 'Divide', 26],
+                      ['OpenADC', 'Clock Setup', 'CLKGEN Settings', 'Multiply', 2],
+                      ['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'CLKGEN x4 via DCM'],
+                      ['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
+                      ['CW Extra Settings', 'Target HS IO-Out', 'CLKGEN'],
+                      ['CW Extra Settings', 'Target IOn Pins', 'Target IO2', 'Serial TXD'],
+                      ['CW Extra Settings', 'Target IOn Pins', 'Target IO1', 'Serial RXD'],
+                      ['Glitch Module', 'Clock Source', 'CLKGEN'],
+                      ['Glitch Module', 'Glitch Width (as % of period)', 3.0],
+                      ['Glitch Module', 'Glitch Offset (as % of period)', -5.0],
+                      ['Glitch Module', 'Glitch Trigger', 'Ext Trigger:Single-Shot'],
+                      ['Glitch Module', 'Ext Trigger Offset', 68],
+                      
+                      ['Simple Serial', 'Go Command', u'p516261276720736265747267206762206f686c207a76797821\\n'],
+                      ['Simple Serial', 'Output Format', u''],
+                      ['Simple Serial', 'Load Key Command', u''],
+                      ]
+
+        # NOTE: For IV: offset = 70000
+        #Download all hardware setup parameters
+        for cmd in lstexample:
+            self.api.setParameter(cmd)
+
+        # Try a couple of captures
+        self.api.capture1()
+
+        print "***** Ending User Script *****"
+
+
+if __name__ == '__main__':
+    # Run the program
+    app = cwc.makeApplication()
+    Parameter.usePyQtGraph = True 
+    api = CWCoreAPI()             
+    gui = cwc.CWCaptureGUI(api)                
+    gui.show()                                 
+    
+    # Run our program and let the GUI take over
+    api.runScriptClass(UserScript)             
+    sys.exit(app.exec_())
+</pre>
+
 {{Template:Tutorials}}
 [[Category:Tutorials]]
