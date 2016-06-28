@@ -94,7 +94,7 @@ ChipWhisperer Target boards:
 
 The following tutorials use the ChipWhisperer software and/or hardware. They are designed to take you through a complete attack. You may also want to check the page on [[Embedded Attacks]] for more snippets of simple attacks and other things you should verify when making a secure system.
 
-Not all tutorials are possible with all hardware. Each tutorial lists supported hardware (both capture & target devices).
+Not all tutorials are possible with all hardware.
 
 {{Template:Tutorials}}
 
