@@ -1,0 +1,18 @@
+This tutorial discusses a specific type of glitch attack. It shows how a simple printing loop can be abused, causing a target to print some otherwise private information. This attack will be used to recover a plaintext without any knowledge of the encryption scheme being used.
+
+= Background =
+== Real Firmware ==
+== Bootloader Setup ==
+
+= The Attack Plan =
+== The Sensitive Code == 
+== Disassembly ==
+
+= Attack Script & Results =
+
+= Ideas =
+* Change hex file to use BRLT
+* Use volatile loop variables
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
