@@ -39,6 +39,23 @@ The bootloader uses triple-ROT-13 encryption to encrypt/decrypt the messages. To
 p516261276720736265747267206762206f686c207a76797821\n
 </pre>
 
+This folder also contains a Makefile to create a hex file for use with the ChipWhisperer hardware. The build process is the same as the previous tutorials: run <code>make</code> from the command line and make sure that everything built properly. If all goes well, the Makefile should print something like 
+<pre>
+----------------
+Device: atxmega128d3
+
+Program:    1706 bytes (1.2% Full)
+(.text + .data + .bootloader)
+
+Data:        248 bytes (3.0% Full)
+(.data + .bss + .noinit)
+
+
+Built for platform CW-Lite XMEGA
+
+-------- end --------
+</pre>
+
 = The Attack Plan =
 == The Sensitive Code == 
 == Disassembly ==
