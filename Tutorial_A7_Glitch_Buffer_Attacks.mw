@@ -109,6 +109,22 @@ This is our printing loop in assembly. It has the following steps in it:
 There's one quirk to notice in this code. In the C source, the for loop checks whether <code>i < ascii_idx</code>. However, in the assembly code, the check is effectively whether <code>i == ascii_idx</code>! This is even easier to glitch - as long as we can break past the <code>brne</code> instruction ''once'', we'll get to the data buffer.
 
 = Attack Script & Results =
+To speed up the tutorial, the script in [[#Appendix: Setup Script]] will open the ChipWhisperer Capture software and fill in all of the appropriate settings. Copy this code into a Python script and run it. Then, open the serial terminal and connect to the target, using the ASCII with Hex display mode. If everything is set up correctly, the Capture 1 button should cause the text <code>r0</code> to appear in the terminal. This is the bootloader's response to a block of ciphertext.
+
+Once this is set up, connect the glitch module's output to the target's clock. Do this by changing the <code>Target HS IO-Out</code> to <code>Glitch Module</code>. Try to Capture 1 again and watch the serial terminal. If you're lucky, a large amount of text will appear in this window:
+<pre>
+r0
+261276720736265747267206762206f686c207a767978210000000000000000000000000000000000000000000000
+00000000000000Don't forget to buy milk!000000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+...
+<many more lines omitted> 
+</pre>
+In the middle of this output, the plaintext is clearly visible! The data buffer has successfully been printed to the serial port, allowing us to see the decrypted text with no knowledge of the algorithm.
+
+If you can't get this to work, remember that glitching is a very sensitive operation - one glitch timing will probably not work for every board on every day. Try using the glitch explorer to attack different ''Glitch Width''s, ''Glitch Offset''s, and ''Ext Trigger Offset''s. The built-in Glitch Explorer will be very useful here - take a read through [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)]] if you need a refresher.
 
 = Ideas =
 * Change hex file to use BRLT
