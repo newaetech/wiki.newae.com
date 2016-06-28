@@ -57,8 +57,43 @@ Built for platform CW-Lite XMEGA
 </pre>
 
 = The Attack Plan =
+Since we have access to the source code, let's take our time and understand how our attack is going to work before we dive in.
+
 == The Sensitive Code == 
+Inside <code>bootloader.c</code>, there are two buffers that are used to store most of the important data. The source code shows:
+<pre>
+#define DATA_BUFLEN 40
+#define ASCII_BUFLEN (2 * DATA_BUFLEN)
+
+uint8_t ascii_buffer[ASCII_BUFLEN];
+uint8_t data_buffer[DATA_BUFLEN];
+</pre>
+This tells us that there will be two arrays stored somewhere in the target's memory. The AVR-GCC compiler doesn't usually try too hard to move these around, so we can expect to find them back-to-back in memory; that is, if we can read past the end of the ASCII buffer, we'll probably find the data buffer.
+
+Next, the code used to print a response to the serial port is
+<pre>
+if(state == RESPOND)
+{
+	// Send the ascii buffer back 
+	trigger_high();
+	
+	int i;
+	for(i = 0; i < ascii_idx; i++)
+	{
+		putch(ascii_buffer[i]);
+	}
+	trigger_low();
+	state = IDLE;
+}
+</pre>
+This looks very similar to the example code given in the previous section, so it should be vulnerable to a glitching attack. The goal is to cause the loop to continue past its regular limit: <code>data_buffer[0]</code> is the same as <code>ascii_buffer[80]</code>, so a successful glitch should dump the data buffer for us.
+
 == Disassembly ==
+As a final step, let's check the assembly code to see exactly what we're trying to glitch through. Run the command
+<pre>
+avr-objdump -m avr -D bootloader.hex > disassembly.txt
+</pre>
+and open <code>disassembly.txt</code>.
 
 = Attack Script & Results =
 
