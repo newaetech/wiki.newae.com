@@ -93,7 +93,20 @@ As a final step, let's check the assembly code to see exactly what we're trying 
 <pre>
 avr-objdump -m avr -D bootloader.hex > disassembly.txt
 </pre>
-and open <code>disassembly.txt</code>.
+and open <code>disassembly.txt</code>. If you know what to look for, you should find a snippet that looks something like:
+<pre>
+ 376:	89 91       	ld	r24, Y+
+ 378:	0e 94 06 02 	call	0x40c	;  0x40c
+ 37c:	f0 e2       	ldi	r31, 0x20	; 32
+ 37e:	cf 37       	cpi	r28, 0x7F	; 127
+ 380:	df 07       	cpc	r29, r31
+ 382:	c9 f7       	brne	.-14     	;  0x376
+</pre>
+This is our printing loop in assembly. It has the following steps in it:
+* Look at the address <code>Y</code> and put the contents into <code>r24</code>. Increase the address stored in <code>Y</code>. (This is the <code>i++</code> in the loop.)
+* Call the function in location <code>0x40c</code>. Presumably, this is the location of the <code>putch()</code> function.
+* Compare <code>r28</code> and <code>r29</code> to <code>0x7F</code> and <code>0x20</code>. Unless they're equal, go back to the top of the loop.
+There's one quirk to notice in this code. In the C source, the for loop checks whether <code>i < ascii_idx</code>. However, in the assembly code, the check is effectively whether <code>i == ascii_idx</code>! This is even easier to glitch - as long as we can break past the <code>brne</code> instruction ''once'', we'll get to the data buffer.
 
 = Attack Script & Results =
 
