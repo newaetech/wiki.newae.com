@@ -127,8 +127,45 @@ In the middle of this output, the plaintext is clearly visible! The data buffer 
 If you can't get this to work, remember that glitching is a very sensitive operation - one glitch timing will probably not work for every board on every day. Try using the glitch explorer to attack different ''Glitch Width''s, ''Glitch Offset''s, and ''Ext Trigger Offset''s. The built-in Glitch Explorer will be very useful here - take a read through [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)]] if you need a refresher.
 
 = Ideas =
-* Change hex file to use BRLT
-* Use volatile loop variables
+There's a lot more that can be done with this type of attack...
+
+== Safer Assembly Code ==
+You may have been surprised to see that the assembly code uses a <code>brne</code> instruction to check if the loop is finished - after all, we used a less-than comparison in our C source code! Try changing this line to use a more prohibitive loop. Here's how you might do this:
+# Find a copy of the [http://www.atmel.com/webdoc/avrassembler/index.html AVR assembler documentation] and find a better instruction to use. You should be able to drop in the <code>brlt</code> instruction without much hassle. Figure out the new op-code for this instruction.
+# Open the <code>bootloader.hex</code> file and find the instruction you want to change. Swap in your new op-code. Note that each line of the hex file has a checksum at the end, so you'll need to [http://www.planetimming.com/checksum8.html calculate an updated checksum].
+# Upload your new bootloader onto the target and retry the attack. Does it still work? You might be able to see one extra byte from the ASCII buffer, but it will be very difficult to get to the data buffer. Can you change the glitch settings to complete the attack?
+
+== Volatile Variables ==
+The reason why the original assembly code used the <code>brne</code> instruction is because GCC is an ''optimizing compiler''. The compiler doesn't directly translate the C source code into assembly instructions. Instead, it tries to determine if any of the code can be modified to make it faster or more compact. For instance, consider the loop
+<pre>
+for(int i = 0; i < 10; i++)
+{
+    if(i < 20)
+        printf("%s", "Less");
+    else
+        printf("%s", "Greater");
+}
+</pre>
+If you take a careful look at this code, you'll notice that the following loop will produce the same output:
+<pre>
+for(int i = 0; i < 10; i++)
+{
+    printf("%s", "Less");
+}
+</pre>
+However, this second loop is smaller (less code) and faster (no conditional jumps). This is the kind of optimization a compiler can make.
+
+There are several ways we can stop the compiler from making some of these assumptions. One of these methods uses volatile variables, which look like
+<pre>
+volatile int i;
+</pre>
+A volatile variable is one that could change at any time. There could be many reasons why the value might change on us:
+* Another thread might have access to the same memory location
+* Another part of the computer might be able to change the variable's value (example: direct memory access)
+* The variable might not actually be stored anywhere - it could be a read-only register in an embedded system
+In any case, the <code>volatile</code> keyword tells the compiler to make no guarantees about this variable. 
+
+Try changing the bootloader's source code to use a volatile variable inside the loop. What happens to the disassembly? Is the loop body longer? Connect to the target board and capture a power trace. Does it look different? You'll have to find a new ''Ext Trigger Offset'' for the glitch module. Can you still perform the attack? Is it feasible to use this fix to avoid glitching attacks?
 
 = Appendix: Setup Script =
 The following script is used to set up the ChipWhisperer-Lite with all of the necessary settings:
