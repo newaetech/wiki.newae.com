@@ -1,8 +1,43 @@
 This tutorial discusses a specific type of glitch attack. It shows how a simple printing loop can be abused, causing a target to print some otherwise private information. This attack will be used to recover a plaintext without any knowledge of the encryption scheme being used.
 
 = Background =
+This section introduces the attack concept by showing some real world examples of vulnerable firmware. Then, it describes the victim firmware that will be used in this tutorial. 
+
 == Real Firmware ==
+Typically, one of the slowest parts of an embedded system is its communication lines. It's pretty common to see a processor running in the MHz range with a serial connection of 96k baud. To make these two different speeds work together, embedded firmware usually fills up a buffer with data and lets a serial driver print on its own time. This setup means we can expect to see code like
+<pre>
+for(int i = 0; i < number_of_bytes_to_print; i++)
+{
+    print_one_byte_to_serial(buffer[i]);
+}
+</pre>
+
+This is a pretty vulnerable piece of C. Imagine that we could sneak into the source code and change it to
+<pre>
+for(int i = 0; i < really_big_number; i++)
+{
+    print_one_byte_to_serial(buffer[i]);
+}
+</pre>
+C compilers don't care that <code>buffer[]</code> has a limited size - this loop will happily print every byte it comes across, which could include other variables, registers, and even source code. Although we probably don't have a good way of changing the source code on the fly, we do have glitches: a well-timed clock or power glitch could let us skip the <code>i < number_of_bytes_to_print</code> check, which would have the same result.
+
+How could this be applied? Imagine that we have an encrypted firmware image that we're going to transmit to a bootloader. A typical communication process might look like:
+# We send the encrypted image ciphertexts over a serial connection
+# The bootloader decrypts the ciphertexts and stores the result somewhere in memory
+# The bootloader sends back a response over the serial port
+We have a pretty straightforward attack for this type of bootloader. During the last step, we'll apply a glitch at precisely the right time, causing the bootloader to print all kinds of things to the serial connection. With some luck, we'll be able to find the decrypted plaintext somewhere in this memory dump.
+
 == Bootloader Setup ==
+For this tutorial, a very simple bootloader using the SimpleSerial protocol has been set up. The source for this bootloader can be found in <code>chipwhisperer/hardware/victims/firmware/bootloader-glitch</code>. The following commands are used:
+* <code>pABCD\n</code>: Send an encrypted ciphertext to the bootloader. For example, this message is made up of the two bytes <code>AB</code> and <code>CD</code>.
+* <code>r0\n</code>: The reply from the bootloader. Acknowledges that a message was received. No other responses are used.
+* <code>x</code>: Clear the bootloader's received buffer. 
+* <code>k</code>: See <code>x</code>.
+
+The bootloader uses triple-ROT-13 encryption to encrypt/decrypt the messages. To help you send messages to the target, the script <code>private/encrypt.py</code> prints the SimpleSerial command for a given fixed string. For example, the ciphertext for the string <code>Don't forget to buy milk!</code> is 
+<pre>
+p516261276720736265747267206762206f686c207a76797821\n
+</pre>
 
 = The Attack Plan =
 == The Sensitive Code == 
