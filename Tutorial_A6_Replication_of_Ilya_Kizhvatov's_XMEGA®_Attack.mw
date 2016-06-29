@@ -161,7 +161,7 @@ return self.attack</pre></li>
 <p>[[File:fastdraw.png|image]]</p>
 <p>You can also use the 'GUI Override' on the byte highlighting to change the highlighted byte.</p></li></ol>
 
-== Appendix A: Full Attack Script ==
+== Appendix B: Full Attack Script for older (< 3.1.x) ==
 
 Here is the full attack script for current releases:
 
@@ -222,6 +222,7 @@ class userScript(AutoScriptBase):
 
     def doAnalysis(self):
         self.attack.doAttack()</pre>
+
 == Appendix B: Full Attack Script for 0.09 or Older Releases ==
 
 Here is the full attack script:
