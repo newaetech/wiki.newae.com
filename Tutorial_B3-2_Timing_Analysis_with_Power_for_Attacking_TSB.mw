@@ -19,25 +19,23 @@ Finally program the microcontroller with the file used here:
 
 These steps differ from previous steps, as we are not going to be using a built-in target. However you can refer to tutorialcomms for general information on using the ChipWhisperer-Capture Interface.
 
-<ol style="list-style-type: decimal;">
-<li>Start ChipWhisperer-Capture</li>
-<li>As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option</li>
-<li>As the ''Target Module'', select the ''Simple Serial'' option</li>
-<li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer'' option</li>
-<li><p>Run the scope connect (click the button labeled ''Scope: DIS''). Only the scope should switch to ''CON'' and be green circles. ''Do not press the master button like last time.'':</p>
-<p>[[File:connectscope_1.png|image]]</p>
-<p>When you are done the software should look as follows:</p>
-<p>[[File:connectscope_2.png|image]]</p>
-<p>We do not connect the 'target' as that would cause data to be sent to it, whereas we just want to listen on the power line while we manually send data.</p></li>
-<li><p>From the ''Tools'' menu select ''Open Terminal'', and press ''Connect'' on the terminal:</p>
-<p>[[File:termconn.png|image]]</p></li>
-<li><p>Switch back to the ''Target Settings'' tab, without closing the terminal window. Set the baud rate for both TX &amp; RX to <code>9600</code> baud. Once you start using the terminal these values will switch to the actual baud rates in use (the hardware can only generate certain baud rates). You cannot use higher bauds for this tutorial as the combined error from the AVR code &amp; ChipWhisperer serial port causes communications failures.</p>
-<p>[[File:termbaud.png|image]]</p></li>
-<li>In the ''ChipWhisperer-Serial Terminal'', change the ''TX on Enter'' to ''None'', as we don't want to send any character to terminate a string.</li>
-<li><p>In the ''ChipWhisperer-Serial Terminal'', check the ''Show non-ASCII as hex'' if not clicked.</p>
-<blockquote><p>[[File:term_settingssimple.png|image]]</p></blockquote></li>
-<li>Finally send the command <code>@@@</code>, which is the login sequence for the TinySafeBoot bootloader. Simply type this in the input line, and press 'enter' to send. You will see the <code>@@@</code> echoed on the received data in a blue font.</li>
-<li><p>The objective is to get the login response. You may have to send <code>@@@</code> a few times for this to be successful, the following figure shows an example where the the login worked after sending a second round of <code>@@@</code>. You might get an invalid response your first time for example. The response should start with <code>TSB</code>:</p>
+#Start ChipWhisperer-Capture
+#As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option
+#As the ''Target Module'', select the ''Simple Serial'' option
+#Switch to the ''Scope Settings'' tab, and as the ''connection'', select the ''ChipWhisperer Rev2'' option (assuming you are using the Capture-Rev2)
+#Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer'' option (assuming you are using the Capture-Rev2)
+#Press the ''Master Connect'' button again (or scope+target separately). You should end up with BOTH the scope and target connected:
+#:[[File:cwcr2_status.png|400px]]
+#:We will later manually adjust the data sent to the target.
+#From the ''Tools'' menu select ''Open Terminal'', and press ''Connect'' on the terminal:
+#:[[File:termconn.png|image]]</p>
+#<p>Switch back to the ''Target Settings'' tab, without closing the terminal window. Set the baud rate for both TX &amp; RX to <code>9600</code> baud. Once you start using the terminal these values will switch to the actual baud rates in use (the hardware can only generate certain baud rates). You cannot use higher bauds for this tutorial as the combined error from the AVR code &amp; ChipWhisperer serial port causes communications failures.</p>
+<p>[[File:termbaud.png|image]]</p>
+#In the ''ChipWhisperer-Serial Terminal'', change the ''TX on Enter'' to ''None'', as we don't want to send any character to terminate a string.
+#<p>In the ''ChipWhisperer-Serial Terminal'', check the ''Show non-ASCII as hex'' if not clicked.</p>
+<blockquote><p>[[File:term_settingssimple.png|image]]</p></blockquote>
+#Finally send the command <code>@@@</code>, which is the login sequence for the TinySafeBoot bootloader. Simply type this in the input line, and press 'enter' to send. You will see the <code>@@@</code> echoed on the received data in a blue font.
+#<p>The objective is to get the login response. You may have to send <code>@@@</code> a few times for this to be successful, the following figure shows an example where the the login worked after sending a second round of <code>@@@</code>. You might get an invalid response your first time for example. The response should start with <code>TSB</code>:</p>
 <p>[[File:term_tsbresponse.png|image]]</p>
 <p>Note the red bytes are hexadecimal responses, which were converted since they were outside of valid range for ASCII data. The response from TinySafeBoot has the following meaning, with example values given for our implementation, note certain values may change if you use different versions of TSB:</p>
 {|
