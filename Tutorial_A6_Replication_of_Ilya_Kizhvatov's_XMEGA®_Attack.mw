@@ -356,7 +356,7 @@ class userScript(AutoScriptBase):
 
 == Appendix B-2: Full Attack Script for 0.09 or Older Releases ==
 
-Here is the full attack script:
+Here is the full attack script for VERY old releases:
 
 <pre># Based on Ilya Kizhvatov's work, published as &quot;Side Channel Analysis of AVR XMEGA Crypto Engine&quot;
 from chipwhisperer.common.autoscript import AutoScriptBase
