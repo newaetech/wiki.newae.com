@@ -294,7 +294,7 @@ if __name__ == '__main__':
 
 == Appendix B-1: Full Attack Script for older (< 3.1.x) ==
 
-Here is the full attack script for older releases:
+Here is the full attack script for older releases - '''DO NOT attempt to use with a current release (3.1.8 or later)'''.
 
 <pre># Based on Ilya Kizhvatov's work, published as &quot;Side Channel Analysis of AVR XMEGA Crypto Engine&quot;
 from chipwhisperer.common.autoscript import AutoScriptBase
