@@ -258,136 +258,126 @@ Finally, we'll reuse the pin GPIO3 as a reset pin. To perform this:
 
 At this point we want to script the setup of the ChipWhisperer-Capture tool, along with pulling in our special utility which is capable of resetting the AVR microcontroller.
 
-<ol style="list-style-type: decimal;">
-<li><p>Create a Python file with a structure such as the following:</p>
-<pre>from subprocess import call
-import chipwhisperer.capture.ChipWhispererCapture as cwc
-from chipwhisperer.capture.scopes.ChipWhispererExtra import CWPLLDriver
+<sytaxhighlight lang="python">
+from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI  # Import the ChipWhisperer API
+from chipwhisperer.common.scripts.base import UserScriptBase
+import time
 
-try:
-    from PySide.QtCore import *
-    from PySide.QtGui import *
-except ImportError:
-    print "ERROR: PySide is required for this program"
-    sys.exit()
+class UserScript(UserScriptBase):
+    def __init__(self, api):
+        super(UserScript, self).__init__(api)
 
-def pe():
-    QCoreApplication.processEvents()
+    def resetAVR():
+        self.api.setParameter(['CW Extra Settings', 'Target IOn GPIO Mode', 'Target IO3: GPIO', 'Low'])
+        time.sleep(0.05)
+        self.api.setParameter(['CW Extra Settings', 'Target IOn GPIO Mode', 'Target IO3: GPIO', 'High'])
 
-def resetAVR():
-    call(["C:\\Program Files (x86)\\Atmel\\AVR Tools\\STK500\\Stk500.exe",
-          "-dATMega328p", "-s", "-cUSB"])
+    def run(self):
+        #User commands here
+        self.api.setParameter(['Generic Settings', 'Scope Module', 'ChipWhisperer/OpenADC'])
+        self.api.setParameter(['Generic Settings', 'Target Module', 'Simple Serial'])
+        self.api.setParameter(['Simple Serial', 'Connection', 'ChipWhisperer'])
+        self.api.setParameter(['ChipWhisperer/OpenADC', 'Connection', 'ChipWhisperer Rev2'])
+                
+        self.api.connect()
+        
+
+        #Example of using a list to set parameters. Slightly easier to copy/paste in this format
+        self.api.setParameter(['Simple Serial', 'ChipWhisperer', 'TX Baud', 9600])
+        self.api.setParameter(['Simple Serial', 'ChipWhisperer', 'RX Baud', 9600])
+        self.api.setParameter(['CW Extra Settings', 'Target IOn Pins', 'Target IO3', 'GPIO'])
+        self.api.setParameter(['CW Extra Settings', 'Target IOn GPIO Mode', 'Target IO3: GPIO', 'High'])
+        
+        #Assign to API for hacking together tests
+        self.api.resetAVR = self.resetAVR
+        
+        #Some useful commands to play with from GUI
+        #self.resetAVR()
+        #ser = self.api.getTarget().ser
+        #ser.write("@@@")
+        #ser.write("ce")
+        #print ser.read(255)
+       
+
+if __name__ == '__main__':
+    import chipwhisperer.capture.ui.CWCaptureGUI as cwc         # Import the ChipWhispererCapture GUI
+    from chipwhisperer.common.utils.parameter import Parameter  # Comment this line if you don't want to use the GUI
+    Parameter.usePyQtGraph = True                               # Comment this line if you don't want to use the GUI
+    api = CWCoreAPI()                                           # Instantiate the API
+    app = cwc.makeApplication("Capture")                        # Change the name if you want a different settings scope
+    gui = cwc.CWCaptureGUI(api)                                 # Comment this line if you don't want to use the GUI
+    gui.show()                                                  # Comment this line if you don't want to use the GUI
+    api.runScriptClass(UserScript)                              # Run the User Script (executes "run()" by default)
+    app.exec_()                                                 # Comment this line if you don't want to use the GUI
 
 
-#Make the application
-app = cwc.makeApplication()
+</syntaxhighlight>
 
-#If you DO NOT want to overwrite/use settings from the GUI version including
-#the recent files list, uncomment the following:
-#app.setApplicationName("Capture V2 Scripted")
-
-#Get main module
-cap = cwc.ChipWhispererCapture()
-
-#Show window - even if not used
-cap.show()
-
-#NB: Must call processEvents since we aren't using proper event loop
-pe()
-
-cap.setParameter(['Generic Settings', 'Scope Module', 'ChipWhisperer/OpenADC'])
-cap.setParameter(['Generic Settings', 'Target Module', 'Simple Serial'])
-cap.setParameter(['Target Connection', 'connection', 'ChipWhisperer'])
-
-#Load FW (must be configured in GUI first)
-cap.FWLoaderGo()
-
-#NOTE: You MUST add this call to pe() to process events. This is done automatically
-#for setParameter() calls, but everything else REQUIRES this, since if you don't
-#signals will NOT be processed correctly
-pe()
-
-#Connect to scope
-cap.doConDisScope(True)
-pe()
-
-#Connect to serial port
-ser = cap.target.driver.ser
-ser.con()
-
-#Set baud rate
-cap.setParameter(['Serial Port Settings', 'TX Baud', 9600])
-cap.setParameter(['Serial Port Settings', 'RX Baud', 9600])
-
-#Attach special method so we can call from GUI if wanted
-cap.resetAVR = resetAVR
-
-#Some useful commands to play with from GUI
-#self.resetAVR()
-#ser = self.target.driver.ser
-#ser.write("@@@")
-#ser.write("ce")
-#print ser.read(255)
-
-#Run Application
-app.exec_()</pre>
 <p>This is a basic 'script', which is really just a Python program using the ChipWhisperer library. Save the script to a file &amp; run this, which should open the ChipWhisperer-Capture window as before. Finally, let's once again configure the OpenADC for analog capture. Before doing this, switch to the '''Script Commands''' tab, and note there is already some script information being printed. We will make changes to the system and then observe additional data that gets printed here:</p>
 <p>[[File:scriptcommands1.png|image]]</p></li>
 <li><p>Follow step 13 from section testingserialbasic, which contains a number of settings for the OpenADC portion. After performing the commands, you will note that additional steps have been printed to the '''Script Commands''' window. For example your output might look something like this:</p>
-<pre>['OpenADC', 'Gain Setting', 'Setting', 45]
-['OpenADC', 'Trigger Setup', 'Mode', 'falling edge']
-['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x1 via DCM']
-['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Front Panel A', False]
-['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Target IO1 (Serial TXD)', True]
-['CW Extra', 'CW Extra Settings', 'Clock Source', 'Target IO-IN']
-['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None]</pre>
+<pre>        ['OpenADC', 'Gain Setting', 'Setting', 45],
+        ['OpenADC', 'Trigger Setup', 'Mode', 'falling edge'],
+        ['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x1 via DCM'],
+        ['CW Extra Settings', 'Trigger Pins', 'Front Panel A', False],
+        ['CW Extra Settings', 'Trigger Pins', 'Target IO1 (Serial TXD)', True],
+        ['CW Extra Settings', 'Clock Source', 'Target IO-IN'],
+        ['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
+        ['Simple Serial', 'Output Format', u''],
+        ['Simple Serial', 'Go Command', u''],
+        ['Simple Serial', 'Load Key Command', u''],]</pre>
 <p>Note the format __changes slightly between releases__, and using the wrong format will cause errors. Thus you should copy the output from your specific application and note the exact list used here.</p></li>
 <li><p>Insert these commands into our master script such we don't need to perform any manual configuration. Close the ChipWhisperer-Capture window, and find the following line in your script:</p>
 <pre>#Connect to scope
-cap.doConDisScope(True)
-pe()</pre></li>
+self.api.connect()</pre></li>
 <li><p>Copy and paste the list of commands into the script just below that:</p>
 <pre>#Connect to scope
-cap.doConDisScope(True)
-pe()
+self.api.connect()
 
-['OpenADC', 'Gain Setting', 'Setting', 45]
-['OpenADC', 'Trigger Setup', 'Mode', 'falling edge']
-['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x1 via DCM']
-['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Front Panel A', False]
-['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Target IO1 (Serial TXD)', True]
-['CW Extra', 'CW Extra Settings', 'Clock Source', 'Target IO-IN']
-['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None]</pre></li>
+        ['OpenADC', 'Gain Setting', 'Setting', 45],
+        ['OpenADC', 'Trigger Setup', 'Mode', 'falling edge'],
+        ['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x1 via DCM'],
+        ['CW Extra Settings', 'Trigger Pins', 'Front Panel A', False],
+        ['CW Extra Settings', 'Trigger Pins', 'Target IO1 (Serial TXD)', True],
+        ['CW Extra Settings', 'Clock Source', 'Target IO-IN'],
+        ['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
+        ['Simple Serial', 'Output Format', u''],
+        ['Simple Serial', 'Go Command', u''],
+        ['Simple Serial', 'Load Key Command', u''],</pre></li>
 <li><p>Convert the list into a Python list variable with a name, which is done by inserting a <code>cmds = [</code> on the line above, a <code>,</code> after each line, and a <code>]</code> after the final line:</p>
 <pre>#Connect to scope
-cap.doConDisScope(True)
-pe()
+self.api.connect()
 
 cmds = [
-['OpenADC', 'Gain Setting', 'Setting', 45],
-['OpenADC', 'Trigger Setup', 'Mode', 'falling edge'],
-['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x1 via DCM'],
-['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Front Panel A', False],
-['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Target IO1 (Serial TXD)', True],
-['CW Extra', 'CW Extra Settings', 'Clock Source', 'Target IO-IN'],
-['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
+        ['OpenADC', 'Gain Setting', 'Setting', 45],
+        ['OpenADC', 'Trigger Setup', 'Mode', 'falling edge'],
+        ['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x1 via DCM'],
+        ['CW Extra Settings', 'Trigger Pins', 'Front Panel A', False],
+        ['CW Extra Settings', 'Trigger Pins', 'Target IO1 (Serial TXD)', True],
+        ['CW Extra Settings', 'Clock Source', 'Target IO-IN'],
+        ['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
+        ['Simple Serial', 'Output Format', u''],
+        ['Simple Serial', 'Go Command', u''],
+        ['Simple Serial', 'Load Key Command', u''],
 ]</pre></li>
 <li><p>Add a loop to run each command on the system:</p>
 <pre>#Connect to scope
-cap.doConDisScope(True)
-pe()
+self.api.connect()
 
 cmds = [
-['OpenADC', 'Gain Setting', 'Setting', 45],
-['OpenADC', 'Trigger Setup', 'Mode', 'falling edge'],
-['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x1 via DCM'],
-['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Front Panel A', False],
-['CW Extra', 'CW Extra Settings', 'Trigger Pins', 'Target IO1 (Serial TXD)', True],
-['CW Extra', 'CW Extra Settings', 'Clock Source', 'Target IO-IN'],
-['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
+        ['OpenADC', 'Gain Setting', 'Setting', 45],
+        ['OpenADC', 'Trigger Setup', 'Mode', 'falling edge'],
+        ['OpenADC', 'Clock Setup', 'ADC Clock', 'Source', 'EXTCLK x1 via DCM'],
+        ['CW Extra Settings', 'Trigger Pins', 'Front Panel A', False],
+        ['CW Extra Settings', 'Trigger Pins', 'Target IO1 (Serial TXD)', True],
+        ['CW Extra Settings', 'Clock Source', 'Target IO-IN'],
+        ['OpenADC', 'Clock Setup', 'ADC Clock', 'Reset ADC DCM', None],
+        ['Simple Serial', 'Output Format', u''],
+        ['Simple Serial', 'Go Command', u''],
+        ['Simple Serial', 'Load Key Command', u''],
 ]
 
-for cmd in cmds: cap.setParameter(cmd)</pre></li>
+for cmd in cmds: self.api.setParameter(cmd)</pre></li>
 <li>Run your script again. You should see the system connect to the target, and also configure the OpenADC settings. You can confirm this by hitting the '''Capture 1''' button. You won't yet get very useful information, but it should give you some analog data after the timeout period.</li>
 <li><p>Switch to the Python console in the running ChipWhisperer-Capture application. First create a shortcut for the serial port:</p>
 <pre>>>> ser = self.target.driver.ser</pre>
