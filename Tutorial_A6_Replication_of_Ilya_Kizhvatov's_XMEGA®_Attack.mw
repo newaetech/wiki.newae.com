@@ -247,7 +247,7 @@ if __name__ == '__main__':
     app.exec_()                              # Comment if you don't need the GUI
 </pre>
 
-== Appendix B: Full Attack Script for older (< 3.1.x) ==
+== Appendix B-1: Full Attack Script for older (< 3.1.x) ==
 
 Here is the full attack script for older releases:
 
