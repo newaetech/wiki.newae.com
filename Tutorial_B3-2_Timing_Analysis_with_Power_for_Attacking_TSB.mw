@@ -150,7 +150,9 @@ Finally, we want to monitor power when sending this sequence to the device. We'l
 |}
 
 #Before attacking the real system, we'll need to confirm these settings will work. To do so we'll monitor the power consumption whilst operating the bootloader under normal conditions.
-#:With our system running, push the 'Capture 1' button. Notice it will go grey indicating the system is waiting for the trigger to occur:
+#Switch to the ''Target Tab'', and '''ERASE''' the ''Load Key Command'', ''Go Command', and ''Output Format'' labels. This will mean the system will not send unexpected data:
+#: [[File:simpleserial_erase.png|400px]]
+#With our system running, push the 'Capture 1' button. Notice it will go grey indicating the system is waiting for the trigger to occur:
 #:[[File:captrig_wait.png|image]]
 #:The trigger in this case is when the 'TXD' line goes low, which means when we send data to the bootloader. At this time we'll monitor the power when sending the sequence of <code>@@@</code> used before. This is described in steps 15-17.
 #Prepare the serial window by typing <code>@@@</code> as before, but do not hit enter yet. We'll need to hit enter only after we arm the system.
