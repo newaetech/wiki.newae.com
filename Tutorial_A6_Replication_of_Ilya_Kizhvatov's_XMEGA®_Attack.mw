@@ -24,14 +24,13 @@ The Multi-Target board should be plugged into the ChipWhisperer Capture via the 
 
 === Using Capture Rev 2 ===
 
-<blockquote># 20-Pin Header connects Multi-Target to Capture Hardware
+# 20-Pin Header connects Multi-Target to Capture Hardware
 # VOUT Connects to SMA Cable
 # SMA Cable connects to 'LNA' on CHA input
 # USB-Mini connects to side (NB: Confirm jumper settings in next section first)
-</blockquote>
-Jumpers on the Multi-Target Victim board are as follows:
-
-<blockquote>[[File:xmegajumpers.jpg|image]]
+#: Jumpers on the Multi-Target Victim board are as follows:
+#: 
+#: [[File:xmegajumpers.jpg|image]]
 
 # NO jumpers mounted in AVR Portion (JP1,JP4-6,JP28) or SmartCard Portion. Note if your multi-target board does not have JP28, the TRIG jumper for the AVR, you will have to remove the AVR from the socket.
 # 3.3V IO Level (JP20 set to INT.)
@@ -43,7 +42,6 @@ Jumpers on the Multi-Target Victim board are as follows:
 # Power measurement taken from VCC shunt (JP12)
 
 For more information on these jumper settings see the XMEGA section of [[CW301_Multi-Target]].
-</blockquote>
 
 === Building/Programming the XMEGA Target ===
 
