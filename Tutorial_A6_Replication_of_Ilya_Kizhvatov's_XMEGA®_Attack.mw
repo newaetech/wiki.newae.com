@@ -30,8 +30,7 @@ Jumpers on the Multi-Target Victim board are as follows:
 # NO jumpers mounted in AVR Portion (JP1,JP4-6,JP28) or SmartCard Portion. Note if your multi-target board does not have JP28, the TRIG jumper for the AVR, you will have to remove the AVR from the socket.
 # 3.3V IO Level (JP20 set to INT.)
 # The 7.37 MHz oscillator is selected as the CLKOSC source (JP18)
-# #; The CLKOSC is routed to the FPGAIN pin (requires jumper wire on JP17), along with routed to XTAL1 pin of XMEGA
-#: (requires jumper wire to JP4/JP15).
+# The CLKOSC is routed to the FPGAIN pin (requires jumper wire on JP17), along with routed to XTAL1 pin of XMEGA (requires jumper wire to JP4/JP15).
 # The TXD &amp; RXD jumpers are set on the XMEGA portion (JP5, JP6)
 # The TRIG jumper is set on the XMEGA portion (JP13)
 # The PWR jumper is set on the XMEGA portion (JP14)
