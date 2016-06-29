@@ -245,38 +245,15 @@ u'\xff\xff\xffce\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff
 </syntaxhighlight>
 <p>The <code>q</code> command causes the bootloader to quit &amp; jump to the application. Since there is no application it re-enters the bootloader. The <code>@@@</code> is our standard sign-on sequence. However the bootloader waits for the secret password before transmitting the sign-on sequence. Note how it's only after sending <code>ce</code> that the bootloader works.</p></li></ol>
 
-== Running External Tools ==
+== Enabling the Reset ==
 
-The next step of this tutorial runs external tools. In particular we want to use the built-in AVR programmer to reset the AVR device, since we have no other method of asserting reset on the target.
+Finally, we'll reuse the pin GPIO3 as a reset pin. To perform this:
 
-This assumes you have <code>AVR Studio 4</code> installed. If you are using another plaform you can simply modify these instructions to use the command-line tool of your choice, such as <code>avrdude</code>.
+#Connect a jumper between pin 6 to 7 of JP8:
+#:
+#Set the GPIO3 as an GPIO, and set it to "High" for now. This is done on the ''Scope Settings'' tab:
+#:[[File:gpio3.png]]
 
-<ol style="list-style-type: decimal;">
-<li>First, ensure the USB-A cable is plugged into the rear of the ChipWhisperer. You will have both the USB-A and USB-Mini connections on the ChipWhisperer connected to your computer.</li>
-<li><p>Open a terminal, and attempt to run the command-line AVR tools. You may have to adjust the path for your specific machine binary location:</p>
-<pre>cd "C:\Program Files (x86)\Atmel\AVR Tools\STK500"
-Stk500.exe -dATMega328p -s -cUSB
-    STK500 command line programmer, v 2.4 Atmel Corp (C) 2004-2011.
-
-    Connected to AVRISP mkII on port USB:000200212345
-    Device parameters loaded
-    Programming mode entered
-    Signature is 0x1E 0x95 0x0F
-    Programming mode left
-    Connection to AVRISP mkII closed</pre>
-<p>Note the signature was correctly read. As part of reading the signature the AVR device will be reset.</p></li>
-<li>Next, we will run the programmer from a Python program. This will provide us with a method of resetting the AVR progmatically.</li>
-<li><p>Create a new file named something like <code>test_bootloader.py</code> with the following contents. Again adjust path as required to point to your AVRStudio installation. Note on Windows the double-slash is due to the requirement of escaping the backslash inside the string:</p>
-<pre>from subprocess import call
-
-def resetAVR():
-    call(["C:\\Program Files (x86)\\Atmel\\AVR Tools\\STK500\\Stk500.exe",
-          "-dATMega328p", "-s", "-cUSB"])
-
-resetAVR()</pre></li></ol>
-
-blockquote>Attempt to run this file &amp; confirm it works as expected.
-</blockquote>
 == Scripting the Setup ==
 
 At this point we want to script the setup of the ChipWhisperer-Capture tool, along with pulling in our special utility which is capable of resetting the AVR microcontroller.
