@@ -105,7 +105,7 @@ The following are specific instructions only for the ChipWhisperer-Capture Rev 2
 
 ==== Trace Capture Instructions ====
 
-#Switch from software to hardware crypto. To do this you'll have to change the <code>makefile<\code> for the project.
+#Switch from software to hardware crypto. To do this you'll have to change the <code>makefile</code> for the project.
 
 #Finally, set the offset to 1500, and number of samples to only 1000:
 #:[[File:slength.png|image]]
