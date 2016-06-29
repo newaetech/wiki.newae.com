@@ -420,6 +420,6 @@ Thus by looking at the power consumption, we can determine the wrong password ch
 
 == Conclusion ==
 
-This tutorial has demonstrated the use of the power side-channel for performing timing attacks. A bootloader with a simple password-based security system is broken. In addition you have learned about the scripting support in the ChipWhisperer-Capture software.
+This tutorial has demonstrated the use of the power side-channel for performing timing attacks. A simple proof-of-concept is performed against a bootloader, although a complete example is not presented. It is left as an exercise to the reader to script a complete attack for this example.
 
 {{Template:Tutorials}}
