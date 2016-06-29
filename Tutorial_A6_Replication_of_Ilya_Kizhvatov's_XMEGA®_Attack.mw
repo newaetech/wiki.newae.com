@@ -12,7 +12,9 @@ Otherwise, you can read this paper as part of Chapter 4 of Dr. Kizhvatov's [http
 
 == Setting up the Hardware ==
 
-This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site], just look for the traces titled ''XMEGA: AES128 Hardware Accelerator (ChipWhisperer Tutorial #A6)''.
+This tutorial can use either the [[CW1173_ChipWhisperer-Lite]], [[CW1200_ChipWhisperer-Pro]], or [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site], just look for the traces titled ''XMEGA: AES128 Hardware Accelerator (ChipWhisperer Tutorial #A6)''.
+
+'''NOTE:''' The ChipWhisperer-Lite Target Board contains an XMEGA device, but this device DOES NOT contain the hardware crypto engine. Only the CW301 Multi-Target board contains an XMEGA with a hardware AES engine.
 
 This example uses the XMEGA Device. You can see instructions for programming in the [[Installing ChipWhisperer]] section, this tutorial assumes you have the programmer aspect working.
 
