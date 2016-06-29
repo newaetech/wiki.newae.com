@@ -267,7 +267,7 @@ class UserScript(UserScriptBase):
     def __init__(self, api):
         super(UserScript, self).__init__(api)
 
-    def resetAVR():
+    def resetAVR(self):
         self.api.setParameter(['CW Extra Settings', 'Target IOn GPIO Mode', 'Target IO3: GPIO', 'Low'])
         time.sleep(0.05)
         self.api.setParameter(['CW Extra Settings', 'Target IOn GPIO Mode', 'Target IO3: GPIO', 'High'])
@@ -380,16 +380,16 @@ cmds = [
 for cmd in cmds: self.api.setParameter(cmd)</pre></li>
 <li>Run your script again. You should see the system connect to the target, and also configure the OpenADC settings. You can confirm this by hitting the '''Capture 1''' button. You won't yet get very useful information, but it should give you some analog data after the timeout period.</li>
 <li><p>Switch to the Python console in the running ChipWhisperer-Capture application. First create a shortcut for the serial port:</p>
-<pre>>>> ser = self.target.driver.ser</pre>
+<pre>>>> ser = self.api.getTarget().ser</pre>
 <p>Then run the following commands:</p>
-<pre>>>> self.resetAVR()
+<pre>>>> self.api.resetAVR()
 >>> ser.write("@@@")</pre>
 <p>At this point the system is waiting for a correct password. Put the following text into the Python console but do not hit enter yet:</p>
 <pre>ser.write("ce")</pre></li>
 <li><p>With the <code>ser.write("ce")</code> still not yet sent, hit the '''Capture 1''' button. Then hit enter on the Python console to send the <code>ser.write("ce")</code> command. The system should trigger immediatly and capture a power trace, which might look something like this:</p>
 <p>[[File:trace_passwordok.png|image]]</p>
 <p>To re-run the capture, perform the same sequence of commands in steps 8 &amp; 9. You should get an almost identical trace each time you do this.</p></li>
-<li><p>Now perform the same sequence (e.g. <code>self.resetAVR()</code>, <code>ser.write("@@@")</code>). But instead of sending the correct password "ce", send an incorrect password such as "ff". You should now see a power trace such as this:</p>
+<li><p>Now perform the same sequence (e.g. <code>self.api.resetAVR()</code>, <code>ser.write("@@@")</code>). But instead of sending the correct password "ce", send an incorrect password such as "ff". You should now see a power trace such as this:</p>
 <p>[[File:trace_password_firstwrong.png|image]]</p>
 <p>Notice the start difference! You can examin the bootloader source to get an idea why this occurs. In particular the portion dealing with the password check looks like this:</p>
 
@@ -409,7 +409,7 @@ chpwl:  brne chpwl                      ; if not, loop infinitely
 
 <p>Note as soon as you get a wrong character, the reception of characters stops.</p></li>
 <li><p>Perform the same experiment, but send the first character right and the second character wrong. So send "cf" for example as the password:</p>
-<pre>>>> self.resetAVR()
+<pre>>>> self.api.resetAVR()
 >>> ser.write("@@@")
 ---Push Capture 1 Button---
 >>> ser.write("cf")</pre>
