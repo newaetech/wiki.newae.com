@@ -106,7 +106,9 @@ Using the XMEGA Programmer, program the XMega16A4 device (it is connected to the
 
 The following are specific instructions only for the ChipWhisperer-Lite or -Pro:
 
-#
+# From the Project menu select the Example Scripts and then ChipWhisperer-Lite: AES SimpleSerial on XMEGA
+# This should connect to the target board & run a few encryptions. You should check the "Encryption Status Manager" along with viewing the resulting power measurement.
+# Jump to the generic instructions (skip the CWC-Rev2 instructions next).
 
 ==== CW-Capture Rev2 Specific Setup ====
 
