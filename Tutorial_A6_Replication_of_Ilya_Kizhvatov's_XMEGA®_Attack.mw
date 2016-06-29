@@ -121,8 +121,8 @@ We will first automatically configure a script, and then use that as the base fo
 <li><p>You can now edit the custom script file using the built-in editor OR with an external editor. In this example the file would be <code>C:\Users\Colin\AppData\Local\Temp\cw_testilya.py</code>.</p>
 <blockquote><p>'''warning'''</p>
 <dl>
-<dt>The API calling parameters changed in release 0.10 of the ChipWhisperer software. If using 0.09 release or older, either see the documentation that</dt>
-<dd><p>is present in the 'doc' directory (which will always correspond to your release), or see Appendix B for the full attack script.</p></dd></dl>
+<dt>The API calling parameters changed a number of times. If using version 0.10 or older, either see the documentation that</dt>
+<dd><p>is present in the 'doc' directory (which will always correspond to your release), or see Appendix B-2/B-1 for the full attack script.</p></dd></dl>
 </blockquote>
 <p>The following defines the required functions to implement, you should refer to the academic paper for details of the correlation model:</p>
 <pre># Imports
