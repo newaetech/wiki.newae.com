@@ -258,7 +258,7 @@ Finally, we'll reuse the pin GPIO3 as a reset pin. To perform this:
 
 At this point we want to script the setup of the ChipWhisperer-Capture tool, along with pulling in our special utility which is capable of resetting the AVR microcontroller.
 
-<sytaxhighlight lang="python">
+<syntaxhighlight lang="python">
 from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI  # Import the ChipWhisperer API
 from chipwhisperer.common.scripts.base import UserScriptBase
 import time
@@ -311,7 +311,7 @@ if __name__ == '__main__':
     app.exec_()                                                 # Comment this line if you don't want to use the GUI
 
 
-</syntaxhighlight>
+</syntaxhighlight >
 
 <p>This is a basic 'script', which is really just a Python program using the ChipWhisperer library. Save the script to a file &amp; run this, which should open the ChipWhisperer-Capture window as before. Finally, let's once again configure the OpenADC for analog capture. Before doing this, switch to the '''Script Commands''' tab, and note there is already some script information being printed. We will make changes to the system and then observe additional data that gets printed here:</p>
 <p>[[File:scriptcommands1.png|image]]</p></li>
