@@ -22,7 +22,22 @@ The Multi-Target board should be plugged into the ChipWhisperer Capture via the 
 
 === Using ChipWhisperer-Lite / ChipWhisperer-Pro ===
 
+# 20-Pin Header connects Multi-Target to Capture Hardware
+# VOUT Connects to SMA Cable
+# SMA Cable connects to 'LNA' on CHA input
+
+Jumpers on the Multi-Target Victim board are as follows:
+
 [[File:xmegajumpers_cwlite.jpg]]
+
+# NO jumpers mounted in AVR Portion (JP1,JP4-6,JP28) or SmartCard Portion. Note if your multi-target board does not have JP28, the TRIG jumper for the AVR, you will have to remove the AVR from the socket.
+# 3.3V IO Level (JP20 set to INT.)
+# FPGAOUT is routed to XTAL1 pin of XMEGA (requires jumper wire to JP4/JP15).
+# The 7.37 MHz oscillator is not connected (JP18)
+# The TXD &amp; RXD jumpers are set on the XMEGA portion (JP5, JP6)
+# The TRIG jumper is set on the XMEGA portion (JP13)
+# The PWR jumper is set on the XMEGA portion (JP14)
+# Power measurement taken from VCC shunt (JP12)
 
 === Using Capture Rev 2 ===
 
