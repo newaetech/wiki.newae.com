@@ -28,16 +28,16 @@ These steps differ from previous steps, as we are not going to be using a built-
 #:[[File:cwcr2_status.png|400px]]
 #:We will later manually adjust the data sent to the target.
 #From the ''Tools'' menu select ''Open Terminal'', and press ''Connect'' on the terminal:
-#:[[File:termconn.png|image]]</p>
-#<p>Switch back to the ''Target Settings'' tab, without closing the terminal window. Set the baud rate for both TX &amp; RX to <code>9600</code> baud. Once you start using the terminal these values will switch to the actual baud rates in use (the hardware can only generate certain baud rates). You cannot use higher bauds for this tutorial as the combined error from the AVR code &amp; ChipWhisperer serial port causes communications failures.</p>
-<p>[[File:termbaud.png|image]]</p>
+#:[[File:termconn.png|image]]
+#Switch back to the ''Target Settings'' tab, without closing the terminal window. Set the baud rate for both TX &amp; RX to <code>9600</code> baud. Once you start using the terminal these values will switch to the actual baud rates in use (the hardware can only generate certain baud rates). You cannot use higher bauds for this tutorial as the combined error from the AVR code &amp; ChipWhisperer serial port causes communications failures.
+#:[[File:termbaud.png|image]]
 #In the ''ChipWhisperer-Serial Terminal'', change the ''TX on Enter'' to ''None'', as we don't want to send any character to terminate a string.
-#<p>In the ''ChipWhisperer-Serial Terminal'', check the ''Show non-ASCII as hex'' if not clicked.</p>
-<blockquote><p>[[File:term_settingssimple.png|image]]</p></blockquote>
+#In the ''ChipWhisperer-Serial Terminal'', set display mode to ''ASCII with Hex for Invalid ASCII'' if not already set.
+#:[[File:term_settingssimple.png|image]]
 #Finally send the command <code>@@@</code>, which is the login sequence for the TinySafeBoot bootloader. Simply type this in the input line, and press 'enter' to send. You will see the <code>@@@</code> echoed on the received data in a blue font.
-#<p>The objective is to get the login response. You may have to send <code>@@@</code> a few times for this to be successful, the following figure shows an example where the the login worked after sending a second round of <code>@@@</code>. You might get an invalid response your first time for example. The response should start with <code>TSB</code>:</p>
-<p>[[File:term_tsbresponse.png|image]]</p>
-<p>Note the red bytes are hexadecimal responses, which were converted since they were outside of valid range for ASCII data. The response from TinySafeBoot has the following meaning, with example values given for our implementation, note certain values may change if you use different versions of TSB:</p>
+#The objective is to get the login response. You may have to send <code>@@@</code> a few times for this to be successful, the following figure shows an example where the the login worked after sending a second round of <code>@@@</code>. You might get an invalid response your first time for example. The response should start with <code>TSB</code>:
+#:[[File:term_tsbresponse.png|image]]
+#:Note the red bytes are hexadecimal responses, which were converted since they were outside of valid range for ASCII data. The response from TinySafeBoot has the following meaning, with example values given for our implementation, note certain values may change if you use different versions of TSB:
 {|
 ! Byte Num
 ! Value
@@ -146,22 +146,22 @@ These steps differ from previous steps, as we are not going to be using a built-
 
 | after pressing button.
 |}
-</li>
-<li><p>Before attacking the real system, we'll need to confirm these settings will work. To do so we'll monitor the power consumption whilst operating the bootloader under normal conditions.</p>
-<p>With our system running, push the 'Capture 1' button. Notice it will go grey indicating the system is waiting for the trigger to occur:</p>
-<p>[[File:captrig_wait.png|image]]</p>
-<p>The trigger in this case is when the 'TXD' line goes low, which means when we send data to the bootloader. At this time we'll monitor the power when sending the sequence of <code>@@@</code> used before. This is described in steps 15-17.</p></li>
-<li>Prepare the serial window by typing <code>@@@</code> as before, but do not hit enter yet. We'll need to hit enter only after we arm the system.</li>
-<li>Arm the system by pressing the 'Capture 1' button.</li>
-<li><p>Before the capture times out (e.g. before the button stops being gray), quickly click on the serial terminal output line and press 'Enter' to send the command, or press the 'Send' button beside the terminal output line to send the <code>@@@</code> command. Note you can adjust the timeout in the ''Trigger Setup'' group of the ''Scope Settings''.</p>
-<p>[[File:captrig_example.png|image]]</p></li>
-<li><p>If this works, you will see the power consumption on receiving the command. You'll notice two distinct power signatures, which may look something like this:</p>
-<p>[[File:powertrace1.png|image]]</p>
-<p>Or:</p>
-<p>[[File:powertrace2.png|image]]</p>
-<p>The scale on the bottom is in samples. Remember we set the sample clock to 7.37 MHz (same speed of the device), meaning each sample represents 1 / 7.37E6 = 135.6nS. Our serial interface is running at approximately 9600 baud, meaning a single bit takes 1/9600 = 0.1042mS. Every byte requires 10 bits (1 start bit, 8 data bits, 1 stop bit), meaning a single byte over the UART represents 1.042mS, or 7684 samples. Note that in the second figure the power consumption drops dramatically after 7000 samples, which would correspond to a single byte being received (remember we triggered the capture based on the start bit).</p>
-<p>The two power traces represent two different modes in the bootloader. In the first power trace the bootloader is waiting for the login sequence, and receives all three bytes of it before awaiting the next command. In the second power trace the bootloader is already waiting the command byte. Since <code>@</code> is not a valid command, when the bootloader receives the first <code>@</code> it simply jumps to the user program. The flash here is empty, which effectively performs <code>nop</code> type operations. You can see a dramatic reduction in power as soon as the microcontroller stops receiving the data.</p>
-<p>Be aware that the data begin sent in both cases is the exact same! The power consumption differences are solely because the microcontroller stops processing the incomming data. We'll exploit this to break a secret password in the final part of this experiment.</p></li></ol>
+
+#Before attacking the real system, we'll need to confirm these settings will work. To do so we'll monitor the power consumption whilst operating the bootloader under normal conditions.
+#:With our system running, push the 'Capture 1' button. Notice it will go grey indicating the system is waiting for the trigger to occur:
+#:[[File:captrig_wait.png|image]]
+#:The trigger in this case is when the 'TXD' line goes low, which means when we send data to the bootloader. At this time we'll monitor the power when sending the sequence of <code>@@@</code> used before. This is described in steps 15-17.
+#Prepare the serial window by typing <code>@@@</code> as before, but do not hit enter yet. We'll need to hit enter only after we arm the system.
+#Arm the system by pressing the 'Capture 1' button.
+#Before the capture times out (e.g. before the button stops being gray), quickly click on the serial terminal output line and press 'Enter' to send the command, or press the 'Send' button beside the terminal output line to send the #:<code>@@@</code> command. Note you can adjust the timeout in the ''Trigger Setup'' group of the ''Scope Settings''.
+#:[[File:captrig_example.png|image]]
+#If this works, you will see the power consumption on receiving the command. You'll notice two distinct power signatures, which may look something like this:
+#:[[File:powertrace1.png|image]]
+#:Or:
+#:[[File:powertrace2.png|image]]
+#:The scale on the bottom is in samples. Remember we set the sample clock to 7.37 MHz (same speed of the device), meaning each sample represents 1 / 7.37E6 = 135.6nS. Our serial interface is running at approximately 9600 baud, meaning a single bit takes 1/9600 = 0.1042mS. Every byte requires 10 bits (1 start bit, 8 data bits, 1 stop bit), meaning a single byte over the UART represents 1.042mS, or 7684 samples. Note that in the second figure the power consumption drops dramatically after 7000 samples, which would correspond to a single byte being received (remember we triggered the capture based on the start bit).
+#:The two power traces represent two different modes in the bootloader. In the first power trace the bootloader is waiting for the login sequence, and receives all three bytes of it before awaiting the next command. In the second power trace the bootloader is already waiting the command byte. Since <code>@</code> is not a valid command, when the bootloader receives the first <code>@</code> it simply jumps to the user program. The flash here is empty, which effectively performs <code>nop</code> type operations. You can see a dramatic reduction in power as soon as the microcontroller stops receiving the data.
+#:Be aware that the data begin sent in both cases is the exact same! The power consumption differences are solely because the microcontroller stops processing the incomming data. We'll exploit this to break a secret password in the final part of this experiment.
 
 == Setting a Password on the Bootloader ==
 
