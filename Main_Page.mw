@@ -119,6 +119,10 @@ Not all tutorials are possible with all hardware. See the various tutorial pages
 
 = ChipWhisperer Training Material =
 
+See the above links for a wide range of tutorials. These take you through several examples.
+
+If you're looking for a more structured course, we offer a 2-day training course at Blackhat USA 2016. In addition we're working to make some of this training material available online.
+
 = Example Attacks / Other =
 
 While ChipWhisperer started as a side-channel power analysis platform, it has grown to be useful in other attack types. This section is designed to show you a wide variety of attacks on embedded systems, to give you an idea of what is required for building secure embedded systems.
