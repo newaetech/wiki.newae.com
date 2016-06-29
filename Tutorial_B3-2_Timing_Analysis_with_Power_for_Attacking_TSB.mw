@@ -38,7 +38,7 @@ These steps differ from previous steps, as we are not going to be using a built-
 #The objective is to get the login response. You may have to send <code>@@@</code> a few times for this to be successful, the following figure shows an example where the the login worked after sending a second round of <code>@@@</code>. You might get an invalid response your first time for example. The response should start with <code>TSB</code>:
 #:[[File:term_tsbresponse.png|image]]
 #:Note the red bytes are hexadecimal responses, which were converted since they were outside of valid range for ASCII data. The response from TinySafeBoot has the following meaning, with example values given for our implementation, note certain values may change if you use different versions of TSB:
-{|
+{|class="wikitable"
 ! Byte Num
 ! Value
 ! Description
@@ -87,9 +87,11 @@ These steps differ from previous steps, as we are not going to be using a built-
 | '!'
 | Confirmation Character
 |}
-</li>
-<li><p>Finally, we want to monitor power when sending this sequence to the device. We'll need to configure a number of OpenADC settings for this. The following table shows these settings, please carefully go though and set each of these as given. Pay attention to the 'notes' section which has some additional information.</p>
-{|
+
+
+Finally, we want to monitor power when sending this sequence to the device. We'll need to configure a number of OpenADC settings for this. The following table shows these settings, please carefully go though and set each of these as given. Pay attention to the 'notes' section which has some additional information.
+
+{|class="wikitable"
 ! Group
 ! Item
 ! Value
