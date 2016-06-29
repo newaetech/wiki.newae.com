@@ -106,7 +106,13 @@ The following are specific instructions only for the ChipWhisperer-Capture Rev 2
 ==== Trace Capture Instructions ====
 
 #Switch from software to hardware crypto. To do this you'll have to change the <code>makefile</code> for the project.
-
+#: In the makefile, add a define for <code>HWCRYPTO=1</code>:
+#: <code>#Multi-Target Board, XMEGA Device
+PLATFORM = CW301_XMEGA
+#Optional - use hardware crypto
+CDEFS += -DHWCRYPTO=1</code>
+#Build a new hex-file, and program the file in.
+#Run a few 'capture 1' traces, and confirm (using the Encryption Status Manager) that the encryption was successful.
 #Finally, set the offset to 1500, and number of samples to only 1000:
 #:[[File:slength.png|image]]
 #Confirm you now get something like this with a 'capture 1':
