@@ -40,20 +40,38 @@ For more information on these jumper settings see the XMEGA section of [[CW301_M
 </blockquote>
 === Building/Programming the XMEGA Target ===
 
-As described in [[Installing ChipWhisperer]], you'll need to configure the AVR-GCC compiler. Assuming you have this setup, you can run <code>make</code> in the directory <code>chipwhisperer\hardware\victims\firmware\xmega-serial</code>, which should give you an output like this:
+As described in [[Installing ChipWhisperer]], you'll need to configure the AVR-GCC compiler. Assuming you have this setup, you can run <code>make</code> in the directory <code>chipwhisperer\hardware\victims\firmware\simpleserial-aes</code>. Before doing that, edit the <code>makefile</code> to select the CW301 XMEGA target. This is done by uncommenting the "CW301_XMEGA" platform define as follows:
+
+<pre>#Multi-Target Board, AVR Device (ATMega328P)
+#PLATFORM = CW301_AVR
+
+#Multi-Target Board, XMEGA Device
+PLATFORM = CW301_XMEGA
+
+#CW-Lite XMEGA Target Device (XMEGA128D4)
+#PLATFORM = CW303
+
+#NOTDUINO Kit (ATMega328P)
+#PLATFORM = CW304</pre>
+
+Running <pre>make</pre> should give you an output indicating the Multi-Target board was used:
 
 <pre>Size after:
 AVR Memory Usage
 ----------------
-Device: atxmega16a4
+Device: atxmega128a3
 
-Program:    4572 bytes (22.3% Full)
+Program:    3100 bytes (2.2% Full)
 (.text + .data + .bootloader)
 
-Data:        369 bytes (18.0% Full)
+Data:        352 bytes (4.3% Full)
 (.data + .bss + .noinit)
 
+
+Built for platform Multi-Target Board, XMEGA Target
+
 -------- end --------</pre>
+
 Using either AVRStudio or AVRDude, program the XMega16A4 device (it is connected to the programmer built into the ChipWhisperer) with the resulting simpleserial.hex file.
 
 === Running the Capture ===
