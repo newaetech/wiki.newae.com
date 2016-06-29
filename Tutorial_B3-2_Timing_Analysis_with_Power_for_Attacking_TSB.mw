@@ -151,7 +151,7 @@ Finally, we want to monitor power when sending this sequence to the device. We'l
 
 #Before attacking the real system, we'll need to confirm these settings will work. To do so we'll monitor the power consumption whilst operating the bootloader under normal conditions.
 #Switch to the ''Target Tab'', and '''ERASE''' the ''Load Key Command'', ''Go Command', and ''Output Format'' labels. This will mean the system will not send unexpected data:
-#: [[File:simpleserial_erase.png|400px]]
+#: [[File:simpleserial_erase.png]]
 #With our system running, push the 'Capture 1' button. Notice it will go grey indicating the system is waiting for the trigger to occur:
 #:[[File:captrig_wait.png|image]]
 #:The trigger in this case is when the 'TXD' line goes low, which means when we send data to the bootloader. At this time we'll monitor the power when sending the sequence of <code>@@@</code> used before. This is described in steps 15-17.
@@ -165,7 +165,7 @@ Finally, we want to monitor power when sending this sequence to the device. We'l
 #:[[File:powertrace2.png|image]]
 #:The scale on the bottom is in samples. Remember we set the sample clock to 7.37 MHz (same speed of the device), meaning each sample represents 1 / 7.37E6 = 135.6nS. Our serial interface is running at approximately 9600 baud, meaning a single bit takes 1/9600 = 0.1042mS. Every byte requires 10 bits (1 start bit, 8 data bits, 1 stop bit), meaning a single byte over the UART represents 1.042mS, or 7684 samples. Note that in the second figure the power consumption drops dramatically after 7000 samples, which would correspond to a single byte being received (remember we triggered the capture based on the start bit).
 #:The two power traces represent two different modes in the bootloader. In the first power trace the bootloader is waiting for the login sequence, and receives all three bytes of it before awaiting the next command. In the second power trace the bootloader is already waiting the command byte. Since <code>@</code> is not a valid command, when the bootloader receives the first <code>@</code> it simply jumps to the user program. The flash here is empty, which effectively performs <code>nop</code> type operations. You can see a dramatic reduction in power as soon as the microcontroller stops receiving the data.
-#:Be aware that the data begin sent in both cases is the exact same! The power consumption differences are solely because the microcontroller stops processing the incomming data. We'll exploit this to break a secret password in the final part of this experiment.
+#:Be aware that the data begin sent in both cases is the exact same! The power consumption differences are solely because the microcontroller stops processing the incoming data. We'll exploit this to break a secret password in the final part of this experiment.
 
 == Setting a Password on the Bootloader ==
 
