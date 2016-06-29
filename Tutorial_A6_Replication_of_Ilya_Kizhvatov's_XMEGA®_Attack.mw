@@ -14,11 +14,15 @@ Otherwise, you can read this paper as part of Chapter 4 of Dr. Kizhvatov's [http
 
 This tutorial can use either the [[CW1173_ChipWhisperer-Lite]], [[CW1200_ChipWhisperer-Pro]], or [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site], just look for the traces titled ''XMEGA: AES128 Hardware Accelerator (ChipWhisperer Tutorial #A6)''.
 
-'''NOTE:''' The ChipWhisperer-Lite Target Board contains an XMEGA device, but this device DOES NOT contain the hardware crypto engine. Only the CW301 Multi-Target board contains an XMEGA with a hardware AES engine.
+'''NOTE: The ChipWhisperer-Lite Target Board contains an XMEGA device, but this device DOES NOT contain the hardware crypto engine. Only the CW301 Multi-Target board contains an XMEGA with a hardware AES engine.'''
 
 This example uses the XMEGA Device. You can see instructions for programming in the [[Installing ChipWhisperer]] section, this tutorial assumes you have the programmer aspect working.
 
-The Multi-Target board should be plugged into the ChipWhisperer Capture Rev2 via the 20-pin target cable. The ''VOUT'' SMA connector is wired to the ''LNA'' input on the ChipWhisperer-Capture Rev2 front panel. The general hardware setup is as follows:
+The Multi-Target board should be plugged into the ChipWhisperer Capture via the 20-pin target cable. The ''VOUT'' SMA connector is wired to the ''LNA'' input on the ChipWhisperer-Capture Rev2 front panel. The hardware setup is slightly different for the ChipWhisperer-Lite/Pro and older Capture-Rev2:
+
+=== Using ChipWhisperer-Lite / ChipWhisperer-Pro ===
+
+=== Using Capture Rev 2 ===
 
 <blockquote># 20-Pin Header connects Multi-Target to Capture Hardware
 # VOUT Connects to SMA Cable
@@ -40,7 +44,10 @@ Jumpers on the Multi-Target Victim board are as follows:
 
 For more information on these jumper settings see the XMEGA section of [[CW301_Multi-Target]].
 </blockquote>
+
 === Building/Programming the XMEGA Target ===
+
+Once you have one of the above setups working, you need to program the device. We'll first double-check the communication using our classic software AES, then enable the hardware crypto module.
 
 As described in [[Installing ChipWhisperer]], you'll need to configure the AVR-GCC compiler. Assuming you have this setup, you can run <code>make</code> in the directory <code>chipwhisperer\hardware\victims\firmware\simpleserial-aes</code>. Before doing that, edit the <code>makefile</code> to select the CW301 XMEGA target. This is done by uncommenting the "CW301_XMEGA" platform define as follows:
 
@@ -61,7 +68,7 @@ Running <pre>make</pre> should give you an output indicating the Multi-Target bo
 <pre>Size after:
 AVR Memory Usage
 ----------------
-Device: atxmega128a3
+Device: atxmega16a4
 
 Program:    3100 bytes (2.2% Full)
 (.text + .data + .bootloader)
@@ -74,33 +81,45 @@ Built for platform Multi-Target Board, XMEGA Target
 
 -------- end --------</pre>
 
-Using either AVRStudio or AVRDude, program the XMega16A4 device (it is connected to the programmer built into the ChipWhisperer) with the resulting simpleserial.hex file.
+Using the XMEGA Programmer, program the XMega16A4 device (it is connected to the programmer built into the ChipWhisperer) with the resulting simpleserial.hex file.
 
-=== Running the Capture ===
+=== Capturing Traces ===
 
-<ol style="list-style-type: decimal;">
-<li>Close &amp; reopen the capture software (to clear out any previous connection which may be invalid).</li>
-<li><p>From the ''Project'' menu elect the ''Example Scripts'' and then ''ChipWhisperer-Rev2: SimpleSerial Target''</p>
-<p>[[File:runscript.png|image]]</p></li>
-<li><p>The script will automatically connect to the capture hardware and run 2 example traces. They will not yet work on the XMega as additional setup is required. You must switch the RX/TX pins:</p>
-<p>[[File:xmegarxtx.png|image]]</p></li>
-<li><p>Run a 'Capture 1', you should confirm the encryption algorithm is working:</p>
-<p>[[File:capture1_working.png|image]]</p></li>
-<li><p>Switch from software to hardware crypto. To do this change the 'Go' command to <code>h$TEXT$\n</code>:</p>
-<p>[[File:gocommand.png|image]]</p></li>
-<li><p>Finally, set the offset to 1500, and number of samples to only 1000:</p>
-<p>[[File:slength.png|image]]</p></li>
-<li><p>Confirm you now get something like this with a 'capture 1':</p>
-<p>[[File:capture1_fullworking.png|image]]</p></li>
-<li><p>To complete the tutorial, follow these steps:</p>
-<blockquote><ol style="list-style-type: decimal;">
-<li>Switch to the ''General Settings'' tab</li>
-<li>Change the number of traces to 3000.</li>
-<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
-<li>You will see each new trace plotted in the waveform display.</li>
-<li>Wait until the capture is complete.</li></ol>
-</blockquote></li>
-<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li></ol>
+==== CW-Capture Lite/Pro Specific Setup ====
+
+
+The following are specific instructions only for the ChipWhisperer-Lite or -Pro:
+
+#
+
+==== CW-Capture Rev2 Specific Setup ====
+
+The following are specific instructions only for the ChipWhisperer-Capture Rev 2:
+
+#From the ''Project'' menu select the ''Example Scripts'' and then ''ChipWhisperer-Rev2: SimpleSerial Target''
+#: [[File:runscript.png|image]]
+#The script will automatically connect to the capture hardware and run 2 example traces. They will not yet work on the XMega as additional setup is required. You must switch the RX/TX pins:
+#:[[File:xmegarxtx.png|image]]
+#Run a 'Capture 1', you should confirm the encryption algorithm is working:
+#:[[File:capture1_working.png|image]]
+#Jump to the generic capture instructions (next)
+
+==== Trace Capture Instructions ====
+
+#Switch from software to hardware crypto. To do this you'll have to change the <code>makefile<\code> for the project.
+
+#Finally, set the offset to 1500, and number of samples to only 1000:
+#:[[File:slength.png|image]]
+#Confirm you now get something like this with a 'capture 1':
+#:[[File:capture1_fullworking.png|image]]
+
+To complete the tutorial, follow these steps:
+#Switch to the ''General Settings'' tab
+#Change the number of traces to 3000.
+#Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.
+#You will see each new trace plotted in the waveform display.
+#Wait until the capture is complete.
+#Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.
 
 == Analyzing of Power Traces ==
 
