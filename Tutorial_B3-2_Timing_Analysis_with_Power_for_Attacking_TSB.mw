@@ -179,22 +179,21 @@ This section assums you still have the setup from the previous part running. If 
 <blockquote><p>[[File:console.png|image]]</p></blockquote>
 <p>As a test try just entering <code>self</code>, which is a Python reference to the ChipWhisperer object. You can explore other options &amp; Python will report the data-type, for example:</p>
 <pre>>>> self
-<__main__.ChipWhispererCapture object at 0x05E27800>
->>> self.target.driver.ser
-<chipwhisperer.capture.targets.SimpleSerial.SimpleSerial_ChipWhisperer object at 0x05E2BAF8></pre></li>
+<__main__.CWCaptureGUIobject at 0x05E27800>
+<chipwhisperer.capture.targets.simpleserial_readers.cw.SimpleSerial_ChipWhisperer object at 0x06E61030></pre></li>
 <li><p>You can also call methods. For example we can send a string with the following:</p>
-<pre>>>> self.target.driver.ser.write("@@@")</pre></li>
-<li><p>And to retreive the data we would call the read() function, where we specify the number of bytes to attempt to read. As before if we fail to get a response you may need to resend the [mailto:%22@@@ "@@@]" prompt:</p>
-<pre>>>> self.target.driver.ser.write("@@@")
+<pre>>>>  self.api.getTarget().ser.write("@@@")</pre></li>
+<li><p>And to retreive the data we would call the read() function, where we specify the number of bytes to attempt to read. As before if we fail to get a response you may need to resend the "@@@" prompt:</p>
+<pre>>>>  self.api.getTarget().ser.write("@@@")
 
->>> self.target.driver.ser.read(255)
+>>> self.api.getTarget().ser.read(255)
 u''
->>> self.target.driver.ser.write("@@@")
->>> self.target.driver.ser.read(255)
+>>> self.api.getTarget().ser.write("@@@")
+>>> self.api.getTarget().ser.read(255)
 u'TSB\x7f\x1c\xf0\x1e\x95\x0f@\xc0>\xff\x03\xaa\xaa!'</pre></li>
 <li><p>To make typing easier, create variables that point to the read and write functions:</p>
-<pre>>>> read =  self.target.driver.ser.read
->>> write =  self.target.driver.ser.write</pre></li>
+<pre>>>> read = self.api.getTarget().ser.read
+>>> write = self.api.getTarget().ser.write</pre></li>
 <li>To set the bootloader on TSB, we need to modify a special page of FLASH memory. First, ensure you've recently (e.g. within < 30 seconds) received the <code>TSB</code> signon prompt. If not resend the <code>@@@</code> string until the call to <code>read(255)</code> returns the <code>TSB</code> prompt. You should read the next step before doing this however.</li>
 <li><p>Send the command 'c' to read the last page of flash. Rather than printing to console, simply save this to a variable:</p>
 <pre>>>> write('c')
@@ -237,7 +236,7 @@ u'\xff\xff\xffce\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff
 <li><p>We now have a bootloader with a password protection. Be aware that if you enter the wrong password you will cause the bootloader to spin into an infinite loop! You can check the password (carefully) by executing the following commands:</p>
 <syntaxhighlight>
    >>> write('q')
-   >>> write([mailto:'@@@' '@@@'])
+   >>> write('@@@')
    >>> read(255) 
    u''
    >>> write('ce')
