@@ -28,9 +28,9 @@ The Multi-Target board should be plugged into the ChipWhisperer Capture via the 
 # VOUT Connects to SMA Cable
 # SMA Cable connects to 'LNA' on CHA input
 # USB-Mini connects to side (NB: Confirm jumper settings in next section first)
-#: Jumpers on the Multi-Target Victim board are as follows:
-#: 
-#: [[File:xmegajumpers.jpg|image]]
+
+Jumpers on the Multi-Target Victim board are as follows:
+[[File:xmegajumpers.jpg|image]]
 
 # NO jumpers mounted in AVR Portion (JP1,JP4-6,JP28) or SmartCard Portion. Note if your multi-target board does not have JP28, the TRIG jumper for the AVR, you will have to remove the AVR from the socket.
 # 3.3V IO Level (JP20 set to INT.)
