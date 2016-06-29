@@ -152,7 +152,7 @@ class AESXMega(object):
 <li><p>We want to disable 'absolute mode', where by default the absolute value of the CPA attack is taken. We can do this by adding a call to self.attack.setAbsoluteMode(False) before the return statement, for example:</p>
 <pre>self.attack.setPointRange((0,996))
 self.attack.setAbsoluteMode(False)
-return self.attack</pre></li>
+</pre></li>
 <li><p>Run ''Start Attack'' as before! Wait for the attack to complete, which should show the key (except for the first byte) being recovered:</p>
 <p>[[File:analysisrunning.png|image]]</p></li>
 <li><p>At this point you can also look at the output values, which one can compare to the shape of the values published in the paper:</p>
