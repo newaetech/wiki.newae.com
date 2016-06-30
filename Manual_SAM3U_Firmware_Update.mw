@@ -1,0 +1,13 @@
+The SAM3U device has a ROM-resident bootloader. This means the bootloader is always present - unless the chip is damaged it can be run, making the device almost "unbrickable". If you have trouble running the instructions on this webpage it's most likely an issue with your host computer, and not an issue with the SAM3U being damaged. 
+
+==Install BOSSA==
+
+The suggested utility to program the device is BOSSA - see [http://www.shumatech.com/web/products/bossa] for details. Before proceeding, install BOSSA for your system.
+
+==Entering Bootloader Mode==
+
+The only way to enter the bootloader mode is to erase the FLASH memory. Before erasing the FLASH memory you should install the programmer tool and confirms it works (it won't connect to the device, but at least check the install works). See the next heading for details of the programming tool.
+
+To erase the FLASH memory, simply short the jumper labeled "ERASE" on the ChipWhisperer-Lite. Do this while the device is connected via micro-USB. The blue LED should stop flashing at this point, and will stay either on or off (depending when you shorted the jumper). This can be accomplished by anything metallic - for example using a screwdriver or tweezers:
+
+Once this is accomplished, unplug and replug the micro-USB port. This will install a new driver (assuming you installed BOSSA already), and the red and blue LED should be only dimmly lit:
