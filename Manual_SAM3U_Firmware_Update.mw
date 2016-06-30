@@ -15,3 +15,9 @@ To erase the FLASH memory, simply short the jumper labeled "ERASE" on the ChipWh
 [[File:short_tweezers.jpg|400px]]
 
 Once this is accomplished, unplug and replug the micro-USB port. This will install a new driver (assuming you installed BOSSA already), and the red and blue LED should be only dimmly lit:
+
+[[File:lights_prog.jpg|400px]]
+
+This indicates it is in bootloader mode. The device will now attach as a serial port. If you are using Windows this may take a few minutes to happen.
+
+If using Linux, you can use ''dmesg'' to verify the serial port was connected OK.
