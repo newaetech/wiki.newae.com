@@ -433,6 +433,8 @@ When talking about the ChipWhisperer-Lite's firmware, there is really two parts 
 
 The FPGA bitstream alone is what is normally configured by the ChipWhisperer-Capture software. This bitstream is always the most up-to-date, since it's automatically reloaded by the computer every time you power cycle the ChipWhisperer-Capture. The SAM3U firmware however is not automatically updated, but it tends to change less frequently.
 
+[[Manual SAM3U Firmware Update]]
+
 ==== Checking Firmware Version ====
 
 The firmware version is printed at start-up. You will see a line that looks like this indicating the version of the SAM3U Firmware:
