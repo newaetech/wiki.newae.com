@@ -10,4 +10,8 @@ The only way to enter the bootloader mode is to erase the FLASH memory. Before e
 
 To erase the FLASH memory, simply short the jumper labeled "ERASE" on the ChipWhisperer-Lite. Do this while the device is connected via micro-USB. The blue LED should stop flashing at this point, and will stay either on or off (depending when you shorted the jumper). This can be accomplished by anything metallic - for example using a screwdriver or tweezers:
 
+[[File:short_screwdriver.jpg|400px]]
+
+[[File:short_tweezers.jpg|image]]
+
 Once this is accomplished, unplug and replug the micro-USB port. This will install a new driver (assuming you installed BOSSA already), and the red and blue LED should be only dimmly lit:
