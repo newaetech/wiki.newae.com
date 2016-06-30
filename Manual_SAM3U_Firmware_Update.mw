@@ -29,6 +29,8 @@ Run BOSSA, and in the "File" point it to chipwhisperer\hardware\capture\chipwhis
 # Press Exit to close out the program.
 # Unplug & Replug the Micro-USB and you've got a working ChipWhisperer-Lite again, with the latest SAM3U firmware!
 
+[[File:Bossa.png]]
+
 ==BOSSA Command Line==
 
 On certain systems it may be easier to use the command-line version of BOSSA, called bossac. You can also build just this version if required (see instructions below).
