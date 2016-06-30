@@ -433,8 +433,6 @@ When talking about the ChipWhisperer-Lite's firmware, there is really two parts 
 
 The FPGA bitstream alone is what is normally configured by the ChipWhisperer-Capture software. This bitstream is always the most up-to-date, since it's automatically reloaded by the computer every time you power cycle the ChipWhisperer-Capture. The SAM3U firmware however is not automatically updated, but it tends to change less frequently.
 
-[[Manual SAM3U Firmware Update]]
-
 ==== Checking Firmware Version ====
 
 The firmware version is printed at start-up. You will see a line that looks like this indicating the version of the SAM3U Firmware:
@@ -448,82 +446,36 @@ If your firmware version is outdated, a warning will be printed. You can also se
 </blockquote>
 Note the main version is 0.11 in this example. The &quot;b0&quot; indicates a &quot;build&quot; number. Typically this will be &quot;build 0&quot;, but special versions will use a different build number to indicate a variant of a regular version.
 
-==== Entering Bootloader Mode ====
+==== Upgrading Firmware ====
 
-Before updating, you must put your ChipWhisperer-Lite into bootloader mode. Once put into this mode you will need to load a new firmware file. The two methods of doing this are:
+Before updating, you must put your ChipWhisperer-Lite into bootloader mode. Once put into this mode you will need to load a new firmware file. There is two ways of doing it: the ''automatic'' method, and the ''manual'' method. The automatic method is done through the GUI, and works if you have valid firmware image loaded. The ''manual'' method is always guaranteed to work.
 
-<ol style="list-style-type: decimal;">
-<li>Using ChipWhisperer-Capture GUI
-<ol style="list-style-type: lower-alpha;">
-<li>Connect to the ChipWhisperer-Lite.</li>
-<li>From the ''Tools'' menu select ''Config CW Firmware''.</li>
-<li>Select the ''Open SAM3U Update Widget'' button.</li>
-<li>Press the ''Enable Bootloader Mode'' button.</li>
-<li>The blue LED will stop flashing, and the device will reconnect in programmer mode (see below).</li></ol>
-</li>
-<li>If this method doesn't work, you can use the manual override method. To use a metal object:
-<ol style="list-style-type: lower-alpha;">
-<li><p>Short the jumper labeled &quot;ERASE&quot; on the ChipWhisperer-Lite. Do this while the device is connected via micro-USB. The blue LED should stop flashing at this point, and will stay either on or off (depending when you shorted the jumper). This can be accomplished by anything metallic - for example using a screwdriver or tweezers:</p>
-<p>[[File:short_screwdriver.jpg|image]]</p>
-<blockquote><dl>
-<dt>width</dt>
-<dd><p>300pt</p></dd></dl>
-</blockquote>
-<p>[[File:short_tweezers.jpg|image]]</p>
-<blockquote><dl>
-<dt>width</dt>
-<dd><p>300pt</p></dd></dl>
-</blockquote></li>
-<li>Unplug and Replug the micro-USB port.</li></ol>
-</li></ol>
+The automatic method is:
+
+Using ChipWhisperer-Capture GUI
+
+# Connect to the ChipWhisperer-Lite.
+# From the ''Tools'' menu select ''Config CW Firmware''
+# Select the ''Open SAM3U Update Widget'' button.
+# Press the ''Enable Bootloader Mode'' button.
+# You will get an error, and the ChipWhisperer-Lite will disconnect. This is normal, and indicates the USB mode changed suddenly.
+# The blue LED will stop flashing, and the device will reconnect in programmer mode (see below).
 
 Once you are in bootloader mode, both the blue and red LED will be very dimmly lit:
 
-<blockquote>[[File:lights_prog.jpg|400px]]
-</blockquote>
+[[File:lights_prog.jpg|400px]]
+
 This indicates it is in bootloader mode. The device will now attach as a serial port. If you are using Windows this may take a few minutes to happen.
 
 If using Linux, you can use ''dmesg'' to verify the serial port was connected OK.
 
-==== Upgrading with BOSSA ====
+If this doesn't work, see the page [[Manual SAM3U Firmware Update]] for details on how to manually enter bootloader mode. You can return to this page for the actual programming - you don't need to install/use the BOSSA utility if you follow those manual directions. You simply need to force the system into bootloader mode using those directions.
 
-BOSSA is a programming tool for the Atmel SAM devices. The ChipWhisperer-Capture software can call the command-line tool for you. To do this:
+Once we are in bootloader mode
 
-<ol style="list-style-type: decimal;">
-<li>Open the SAM3U Firmware Loader - if you just used it to enter bootloader mode, you will already have this window open. If not:
-<ol style="list-style-type: lower-alpha;">
-<li>Start ChipWhisperer-Capture.</li>
-<li>Select the &quot;ChipWhisperer/OpenADC&quot; and &quot;ChipWhisperer-Lite&quot; target, but ''do not'' click connect (as it won't work).</li>
-<li>From the ''Tools'' menu select ''Config CW Firmware''.</li>
-<li>Press the ''Open SAM3U Update Widget'' button.</li></ol>
-</li>
-<li><p>Hopefully the ''bossac'' binary was found. ChipWhisperer-Capture has a binary for Windows and Linux already present, which should be located at <code>chipwhisperer/capture/hardware/chipwhisperer-lite/bossa</code>. If these binaries are not working, see the BOSSA homepage to download an appropriate installer for your system.</p>
-<p>Once ready, point to the <code>bossac</code> binary for your system.</p></li>
-<li><p>The firmware update file is normally located in <code>hardware/capture/chipwhisperer-lite/sam3u_fw/SAM3U_VendorExample/Debug/SAM3U_CW1173.bin</code>. If not found, again point your system to this. If the window is setup correctly, it should look like this:</p>
-<p>[[File:bossa_gui.png|image]]</p></li>
-<li>Hit the ''Run bossac'' button. You should see a decleration of success printed in the output.</li>
-<li>Unplug and replug the ChipWhisperer-Lite. The blue LED should be blinking again. Close ChipWhisperer-Capture and re-open it to attempt a re-connect.</li></ol>
+==== Manual Update ====
 
-If things don't work, you can manually run bossac as follows:
-
-<pre>bossac -e -w -v -b /path/to/SAM3U_CW1173.bin</pre>
-If you are on Linux, you may need to either fix permissions on the serial port, or run bossac as root/sudo. See below for details.
-
-===== Linux-Specific Instructions =====
-
-You may need to give yourself write permission for the serial port. This can be done on some systems easily by adding yourself to the <code>dialout</code> user group. For example, assuming your username was <code>cwuser</code>:
-
-# <code>$ sudo usermod -a -G dialout cwuser</code>
-# Log out and log back in again for changes to take effect.
-
-You may also need to build bossac from sources, as the provided binary does not work with your system. Details of how to perform this are provided next:
-
-To build BOSSA, it is recommended to use our simplified bossac repository, which only builds the command-line version. To build this perform these steps:
-
-# Download [https://github.com/newaetech/BOSSA/archive/master.zip a copy of the GIT repo], or clone with <code>git clone git@github.com:newaetech/BOSSA.git</code> (see github.com/newaetech/bossa for the full repo).
-# Unzip the directory if you downloaded the zip.
-# Run <code>make</code>.
-# The binary should be in <code>bin\bossac</code>.
+If the above instructions fail, there is no big problem. The SAM3U chip contains a hardware-resident bootloader. You may need to follow instructions on the [[Manual SAM3U Firmware Update]] page (including using BOSSA) if you are unable to use the automatic system that is part of ChipWhisperer-Capture.
 
 === Breaking Target Section Apart ===
 
