@@ -471,7 +471,15 @@ If using Linux, you can use ''dmesg'' to verify the serial port was connected OK
 
 If this doesn't work, see the page [[Manual SAM3U Firmware Update]] for details on how to manually enter bootloader mode. You can return to this page for the actual programming - you don't need to install/use the BOSSA utility if you follow those manual directions. You simply need to force the system into bootloader mode using those directions.
 
-Once we are in bootloader mode
+Once we are in bootloader mode, you can follow these steps:
+
+# Hit "Update List", and select the serial port the SAM3U attached as.
+# To use the default firmware file, leave the "Built-in" radio-box selected. If you want a custom firmware you can select the "External" mode.
+# Hit the "Run Program" button
+# Once completed, unplug/replug your device and it should come to life.
+# Close the update widgets, and reconnect to your ChipWhisperer-Lite.
+
+[[File:sam3uupdate.png|400px]]
 
 ==== Manual Update ====
 
