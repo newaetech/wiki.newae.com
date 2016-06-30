@@ -21,3 +21,30 @@ Once this is accomplished, unplug and replug the micro-USB port. This will insta
 This indicates it is in bootloader mode. The device will now attach as a serial port. If you are using Windows this may take a few minutes to happen.
 
 If using Linux, you can use ''dmesg'' to verify the serial port was connected OK.
+
+
+==BOSSA Command Line==
+
+On certain systems it may be easier to use the command-line version of BOSSA, called bossac. You can also build just this version if required (see instructions below).
+
+You can also run the BOSSA utility at the command line, with an instruction like the following:
+ 
+ bossac -e -w -v -b /path/to/SAM3U_CW1173.bin
+
+If you are on Linux, you may need to either fix permissions on the serial port, or run bossac as root/sudo. See below for details.
+
+=== Linux-Specific Instructions ===
+
+You may need to give yourself write permission for the serial port. This can be done on some systems easily by adding yourself to the <code>dialout</code> user group. For example, assuming your username was <code>cwuser</code>:
+
+# <code>$ sudo usermod -a -G dialout cwuser</code>
+# Log out and log back in again for changes to take effect.
+
+You may also need to build bossac from sources, as the provided binary does not work with your system. Details of how to perform this are provided next:
+
+To build BOSSA, it is recommended to use our simplified bossac repository, which only builds the command-line version. To build this perform these steps:
+
+# Download [https://github.com/newaetech/BOSSA/archive/master.zip a copy of the GIT repo], or clone with <code>git clone git@github.com:newaetech/BOSSA.git</code> (see github.com/newaetech/bossa for the full repo).
+# Unzip the directory if you downloaded the zip.
+# Run <code>make</code>.
+# The binary should be in <code>bin\bossac</code>.
