@@ -27,4 +27,5 @@ Note that ChipWhisperer isn't the only side-channel analysis project out there! 
 == Half-Baked Ideas ==
 
 [[Profiling Attacks with Neural Networks]]
+
 [[Attacking TEA with CPA]]
