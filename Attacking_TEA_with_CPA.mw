@@ -1,0 +1,15 @@
+= TEA Encryption =
+TEA (Tiny Encryption Algorithm) is a simple encryption algorithm that is meant to be simple enough to memorize. It uses a 128 bit key to encrypt 64 bits of plaintext with the following C code:
+<pre>
+void tea_encrypt(uint32_t* v, uint32_t* k)
+{
+    uint32_t sum=0, i;
+    uint32_t delta= 0x9e3779b9;
+    for (i=0; i < 32; i++) {
+        sum  += delta;
+        v[0] += ((v[1]<<4) + k[0]) ^ (v[1] + sum) ^ ((v[1]>>5) + k[1]);
+        v[1] += ((v[0]<<4) + k[2]) ^ (v[0] + sum) ^ ((v[0]>>5) + k[3]);
+    }
+}
+</pre>
+If you're used to looking at the AES algorithm, this one probably looks extremely simple. However, it is surprisingly secure. As of 2016, very few attacks on TEA are known - the best cryptanalysis results require <math>2^{121.5}</math> guesses against a shortened version of the algorithm! The only real weakness is that every key has three other equivalent keys - that is, there are four different keys that all give the exact same encrypted output. This is not a showstopper because <math>2^{126}</math> keys is still too many to brute-force.
