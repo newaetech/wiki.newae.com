@@ -30,3 +30,24 @@ The three attack points here are good spots to attack because they are non-linea
 # Similarly, this expression includes a right-shift of 5 bits, so we can only get at the bottom 27 bits.
 # The last XOR combines the first two results, which use both words of the key (<code>k[0]</code> and <code>k[1]</code>). This means that we can only use it if we already know some of the bits in one of these keys (ie: we can only find the first byte of <code>k[0]</code> if we know the first byte of <code>k[1]</code>).
 However, this is enough information to recover both of these words. Once we know these 64 bits, the second half of the key can be recovered in exactly the same way.
+
+= Firmware =
+The AES SimpleSerial target was adapted to use TEA encryption instead of AES. This new target uses the exact same commands as the original SimpleSerial target:
+* <code>kKEY</code> loads KEY as the 128 bit encryption key
+* <code>pPLAINTEXT</code> loads PLAINTEXT as the 64 bit plaintext and begins the encryption routine
+* <code>rRESPONSE</code> is the reply from the target, where RESPONSE is the 64 bit ciphertext
+This firmware is available in <code>chipwhisperer/hardware/victims/firmware/simpleserial-tea</code>. It uses the same build process as the other targets - simply run <code>make</code> to produce the hex file.
+
+= Capture =
+== Capture Setup ==
+== Sample Outputs ==
+
+= Analysis = 
+== Searching for Leakage ==
+== Attacking the Key ==
+
+= More Ideas =
+This guide has walked through a very basic CPA attack on TEA encryption. However, we could take this a lot further...
+* This was a very "manual" attack: we had to guide our code through each of the single-byte attacks. It would be good to have a more automatic attack that combines all of the information from all three attack points, rather than picking and choosing bytes to attack.
+* We had to use a lower optimization level so that we could see the power signature from the sensitive attack points. Can we avoid this? Maybe it's possible to use a different sampling method to find more leakage.
+* A template attack might be a more powerful way to perform this attack. There are several points that we could create a template for, including the three points that we examined in this attack.
