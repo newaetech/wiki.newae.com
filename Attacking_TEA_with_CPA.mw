@@ -146,6 +146,199 @@ OPT = s
 Change this <code>s</code> to <code>0</code> and re-make the firmware. Then, repeat the capture setup and record another 2000 traces. Re-run the analysis script and confirm that the leakage is clearly visible.
 
 == Attacking the Key ==
+Since we know that our traces show us some leakage, we can complete our attack. We'll start a new script by writing functions to calculate our three attack point values:
+
+<pre>
+def intermediate_1(v, k):
+    v1 = ( v[4] << 24
+         | v[5] << 16
+         | v[6] << 8
+         | v[7])
+    k0 = ( k[0] << 24
+         | k[1] << 16
+         | k[2] << 8
+         | k[3])
+    return ((v1 << 4) + k0) & 0xffffffff
+
+def intermediate_2(v, k):
+    v1 = ( v[4] << 24
+         | v[5] << 16
+         | v[6] << 8
+         | v[7])
+    k1 = ( k[4] << 24
+         | k[5] << 16
+         | k[6] << 8
+         | k[7])
+    return ((v1 >> 5) + k1) & 0xffffffff
+    
+def intermediate_3(v, k):
+    v0 = ( v[0] << 24
+         | v[1] << 16
+         | v[2] << 8
+         | v[3])
+    v1 = ( v[4] << 24
+         | v[5] << 16
+         | v[6] << 8
+         | v[7])
+    k0 = ( k[0] << 24
+         | k[1] << 16
+         | k[2] << 8
+         | k[3])
+    k1 = ( k[4] << 24
+         | k[5] << 16
+         | k[6] << 8
+         | k[7])
+    int1 = ((v1 << 4) + k0)  & 0xffffffff
+    int2 = (v1 + 0x9e3779b9) & 0xffffffff
+    int3 = ((v1 >> 5) + k1)  & 0xffffffff
+    return v0 + (int1 ^ int2 ^ int3)
+</pre>
+
+Then, we'll copy in the CPA attack script from Tutorial B6 and make some modifications. The full script for the TEA attack is:
+<pre>
+traces   = np.load('traces/O0_rand_traces.npy')
+pt       = np.load('traces/O0_rand_textin.npy')
+knownkey = np.load('traces/O0_rand_keylist.npy')
+#print knownkey
+numtraces = np.shape(traces)[0]
+numpoint = np.shape(traces)[1]
+
+# Use less than the maximum traces by setting numtraces to something smaller
+numtraces = 1000
+bestguess = 0
+   
+  
+cpaoutput = [0]*256
+maxcpa = [0]*256
+for kguess in range(0, 256):
+    print "Key = %02x: "%(kguess),
+    
+    # Build our key guess 
+    k = [0, 0, 0, kguess, 0, 0, 0, 0]
+
+    #Initialize arrays and variables to zero
+    sumnum = np.zeros(numpoint)
+    sumden1 = np.zeros(numpoint)
+    sumden2 = np.zeros(numpoint)
+
+    # Calculate hypothesis = Hamming weight of intermediate values
+    hyp = np.zeros(numtraces)
+    for tnum in range(0, numtraces):
+        int = (intermediate_1(pt[tnum], k) >> 0) & 0xff
+        hyp[tnum] = HW[int]
+
+    #Means of hypothesis and traces
+    meanh = np.mean(hyp, dtype=np.float64)
+    meant = np.mean(traces, axis=0, dtype=np.float64)
+
+    #For each trace, calculate correlation
+    for tnum in range(0, numtraces):
+        hdiff = (hyp[tnum] - meanh)
+        tdiff = traces[tnum,:] - meant
+
+        sumnum = sumnum + (hdiff*tdiff)
+        sumden1 = sumden1 + hdiff*hdiff 
+        sumden2 = sumden2 + tdiff*tdiff
+
+    cpaoutput[kguess] = sumnum / np.sqrt( sumden1 * sumden2 )
+        
+    maxcpa[kguess] = max(abs(cpaoutput[kguess]))
+    print maxcpa[kguess]
+
+bestguess = np.argmax(maxcpa)
+cparefs = np.argsort(maxcpa)[::-1]
+
+print "Best Key Guess: %02x"%(bestguess)
+print [hex(c) for c in cparefs]
+</pre>
+
+There's one line of this script that we'll need to change a few times. In the key-guessing loop, we build the key by writing
+<pre>
+k = [0, 0, 0, kguess, 0, 0, 0, 0]
+</pre>
+and we calculate the intermediate value as
+<pre>
+int = (intermediate_1(pt[tnum], k) >> 0) & 0xff
+</pre>
+This means that we're only going to be modifying one byte of our guess - the other 7 bytes will remain unchanged - and we're only looking at the first byte of attack point 1. Once we're done attacking this byte, we can move our guess to a different byte and examine a different part of the intermediate value to continue the attack.
+
+Run the script. You should see an output that looks like
+<pre>
+Key = 00:  0.491256496954
+Key = 01:  0.491256496954
+Key = 02:  0.491256496954
+Key = 03:  0.491256496954
+Key = 04:  0.491256496954
+Key = 05:  0.491256496954
+Key = 06:  0.491256496954
+Key = 07:  0.491256496954
+Key = 08:  0.491256496954
+Key = 09:  0.491256496954
+Key = 0a:  0.491256496954
+Key = 0b:  0.491256496954
+Key = 0c:  0.491256496954
+Key = 0d:  0.491256496954
+Key = 0e:  0.491256496954
+Key = 0f:  0.491256496954
+Key = 10:  0.25438721963
+Key = 11:  0.25438721963
+Key = 12:  0.25438721963
+Key = 13:  0.25438721963
+Key = 14:  0.25438721963
+Key = 15:  0.25438721963
+Key = 16:  0.25438721963
+Key = 17:  0.25438721963
+Key = 18:  0.25438721963
+Key = 19:  0.25438721963
+Key = 1a:  0.25438721963
+Key = 1b:  0.25438721963
+Key = 1c:  0.25438721963
+Key = 1d:  0.25438721963
+Key = 1e:  0.25438721963
+Key = 1f:  0.25438721963
+...
+<removed>
+Key = f0:  0.208801829135
+Key = f1:  0.208801829135
+Key = f2:  0.208801829135
+Key = f3:  0.208801829135
+Key = f4:  0.208801829135
+Key = f5:  0.208801829135
+Key = f6:  0.208801829135
+Key = f7:  0.208801829135
+Key = f8:  0.208801829135
+Key = f9:  0.208801829135
+Key = fa:  0.208801829135
+Key = fb:  0.208801829135
+Key = fc:  0.208801829135
+Key = fd:  0.208801829135
+Key = fe:  0.208801829135
+Key = ff:  0.208801829135
+Best Key Guess: 00
+['0x0', '0xb', '0x4', '0x5', '0x6', '0x7', '0x8', '0xa', '0x9', '0x3', '0xc', '0xd', ...
+</pre>
+This tells us a few things. First of all, like we expected, we can't attack the bottom four bits of <code>k[0]</code> because the correlation coefficient isn't affected by these bits. Second, the most likely value of the top four bits is <code>0x0</code>.
+
+Change the attack script to
+<pre>
+k = [0, 0, kguess, 0x00, 0, 0, 0, 0]
+...
+int = (intermediate_1(pt[tnum], k) >> 8) & 0xff
+</pre>
+and run it again. The correlation coefficients should be much different. My output shows <code>Best Key Guess: 02</code>, which is correct. 
+
+Continue this process:
+* Repeat the same attack for the first two bytes of the key. <code>intermediate_1</code> shifted by 16 and 24 bits should have no trouble with this.
+* To get the other half of the key, change the attack to
+<pre>
+k = [0x00, 0x01, 0x02, 0x00, 0, 0, 0, kguess]
+...
+int = (intermediate_2(pt[tnum], k) >> 0) & 0xff
+</pre>
+: and attack all four bytes like before. Note that you will not recover the top 5 bits of <code>k[1]</code> this way.
+* To clean up the two incomplete bytes, switch to <code>intermediate_3</code> and retry these two guesses.
+
+If all goes well, you should be able to recover the entire key this way!
 
 = More Ideas =
 This guide has walked through a very basic CPA attack on TEA encryption. However, we could take this a lot further...
