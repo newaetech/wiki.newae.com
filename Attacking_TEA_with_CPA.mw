@@ -39,8 +39,17 @@ The AES SimpleSerial target was adapted to use TEA encryption instead of AES. Th
 This firmware is available in <code>chipwhisperer/hardware/victims/firmware/simpleserial-tea</code>. It uses the same build process as the other targets - simply run <code>make</code> to produce the hex file.
 
 = Capture =
-== Capture Setup ==
-== Sample Outputs ==
+The setup for this capture routine will be pretty straightforward because the firmware is so close to the SimpleSerial targets we've attacked before. Only a small number of modifications need to be made to adapt the capture script for TEA.
+
+# First, run the AES SimpleSerial example script (<code>Project > Example Scripts > ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code>). This will connect to the hardware and prepare most of the settings.
+# Open the programmer (<code>Tools > CW-Lite XMEGA Programmer</code>) and find the hex file that we made in the previous section. Flash this program onto the target. 
+# Under ''Target Settings'', change the ''Input Length'' and ''Output Length'' from 16 to 8 bytes to match the TEA code (64 bit plaintext and ciphertext).
+# Under ''Scope Settings'', change the trigger offset to 0 samples. 
+All of the other default settings are fine. 
+
+Before starting the full captures, open the Encryption Monitor (<code>Tools > Encryption Status Monitor</code>) and press ''Capture 1''. Confirm that the ''Text In'' and ''Text Out'' are 8 bytes long, like we specified above. If you want to test a specific case, when the input and key are both all 0s, the output is <code>41 EA 3A 0A 94 BA A9 40</code>.
+
+For our analysis, we'll need two sets of data. The first should have random keys and plaintexts, and the second should have a fixed ("secret") key and random plaintexts. For this guide, I'll be using a fixed key of <code>00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F</code>. Capture about 1000 traces for each set and put all of the data files in a convenient place.
 
 = Analysis = 
 == Searching for Leakage ==
