@@ -12,7 +12,7 @@ void tea_encrypt(uint32_t* v, uint32_t* k)
     }
 }
 </pre>
-If you're used to looking at the AES algorithm, this one probably looks extremely simple. However, it is surprisingly secure. As of 2016, very few attacks on TEA are known - the best cryptanalysis results require <math>2^{121.5}</math> guesses against a shortened version of the algorithm! The only real weakness is that every key has three other equivalent keys - that is, there are four different keys that all give the exact same encrypted output. This is not a showstopper because <math>2^{126}</math> keys is still too many to brute-force.
+If you're used to looking at the AES algorithm, this one probably looks extremely simple. However, it is surprisingly secure. As of 2016, very few attacks on TEA are known - the best cryptanalysis results require <math>2^{121.5}</math> guesses against a shortened version of the algorithm! The only real weakness is that every key has three other equivalent keys - that is, there are four different keys that all give the exact same encrypted output. This is not a showstopper because <math>2^{126}</math> keys is still too many to brute-force (it does mean the algorithm is a poor choice for certain applications such as hashes, something the [https://web.archive.org/web/20090416175601/http://www.xbox-linux.org/wiki/17_Mistakes_Microsoft_Made_in_the_Xbox_Security_System#The_TEA_Hash XBox security missed]).
 
 In order to complete a CPA attack, we need to find some sensitive points of the algorithm. Breaking up the first round of the one-liner
 <pre>
