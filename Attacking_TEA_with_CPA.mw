@@ -53,6 +53,98 @@ For our analysis, we'll need two sets of data. The first should have random keys
 
 = Analysis = 
 == Searching for Leakage ==
+Our first step is to look through the traces to see if there's any visible leakage. We can do this by sorting the traces into appropriate groups and comparing the averages of each group. This section will look a lot like [[Tutorial B6 Breaking AES (Manual CPA Attack)]], so you might want to make a copy of this script for a starting point.
+
+First of all, find the random-key traces and load them with NumPy:
+<pre>
+import numpy as np
+
+traces = np.load('traces/traces.npy')
+text   = np.load('traces/textin.npy')
+keys   = np.load('traces/keylist.npy')
+num_traces = len(traces)
+</pre>
+
+Next, we'll make a list to split our traces into 9 groups (one for each Hamming weight):
+<pre>
+grouped_traces = [[] for _ in range(9)]
+</pre>
+
+Then, for each trace, we need to calculate one of the sensitive intermediate values and find the Hamming weight. There are a few steps to this; for each trace, we need to:
+* Use the plaintext we loaded to build the <code>v</code> array (32 bit words, instead of bytes)
+* Use the key to build the <code>k</code> array (again, 32 bit words)
+* Calculate the intermediate values (watch out for overflow - you can keep things at 32 bits by ANDing your variables with <code>0xffffffff</code>)
+* Find the Hamming weight of the intermediate values
+* Put the trace into one of the 9 groups
+Try this yourself! If you're stuck, here's my implementation:
+<pre>
+for i in range(num_traces):
+    # Build the v array
+    v = [( text[i][0] << 24
+         | text[i][1] << 16
+         | text[i][2] << 8
+         | text[i][3]),
+         ( text[i][4] << 24
+         | text[i][5] << 16
+         | text[i][6] << 8
+         | text[i][7])]
+
+    # Build the k array
+    k = [( keys[i][0] << 24
+         | keys[i][1] << 16
+         | keys[i][2] << 8
+         | keys[i][3]),
+         ( keys[i][4] << 24
+         | keys[i][5] << 16
+         | keys[i][6] << 8
+         | keys[i][7])]
+
+    # Calculate the intermediate values
+    sum  = 0x9e3779b9
+    mask = 0xffffffff
+    int1 = ((v[1] << 4) + k[0]) & mask
+    int2 = (v[1] + sum) & mask
+    int3 = ((v[1] >> 5) + k[1]) & mask
+    int = ((int1 ^ int2 ^ int3)) & mask
+
+    # Figure out which group this trace goes in
+    # Change this line to look for different attack points
+    group = bin((int1) & 0xFF).count('1')
+    grouped_traces[group].append(traces[i])
+</pre>
+
+Once we have the traces in groups, we can find the mean of each group and plot everything:
+<pre>
+import matplotlib.pyplot as plt
+
+# Find means and plot
+means = []
+for i in range(9):
+    print i, len(grouped_traces[i])
+    means.append(np.average(grouped_traces[i], axis=0))
+    plt.plot(means[i])
+plt.grid()
+plt.show()
+</pre>
+
+With some luck, you should be able to find a point where the averages are noticeably different. For example, this point varies quite a bit when the first attack point changes in Hamming weight:
+
+[[File:TEA-Sorted-Traces.png | 800px]]
+
+If you need some help searching, you could also try plotting <code>means[7] - means[1]</code>. This plot will have large spikes whenever these two means are different, making it easier to find places to look. Do this for all three of our attack points and make sure that you can spot all of them.
+
+== Creating More Leakage ==
+This is where things get tough. When I worked through these plots, I found pretty clear signals that showed me the Hamming weight of attack point 1 (<code>int1</code>) and 3 (<code>v[0] + int</code>). However, I couldn't find the second point anywhere. Since we need all three points to complete the attack, I took some drastic measures. If you're also stuck, keep reading.
+
+One way to get more leakage out of the target is to turn off optimizations in the compiler. This will usually cause the CPU to perform more reads and writes to memory, which are not always necessary. These extra operations made it much easier to find the missing leakage. To turn off optimizations, go back to the firmware folder, open the Makefile in a text editor, and find the line 
+<pre>
+# Optimization level, can be [0, 1, 2, 3, s]. 
+#     0 = turn off optimization. s = optimize for size.
+#     (Note: 3 is not always the best optimization level. See avr-libc FAQ.)
+OPT = s
+</pre>
+Change this <code>s</code> to <code>0</code> and re-make the firmware. Then, repeat the capture setup and record another 2000 traces. Re-run the analysis script and confirm that the leakage is clearly visible.
+
 == Attacking the Key ==
 
 = More Ideas =
