@@ -2,6 +2,35 @@
 == Preprocessing Modules ==
 Are filters that modify the traces from a given trace source (that can be another Preprocessing Module or the Trace Manager) and works as a new trace source to the next module in the chain (called trace observer).
 
-=== Sum of Difference ===
+=== Add Noise: Amplitude ===
+Add random noise to the traces. Used for testing, has no use in actual analysis.
 
+=== Add Noise: Time Jitter ===
+Add random jitter. Used for testing, has no use in actual analysis.
+
+=== Decimation: Clock Recovery ===
+Attempts to 'recover' the clock by band-pass filtering, and then uses that to decimate to only points of interest. ****CURRENTLY NOT SUPPORTED****
+
+=== Decimation: Fixed ===
+Decimate (reduce the sample rate) by a fixed factor.
+
+=== Digital Filter ===
+Frequency specific filter.
+
+=== Normalize ===
+Normalize by standard deviation.
+
+=== Resync: Cross Correlation ===
+Use cross-correlation to detect shift between a 'reference trace' and every input trace. In practice the other resync methods seem to work better.
+
+=== Resync: Peak Detect ===
+Line up traces so peak (either max positive or max negative) within some given range of points all aligns.
+For each trace the following must hold or the trace is rejected:
+  (1-valid limit) < (peak value from candidate trace) / (peak value from reference) < (1+valid limit)
+  If 'valid limit' is 0 then this is ignored, and all traces are kept.
+
+=== Resync: Resample based on Zero-Crossing ===
+Deal with resampling 'bins' based on zero-crossing detection.
+
+=== Sum of Difference ===
 This module, also known as Sum of Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter. See [[Sum of Absolute Difference (SAD) Pre-Processing]]
