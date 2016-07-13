@@ -33,4 +33,4 @@ For each trace the following must hold or the trace is rejected:
 Deal with resampling 'bins' based on zero-crossing detection.
 
 === Sum of Difference ===
-Minimizes the 'Sum of Absolute Difference' (SAD), also known as 'Sum of Absolute Error'. Uses a portion of one of the traces as the 'reference'. This reference is then slid over the 'input window' for each trace, and the amount of shift resulting in the minimum SAD criteria is selected as the shift amount for that trace.
+Minimize the 'Sum of Absolute Difference' (SAD), also known as 'Sum of Absolute Error'. Uses a portion of one of the traces as the 'reference'. This reference is then slid over the 'input window' for each trace, and the amount of shift resulting in the minimum SAD criteria is selected as the shift amount for that trace.
