@@ -1,3 +1,9 @@
+== Loading/Saving the Project ==
+The save option inside the file menu of both the Capture and Analyzer tools creates the project directoryes and the .cwp file with traces information that is shared between both tools. The exact content of this file can be viewed and edited in the "Project Text Editor" widget.
+
+The traces data are captured to the tmp directory if no project was created. In this case, the "Consolidate" option in the Project menu can be used to copy/move this files to the current Project directory as soon as you create one. It can also be used if you added traces using the import option in the Trace Manager.
+
+== Loading/Saving the Settings ==
+The settings are not saved with the project (we may improve it in the future), but instead, you can use the "Save Settings" option (inside the Project menu) to dump this information to the "settings.cwset" file, inside the project directory. Once saved, the settings can be re-loaded using the load button in the settings tabs (general, scope, traget,...). Another possibility would be to use the Save Button and choose different filenames for each settings profile that you wanto to use.
 
 == Class Diagram ==
-[[File:cw_classdiagram.png|1100px]]
