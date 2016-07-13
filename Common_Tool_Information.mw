@@ -7,4 +7,4 @@ The traces data are captured to the tmp directory if no project was created. In 
 The settings are not saved with the project (we may improve it in the future), but instead, you can use the "Save Settings" option (inside the Project menu) to dump this information to the "settings.cwset" file, inside the project directory. Once saved, the settings can be re-loaded using the load button in the settings tabs (general, scope, traget,...). Another possibility would be to use the Save Button and choose different filenames for each settings profile that you wanto to use.
 
 == Class Diagram ==
-[[File:Cw classdiagram.png]]
+[[File:Cw classdiagram.png|1100x1100px]]
