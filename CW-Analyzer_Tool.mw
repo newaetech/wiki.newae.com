@@ -1,64 +1,22 @@
-The objective of this tool is to analyze the traces captured from a given scope.
-
-Main features:
-* CPA and Profiling types of attack;
-* Built-in preprocessing modules (decimation, resync, digital filter, normalize and noise);
-* Record preprocessed traces output;
-* Execute custom analysis scripts;
-* AES Key schedule calculator;
-* Set of result widgets: Correlation vs Traces plot; Output vs Point plot; PGE vs Trace plot; PGE Table; Waveform Viewer.
-
-[[File:Screen Shot 2016-07-12 at 4.02.17 PM.png|1100px]]
-
-== Using the Analyzer ==
-After loading the project, you will need to setup the analysis environment first. 
-
-In the analyzer, the settings tabs are used to automatically generate the analysis script (shown in the "Analysis Script" dock). This code can be edited by the user for a more "advanced" usage. It can also be saved and loaded through:
-* the console ($python script.py); 
-* using the "Attack Script Generator" tab;
-* copying it to the scripts folder (chipwhisperer/software/chipwhisperer/analyzer/scripts or ˜/chipwhisperer_projects/chipwhisperer/analyzer/scripts) so that it will appear in the Project->"Example Scripts" menu the next time you execute the tool.
-In the "Analysis Script" dock, the constructor of the script object is called automatically every time that a new script is generated. It is done because widgets like the waveform viewer should update the trace output of the preprocessing modules when the user modify its settings. The run() method is executed only when the "Start Analysis" button in the toolbar is pressed. Custom methods can be executed by selecting it in the code and right clicking: a "Run Function" option will show up.
-
-The "Attack Script Generator" is the main settings tab. It allows the user to set the Preprocessing modules that should be applied over the original traces and the Attack module. The Preprocessing and the Attack tabs will update accordingly.
-
-The "Trace Explorer" tab enables a set of helper scripts needed by some of the analysis algorithms (like the POI detection in the Template attack).
 
 == Preprocessing Modules ==
-Are filters that modify the traces from a given trace source (that can be another Preprocessing Module or the Trace Manager) and works as a new trace source to the next module in the chain (called trace observer).
+They are filters that modify the previous trace source that can be another Preprocessing Module or the Trace Manager (Channel is supported aswell but only through scripting). It means that multiple modules can be used one after the other. You may want to observe the changes in auto-generated script code in the "Analysis script" editor widget.
 
-=== Add Noise: Amplitude ===
-Add random noise to the traces. Used for testing, has no use in actual analysis.
+=== Sum of Difference ===
 
-=== Add Noise: Time Jitter ===
-Add random jitter. Used for testing, has no use in actual analysis.
+This module, also known as Sum o Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter. Zooming in the waveform plot, you can detect the presence of jitter when the traces are not aligned (you may need to select about 8 or more traces to be ploted simulteneously in the "Trace Output Plot" settings in order to visualize it):
 
-=== Decimation: Clock Recovery ===
-Attempts to 'recover' the clock by band-pass filtering, and then uses that to decimate to only points of interest. ****CURRENTLY NOT SUPPORTED****
+[[File:Screen Shot 2016-07-13 at 1.31.23 PM.png|800px]]
 
-=== Decimation: Fixed ===
-Decimate (reduce the sample rate) by a fixed factor.
+If it is the case, go to the "Attack Script Generator" tab and select "Resync: Sum-of-Difference" as the Module #0. 
+Switch to the "Preprocessing" tab and Select a point range in the plot as "Reference Points". It can be performed by manually inserting the values (usually around a peak) in the corresponding field or by clicking in the adjacent button and select the area direcly in the plot by draggin the vertical lines.
 
-=== Digital Filter ===
-Frequency specific filter.
+[[File:Screen Shot 2016-07-13 at 1.54.09 PM.png|800px]]
 
-=== Normalize ===
-Normalize by standard deviation.
+Next, you will need to select the "Input Windows" which is the interval in the other traces that the tool will try to match with the reference by shifting it until the SAD is reduced. The best value for this field can be determined by  adding more traces to the plot and checking if all of then would fit in the "Reference Points after shifting:
 
-=== Resync: Cross Correlation ===
-Use cross-correlation to detect shift between a 'reference trace' and every input trace. In practice the other resync methods seem to work better.
+[[File:Screen Shot 2016-07-13 at 1.55.57 PM.png|800px]]
 
-=== Resync: Peak Detect ===
-Line up traces so peak (either max positive or max negative) within some given range of points all aligns.
+Click "Enable" and (with some luck) all the traces will align magically.
 
-For each trace the following must hold or the trace is rejected:
-* (1-valid limit) < (peak value from candidate trace) / (peak value from reference) < (1+valid limit)
-
-* If 'valid limit' is 0 then this is ignored, and all traces are kept.
-
-=== Resync: Resample based on Zero-Crossing ===
-Deal with resampling 'bins' based on zero-crossing detection.
-
-=== Resync: Sum-of-Difference ===
-Minimize the 'Sum of Absolute Difference' (SAD), also known as 'Sum of Absolute Error'. Uses a portion of one of the traces as the 'reference'. This reference is then slid over the 'input window' for each trace, and the amount of shift resulting in the minimum SAD criteria is selected as the shift amount for that trace. 
-
-See [[Sum of Absolute Difference (SAD) Pre-Processing]] for more information.
+[[File:Screen Shot 2016-07-13 at 1.56.20 PM.png|800px]]
