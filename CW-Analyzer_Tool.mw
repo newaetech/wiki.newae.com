@@ -4,6 +4,4 @@ Are filters that modify the traces from a given trace source (that can be anothe
 
 === Sum of Difference ===
 
-This module, also known as Sum of Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter.
-
-See [[Sum of Absolute Difference (SAD) Pre-Processing]]
+This module, also known as Sum of Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter. See [[Sum of Absolute Difference (SAD) Pre-Processing]]
