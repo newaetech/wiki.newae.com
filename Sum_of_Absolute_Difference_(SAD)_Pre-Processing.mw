@@ -1,4 +1,3 @@
-= Sum of Difference Pre-Processing Module =
 
 This module, also known as Sum of Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter.
 
