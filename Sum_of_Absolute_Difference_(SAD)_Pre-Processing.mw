@@ -3,17 +3,18 @@ This module, also known as Sum of Absolute Difference (SAD), is used to re-synch
 
 The easiest way to detect the presence of jitter is by zooming in the plot to check if they are not aligned (you may need to select about 8 or more traces to be plotted simultaneously in the "Trace Output Plot" settings in order to visualize it):
 
-[[File:Screen Shot 2016-07-13 at 1.31.23 PM.png|1100px]]
+[[File:Screen Shot 2016-07-13 at 1.31.23 PM.png|1100px]] 
 
-If it is the case, go to the "Attack Script Generator" tab and select "Resync: Sum-of-Difference" as the Module #0. 
+If it is the case, go to the "Attack Script Generator" tab and select "Resync: Sum-of-Difference" as the Module #0.  
+
 Switch to the "Preprocessing" tab and Select a point range as "Reference Points". It can be performed by manually inserting the values in the corresponding field or by clicking in the adjacent button and selecting the area directly in the plot by dragging the vertical lines. The best range is usually located around a "unique" point sequence in the plot (that can be easily distinguished from its neighbours), as the case of peaks. 
 
-[[File:Screen Shot 2016-07-13 at 1.54.09 PM.png|1100px]]
+[[File:Screen Shot 2016-07-13 at 1.54.09 PM.png|1100px]] 
 
-Next, you will need to select the "Input Window", which is the range in the other traces that the tool will try to match with the reference window by shifting it until the SAD is reduced. The ideal value for this field can be determined by adding more traces to the plot and checking if the selected trace shape in the "Reference Points" window would fit in this range for all other traces after shifting. 
+Next, you will need to select the "Input Window", which is the range in the other traces that the tool will try to match with the reference window by shifting it until the SAD is reduced. The ideal value for this field can be determined by adding more traces to the plot and checking if the selected trace shape in the "Reference Points" interval (in the red trace -> number #0 ) fit in this range for all other traces after shifting. 
 
 [[File:Screen Shot 2016-07-13 at 1.55.57 PM.png|1100px]]
 
-Click "Enable" and (with some luck) all the traces will align magically.
+Click "Enable" and watch the tool fix all the traces automagically.
 
 [[File:Screen Shot 2016-07-13 at 1.56.20 PM.png|1100px]]
