@@ -1,0 +1,22 @@
+
+== Preprocessing Modules ==
+They are filters that modify the previous trace source that can be another Preprocessing Module or the Trace Manager (Channel is supported aswell but only through scripting). It means that multiple modules can be used one after the other. You may want to observe the changes in auto-generated script code in the "Analysis script" editor widget.
+
+=== Sum of Difference ===
+
+This module, also known as Sum o Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter. Zooming in the waveform plot, you can detect the presence of jitter when the traces are not aligned (you may need to select about 8 or more traces to be ploted simulteneously in the "Trace Output Plot" settings in order to visualize it):
+
+[[File:Screen Shot 2016-07-13 at 1.31.23 PM.png|800px]]
+
+If it is the case, go to the "Attack Script Generator" tab and select "Resync: Sum-of-Difference" as the Module #0. 
+Switch to the "Preprocessing" tab and Select a point range in the plot as "Reference Points". It can be performed by manually inserting the values (usually around a peak) in the corresponding field or by clicking in the adjacent button and select the area direcly in the plot by draggin the vertical lines.
+
+[[File:Screen Shot 2016-07-13 at 1.54.09 PM.png|800px]]
+
+Next, you will need to select the "Input Windows" which is the interval in the other traces that the tool will try to match with the reference by shifting it until the SAD is reduced. The best value for this field can be determined by  adding more traces to the plot and checking if all of then would fit in the "Reference Points after shifting:
+
+[[File:Screen Shot 2016-07-13 at 1.55.57 PM.png|800px]]
+
+Click "Enable" and (with some luck) all the traces will align magically.
+
+[[File:Screen Shot 2016-07-13 at 1.56.20 PM.png|800px]]
