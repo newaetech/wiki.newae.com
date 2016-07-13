@@ -11,11 +11,11 @@ The easiest way to detect the presence of jitter is by zooming in the plot to ch
 [[File:Screen Shot 2016-07-13 at 1.31.23 PM.png|1100px]]
 
 If it is the case, go to the "Attack Script Generator" tab and select "Resync: Sum-of-Difference" as the Module #0. 
-Switch to the "Preprocessing" tab and Select a point range as "Reference Points". It can be performed by manually inserting the values (usually around a peak) in the corresponding field or by clicking in the adjacent button and select the area direcly in the plot by draggin the vertical lines.
+Switch to the "Preprocessing" tab and Select a point range as "Reference Points". It can be performed by manually inserting the values in the corresponding field or by clicking in the adjacent button and selecting the area direcly in the plot by draggin the vertical lines. The best range is usually located around a "unique" point sequence in the plot (that can be easily distinguished from its neighbours), as the case of peaks. 
 
 [[File:Screen Shot 2016-07-13 at 1.54.09 PM.png|1100px]]
 
-Next, you will need to select the "Input Windows" which is the interval in the other traces that the tool will try to match with the reference by shifting it until the SAD is reduced. The best value for this field can be determined by  adding more traces to the plot and checking if all of then would fit in the "Reference Points after shifting:
+Next, you will need to select the "Input Window", which is the range in the other traces that the tool will try to match with the reference window by shifting it until the SAD is reduced. The ideal value for this field can be determined by adding more traces to the plot and checking if the selected trace shape in the "Reference Points" window would fit in this range for all other traces after shifting. 
 
 [[File:Screen Shot 2016-07-13 at 1.55.57 PM.png|1100px]]
 
