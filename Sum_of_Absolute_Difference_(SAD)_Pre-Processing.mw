@@ -11,7 +11,7 @@ Switch to the "Preprocessing" tab and Select a point range as "Reference Points"
 
 [[File:Screen Shot 2016-07-13 at 1.54.09 PM.png|1100px]] 
 
-Next, you will need to select the "Input Window", which is the range in the other traces that the tool will try to match with the reference window by shifting it until the SAD is reduced. The ideal value for this field can be determined by adding more traces to the plot and checking if the selected trace shape in the "Reference Points" interval, in the Ref. trace, (red in the example above) fit in this range for all other traces after shifting. 
+Next, you will need to select the "Input Window", which is the range in the other traces that the tool will try to match with the reference window by shifting it until the SAD is reduced. The ideal value for this field can be determined by adding more traces to the plot and checking if the selected trace shape in the "Reference Points" interval, for the the Ref. trace (red in the example above), fit in this range for all other traces after shifting. 
 
 [[File:Screen Shot 2016-07-13 at 1.55.57 PM.png|1100px]]
 
