@@ -1,6 +1,6 @@
 
 == Preprocessing Modules ==
-They are filters that modify the previous trace source that can be another Preprocessing Module or the Trace Manager (Channel is supported aswell but only through scripting). It means that multiple modules can be used one after the other. You may want to observe the changes in auto-generated script code in the "Analysis script" editor widget.
+Are filters that modify the traces from a given trace source (that can be another Preprocessing Module or the Trace Manager) and works as a new trace source to the next module in the chain (called trace observer).
 
 === Sum of Difference ===
 
