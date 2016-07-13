@@ -11,7 +11,7 @@ The easiest way to detect the presence of jitter is by zooming in the plot to ch
 [[File:Screen Shot 2016-07-13 at 1.31.23 PM.png|1100px]]
 
 If it is the case, go to the "Attack Script Generator" tab and select "Resync: Sum-of-Difference" as the Module #0. 
-Switch to the "Preprocessing" tab and Select a point range in the plot as "Reference Points". It can be performed by manually inserting the values (usually around a peak) in the corresponding field or by clicking in the adjacent button and select the area direcly in the plot by draggin the vertical lines.
+Switch to the "Preprocessing" tab and Select a point range as "Reference Points". It can be performed by manually inserting the values (usually around a peak) in the corresponding field or by clicking in the adjacent button and select the area direcly in the plot by draggin the vertical lines.
 
 [[File:Screen Shot 2016-07-13 at 1.54.09 PM.png|1100px]]
 
