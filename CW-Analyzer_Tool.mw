@@ -4,7 +4,7 @@ They are filters that modify the previous trace source that can be another Prepr
 
 === Sum of Difference ===
 
-This module, also known as Sum o Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter. Zooming in the waveform plot, you can detect the presence of jitter when the traces are not aligned (you may need to select about 8 or more traces to be ploted simulteneously in the "Trace Output Plot" settings in order to visualize it):
+This module, also known as Sum of Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter. Zooming in the waveform plot, you can detect the presence of jitter when the traces are not aligned (you may need to select about 8 or more traces to be ploted simulteneously in the "Trace Output Plot" settings in order to visualize it):
 
 [[File:Screen Shot 2016-07-13 at 1.31.23 PM.png|1100px]]
 
