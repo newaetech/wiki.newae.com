@@ -6,7 +6,7 @@ Are filters that modify the traces from a given trace source (that can be anothe
 
 This module, also known as Sum of Absolute Difference (SAD), is used to re-synchronize traces as in the case of signals with time jitter. 
 
-The easiest way to detect the presence of jitter is zooming in the plot to check if they are not aligned (you may need to select about 8 or more traces to be ploted simulteneously in the "Trace Output Plot" settings in order to visualize it):
+The easiest way to detect the presence of jitter is by zooming in the plot to check if they are not aligned (you may need to select about 8 or more traces to be ploted simulteneously in the "Trace Output Plot" settings in order to visualize it):
 
 [[File:Screen Shot 2016-07-13 at 1.31.23 PM.png|1100px]]
 
