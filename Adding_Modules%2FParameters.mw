@@ -63,7 +63,7 @@ Each parameter stores the data internally or externally using a set/get (usefull
 
 More information about the Parameterized and the Parameter class can be found in its docstrings.
 
-Basic exemple:
+Basic example:
 
 <pre>
 from chipwhisperer.common.utils.parameter import Parameterized, setupSetParam
