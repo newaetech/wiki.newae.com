@@ -15,6 +15,7 @@ In the diagram bellow, the arrows shows the data flow (the requests are made in 
 
   TraceSource -> [ActiveTraceObserver, TraceSource] -> [ActiveTraceObserver/PassiveTraceSource]     AnalysisSource -> AnalysisObserver
         |                            |                      |                 |     \              /                         |
-     Channel     PreprocessingBase(jitter, SAD,...)         |                 |      AttackBaseClass(CPA, Template)   AttackObserver
-   TraceManager                                         WaveFormWidget        |                                              |
-                                                                       TraceRecorder                   [ResultsTable, CorrelationVsTrace, ...]
+     Channel     PreprocessingBase(jitter, SAD,...)         |                 |      AttackBaseClass                  AttackObserver
+   TraceManager                                         WaveFormWidget        |              |                               |
+                                                                       TraceRecorder         |          [ResultsTable/CorrelationVsTrace/...]
+(CPA, Template)
