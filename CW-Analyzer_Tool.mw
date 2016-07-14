@@ -8,7 +8,7 @@ Main features:
 * AES Key schedule calculator;
 * Set of result widgets: Correlation vs Traces plot; Output vs Point plot; PGE vs Trace plot; PGE Table; Waveform Viewer.
 
-[[File:Screen Shot 2016-07-12 at 4.02.17 PM.png|400px]]
+[[File:Screen Shot 2016-07-12 at 4.02.17 PM.png|1100px]]
 
 == Using the Analyzer ==
 After loading the project, you will need to setup the analysis environment. In the analyzer, the settings tabs are used to automatically generate the analysis script (shown in the "Analysis Script" dock) that is executed when the attack is started. This way, the user can manually edit the code having even more flexibility. This code can also be saved and loaded both through the console (python filename) or the GUI. You can also copy this file to the analyzer/scripts folder so it will appear in the Project->Example Scripts menus in the next time you execute the tool.
