@@ -58,7 +58,7 @@ The easiest way to add parameters to your class, is to make it ''Parameterized''
 * register it if it is not readily accessible through a higher parameter hierarchy: self.getParams().register() 
 * call self.getParams().addChildren([...])
 
-The getParams() method does three things: 
+The getParams() method does four things: 
 * create a new Parameter if it doesn't exist; 
 * create a group called _name; 
 * create a child description parameter with the specified _description label; 
