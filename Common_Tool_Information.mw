@@ -22,3 +22,4 @@ In the diagram bellow, the arrows show the data flow (the requests are made in t
                                     ...                                                       Template                     ...
 
 The AnalysisSource defines signals (started, updated and done) that the AnalysisObserver objects will "listen" when emitted by these objects to execute the appropriate operation.
+The AttackObserver is a specialized class that will listen to AttackBaseClass signals and update the ResultWidgets (table, plots,...)
