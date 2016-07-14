@@ -83,7 +83,7 @@ New scripts can be added to the tool menu automatically by saving it in its resp
 * chipwhisperer/software/chipwhisperer/capture/scripts
 * chipwhisperer/software/chipwhisperer/analyzer/scripts
 
-Files put in these directories are scanned during the GUI initialization and all UserScript classes are loaded.
+Files put in these directories are scanned during the GUI initialization and all UserScriptBase classes are added to the menu.
 
 == Other examples==
 The directories listed above already have some examples which can be used as a reference to create new ones. More advanced scripts can be located in the chipwhisperer/software/chipwhisperer/tests folder. 
