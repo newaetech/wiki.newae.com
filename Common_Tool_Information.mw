@@ -21,7 +21,7 @@ In the diagram bellow, the arrows show the data flow (the requests are made in t
                                AddNoiseJitter                                                   CPA                 CorrelationVsTrace
                                     ...                                                       Template                     ...
 
-Description of some important classes:
+Description of some other important classes:
 
 AnalysisSource - define signals (started, updated and done) that the AnalysisObserver objects will "listen" when emitted by these objects to execute the appropriate operation.
 
