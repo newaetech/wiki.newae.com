@@ -65,7 +65,7 @@ The getParams() method does four things:
 * return a reference to the parent group parameter. 
 Search is performed using the findParam([fullpath]) method.
 
-Each parameter stores the data internally or externally, using a set/get pair - usefull to retrieve dynamic data. In this case, the @setupSetParam(nameOrPath) decorator should be used in the set method in order to syncronize the GUI when the parameter value changes.
+Each parameter stores the data internally or externally, using a set/get pair - usefull to retrieve dynamic data. In this case, the @setupSetParam(nameOrPath) decorator should be used in the set method in order to syncronize the GUI when the method is called directly without using the parameter class.
 
 More information about the Parameterized and the Parameter class can be found in its docstrings.
 
