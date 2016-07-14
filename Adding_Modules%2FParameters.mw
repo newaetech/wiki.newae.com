@@ -58,7 +58,12 @@ The easiest way to add parameters to your class, is to make it ''Parameterized''
 * register it if it is not readily accessible through a higher parameter hierarchy: self.getParams().register() 
 * call self.getParams().addChildren([...])
 
-The getParams() method does three things: create a new Parameter if it doesn't exist; create a group called _name; create a child description parameter with the specified _description label; and return a reference to the parent group parameter. Search is performed using the findParam([fullpath]) method.
+The getParams() method does three things: 
+* create a new Parameter if it doesn't exist; 
+* create a group called _name; 
+* create a child description parameter with the specified _description label; 
+* and return a reference to the parent group parameter. Search is performed using the findParam([fullpath]) method.
+
 Each parameter stores the data internally or externally using a set/get (usefull to retrieve dynamic data). In this case, the @setupSetParam(nameOrPath) decorator should be used in the set method in order to syncronize the GUI when the parameter value changes.
 
 More information about the Parameterized and the Parameter class can be found in its docstrings.
