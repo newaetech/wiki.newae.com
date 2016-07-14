@@ -52,7 +52,7 @@ User scripts should inherit from UserScriptBase that specifies the run() method 
 The API is passed as an argument by the GUI through the constructor in order to allow the script to "remote control" the existing section. A name and a description should also be specified.
 
 ==Running from the Terminal==
-This step is needed if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using only the API. I order to do it, add the following lines at the end of your script file:
+This step is only needed if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using only the API. In order to do it, you should add the following lines to the end of your script file:
 
 <pre>
 if __name__ == '__main__':
