@@ -10,14 +10,3 @@ The settings are not saved with the project (we may improve it in the future), b
 [[File:Cw classdiagram.png|1100x1100px]]
 
 The general architectural idea is to start the Flow with a TraceSource, allow the connection off multiple preprocessing modules (that are both a TraceObserver and a TraceSource) and end the chain in an TraceObserver (that can be a widget or an AnalysisSource).
-
-
-[TraceSource] -> [(Active)TraceObserver, TraceSource] -> [(Passive/Active)TraceObserver]
-      |                                            |                                                              |
-    Channel                         PreprocessingBase                                  AnalysisSource -------------> [AnalysisObserver]
-
- TraceManager                                                                                     TraceRecorder                                    |
-
-                                                                                                           WaveFormWidget                          [AttackObserver]
-                                                                                                                                                                               |  
-                                                                                                                                                                  Analysis Widgets (ResultsTable, CorrelationVsTrace, ...)
