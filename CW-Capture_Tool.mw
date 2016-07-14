@@ -1,3 +1,12 @@
-This tool capture traces from scopes meanwhile is also able to synchronize it with different targets. 
+This tool captures traces from scopes while is also capable of synchronize it with different targets. 
 
-It also features:
+Main features:
+* View the wave form of each trace captured;
+* Save/load/import/edit/manage the traces;
+* Run custom capture scripts;
+* Automated glitch exploring with a nice scatterplot widget to visualize the result;
+* Firmware programmer to flash files to the target board;
+* Record traces using fixed/random encryption keys and fixed/random plaintext inputs;
+* Serial Terminal
+
+[[File:Screen Shot 2016-07-12 at 4.15.30 PM.png|400px]]
