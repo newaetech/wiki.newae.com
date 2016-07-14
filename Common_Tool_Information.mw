@@ -33,4 +33,4 @@ Plugin - marker interface that informs that the class should be considered when 
 
 AutoScript - helper class with methods to setup the output when the class that uses it need to have scripts as output.
 
-Parameterized - helper class with methods maintain (add/find/delete) parameters when the class that extends it makes use of parameters.
+Parameterized - helper class with methods to maintain (add/find/delete) the parameters when the class that extends it makes use of parameters.
