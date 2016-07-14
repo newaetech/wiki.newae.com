@@ -20,3 +20,5 @@ In the diagram bellow, the arrows show the data flow (the requests are made in t
                                  ResyncSAD                             TraceRecorder         |                          ResultsTable
                                AddNoiseJitter                                               CPA                      CorrelationVsTrace
                                     ...                                                   Template                          ...
+
+The AnalysisSource defines signals (started, updated and done) that the AnalysisObserver objects will "listen" when emitted by these objects to execute the appropriate operation.
