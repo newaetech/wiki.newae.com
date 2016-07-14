@@ -6,6 +6,9 @@ The traces data is captured to the tmp directory if no project was created. In t
 == Loading/Saving the Settings ==
 The settings are not saved with the project (we may improve it in the future), but instead, you can use the "Save Settings" option (inside the Project menu) to dump this information to the "settings.cwset" file, inside the project directory. Once saved, the settings can be re-loaded using the load button in the settings tabs (general, scope, traget,...). Another possibility would be to use the Save Button and choose different filenames for each settings profile that you wanto to use.
 
+== Using the Analyzer ==
+After loading the project, you will need to setup the analysis environment. In the analyzer, the settings tabs are used to automatically generate the analysis script (shown in the "Analysis Script" dock) that is executed when the attack is started. This way, the user can manually edit the code having even more flexibility. This code can also be saved and loaded both through the console (python filename) or the GUI. You can also copy this file to the analyzer/scripts folder so it will appear in the Project->Example Scripts menus in the next time you execute the tool.
+
 == Class Diagram ==
 [[File:Cw classdiagram.png|1100x1100px]]
 
