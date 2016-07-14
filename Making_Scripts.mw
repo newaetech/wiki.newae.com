@@ -49,7 +49,7 @@ class UserScript(UserScriptBase):
 
 User scripts should inherit from UserScriptBase that specifies the run() method that is called when clicking it in the menu or pressing the attack button (in the analyzer tool).
 
-The API is passed as an argument by the GUI throught the constructor in order to allow the script to "remote control" the existing section. A name and a description should also be specified.
+The API is passed as an argument by the GUI through the constructor in order to allow the script to "remote control" the existing section. A name and a description should also be specified.
 
 ==Running from the Terminal==
 This step is needed if you want to run the script from the terminal. In this case, you don't need to use the GUI, the capture can be performed using only the API. I order to do it, add the following lines at the end of your script file:
