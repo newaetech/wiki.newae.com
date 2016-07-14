@@ -1,3 +1,6 @@
+The objective of this tool is to analyze the traces captured from a given scope.
+Main features:
+
 == Using the Analyzer ==
 After loading the project, you will need to setup the analysis environment. In the analyzer, the settings tabs are used to automatically generate the analysis script (shown in the "Analysis Script" dock) that is executed when the attack is started. This way, the user can manually edit the code having even more flexibility. This code can also be saved and loaded both through the console (python filename) or the GUI. You can also copy this file to the analyzer/scripts folder so it will appear in the Project->Example Scripts menus in the next time you execute the tool.
 
