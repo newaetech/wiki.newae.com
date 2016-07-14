@@ -1,7 +1,7 @@
 This tool captures traces from scopes while is also capable of synchronize it with different targets. 
 
 Main features:
-* View the wave form of each trace captured;
+* View the wave form of each trace;
 * Save/load/import/edit/manage the traces;
 * Run custom capture scripts;
 * Automated glitch exploring with a nice scatterplot widget to visualize the result;
