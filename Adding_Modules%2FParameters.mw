@@ -62,7 +62,8 @@ The getParams() method does four things:
 * create a new Parameter if it doesn't exist; 
 * create a group called _name; 
 * create a child description parameter with the specified _description label; 
-* return a reference to the parent group parameter. Search is performed using the findParam([fullpath]) method.
+* return a reference to the parent group parameter. 
+Search is performed using the findParam([fullpath]) method.
 
 Each parameter stores the data internally or externally using a set/get (usefull to retrieve dynamic data). In this case, the @setupSetParam(nameOrPath) decorator should be used in the set method in order to syncronize the GUI when the parameter value changes.
 
