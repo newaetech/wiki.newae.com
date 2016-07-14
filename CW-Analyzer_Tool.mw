@@ -7,7 +7,6 @@ The "Attack Script Generator" is the main settings tab. It allows the user to se
 
 The "Trace Explorer" tab enables a set of helper scripts needed by some of the analysis algorithms (like the POI detection in the Template attack).
 
-
 == Preprocessing Modules ==
 Are filters that modify the traces from a given trace source (that can be another Preprocessing Module or the Trace Manager) and works as a new trace source to the next module in the chain (called trace observer).
 
