@@ -13,7 +13,7 @@ The general architectural idea is to start the Flow with a TraceSource, allow th
 
 In the diagram bellow, the arrows show the data flow (the requests are made in the opposite direction) and the vertical lines the inheritance structure:
 
-  TraceSource -> [ActiveTraceObserver, TraceSource] -> [ActiveTraceObserver/PassiveTraceSource]     AnalysisSource -> AnalysisObserver
+  TraceSource -> [ActiveTraceObserver, TraceSource] -> [ActiveTraceObserver/PassiveTraceObserver]   AnalysisSource -> AnalysisObserver
         |                          |     /                  |                 |     \              /                         |
      Channel                 PreprocessingBase              |                 |      AttackBaseClass                  AttackObserver
    TraceManager                      |                WaveFormWidget          |              |                               |
