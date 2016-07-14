@@ -9,7 +9,7 @@ The settings are not saved with the project (we may improve it in the future), b
 == Class Diagram ==
 [[File:Cw classdiagram.png|1100x1100px]]
 
-The general architectural idea is to start the Flow with a TraceSource, allow the connection off multiple preprocessing modules (that are both a TraceObserver and a TraceSource) and end the chain in an TraceObserver (that can be a widget or an AnalysisSource). The sigTracesChanged signal (in the TraceSource objects) is used to propagate this notification through the chain and activate a callback method (processTraces) in the ActiveTraceObserver objects (like the WaveFormWidget) to read the new data. The PassiveTraceObservers (like the AnalysisSource and the TraceRecorder widget) will ignore this signal and the processSignal() should be called manually.
+The general architectural idea is to start the Flow with a TraceSource, allow the connection off multiple preprocessing modules (that are both a TraceObserver and a TraceSource) and end the chain in an TraceObserver (that can be a widget or an AnalysisSource). The sigTracesChanged signal (in the TraceSource objects) is used to propagate this notification through the chain and activate a callback method (processTraces) in the ActiveTraceObserver objects (like the WaveFormWidget) to read the new data. The PassiveTraceObservers (like the AnalysisSource and the TraceRecorder widget) will ignore this signal, so the processSignal() should be called manually.
 
   [TraceSource] -> [(Active)TraceObserver, TraceSource] -> [(Passive/Active)TraceObserver]
         |                           |                                     |
