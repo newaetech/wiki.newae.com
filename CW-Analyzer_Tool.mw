@@ -3,7 +3,7 @@ After loading the project, you will need to setup the analysis environment. In t
 
 In the "Analysis Script" dock, the constructor is called automatically every time a new script is generated. It is done because widgets like the waveform viewer should update the trace output of the preprocessing modules when the user modify its settings. The run() method is executed when the start analysis button is pressed. Custom methods can be executed by selecting it in the code and right clicking: a "Run Function" option will show up.
 
-The "Attack Script Generator" is the main settings tab. It allows the user to set the preprocessing modules that should be applied over the original traces and the Attack module. The Preprocessing and the Attack tabs will update accordingly.
+The "Attack Script Generator" is the main settings tab. It allows the user to set the Preprocessing modules that should be applied over the original traces and the Attack module. The Preprocessing and the Attack tabs will update accordingly.
 
 The "Trace Explorer" tab enables a set of helper scripts needed by some of the analysis algorithms (like the POI detection in the Template attack).
 
