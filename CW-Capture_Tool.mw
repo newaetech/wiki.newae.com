@@ -34,7 +34,7 @@ If you want more advanced setups, you will have to configure the capture environ
 #* TIP: check the content of the "Example Scripts" at chipwhisperer/software/chipwhisperer/capture/scripts if you are lost.
 # You may want to check if everything is working properly by clicking in the "Capture 1" button and adjusting the above settings if necessary.
 # Once the traces output is working as expected, you can set the "Generic Settings"->"Ackisition Settings"->"Number of Traces" option to the desired amount (i.e. 50-100) and click the "Capture M" button in the toolbar. This time the traces will be saved to the "Trace Manager" if you specified a "Trace Format".
-# In order to view the saved traces, you will have to change the "Result"->"Trace Output Plot"->"Input" from the scope channel to the "Trace Manager". You may also want to change  "X Axis" temporal sequence from Samples to Time. 
+# In order to view the saved traces, you will have to change the "Result"->"Trace Output Plot"->"Input" from the scope channel to the "Trace Manager". You may also want to change the "X Axis" temporal sequence from Samples to Time. 
 # You can also import, delete, edit or select/deselect the trace segments by opening the "Trace Manager" in the Project menu.
 # Don't forget to save the Project after each change in the traces. A "Consolidate" option is also available to move/copy all the trace files to the current project directory. It is useful if you imported existing traces or captured it before creating the project.
 Once you master this procedure get tired of doing it over and over again, there are two things you can do about it:
