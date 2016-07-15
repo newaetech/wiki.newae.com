@@ -12,7 +12,7 @@ In the new CW plugin architecture, all modules are scanned during the tool initi
 * chipwhisperer/software/chipwhisperer/analyzer/attacks
 * chipwhisperer/software/chipwhisperer/analyzer/preprocessing
 * chipwhisperer/software/chipwhisperer/analyzer/scripts
-* and some of its subfolders.
+* and some of the above subfolders.
 
 These paths are checked both inside the tool's root directory (where the tool is installed), and in the Project Folder (default is ~/chipwhisperer_projects), allowing the usage of custom modules without the requirement of being system administer. The CW tools scan these directories looking for classes that inherits from the ''Plugin'' class (a marker interface actually) in each public module (that doesn't begin with "_").
 
