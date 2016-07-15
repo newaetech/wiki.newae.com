@@ -32,4 +32,6 @@ The last step is to set the "Generic Settings"->"Acquisition Settings"->"Number 
 Now you are ready to click the "Capture M" to start the exploration.
 
 == Using the Glitch Explorer - Advanced ==
-To get more detailed information of how to use the Glitch Explorer, follow the [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)|A2]] and [[Tutorial A3 VCC Glitch Attacks|A3]] tutorials. If you want to create a script to fully automate this attack, check the example in the file chipwhisperer/software/chipwhisperer/tests/glitchscript.py that currently is being used internally for testing purposes.
+To get more detailed information of how to use the Glitch Explorer, follow the [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)|A2]] and [[Tutorial A3 VCC Glitch Attacks|A3]] tutorials. 
+
+If you want to create a script to fully automate this attack, check the example in the file chipwhisperer/software/chipwhisperer/tests/glitchscript.py that currently is being used internally for testing purposes.
