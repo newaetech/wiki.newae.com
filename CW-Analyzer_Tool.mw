@@ -1,7 +1,7 @@
 The objective of this tool is to analyze the traces captured from a given scope.
 
 Main features:
-* CPA and Profiling attack;
+* CPA and Profiling types of attack;
 * Built-in preprocessing modules (decimation, resync, digital filter, normalize and noise);
 * Record preprocessed traces output;
 * Execute custom analysis scripts;
@@ -11,9 +11,13 @@ Main features:
 [[File:Screen Shot 2016-07-12 at 4.02.17 PM.png|1100px]]
 
 == Using the Analyzer ==
-After loading the project, you will need to setup the analysis environment. In the analyzer, the settings tabs are used to automatically generate the analysis script (shown in the "Analysis Script" dock) that is executed when the attack is started. This way, the user can manually edit the code having even more flexibility. This code can also be saved and loaded both through the console (python filename) or the GUI. You can also copy this file to the analyzer/scripts folder so it will appear in the Project->Example Scripts menus in the next time you execute the tool.
+After loading the project, you will need to setup the analysis environment first. 
 
-In the "Analysis Script" dock, the constructor is called automatically every time a new script is generated. It is done because widgets like the waveform viewer should update the trace output of the preprocessing modules when the user modify its settings. The run() method is executed when the "Start Analysis" button in the toolbar is pressed. Custom methods can be executed by selecting it in the code and right clicking: a "Run Function" option will show up.
+In the analyzer, the settings tabs are used to automatically generate the analysis script (shown in the "Analysis Script" dock). This code can be edited by the user for a more "advanced" usage. It can also be saved and loaded through:
+* the console ($python script.py); 
+* using the "Attack Script Generator" tab;
+* copying it to the scripts folder (chipwhisperer/software/chipwhisperer/analyzer/scripts or ˜/chipwhisperer_projects/chipwhisperer/analyzer/scripts) so that it will appear in the Project->"Example Scripts" menu the next time you execute the tool.
+In the "Analysis Script" dock, the constructor of the script object is called automatically every time that a new script is generated. It is done because widgets like the waveform viewer should update the trace output of the preprocessing modules when the user modify its settings. The run() method is executed only when the "Start Analysis" button in the toolbar is pressed. Custom methods can be executed by selecting it in the code and right clicking: a "Run Function" option will show up.
 
 The "Attack Script Generator" is the main settings tab. It allows the user to set the Preprocessing modules that should be applied over the original traces and the Attack module. The Preprocessing and the Attack tabs will update accordingly.
 
