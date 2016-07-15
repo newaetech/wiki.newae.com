@@ -477,7 +477,7 @@ Details of the parameter settings:
 
 The name of the parameter to be tuned is set at |1|. This name will be displayed in the table, so should be some useful reminder of the parameter name.
 
-The ''Script Command'' at |2| defines what is modified. This string is simply copied from the ''Script Commands'' tab of the main window. This lets you modify ''any'' parameter of the GUI, but most likely you will want to modify some of the glitch settings. The numeric value in this string is ignored - the numeric value will be automatically overwritten with the value of the parameter to try.
+The ''Parameter Path'' at |2| defines what is modified. This string is simply copied from the ''Script Commands'' tab of the main window. This lets you modify ''any'' parameter of the GUI, but most likely you will want to modify some of the glitch settings. The numeric value in this string is ignored - the numeric value will be automatically overwritten with the value of the parameter to try.
 
 The ''Data Format'' at |3| defines what type of data will be inserted into the parameter. For example for the ''Glitch Offset (as % of period)'' used here, this would need to be set to ''Float'', meaning fractional values such as &quot;4.5&quot; are allowed. The data format should match the data format expected.
 
