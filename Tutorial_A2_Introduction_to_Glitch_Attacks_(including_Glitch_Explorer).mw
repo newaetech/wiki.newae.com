@@ -422,7 +422,8 @@ The main window of the glitch explorer looks like this:
 
 Where you can see the following parts
 
-<blockquote># In |1| the output of the system combined with the parameters of the glitch is displayed (the 'output window').
+<blockquote>
+# In |1| the output of the system combined with the parameters of the glitch is displayed (the 'output window').
 # In |2| you can adjust general parameters of the glitching system, such as what counts as a successful glitch or not and how many parameters to fiddle with.
 # In |3| you actually specify the parameters to adjust during the glitching attempts, and what range you would like to adjust them over.
 </blockquote>
