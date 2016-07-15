@@ -13,7 +13,7 @@ Main features:
 == The Basic ==
 The capture tool comes with a list of built-in scripts to connect to different pairs of target-scope hardwares. The easiest way to start using it is accessing the "Project"->"Example Scripts" menu and select the appropriate item in the list.
 
-If you want more advanced setups, you will have to configure manually the parameters in the Setting tabs, starting with the "Generic Settings":
+If you want more advanced setups, you will have to configure the capture environment manually using the Setting tabs, starting with the "Generic Settings":
 # Select the "Scope Module"  (i.e: ChipWhisperer/OpenADC). Leave it as None if you just want to use the target.
 # Select the "Target Module" (i.e.: Simple Serial). Leave it as None if you just want to use the scope.
 # Select the "Trace Format" (i.e.: ChipWhisperer/Native). Leave it as None if you don't need to save the traces, as often happen when executing the Glitching attack.
