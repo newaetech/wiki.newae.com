@@ -1,17 +1,14 @@
 The Glitch Explorer allows an automatic exploration of a range of one or more parameter values. It means that the user can test multiple glitch setups at the same time and see the result in a nice scatterplot, highlighting the successful attempts.
 
-[[File:glitch explorer overview.png|1100px]]
+[[File:Screen Shot 2016-07-12 at 4.15.30 PM.png|1100px]]
 
-== The Glitch Explorer Window ==
 The main window of the glitch explorer looks like this:
 
 [[File:Screen Shot 2016-07-15 at 10.24.13 AM.png|400px]]
 
 In top, the output of the system combined with the parameters of the glitch is displayed (the 'output window').
-
 In bottom, you can adjust general parameters of the glitching system, such as what counts as a successful glitch or not and how many parameters to fiddle with.
 
-== Using the Glitch Explorer - The Basic ==
 To start using the Glitch Explorer, you should first switch to the "Target Settings" tab and set the "Output Format" to be $GLITCH$. This will mean data is no longer sent to the terminal emulator when using the capture 1 or capture M buttons, but instead, is logged in the glitch explorer window.
 
 Then, you should define what is a Normal and a Successful Response. This information is used to highlight the individual attacks. You should use Python expressions here, where 's' is a str-type variable which contains the response of the system (ex.: s.endswith("123456")).
@@ -19,19 +16,14 @@ Then, you should define what is a Normal and a Successful Response. This informa
 The next step is to set the number of tuning parameters. You may want to start with 1 (0 is used to just record manual exploration attempts in the table) and then increment it to 2 or more later. This will generate another group in the list where you can tune the settings for each parameter:
 
 [[File:Screen Shot 2016-07-15 at 10.30.53 AM.png|400px]]
-* Name - is just a reminder of what we are tuning.
 
-* Parameter Path - defines what will be modified. This string can simply be copied from the Script Commands, provided that you remove the last element first (which is the value).
-* Data Format - defines what type of data will be inserted into the parameter.
-* Range - defines the range from the minimum to maximum that will be swept for the parameter.
-* Value - defines the current/start value of the sweep. This is NOT automatically set to the minimum value of your sweep since you may want to stop and continue later or attack a smaller number of traces. If you want to perform the full sweep, you must manually set this to the minimum of the range or click reset.
-* Step - defines the incremented on each glitch attempt. When the value reaches the maximum defined by the range, it will loop around to the minimum and continue incrementing.
-* Repeat - defines how many times to perform the same value. This can be used to determine the reliability of each glitch value.
-The last step is to set the "Generic Settings"->"Acquisition Settings"->"Number of Traces" to a value high enough to loop trough all the value combinations. It can be performed automatically clicking in the "Glitch Explorer"->"Traces Required"->"Use this value" button.
+Name - is just a reminder of what we are tunning.
+Script Command - defines what will be modified. This string can simply be copied from the Script Commands tab of the main window.
+Data Format - defines what type of data will be inserted into the parameter.
+Range - defines the range from the minimum to maximum that will be swept for the parameter.
+Value - defines the current/start value of the sweep. This is NOT automatically set to the minimum value of your sweep since you may want to stop and continue later or attack a smaller number of traces. If you want to perform the full sweep, you must manually set this to the minimum of the range or click reset.
+Step - defines the incremented on each glitch attempt. When the value reaches the maximum defined by the range, it will loop around to the minimum and continue incrementing.
+Repeat - defines how many times to perform the same value. This can be used to determine the reliability of each glitch value.
 
-Now you are ready to click the "Capture M" to start the exploration.
-
-== Using the Glitch Explorer - Advanced ==
-To get more detailed information of how to use the Glitch Explorer, follow the [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)|A2]] and [[Tutorial A3 VCC Glitch Attacks|A3]] tutorials. 
-
-If you want to create a script to fully automate this attack, check the example in the file chipwhisperer/software/chipwhisperer/tests/glitchscript.py that currently is being used internally for testing purposes.
+The last step is to set the "Generic Settings"->"Acquisition Settings"->"Number of Traces" to a value high enough to loop trough all the values combination set in the Glitch Explorer. It can be performed automatically clicking in the "Glitch Explorer"->"Traces Required"->"Use this value" button.
+Now you can use the "Capture M" to start the exploration.
