@@ -1,6 +1,6 @@
 The Glitch Explorer allows an automatic exploration of a range of one or more parameter values. It means that the user can test multiple glitch setups at the same time and see the result in a nice scatterplot, highlighting the successful attempts.
 
-[[File:Screen Shot 2016-07-12 at 4.15.30 PM.png|1100px]]
+[[File:glitch explorer overview.png|1100px]]
 
 == The Glitch Explorer Window ==
 The main window of the glitch explorer looks like this:
