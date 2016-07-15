@@ -14,9 +14,9 @@ Main features:
 The capture tool comes with a list of built-in scripts to connect to different pairs of target-scope hardwares. The easiest way to start using it is accessing the "Project"->"Example Scripts" menu and select the appropriate item in the list.
 
 If you want more advanced setups, you will have to configure the capture environment manually using the Setting tabs, starting with the "Generic Settings":
-# Select the "Scope Module"  (i.e: ChipWhisperer/OpenADC). Leave it as None if you just want to use the target.
-# Select the "Target Module" (i.e.: Simple Serial). Leave it as None if you just want to use the scope.
-# Select the "Trace Format" (i.e.: ChipWhisperer/Native). Leave it as None if you don't need to save the traces, as often happen when executing the Glitching attack.
+# Select the desired "Scope Module"  (i.e.: ChipWhisperer/OpenADC). Leave it as None if you only want to use the target.
+# Select the desired "Target Module" (i.e.: Simple Serial). Leave it as None if you only want to use the scope.
+# Select the desired "Trace Format" (i.e.: ChipWhisperer/Native). Leave it as None if you don't need to save the traces, as often happen when executing the Glitching attack.
 # Switch to the "Scope Settings" tab and setup your scope connection (i.e. selecting 'NewAE USB (CWLite/CW1200)').
 # Switch to the "Target Settings" tab and setup your target connection (i.e. selecting 'NewAE USB (CWLite/CW1200)').
 # Connect to the desired scope/target pair, using the toolbar buttons. The master button connects to both at the same time.
