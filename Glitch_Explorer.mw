@@ -21,7 +21,7 @@ The next step is to set the number of tuning parameters. You may want to start w
 [[File:Screen Shot 2016-07-15 at 10.30.53 AM.png|400px]]
 * Name - is just a reminder of what we are tuning.
 
-* Script Command - defines what will be modified. This string can simply be copied from the Script Commands tab of the main window.
+* Parameter Path - defines what will be modified. This string can simply be copied from the Script Commands, provided that you remove the last element first (which is the value).
 * Data Format - defines what type of data will be inserted into the parameter.
 * Range - defines the range from the minimum to maximum that will be swept for the parameter.
 * Value - defines the current/start value of the sweep. This is NOT automatically set to the minimum value of your sweep since you may want to stop and continue later or attack a smaller number of traces. If you want to perform the full sweep, you must manually set this to the minimum of the range or click reset.
