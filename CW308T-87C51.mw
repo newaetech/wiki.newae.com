@@ -4,3 +4,5 @@ The 87C51 target is designed for a line of 8051 processors made by Intel & avail
 = Project Build Notes =
 
 Example projects use MCU 8051 IDE - it's free for Linux platforms, and for Windows is approx 10EUR. See [http://www.moravia-microsystems.com/ MCU 8051 IDE] to download.
+
+This also requires installing SDCC for the C compilation, see the [https://sourceforge.net/projects/sdcc Sourceforge Page] to download.
