@@ -9,6 +9,10 @@ This also requires installing SDCC for the C compilation, see the [https://sourc
 
 You can also simply run the Makefiles to build the project.
 
+= Example Project =
+
+The default device is programmed with a simple test program. This allows testing of side-channel power analysis and clock glitching. 
+
 = Hardware Specifics =
 
 == Programming Microcontroller ==
