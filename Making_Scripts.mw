@@ -78,10 +78,12 @@ if __name__ == '__main__':
 </pre>
 
 ==Adding user scripts to the GUI menu==
-New scripts can be added to the tool menu automatically by saving it in its respective script folder:
+New scripts can be added to the tool menu automatically by saving it in its respective script folder inside the chipwhisperer installation folder or user projects folder:
 
 * chipwhisperer/software/chipwhisperer/capture/scripts
 * chipwhisperer/software/chipwhisperer/analyzer/scripts
+* ~/chipwhisperer_projects/chipwhisperer/capture/scripts
+* ~/chipwhisperer_projects/chipwhisperer/analyzer/scripts
 
 Files put in these directories are scanned during the GUI initialization and all UserScriptBase classes are added to the menu.
 
