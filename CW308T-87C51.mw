@@ -1,8 +1,39 @@
 
-The 87C51 target is designed for a line of 8051 processors made by Intel & available from NXP as well.
+The 87C51 target is designed for a line of 8051 processors made by Intel in PLCC44 package, although other manufactures make equivalent devices as well (notably NXP as well).
 
 = Project Build Notes =
 
-Example projects use MCU 8051 IDE - it's free for Linux platforms, and for Windows is approx 10EUR. See [http://www.moravia-microsystems.com/ MCU 8051 IDE] to download. This includes a simulator with virtual hardware, which is very useful for initial analysis.
+Example projects can be built with MCU 8051 IDE - it's free for Linux platforms, and for Windows is approx 10EUR. See [http://www.moravia-microsystems.com/ MCU 8051 IDE] to download. This includes a simulator with virtual hardware, which is very useful for initial analysis.
 
 This also requires installing SDCC for the C compilation, see the [https://sourceforge.net/projects/sdcc Sourceforge Page] to download.
+
+You can also simply run the Makefiles to build the project.
+
+= Hardware Specifics =
+
+== Programming Microcontroller ==
+
+The target board contains an ATMega8515, which can be used for performing program verification. It is also used to generate trigger points for attacks such as encryption table read-out & inserting glitches into the program read logic. The programming interface contains the following limitations:
+
+* No programming is possible as there is no VPP generation.
+* Address lines A0 - A11 only are mapped to the ATMega8515 (up to 4096 bytes). The upper two lines are mapped to the LEDs with pull-downs, but with additional jumpers can be set for dumping the full address space (see jumpers section).
+
+== Target Microcontroller ==
+
+The default target device is an Intel EE87C51RB1 (16K EPROM, 512 RAM). Useful references:
+
+* [http://media.digikey.com/pdf/Data%20Sheets/Intel%20PDFs/8xC51RA,RB,RC.pdf Intel 8xC51RA,RB,RC Datasheet]
+* [http://www.nxp.com/documents/data_sheet/8XC54_51FX_51RX.pdf NXP 8XC51RA+/RB+ Datasheet]
+
+NOTE: The Intel datasheet is fairly short (20 pages) and does not include full details of the programming. This can be found in the NXP datasheet.
+
+== Jumpers ==
+
+A number of jumpers are present on the target board. They are mostly used to select different features and options. A brief description of them is below:
+
+* J1: Selects if the ATMega8515 is enabled or not. When not enabled (J1 in "RUN" mode), the ATMega8515 shuts down.
+* J2: Selects the EA pin connection. When running a program must be set to "RUN" mode to run program memory from internal EPROM.
+* J3 & J4: Select if the serial port connects to the 8051 chip (at P3.0/P3.1) or to the ATMega8515.
+* J5: Select if GPIO4 (normally trigger-in to CW-Lite) goes to the 8051 chip (at P1.0) or the ATMega8515. When connected to the 8051 this allows usage of trigger from code in the 8051. When connected to the ATMega8515 allows a trigger to come from programming logic.
+* J6: Select if GPIO3 connects to the 8051 reset pin or to the 
+* J7: If using the ATMega8515, selects the "mode". This is used to enable optional logic, and should normally be in "NORM" mode.
