@@ -39,8 +39,28 @@ A number of jumpers are present on the target board. They are mostly used to sel
 * J7: If using the ATMega8515, selects the "mode". This is used to enable optional logic, and should normally be in "NORM" mode.
 
 The "Target-Defined Header" at J15 is used to set pins P3.3/P3.4/P3.5 to high/low. These pins each contain pull-downs, and mounting a header will set the associated pin high as shown below:
-
-todo
+{| class="wikitable"
+!Shunt Location
+!
+!
+!8051 Pin
+|-
+|H1 - H2
+|
+|
+|P3.3 = 1 when jumper mounted, 0 when jumper not mounted.
+|-
+|H3 - H4
+|
+|
+|P3.4 = 1 when jumper mounted, 0 when jumper not mounted.
+|-
+|H5 - H6
+|
+|
+|P3.5 = 1 when jumper mounted, 0 when jumper not mounted.
+|}
+These pins are used to specify the operating mode of the main test processor.
 
 If using the program/verification mode, the following additional settings allow indexing of the full 16K-bytes of the 87C51RB device:
 
