@@ -37,3 +37,12 @@ A number of jumpers are present on the target board. They are mostly used to sel
 * J5: Select if GPIO4 (normally trigger-in to CW-Lite) goes to the 8051 chip (at P1.0) or the ATMega8515. When connected to the 8051 this allows usage of trigger from code in the 8051. When connected to the ATMega8515 allows a trigger to come from programming logic.
 * J6: Select if GPIO3 connects to the 8051 reset pin or to the 
 * J7: If using the ATMega8515, selects the "mode". This is used to enable optional logic, and should normally be in "NORM" mode.
+
+The "Target-Defined Header" at J15 is used to set pins P3.3/P3.4/P3.5 to high/low. These pins each contain pull-downs, and mounting a header will set the associated pin high as shown below:
+
+todo
+
+If using the program/verification mode, the following additional settings allow indexing of the full 16K-bytes of the 87C51RB device:
+
+* Jumper from LED2 to LED3.
+* Jumper from LED1 to Pin 1 of J6 (the left-most pin).
