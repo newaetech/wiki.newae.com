@@ -14,9 +14,6 @@ The ATMega Card is shown below:
 
 [[File:megacard.jpg|image]]
 
-<blockquote>; width
-: 400
-</blockquote>
 This card contains an Atmel ATMega163 die along with a 24C256 EEPROM. You can see the internal pinout of these cards online. It should be noted that this card is in a SmartCard ''form factor'', but is essentially just a very old microcontroller (AtMega163). If you are unable to find this card but still wish to perform these experiments, there are two other options:
 
 <blockquote># Purchase an ATMega16, which can be programmed with the ATMega163 binary (.hex file). See an [http://www.atmel.com/Images/doc2517.pdf Atmel App-Note] on the subject. The AtMega16 ''will not'' fit on the Multi-Target board, meaning you must build your own board. You can then connect the appropriate IO lines to the SmartCard interface.
