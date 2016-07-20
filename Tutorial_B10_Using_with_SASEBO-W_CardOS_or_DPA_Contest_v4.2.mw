@@ -118,10 +118,11 @@ See [[SASEBO-W_Target#Connecting_the_Multi-Target_Board_to_the_SASEBO-W]] for de
 <p>[[File:scard_cwser.png|image]]</p></li>
 <li><p>Finally press the ''Capture 1'' button. You should see a waveform like this:</p>
 <p>[[File:waveform.png|image]]</p></li>
-<li><p>Using the encryption monitor, you can check the encryption monitor:</p>
+<li><p>Use the encryption monitor to check the output:</p>
 <p>[[File:encmonitor.png|image]]</p></li>
 <li>You can now run a capture campaign and save the traces as before.</li></ol>
 </blockquote>
+
 == Changes for DPAContest v4.2 Card ==
 
 As of ChipWhisperer Release 0.09, the DPAContest v4.2 protocol is also supported. This protocol uses AES-128 RSM, making an interesting attack of a protected target. The following details settings required to attack this card.
