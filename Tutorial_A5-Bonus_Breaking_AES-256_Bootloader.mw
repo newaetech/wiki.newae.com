@@ -222,7 +222,7 @@ dr = []
 aes = AES.new(knownkey, AES.MODE_ECB)
 for i in range(numTraces):
     ct = str(bytearray(textin[i]))
-    d = aes.decrypt(ct)
+    pt = aes.decrypt(ct)
     d = [bytearray(pt)[i] for i in range(16)]
     dr.append(d)
 print dr
