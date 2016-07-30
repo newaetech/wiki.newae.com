@@ -261,7 +261,20 @@ This makes a plot with some pretty obvious spikes:
 
 [[File:Tutorial-A5-Bonus-Diff-0.PNG]]
 
-However, one of these spikes is meaningless to us. The spike around sample 1600 is caused by the signature check, which we aren't attacking yet. Let's ignore this peak and zoom in on the smaller spikes at the start of the trace: 
+However, one of these spikes is meaningless to us. The spike around sample 1600 is caused by the signature check, which we aren't attacking yet. You can get a better feel for this by plotting an overlay of the power trace itself:
+
+<pre>
+plt.hold(True)
+plt.plot(traces[0], 'r')
+plt.plot(diff, 'b')
+
+plt.grid()
+plt.show()
+</pre>
+
+You can notice the input data is often "pegging" to the 0.5 limit, indicating that spike may be caused by data overload! At any rate, it's clear the actual XOR is occurring where the group of 16 identical operations happens.
+
+Let's ignore this large peak and zoom in on the smaller spikes at the start of the trace: 
 
 [[File:A5-Bonus-Diff-0-Zoom.PNG]]
 
