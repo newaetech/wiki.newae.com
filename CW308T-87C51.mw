@@ -1,5 +1,7 @@
 
-The 87C51 target is designed for a line of 8051 processors made by Intel in PLCC44 package, although other manufactures make equivalent devices as well (notably NXP as well).
+The 87C51 target is designed for a line of 8051 processors made by Intel in PLCC44 package, although other manufactures make equivalent devices as well (notably NXP as well). This target board allows for two types of side channel attacks:
+# Regular power analysis or glitching on the 87C51 firmware (ex: attacking an AES key while the 87C51 performs AES encryption)
+# Attacks on the verification process in order to bypass the device's encryption table or security fuses
 
 = Project Build Notes =
 
