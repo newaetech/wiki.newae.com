@@ -10,6 +10,6 @@ and:
 
 In the Analyzer, the only difference is to set the 'Crypto Algorithm' to DES in the ''Attack Settings''.
 
-Note that the attack attemps to recover the first round subkey, which only has 48bits, while the original key has 54 significant bits (64 we count the parity bits that are irrelevant). So, if we map the first round subkey, obtained after the attack, to the original key (you can use the provided  DES Key Schedule Tool to do it), there will still be 8 bits missing (256 combinations).
+Note that the attack attemps to recover the first round subkey, which only has 48bits, while the original key has 54 significant bits (64 if we count the parity bits that are irrelevant). So, if we map the first round subkey, obtained after the attack, to the original key (you can use the provided  DES Key Schedule Tool to do it), there will still be 8 bits missing (256 combinations).
 
 [[File:deskeyschedulecalc.png|800x800px]]
