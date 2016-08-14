@@ -1,13 +1,13 @@
 Follow the same procedure as in : [[Tutorial B5 Breaking AES (Straightforward)]], but:
-- Flashing the DES firmware at the target (i.e. chipwhisperer/hardware/victims/firmware/simpleserial-des/simpleserial-des-xmega.hex), instead;
+* Flashing the DES firmware to the target device (i.e. chipwhisperer/hardware/victims/firmware/simpleserial-des/simpleserial-des-xmega.hex), instead;
 
 and:
+* Setting an appropriate 'Total Samples' and 'Offset' in the ''Scope Settings'';
+* Setting the 'Key Length (Bytes)', 'Input Length (Bytes)' and 'Output Length (Bytes)' to 8 bytes in the ''Target Settings'';
+* Setting an appropriate 8 bytes Key in the ''Generic Settings''.
 
-- Setting an appropriate 'Total Samples' and 'Offset' in the Scope Settings;
-- Setting the 'Key Length (Bytes)', 'Input Length (Bytes)' and 'Output Length (Bytes)' to 8 bytes in the Target Settings;
-- Setting an appropriate 8 bytes Key in the Generic Settings.
-Or, alternatively, the script "ChipWhisperer-Lite: DES SimpleSerial on XMEGA" can be executed to do the above steps automatically in this platform.
+* Or, alternatively, execute the script "ChipWhisperer-Lite: DES SimpleSerial on XMEGA" to do the above steps automatically in this platform.
 
-In the Analyzer, the only difference is to set the Crypto Algorithm to DES in the Attack Settings.
+In the Analyzer, the only difference is to set the 'Crypto Algorithm' to DES in the ''Attack Settings''.
 
-Note that the attack attemps to recover the first round subkey, which only have 48bits, while the original key has 54 significant bits (64 we count the parity bits that are irrelevant). So, if we map the first round subkey, obtained after the attack, to the original key (you can use the provided  DES Key Schedule Tool to do it), there will still be 8 bits missing (256 combinations). However, it can be easily recovered using brute force.
+Note that the attack attemps to recover the first round subkey, which only have 48bits, while the original key has 54 significant bits (64 we count the parity bits that are irrelevant). So, if we map the first round subkey, obtained after the attack, to the original key (you can use the provided  DES Key Schedule Tool to do it), there will still be 8 bits missing (256 combinations).
