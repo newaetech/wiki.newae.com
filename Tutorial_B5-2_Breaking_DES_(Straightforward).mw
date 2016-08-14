@@ -1,4 +1,4 @@
-Follow the same procedure as in [Creating Tutorial B5 Breaking AES (Straightforward)], but:
+Follow the same procedure as in [[Creating Tutorial B5 Breaking AES (Straightforward)]], but:
 - Flashing the DES firmware at the target (i.e. chipwhisperer/hardware/victims/firmware/simpleserial-des/simpleserial-des-xmega.hex), instead;
 
 and:
