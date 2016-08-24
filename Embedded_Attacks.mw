@@ -29,3 +29,5 @@ Note that ChipWhisperer isn't the only side-channel analysis project out there! 
 [[Profiling Attacks with Neural Networks]]
 
 [[Attacking TEA with CPA]]
+
+[[Investigating Block Cipher Modes with DPA]]
