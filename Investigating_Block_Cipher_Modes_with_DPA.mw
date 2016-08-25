@@ -176,6 +176,24 @@ plt.show()
 
 Running this script on all five datasets produced the following five graphs:
 
-''TODO: add''
+'''ECB:'''
+
+[[File:Block-Cipher-ECB-Plot.png|600px]]
+
+'''CBC:'''
+
+[[File:Block-Cipher-CBC-Plot.png|600px]]
+
+'''CFB:'''
+
+[[File:Block-Cipher-CFB-Plot.png|600px]]
+
+'''OFB:'''
+
+[[File:Block-Cipher-OFB-Plot.png|600px]]
+
+'''CTR:'''
+
+[[File:Block-Cipher-CTR-Plot.png|600px]]
 
 It is quite clear from these graphs which encryption modes are being used, so the attack was successful.
