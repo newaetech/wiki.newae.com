@@ -86,6 +86,6 @@ void encrypt(uint8_t* pt)
 }
 </pre>
 
-Check that all five of these modes match the diagrams above.
+Check that all five of these modes match the diagrams above. Note that there is no way to select an IV in this code - the contents of <code>ct[]</code> are not fixed when the target is powered on. However, the IV isn't important for these attacks, so this limitation isn't a big deal.
 
 This code was compiled five times with five different values of <code>BLOCK_MODE</code>, producing five hex files (one for ECB encryption, one for CBC, etc). All of this code is in the ChipWhisperer repository under <code>chipwhisperer\hardware\victims\firmware\simpleserial-aes-modes\</code>.
