@@ -22,4 +22,4 @@ To get around the weaknesses of ECB mode, there are alternative encryption metho
 
 [[File:Block-Cipher-CTR.png]]
 
-All four of these modes share the same quality: if the same plaintext block is encrypted multiple times, the result will be different every time. The goal of this attack to figure out which of the five cipher modes is being used.
+All four of these modes share the same quality: if the same plaintext block is encrypted multiple times, the result will be different every time. The goal of this attack is to take a target that's using one of these five cipher modes and determine which mode is being used.
