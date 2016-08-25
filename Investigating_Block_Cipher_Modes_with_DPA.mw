@@ -18,8 +18,74 @@ To get around the weaknesses of ECB mode, there are alternative encryption metho
 
 [[File:Block-Cipher-OFB.png]]
 
-'''Counter (CTR):''' An incrementing counter repeatedly encrypted to produce a sequence of blocks, which are XORed with the plaintexts to produce the ciphertexts:
+'''Counter (CTR):''' An incrementing counter is encrypted to produce a sequence of blocks, which are XORed with the plaintexts to produce the ciphertexts:
 
 [[File:Block-Cipher-CTR.png]]
 
 All four of these modes share the same quality: if the same plaintext block is encrypted multiple times, the result will be different every time. The goal of this attack is to take a target that's using one of these five cipher modes and determine which mode is being used.
+
+
+= Firmware =
+To perform this attack, the SimpleSerial AES XMEGA firmware was modified to allow the target to use all five of these block cipher modes. The <code>encrypt()</code> function takes a new plaintext and produces the next ciphertext:
+
+<pre>
+void encrypt(uint8_t* pt)
+{
+	static uint8_t input[16];
+	static uint8_t output[16];
+	
+	// Find input 
+	switch(BLOCK_MODE)
+	{
+		case ECB:
+			for(int i = 0; i < 16; i++)
+				input[i] = pt[i];
+			break;
+			
+		case CBC:
+			for(int i = 0; i < 16; i++)
+				input[i] = pt[i] ^ ct[i];
+			break;
+			
+		case CFB:
+			for(int i = 0; i < 16; i++)
+				input[i] = ct[i];
+			break;
+			
+		case OFB:
+			for(int i = 0; i < 16; i++)
+				input[i] = output[i];
+			break;
+			
+		case CTR:
+			input[0]++;
+			break;
+	}
+	
+	// Encrypt in place
+	for(int i = 0; i < 16; i++)
+		output[i] = input[i];
+	aes_indep_enc(output);
+	
+	// Use output to calculate new ciphertext
+	switch(BLOCK_MODE)
+	{
+		case ECB:
+		case CBC:
+			for(int i = 0; i < 16; i++)
+				ct[i] = output[i];
+			break;
+			
+		case CFB:
+		case OFB:
+		case CTR:
+			for(int i = 0; i < 16; i++)
+				ct[i] = output[i] ^ pt[i];
+			break;
+	}
+}
+</pre>
+
+Check that all five of these modes match the diagrams above.
+
+This code was compiled five times with five different values of <code>BLOCK_MODE</code>, producing five hex files (one for ECB encryption, one for CBC, etc). All of this code is in the ChipWhisperer repository under <code>chipwhisperer\hardware\victims\firmware\simpleserial-aes-modes\</code>.
