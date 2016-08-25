@@ -2,16 +2,24 @@
 
 In the real world, it's a bad idea to encrypt data directly using block ciphers like AES. The goal of encryption is to produce ciphertexts that look pseudo-random: there should be no visible patterns in the output. Using a block cipher directly, encrypting the same plaintext multiple times will always result in the same ciphertext, so any patterns in the input will also appear in the output. This encryption method is called the ''Electronic Code Book'' (ECB) block cipher mode. 
 
+[[File:Block-Cipher-ECB.png]]
+
 To get around the weaknesses of ECB mode, there are alternative encryption methods that reuse the basic block ciphers and their core. A number of these are described [https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation on Wikipedia]. On top of ECB mode, there are 4 more block cipher modes that this attack will consider.
 
 '''Cipher Block Chaining (CBC):''' The plaintext is XORed with the previous ciphertext before being encrypted. There is no ciphertext before the first plaintext, so a randomly chosen initialization vector (IV) is used instead:
 
+[[File:Block-Cipher-CBC.png]]
+
 '''Cipher Feedback (CFB):''' The previous ciphertext is used as the input for the cipher. Then, the plaintext is XORed with the result to get the new ciphertext. Again, an IV is used to replace the missing ciphertext:
+
+[[File:Block-Cipher-CFB.png]]
 
 '''Output Feedback (OFB):''' An IV is repeatedly encrypted to produce a pseudo-random sequence of blocks. Then, these encryption results are XORed with the plaintexts to produce the ciphertexts:
 
+[[File:Block-Cipher-OFB.png]]
+
 '''Counter (CTR):''' An incrementing counter repeatedly encrypted to produce a sequence of blocks, which are XORed with the plaintexts to produce the ciphertexts:
 
-'' TODO: add images ''
+[[File:Block-Cipher-CTR.png]]
 
 All four of these modes share the same quality: if the same plaintext block is encrypted multiple times, the result will be different every time. The goal of this attack to figure out which of the five cipher modes is being used.
