@@ -89,3 +89,93 @@ void encrypt(uint8_t* pt)
 Check that all five of these modes match the diagrams above. Note that there is no way to select an IV in this code - the contents of <code>ct[]</code> are not fixed when the target is powered on. However, the IV isn't important for these attacks, so this limitation isn't a big deal.
 
 This code was compiled five times with five different values of <code>BLOCK_MODE</code>, producing five hex files (one for ECB encryption, one for CBC, etc). All of this code is in the ChipWhisperer repository under <code>chipwhisperer\hardware\victims\firmware\simpleserial-aes-modes\</code>.
+
+= Captures and Attack =
+To perform the attack, each of the five hex files were loaded onto the ChipWhisperer Lite XMEGA target. Then, 200 traces were captured for each block cipher mode, using a fixed key and random plaintexts. All of the NumPy data files were copied from the project folder so they could be loaded in a Python script. 
+
+To tell the difference between the five cipher modes, DPA was used to search for the input to the AES encryption function. Recall that all five of the modes combine the plaintexts and ciphertexts in different ways to calculate the input blocks. The input for each mode uses:
+
+{| class="wikitable"
+|-
+|'''Mode'''
+|'''Plaintext'''
+|'''Ciphertext'''
+|-
+|ECB
+|Current
+|&mdash;
+|-
+|CBC
+|Current
+|Previous
+|-
+|CFB
+|&mdash;
+|Previous
+|-
+|OFB
+|Previous
+|Previous
+|-
+|CTR
+|&mdash;
+|&mdash;
+|}
+
+Using this information, the DPA attack uses the following steps:
+# Use the current/previous plaintexts and ciphertexts to calculate four different possible AES inputs (the inputs for ECB, CBC, CFB, and OFB modes)
+# For each of these calculated inputs, use one bit of the input to split the traces into two groups
+# Calculate an average trace for each group and subtract them to get four differential traces
+# Look at the differences to decide which mode is most likely:
+## If one of the differential traces shows a large spike, the target is probably using that mode
+## If none of the differential traces has a large spike, the target is probably using CTR mode
+A simple Python script to implement this attack is:
+<pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load data
+pt     = np.load('traces/ecb_textin.npy')
+ct     = np.load('traces/ecb_textout.npy')
+traces = np.load('traces/ecb_traces.npy')
+numtraces = np.shape(traces)[0]
+
+# Create groups for all 4 modes
+grouped_ecb = [[] for _ in range(2)]
+grouped_cbc = [[] for _ in range(2)]
+grouped_cfb = [[] for _ in range(2)]
+grouped_ofb = [[] for _ in range(2)]
+
+# Sort traces into groups
+for i in range(1, numtraces):
+    bit_ecb = (pt[i][0]               ) & 0x01
+    bit_cbc = (pt[i][0]   ^ ct[i-1][0]) & 0x01
+    bit_cfb = (ct[i-1][0]             ) & 0x01
+    bit_ofb = (pt[i-1][0] ^ ct[i-1][0]) & 0x01
+    
+    grouped_ecb[bit_ecb].append(traces[i])
+    grouped_cbc[bit_cbc].append(traces[i])
+    grouped_cfb[bit_cfb].append(traces[i])
+    grouped_ofb[bit_ofb].append(traces[i])
+   
+# Calculate means
+means_ecb = [np.average(grouped_ecb[0], 0), np.average(grouped_ecb[1], 0)]
+means_cbc = [np.average(grouped_cbc[0], 0), np.average(grouped_cbc[1], 0)]
+means_cfb = [np.average(grouped_cfb[0], 0), np.average(grouped_cfb[1], 0)]
+means_ofb = [np.average(grouped_ofb[0], 0), np.average(grouped_ofb[1], 0)]
+
+# Plot differences
+plt.plot(abs(means_ecb[1] - means_ecb[0]))  # Blue
+plt.plot(abs(means_cbc[1] - means_cbc[0]))  # Green
+plt.plot(abs(means_cfb[1] - means_cfb[0]))  # Red
+plt.plot(abs(means_ofb[1] - means_ofb[0]))  # Teal
+plt.axis((0, 3000, 0, 0.02))
+plt.grid()
+plt.show()
+</pre>
+
+Running this script on all five datasets produced the following five graphs:
+
+''TODO: add''
+
+It is quite clear from these graphs which encryption modes are being used, so the attack was successful.
