@@ -4,6 +4,56 @@ The 87C51 target is designed for a line of 8051 processors made by Intel in PLCC
 # Attacks on the verification process in order to bypass the device's encryption table or security fuses
 This page describes the setup of the 87C51 target and shows how it can be used to perform these two types of attacks.
 
+= Hardware Details =
+== Programming Microcontroller ==
+The target board contains an ATMega165PA/ATMega325PA (referred to as the 'AVR' hereafter), which can be used for performing program verification. It is also used to generate trigger points for attacks such as encryption table read-out & inserting glitches into the program read logic. The programming interface contains the following limitations:
+
+* No programming is possible as there is no VPP generation.
+* Address lines A0 - A13 are mapped to the AVR. The upper two lines are shared with LED1/LED2 outputs. (A14 and A15 aren't needed because the 87C51 model that's used only has 16 KB = 2^14 bytes of memory.)
+
+== Target Microcontroller ==
+The default target device is an Intel EE87C51RB1 (16K EPROM, 512 RAM). Useful references:
+
+* [http://media.digikey.com/pdf/Data%20Sheets/Intel%20PDFs/8xC51RA,RB,RC.pdf Intel 8xC51RA,RB,RC Datasheet]
+* [http://www.nxp.com/documents/data_sheet/8XC54_51FX_51RX.pdf NXP 8XC51RA+/RB+ Datasheet]
+
+NOTE: The Intel datasheet is fairly short (20 pages) and does not include full details of the programming. This can be found in the NXP datasheet.
+
+There are 2 20-pin headers on the top side of the board connected to the pins of the 87C51. If you're keeping track, the remaining 4 pins are labelled NC - they aren't used internally, so all of the functional pins are broken out to these headers. These headers make it easier to connect an oscilloscope or logic analyzer to the target.
+
+== Jumpers ==
+
+A number of jumpers are present on the target board. They are mostly used to select different features and options on the target board. First, there are 7 jumpers that connect to the IO lines of the two microcontrollers
+
+* '''IO MODE (J1):''' Selects if the AVR is enabled or not. When the board is powered on, if this is set to "RUN", the AVR will enter sleep mode until the power is cut. If it is set to "PROG", the AVR will continue executing its program.
+* '''EA/VPP (J2):''' Selects the 8051's EA pin connection. In "PROG" mode, the AVR has control of this pin; in "RUN" mode, it is always set to 1. This is necessary to allow the 8051 to execute code from internal EPROM memory.
+* '''TXD (J3):''' Connects the Target IO2 line (Serial TXD) to one of the chips. In "PROG" mode, this is connected to AVR PE1. In "RUN" mode, it is connected to 8051 P3.1.
+* '''RXD (J4):''' Connects the Target IO1 line (Serial RXD) to one of the chips. In "PROG" mode, this is connected to AVR PE0. In "RUN" mode, it is connected to 8051 P3.0.
+* '''GPIO4 (J5):''' Connects the Target IO4 line to AVR PE3 ("AVR" mode) or 8051 P1.0 ("51/P1.0" mode). This line is intended to be used as a trigger, so firmware on the 8051 and AVR can cause a trigger by toggling these wires.
+* '''GPIO3 (J6):''' Connects the Target IO3 line to AVR PE5 ("AVR" mode) or 8051 RESET ("51-RST" mode). In the former, the AVR has control over the 8051's reset line. In the latter, the 8051 uses an active-high reset, so the device runs when GPIO3 is set low. 
+* '''AVR MODE (J7):''' Connects to AVR PE4. This is normally pulled up to VCC. With a jumper connected in "OPT" mode, this is set low. 
+
+Then, there are two jumpers that control the power and clock signals:
+* '''VCC (J11):''' Connects to the board's VCC rails. This can be connected to the baseboard's 5V rail or to one of the 3.3V regulator outputs. Be cautious with this - in particular, the ChipWhisperer Lite does NOT have 5V tolerant IO lines!
+* '''J12:''' When J12 is not connected, the AVR runs on its own 7.37 MHz crystal. With J12 connected, the AVR's clock line is connected to CLKIN signal, which is also the 8051's clock line. Connecting the clock signals is useful for ensuring that the devices are synchronized, but it also causes any glitched clock signals to be routed to AVR.
+
+Finally, the baseboard's "Target-Defined Programming" header (J15) is connected to some of the 8051 pins. P3.3, P3.4, and P3.5 are connected to H2, H4, and H6. Normally, these pins are all pulled down to ground (logic 0). When a jumper is mounted to H1-H2, H3-H4, or H5-H6, these pins are instead connected to VCC (logic 1). 
+
+'' TODO: figure out what this was saying ''
+If using the program/verification mode, the following additional settings allow indexing of the full 16K-bytes of the 87C51RB device:
+* Jumper from LED2 to LED3.
+* Jumper from LED1 to Pin 1 of J6 (the left-most pin).
+
+= Firmware =
+== Developing Firmware for the 87C51 ==
+== Default Firmware ==
+
+= Code Verification =
+== Verification Process ==
+== Security ==
+== Gotchas ==
+
+
 = Project Build Notes =
 
 Example projects can be built with MCU 8051 IDE - it's free for Linux platforms, and for Windows is approx 10EUR. See [http://www.moravia-microsystems.com/ MCU 8051 IDE] to download. This includes a simulator with virtual hardware, which is very useful for initial analysis.
@@ -43,54 +93,4 @@ The default device is programmed with a simple test program. This allows testing
 |}
 A '1' in the above table indicates the associated pin should be shorted with a jumper to H2/H4/H6 respectively, the following for example shows selecting the bootloader test: 
 
-<TODO> 
-
-= Hardware Specifics =
-
-== Programming Microcontroller ==
-
-The target board contains an ATMega165PA/ATMega325PA (referred to as the 'AVR' hereafter), which can be used for performing program verification. It is also used to generate trigger points for attacks such as encryption table read-out & inserting glitches into the program read logic. The programming interface contains the following limitations:
-
-* No programming is possible as there is no VPP generation.
-* Address lines A0 - A13 are mapped to the AVR. The upper two lines are shared with LED1/LED2 outputs.
-
-== Target Microcontroller ==
-
-The default target device is an Intel EE87C51RB1 (16K EPROM, 512 RAM). Useful references:
-
-* [http://media.digikey.com/pdf/Data%20Sheets/Intel%20PDFs/8xC51RA,RB,RC.pdf Intel 8xC51RA,RB,RC Datasheet]
-* [http://www.nxp.com/documents/data_sheet/8XC54_51FX_51RX.pdf NXP 8XC51RA+/RB+ Datasheet]
-
-NOTE: The Intel datasheet is fairly short (20 pages) and does not include full details of the programming. This can be found in the NXP datasheet.
-
-== Jumpers ==
-
-A number of jumpers are present on the target board. They are mostly used to select different features and options. A brief description of them is below:
-
-* J1: Selects if the AVR is enabled or not. When not enabled (J1 in "RUN" mode), the AVR shuts down and it's oscillator is disabled (to reduce any noise).
-* J2: Selects the EA pin connection. When running a program must be set to "RUN" mode to run program memory from internal EPROM.
-* J3 & J4: Select if the serial port connects to the 8051 chip (at P3.0/P3.1) or to the AVR.
-* J5: Select if GPIO4 (normally trigger-in to CW-Lite) goes to the 8051 chip (at P1.0) or the AVR. When connected to the 8051 this allows usage of trigger from code in the 8051. When connected to the AVR allows a trigger to come from programming logic.
-* J6: Select if GPIO3 connects to the 8051 reset pin or to the 
-* J7: If using the AVR, selects the "mode". This is used to enable optional logic, and should normally be in "NORM" mode.
-
-The "Target-Defined Header" at J15 is used to set pins P3.3/P3.4/P3.5 to high/low. These pins each contain pull-downs, and mounting a header will set the associated pin high as shown below:
-{| class="wikitable"
-!Shunt Location
-!8051 Pin
-|-
-|H1 - H2
-|P3.3 = 1 when jumper mounted, 0 when jumper not mounted.
-|-
-|H3 - H4
-|P3.4 = 1 when jumper mounted, 0 when jumper not mounted.
-|-
-|H5 - H6
-|P3.5 = 1 when jumper mounted, 0 when jumper not mounted.
-|}
-These pins are used to specify the operating mode of the main test processor.
-
-If using the program/verification mode, the following additional settings allow indexing of the full 16K-bytes of the 87C51RB device:
-
-* Jumper from LED2 to LED3.
-* Jumper from LED1 to Pin 1 of J6 (the left-most pin).
+<TODO>
