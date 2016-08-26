@@ -76,7 +76,63 @@ void func()
 
 '''Programmer''': To write a program into the code EPROM, an EPROM programmer is needed. We used a [http://minipro.txt.si/index.php?title=Main_Page MiniPro TL866 programmer] along with their free software. However, any programmer compatible with the 87C51 should be fine.
 
-== Default Firmware ==
+== Example Firmware ==
+We've written a couple of firmware examples and put them together into one big 87C51 project. Combining multiple pieces of code together means that we can use one chip for all of the side channel attacks - we don't need separate processors to work on different pieces of firmware. This project has six different parts:
+* <code>print</code>: prints "Testing 1\nTesting 2\nTesting 3...". Easy to confirm that the processor is running correctly.
+* <code>passcheck</code>: waits for the user to enter a password and checks whether it is correct. The correct password is "[http://xkcd.com/936/ Tr0ub4dor&3\r]".
+* <code>glitchloop</code>: calculates 200 * 200 using a very long and tedious loop. Inserting a successful glitch will corrupt this result.
+* <code>xor</code>: implements the SimpleSerial protocol with 128 bit key and plaintexts. The response is the XOR of the plaintext and key.
+* <code>aes</code>: implements SimpleSerial with AES-128 encryption (128 bit key and plaintext)
+* <code>tea</code>: implements SimpleSerial with TEA encryption (256 bit key and 128 bit plaintext)
+
+When the 87C51 is powered on, it reads the state of the Target-Defined Programming header J15 to decide which mode to run in. In the following table, a Y means that the jumper is mounted, and an N means that no jumper is mounted:
+{| class="wikitable"
+|'''H5-H6'''
+|'''H3-H4'''
+|'''H1-H2'''
+|'''Mode'''
+|-
+|N
+|N
+|N
+|Print
+|-
+|N
+|N
+|Y
+|Password check
+|-
+|N
+|Y
+|N
+|Glitch loop
+|-
+|N
+|Y
+|Y
+|XOR
+|-
+|Y
+|N
+|N
+|AES
+|-
+|Y
+|N
+|Y
+|TEA
+|-
+|Y
+|Y
+|N
+|&mdash;
+|-
+|Y
+|Y
+|Y
+|&mdash;
+|-
+|}
 
 = Code Verification =
 == Verification Process ==
