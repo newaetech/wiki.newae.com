@@ -46,6 +46,26 @@ If using the program/verification mode, the following additional settings allow 
 
 = Firmware =
 == Developing Firmware for the 87C51 ==
+There are a number of tools that can be used to develop firmware for the 87C51 processor. The best 8051-specific software can be pretty expensive, but it is possible to get by with free software:
+
+'''Compiler:''' The [http://sdcc.sourceforge.net/ SDCC] (Small Device C Compiler) is a compiler that is made for devices with limited amounts of memory. It can be used to compile code specifically for a number of targets, including the 8051 line of processors. A few of the useful flags are:
+* <code>-mmcs51</code>: Compile code specifically for an MCS51 target
+* <code>--iram-size [size]</code>: Specify that the device has <code>[size]</code> bytes of internal RAM
+* <code>--xram-size [size]</code>: Same as above, but for external RAM
+* <code>--code-size [size]</code>: Same as above, but for code memory (EPROM)
+* <code>--out-fmt-ihx</code>: Produce an Intel HEX file as the output of the linking stage
+* <code>--stack-auto</code>: Put all automatic variables on the stack, rather than storing a specific location in RAM for them. This can be a huge RAM saver!
+
+Note that SDCC has [http://sdcc.sourceforge.net/mediawiki/index.php/Standard_compliance not completely implemented] the ISO C99/C11 standards. One very noticeable change is that SDCC does not allow variables declarations to be intermingled with code. That is, the following will not compile:
+<pre>
+void func()
+{
+	int x = 1; // OK
+	x += 2;    // OK
+	int y = x; // syntax error: token -> 'int'
+}
+</pre>
+
 == Default Firmware ==
 
 = Code Verification =
