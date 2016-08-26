@@ -44,7 +44,15 @@ If using the program/verification mode, the following additional settings allow 
 * Jumper from LED2 to LED3.
 * Jumper from LED1 to Pin 1 of J6 (the left-most pin).
 
-= Firmware =
+= AVR Firmware =
+The AVR on the target board has its own firmware to control the 87C51 code verification process. This firmware is one Atmel Studio project in the Git repository. The compiled hex file can be programmed onto the AVR using the AVR Programmer in the capture software.
+
+If you have a target board that's never been programmed before, the AVR fuses will need to be programmed from their default values. A [http://www.engbedded.com/fusecalc/ fuse calculator] is helpful here. The fuses should be written to:
+* Low fuse: <code>0xED</code>
+* High fuse: <code>0x99</code>
+* Ext fuse: <code>0xFF</code>
+
+= 87C51 Firmware =
 == Developing Firmware for the 87C51 ==
 There are a number of tools that can be used to develop firmware for the 87C51 processor. The best 8051-specific software can be pretty expensive, but it is possible to get by with free software:
 
