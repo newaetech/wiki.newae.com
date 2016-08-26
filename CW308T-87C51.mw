@@ -138,12 +138,3 @@ When the 87C51 is powered on, it reads the state of the Target-Defined Programmi
 == Verification Process ==
 == Security ==
 == Gotchas ==
-
-
-= Project Build Notes =
-
-Example projects can be built with MCU 8051 IDE - it's free for Linux platforms, and for Windows is approx 10EUR. See [http://www.moravia-microsystems.com/ MCU 8051 IDE] to download. This includes a simulator with virtual hardware, which is very useful for initial analysis.
-
-This also requires installing SDCC for the C compilation, see the [https://sourceforge.net/projects/sdcc Sourceforge Page] to download.
-
-You can also simply run the Makefiles to build the project.
