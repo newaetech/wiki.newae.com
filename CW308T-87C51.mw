@@ -136,5 +136,63 @@ When the 87C51 is powered on, it reads the state of the Target-Defined Programmi
 
 = Code Verification =
 == Verification Process ==
+The process to read back code from the 87C51's EPROM memory is described in the NXP datasheet (in the EPROM Characteristics section). However, there's a lot of info in this section about ''writing'' to the EPROM memory, which we can't do on the target board. The bare minimum to verify code bytes is repeated here:
+
+1. Set the following levels on these pins:
+{| class="wikitable"
+|'''Pin'''
+|'''Level'''
+|-
+|RST
+|1
+|-
+|P3.6
+|1
+|-
+|P3.7
+|1
+|-
+|EA/VPP
+|1
+|-
+|ALE/PROG
+|1
+|-
+|PSEN
+|0
+|-
+|P2.6
+|0
+|-
+|P2.7
+|1
+|-
+|}
+
+2. Write the 16 bit address to the following pins:
+{| class="wikitable"
+|'''Pin'''
+|'''Address'''
+|-
+|P1.0-P1.7
+|A0-A7
+|-
+|P2.0-P2.5
+|A8-A13
+|-
+|P3.4
+|A14
+|-
+|P3.5
+|A15
+|}
+Note that the 87C51 that we've used for this project only has 16 KB of memory, so addresses over 0x3FFF are meaningless (ie: A14 and A15 have no purpose).
+
+3. Write P2.7 to 0 to begin the read. Wait at least 48 clock cycles.
+
+4. Read the 8 bits of data from P0.0-P0.7. These pins use open drain outputs, so pull-up resistors are needed - the AVR's internal pullups are good enough for this.
+
+5. Write P2.7 to 1 to stop reading the device.
+
 == Security ==
 == Gotchas ==
