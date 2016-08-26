@@ -37,12 +37,7 @@ Then, there are two jumpers that control the power and clock signals:
 * '''VCC (J11):''' Connects to the board's VCC rails. This can be connected to the baseboard's 5V rail or to one of the 3.3V regulator outputs. Be cautious with this - in particular, the ChipWhisperer Lite does NOT have 5V tolerant IO lines!
 * '''J12:''' When J12 is not connected, the AVR runs on its own 7.37 MHz crystal. With J12 connected, the AVR's clock line is connected to CLKIN signal, which is also the 8051's clock line. Connecting the clock signals is useful for ensuring that the devices are synchronized, but it also causes any glitched clock signals to be routed to AVR.
 
-Finally, the baseboard's "Target-Defined Programming" header (J15) is connected to some of the 8051 pins. P3.3, P3.4, and P3.5 are connected to H2, H4, and H6. Normally, these pins are all pulled down to ground (logic 0). When a jumper is mounted to H1-H2, H3-H4, or H5-H6, these pins are instead connected to VCC (logic 1). 
-
-'' TODO: figure out what this was saying ''
-If using the program/verification mode, the following additional settings allow indexing of the full 16K-bytes of the 87C51RB device:
-* Jumper from LED2 to LED3.
-* Jumper from LED1 to Pin 1 of J6 (the left-most pin).
+Finally, the baseboard's "Target-Defined Programming" header (J15) is connected to some of the 8051 pins. P3.3, P3.4, and P3.5 are connected to H2, H4, and H6. Normally, these pins are all pulled down to ground (logic 0). When a jumper is mounted to H1-H2, H3-H4, or H5-H6, these pins are instead connected to VCC (logic 1).
 
 = AVR Firmware =
 The AVR on the target board has its own firmware to control the 87C51 code verification process. This firmware is one Atmel Studio project in the Git repository. The compiled hex file can be programmed onto the AVR using the AVR Programmer in the capture software.
