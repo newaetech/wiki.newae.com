@@ -147,36 +147,3 @@ Example projects can be built with MCU 8051 IDE - it's free for Linux platforms,
 This also requires installing SDCC for the C compilation, see the [https://sourceforge.net/projects/sdcc Sourceforge Page] to download.
 
 You can also simply run the Makefiles to build the project.
-
-= Example Project =
-
-The default device is programmed with a simple test program. This allows testing of side-channel power analysis and clock glitching. The mode of operation is selected by mounting jumpers at H1/H3/H5 which short to H2/H4/H6. 
-{| class="wikitable"
-!H1
-!H3
-!H5
-!Mode
-|-
-|0
-|0
-|0
-|Glitch loop (counter)
-|-
-|1
-|0
-|0
-|Glitch bootloader test.
-|-
-|0
-|1
-|0
-|Glitch password test.
-|-
-|1
-|1
-|0
-|SCA Test #1
-|}
-A '1' in the above table indicates the associated pin should be shorted with a jumper to H2/H4/H6 respectively, the following for example shows selecting the bootloader test: 
-
-<TODO>
