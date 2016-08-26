@@ -46,6 +46,7 @@ If you have a target board that's never been programmed before, the AVR fuses wi
 * Low fuse: <code>0xED</code>
 * High fuse: <code>0x99</code>
 * Ext fuse: <code>0xFF</code>
+To program these, the AVR programmer will have to use Slow Clock Mode. Once these fuses are set, slow clock mode can be disabled again.
 
 = 87C51 Firmware =
 == Developing Firmware for the 87C51 ==
