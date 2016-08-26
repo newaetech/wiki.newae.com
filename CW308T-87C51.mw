@@ -210,3 +210,10 @@ Second, the 87C51 has three lock bits that can be enabled. Lock bit 2 cannot be 
 The most critical of these locks is the second: it stops all verification.
 
 == Gotchas ==
+This section describes a few quirks/caveats that we found with the 87C51 and its target board. 
+
+The 87C51 does some crazy things with the clock signal. First, the external clock is fed into a divide by 2 counter to guarantee a 50% duty cycle. Second, every instruction that the 8051 core executes takes a multiple of 6 clock cycles. In other words, one "machine cycle" on the chip is 6 internal cycles, which is 12 oscillator cycles. 
+
+When performing side channel attacks on the verify process, the relative phase of the "machine clock" is important: the power consumption changes significantly if we load the address on oscillator cycle 1, 2, 3, ..., or 12. (The changes are more severe than a simple shift in time.) To avoid these phase shifts, we tried to synchronize the AVR's verify methods with the 8051's machine clock. We found that the 8051 has an output (ALE/PROG) that is used for external timing - it is emitted at 1/6 of the oscillator frequency. By syncing to this signal, we narrowed down the phase shift from 12 possible shifts to 2. However, we could not find a way to remove this 1/2 chance. If you are capturing multiple sets of traces, please look to see that the main features of the traces don't move between captures!
+
+The 87C51 has a synchronous reset input (?!) - a reset requires 12 oscillator cycles to take effect, and the machine clock's phase does not change during a reset! This means that the only way to change the machine clock's phase is to power cycle the 87C51. (The "Read Signature" button in the AVR Programmer does this. Pulling out the processor and re-mounting it does too.)
