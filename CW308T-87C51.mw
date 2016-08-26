@@ -195,4 +195,18 @@ Note that the 87C51 that we've used for this project only has 16 KB of memory, s
 5. Write P2.7 to 1 to stop reading the device.
 
 == Security ==
+There are two security features built into the 87C51 to stop end-users from reading the firmware out of EPROM. Companies might use these features as an anti-piracy measure: if they can keep their competitors from reading their source code, then they can avoid giving away any of their trade secrets. Both of these security features can be enabled using the Minipro programmer.
+
+First, the 87C51 has a 64 byte encryption table stored in EPROM. By default, this table contains 64 <code>0xFF</code> bytes. When the chip is being programmed, the table can be loaded with secret values. Then, when a byte of the code is read from the code memory, it is XNORed with a corresponding byte from the encryption table. In pseudocode, this is
+<pre>
+displayed_byte = ~(data[address] ^ enc_table[address % 64]);
+</pre>
+Notice that the default encryption table has no effect on the data - there is no encryption until the table has been written with some values.
+
+Second, the 87C51 has three lock bits that can be enabled. Lock bit 2 cannot be enabled until lock 1 is, and lock 3 cannot be enabled until lock 2 is. The three locks have the following functions:
+# EPROM can no longer be programmed. Also, some restrictions are placed on programs that use external memory.
+# Verification is disabled. The device will read <code>0xFF</code> for every address.
+# Programs cannot be executed from external memory.
+The most critical of these locks is the second: it stops all verification.
+
 == Gotchas ==
