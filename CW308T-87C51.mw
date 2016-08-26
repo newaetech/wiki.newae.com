@@ -66,6 +66,12 @@ void func()
 }
 </pre>
 
+'''Simulator''': The 87C51 is one-time programmable, so it is extremely helpful to have a simulator to test firmware before burning it onto a physical processor. There are very few free simulators for the 8051 core. One free sim is [http://www.edsim51.com/ EdSim51]. This program can load a hex file and run the code one step at a time. There are a few big issues:
+* The simulator has no way of translating your compiled binary file back into C. This means that the debugging process is a bit blind - moving through the program one line at a time isn't particularly helpful because one line of C will typically be many lines of assembly. It's still possible to debug code by printing variables, but this leaves something to be desired.
+* EdSim51 is designed for an 8051 core with 128 B of RAM. This means that you cannot simulate any programs that use more than 128 B of RAM. However, this is enough space for a lot of tasks - our full piece of firmware does AES over SimpleSerial in this much space!
+
+'''Programmer''': To write a program into the code EPROM, an EPROM programmer is needed. We used a [http://minipro.txt.si/index.php?title=Main_Page MiniPro TL866 programmer] along with their free software. However, any programmer compatible with the 87C51 should be fine.
+
 == Default Firmware ==
 
 = Code Verification =
