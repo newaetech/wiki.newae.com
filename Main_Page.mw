@@ -65,12 +65,12 @@ ChipWhisperer Target boards:
 * [[CW306 Smart / SIM card Target]]
 * [[CW308 UFO Target]]
 ** [[CW308T-GENERIC]] (Protoboard)
-** [[CW308T-AVR]] (Atmel AVR)
-** [[CW308T-XMEGA]] (Atmel XMEGA)
-** [[CW308T-87C51]] (Intel 87C51RB)
-** [[CW308T-MSP430FR5]] (TI MSP430FR5xxx)
-** [[CW308T-S6LX9]] (Xilinx Spartan 6 LX9 in TQFP)
-** [[CW308T-ATSAMR21]] (Atmel SAMR21 with 802.15.4 radio)
+** [[CW308T-AVR]] (Atmel AVR, 8-bit)
+** [[CW308T-XMEGA]] (Atmel XMEGA, 8-bit)
+** [[CW308T-87C51]] (Intel 87C51RB, 8-bit)
+** [[CW308T-MSP430FR5]] (TI MSP430FR5xxx, 16-bit)
+** [[CW308T-S6LX9]] (Xilinx Spartan 6 LX9 in TQFP, FPGA)
+** [[CW308T-ATSAMR21]] (Atmel SAMR21 with 802.15.4 radio, 32-bit ARM Cortex M0)
 
 
 3rd-Party Target Boards:
