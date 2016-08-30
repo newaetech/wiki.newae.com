@@ -67,6 +67,7 @@ ChipWhisperer Target boards:
 ** [[CW308T-AVR]]
 ** [[CW308T-XMEGA]]
 ** [[CW308T-87C51]]
+** [[CW308T-MSP430FR5]]
 
 
 3rd-Party Target Boards:
