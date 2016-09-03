@@ -20,7 +20,7 @@ When running make, you'll need to have the msp430-gcc files on your system path.
  cmd
 Double-clicking on this file should give you a command prompt which now has tools like <code>make</code> and <code>msp430-elf-gcc</code> in the path:
 
-[[File:msp430_cmd_make.png|400px]]
+[[File:msp430_cmd_make.png|600px]]
 
 == Example Projects ==
 
