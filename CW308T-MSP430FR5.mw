@@ -1,10 +1,24 @@
+== Hardware Description ==
 
 ==Build Environment==
 
-The examples are designed to be built with GCC for the MSP430 (msp430-elf-gcc). You can download a build of GCC from [http://www.ti.com/tool/msp430-gcc-opensource TI's website], although you may also have a build from another location. Downloading from TI will require registering & agreeing to some export control conditions.
+The examples are designed to be built with GCC for the MSP430 (msp430-elf-gcc). You can download a build of GCC from [http://www.ti.com/tool/msp430-gcc-opensource TI's website], although you may also have a build from another location. Downloading from TI will require registering & agreeing to some export control conditions. The following assumes you have installed this version of GCC.
 
 If you want to use an external programmer, you can also download a [http://www.ti.com/tool/msp430-flasher Command-Line MSP430Flasher program].
 
-=== Environment-Specific Considerations ===
+=== Include File Location ===
 
-Currently, the provided GCC does not seem to add the MSP430 header files as a default include location. Instead you must specify the location of these files in the Makefile - on Windows for example this defaults to
+Currently, the provided GCC does not seem to add the MSP430 header files as a default include location. Instead you must specify the location of these files in the Makefile - on Windows for example this defaults to <code>C:\ti\msp430_gcc\include</code> . You will see one of the first lines of the Makefile specifies this path:
+ INC_PATH = C:/ti/msp430_gcc/include/
+
+=== Batch File for Building ===
+When running make, you'll need to have the msp430-gcc files on your system path. Rather than modifying your path, you may wish to make a batch file with the path on it. For Windows you can call this file <code>tigcc.bat</code>, and for example the following shows including both GCC and the flasher program:
+ set PATH=%PATH%;C:\ti\msp430_gcc\bin;C:\ti\MSPFlasher_1.3.10<br>
+ cmd
+Double-clicking on this file should give you a command prompt which now has tools like <code>make</code> and <code>msp430-elf-gcc</code> in the path:
+
+== Example Projects ==
+
+== Schematic ==
+
+== Board Layout ==
