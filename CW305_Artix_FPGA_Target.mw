@@ -217,8 +217,6 @@ The dip-switch (S2) routes to FPGA pins J16, K16, K15, and L14 (see PCB silkscre
 |0 (Default)
 |PLL1
 |}
-
-
 {| class="wikitable"
 !K16
 !ChipWhisperer HS-Out
