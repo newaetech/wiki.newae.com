@@ -207,7 +207,28 @@ The push-button (SW4) routes to FPGA pin R1.
 
 The dip-switch (S2) routes to FPGA pins J16, K16, K15, and L14 (see PCB silkscreen). With generic designs that dip-switch has the following uses:
 
+{| class="wikitable"
+!J16
+!Input Clock Source
+|-
+|1
+|ChipWhisperer HS-IO
+|-
+|0 (Default)
+|PLL1
+|}
 
+
+{| class="wikitable"
+!K16
+!ChipWhisperer HS-Out
+|-
+|1 (Default)
+|Enabled (clock)
+|-
+|0
+|Disabled
+|}
 See the example design documentation for more details.
 
 == FPGA Configuration ==
