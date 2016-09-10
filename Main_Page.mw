@@ -112,9 +112,9 @@ Not all tutorials are possible with all hardware. See the various tutorial pages
 
 === CW305 (Artix FPGA Board) ===
 
-* [CW305: Building a Project]
-* [CW305: Clock Glitching]
-* [CW305: Voltage Glitching with crowbars]
+* [[CW305: Building a Project]]
+* [[CW305: Clock Glitching]]
+* [[CW305: Voltage Glitching with crowbars]]
 
 = Source Code and Releases =
 
