@@ -638,10 +638,6 @@ if __name__ == '__main__':
     app.exec_()                     # Comment if you don't need the GUI
 </pre>
 
-= Appendix D: AES-256 13th Round Key Script =
-Full attack script, copy/paste into a file then add as active attack script:
-
-<pre>
 # AES-256 13th Round Key Script
 from chipwhisperer.common.scripts.base import UserScriptBase
 # Imports from Preprocessing
@@ -653,25 +649,27 @@ import chipwhisperer.analyzer.attacks.models.AES128_8bit
 # Imports from utilList
 
 # Imports for AES256 Attack
-from chipwhisperer.analyzer.attacks.models.AES128_8bit import getHW
+from chipwhisperer.analyzer.attacks.models.base import ModelsBase
 from chipwhisperer.analyzer.models.aes.funcs import sbox, inv_sbox, inv_shiftrows, inv_mixcolumns, inv_subbytes
 
 
-class AES256Attack(object):
-   numSubKeys = 16
+class AES256Attack(ModelsBase):  
+   _name = 'AES 128'
 
-   @staticmethod
-   def leakage(textin, textout, guess, bnum, setting, state):
-       if setting == 13:
-          knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
-          xored = [knownkey[i] ^ textin[i] for i in range(0, 16)]
-          block = xored
-          block = inv_shiftrows(block)
-          block = inv_subbytes(block)
-          block = inv_mixcolumns(block)
-          block = inv_shiftrows(block)
-          result = block
-          return getHW(inv_sbox((result[bnum] ^ guess)))
+   def __init__(self):
+        ModelsBase.__init__(self, 16, 256, model=1)
+        self.numRoundKeys = 10
+   
+   def leakage(self, textin, textout, guess, bnum, state):
+        knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
+        xored = [knownkey[i] ^ textin[i] for i in range(0, 16)]
+        block = xored
+        block = inv_shiftrows(block)
+        block = inv_subbytes(block)
+        block = inv_mixcolumns(block)
+        block = inv_shiftrows(block)
+        result = block
+        return self.HW[inv_sbox((result[bnum] ^ guess))]
 
 
 class UserScript(UserScriptBase):
@@ -697,12 +695,12 @@ class UserScript(UserScriptBase):
     def initAnalysis(self):
         self.attack = CPA()
         self.attack.setTraceSource(self.traces, blockSignal=True)
-        self.attack.setAnalysisAlgorithm(CPAProgressive, AES256Attack, 13)
+        self.attack.setAnalysisAlgorithm(CPAProgressive, AES256Attack, None)
         self.attack.setTraceStart(0)
         self.attack.setTracesPerAttack(200)
         self.attack.setIterations(1)
         self.attack.setReportingInterval(10)
-        self.attack.setTargetBytes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        self.attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
         self.attack.setPointRange((0,10991))
 
     def initReporting(self):
@@ -729,9 +727,4 @@ if __name__ == '__main__':
     gui = cwa.CWAnalyzerGUI(api)    # Comment if you don't need the GUI
     gui.show()                      # Comment if you don't need the GUI
     api.runScriptClass(UserScript)  # Run UserScript through the API
-    app.exec_()                     # Comment if you don't need the GUI
-
-</pre>
-
-{{Template:Tutorials}}
-[[Category:Tutorials]]
+    app.exec_()                     # Comment if you don't need the GUITraceback (most recent call last):
