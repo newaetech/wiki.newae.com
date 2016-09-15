@@ -728,3 +728,5 @@ if __name__ == '__main__':
     gui.show()                      # Comment if you don't need the GUI
     api.runScriptClass(UserScript)  # Run UserScript through the API
     app.exec_()                     # Comment if you don't need the GUITraceback (most recent call last):
+
+</pre>
