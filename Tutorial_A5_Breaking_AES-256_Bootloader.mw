@@ -603,12 +603,12 @@ class UserScript(UserScriptBase):
     def initAnalysis(self):
         self.attack = CPA()
         self.attack.setTraceSource(self.traces, blockSignal=True)
-        self.attack.setAnalysisAlgorithm(CPAProgressive,chipwhisperer.analyzer.attacks.models.AES128_8bit,chipwhisperer.analyzer.attacks.models.AES128_8bit.LEAK_HW_INVSBOXOUT_FIRSTROUND)
+        self.attack.setAnalysisAlgorithm(CPAProgressive,chipwhisperer.analyzer.attacks.models.AES128_8bit.AES128_8bit,chipwhisperer.analyzer.attacks.models.AES128_8bit.AES128_8bit.LEAK_HW_INVSBOXOUT_FIRSTROUND)
         self.attack.setTraceStart(0)
         self.attack.setTracesPerAttack(200)
         self.attack.setIterations(1)
         self.attack.setReportingInterval(10)
-        self.attack.setTargetBytes([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+        self.attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
         self.attack.setPointRange((0,10991))
 
     def initReporting(self):
