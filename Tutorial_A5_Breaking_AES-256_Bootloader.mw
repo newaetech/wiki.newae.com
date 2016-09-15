@@ -638,6 +638,9 @@ if __name__ == '__main__':
     app.exec_()                     # Comment if you don't need the GUI
 </pre>
 
+= Appendix D: AES-256 13th Round Key Script =
+
+<pre>
 # AES-256 13th Round Key Script
 from chipwhisperer.common.scripts.base import UserScriptBase
 # Imports from Preprocessing
@@ -657,7 +660,7 @@ class AES256Attack(ModelsBase):
    _name = 'AES 128'
 
    def __init__(self):
-        ModelsBase.__init__(self, 16, 256, model=1)
+        ModelsBase.__init__(self, 16, 256, model=None)
         self.numRoundKeys = 10
    
    def leakage(self, textin, textout, guess, bnum, state):
