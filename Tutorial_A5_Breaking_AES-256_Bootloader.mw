@@ -653,7 +653,7 @@ import chipwhisperer.analyzer.attacks.models.AES128_8bit
 
 # Imports for AES256 Attack
 from chipwhisperer.analyzer.attacks.models.base import ModelsBase
-from chipwhisperer.analyzer.models.aes.funcs import sbox, inv_sbox, inv_shiftrows, inv_mixcolumns, inv_subbytes
+from chipwhisperer.analyzer.attacks.models.aes.funcs import sbox, inv_sbox, inv_shiftrows, inv_mixcolumns, inv_subbytes
 
 
 class AES256Attack(ModelsBase):  
