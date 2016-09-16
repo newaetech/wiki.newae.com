@@ -691,7 +691,7 @@ class UserScript(UserScriptBase):
     def initPreprocessing(self):
         ppMod0 = preprocessing.resync_sad.ResyncSAD(self.api.project().traceManager())
         ppMod0.setEnabled(True)
-        ppMod0.setReference(rtraceno=0, refpoints=(8973,9089), inputwindow=(8841,9124))
+        ppMod0.setReference(rtraceno=0, refpoints=(9100,9300), inputwindow=(8900,9500))
         ppMod0.init()
         self.traces = ppMod0
 
