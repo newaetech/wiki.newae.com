@@ -1,1 +1,11 @@
+==Test Reports==
+
+Some devices come with printed test reports (such as the ChipWhisperer-Lite). These reports give detailed information on tests performed.
+
+Most other devices have a functional test performed before shipping, but there is no test report generated as the test is simply pass/fail.
+
+==QA Manager==
+
+All test reports our signed by our Q.A. manager, Luna. This was part of the [https://www.kickstarter.com/projects/coflynn/chipwhisperer-lite-a-new-era-of-hardware-security Kickstarter Campaign]:
+
 [[File:Luna.jpg]]
