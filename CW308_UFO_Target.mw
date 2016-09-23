@@ -333,6 +333,24 @@ The following shows the dimensions of the main connector:
 |Active-high buffered LED driver. 100k pull-down.
 |}
 
+=== Removing / Replacing Victim Boards ===
+
+The target board is removed and replaced using the removal tool. This helps avoid bending pins:
+
+[[File:P1090067.jpg|600px]]
+
+The following shows the removal process:
+
+[[File:removal.gif]]
+
+Adding a board involves carefully aligning the board and pushing down:
+
+[[File:addition.gif]]
+
+The alignment should be carefully checked if resistance is found. You may need to adjust how the board is aligned, as you should be able to press down with minimal force.
+
+The CW308 should be turned off when swapping victim boards.
+
 == I/O Connections ==
 
 There are two main I/O connection points: the pin headers which duplicate the target board connections, and the 20-pin ChipWhisperer header.
@@ -344,6 +362,8 @@ The ChipWhisperer header pins (most of the pins on header J5) have diode protect
 === Clock Selection ===
 
 === Crystal Driver ===
+
+[[File:P1090074.jpg]]
 
 == Power Distribution ==
 
