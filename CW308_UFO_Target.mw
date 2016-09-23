@@ -119,7 +119,7 @@ The following shows the dimensions of the main connector:
 
 
 {| class="wikitable"
-!J7 (South, B)
+!J9 (South, B)
 !Function
 !Direction
 !Notes
@@ -222,12 +222,12 @@ The following shows the dimensions of the main connector:
 |20
 |HDR10
 |
-|J11: Pin 10
+|J10: Pin 10
 |}
 
 
 {| class="wikitable"
-!J7 (East, C)
+!J11 (East, C)
 !Function
 !Direction
 !Notes
