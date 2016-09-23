@@ -1,1 +1,19 @@
-Details forthcoming - expected release in August/September 2016!
+The CW308 UFO Board is a handy main-board for attacking all sorts of embedded targets. Released in 2016, it forms the basis for most of our upcoming target boards. 
+
+== I/O Connections ==
+
+== Clock Network ==
+
+=== Clock Selection ===
+
+=== Crystal Driver ===
+
+== Power Distribution ==
+
+=== External Power Sources ===
+
+=== On-Board LDOs ===
+
+== Programmer Connections ==
+
+== Schematic ==
