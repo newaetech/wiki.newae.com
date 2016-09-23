@@ -362,11 +362,13 @@ The ChipWhisperer header pins (most of the pins on header J5) have diode protect
 
 == Clock Network ==
 
-=== Clock Selection ===
-
 === Crystal Driver ===
 
+The CW308 contains a crystal oscillator driver. This allows you to use a standard crystal to drive either the victim board or the connected ChipWhisperer. This also allows the use of the CW308 stand-alone, as it's possible to generate almost any frequency by simply putting an appropriate crystal into the socket.
+
 [[File:P1090074.jpg|border|frameless|400x400px]]
+
+=== Clock Selection ===
 
 == Power Distribution ==
 
