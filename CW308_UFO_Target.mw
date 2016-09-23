@@ -13,87 +13,108 @@ The following shows the dimensions of the main connector:
 {| class="wikitable"
 !J7 (West, A)
 !Function
+!Direction
 !Notes
 |-
 |1
+|Spare
 |
-|
+|Not connected to main-board, can be used as spare I/O pin breakout.
 |-
 |2
+|GND
 |
 |
 |-
 |3
-|
-|
+|CLK-IN
+|CW308 --> Victim
+|Clock to victim.
 |-
 |4
+|GND
 |
 |
 |-
 |5
-|
+|CLKOUT
+|CW308 <-- Victim
 |
 |-
 |6
+|GND
 |
 |
 |-
 |7
+|GPIO1
 |
 |
 |-
 |8
+|GPIO2
 |
 |
 |-
 |9
+|GPIO3
 |
 |
 |-
 |10
+|GPIO4
 |
 |
 |-
 |11
-|
+|nRST
+|CW308 --> Victim
 |
 |-
 |12
+|SCK
 |
 |
 |-
 |13
+|MISO
 |
 |
 |-
 |14
+|MOSI
 |
 |
 |-
 |15
+|GND
 |
 |
 |-
 |16
+|GND
 |
 |
 |-
 |17
+|PDIC
 |
 |
 |-
 |18
+|PDID/CS
 |
 |
 |-
 |19
+|Spare
 |
 |
 |-
 |20
-|
-|
+|VREF
+|CW308 <-- Victim
+|Reference voltage for I/O. MUST be set to VCC-IO voltage (3.3V, etc) or I/O lines may not work.
 |}
 
 
@@ -103,7 +124,7 @@ The following shows the dimensions of the main connector:
 !Notes
 |-
 |1
-|
+|GND
 |
 |-
 |2
