@@ -69,7 +69,7 @@ The following shows the dimensions of the main connector:
 |11
 |nRST
 |CW308 --> Victim
-|
+|100k pull-up to VREF.
 |-
 |12
 |SCK
@@ -119,176 +119,218 @@ The following shows the dimensions of the main connector:
 
 
 {| class="wikitable"
-!J7 (West, A)
+!J7 (South, B)
 !Function
+!Direction
 !Notes
 |-
 |1
 |GND
 |
+|
 |-
 |2
+|JTAG_TRST
 |
-|
+|Connects to 20-pin ARM JTAG header.
 |-
 |3
+|JTAG_TDI
 |
-|
+|Connects to 20-pin ARM JTAG header.
 |-
 |4
+|JTAG_TDO
 |
-|
+|Connects to 20-pin ARM JTAG header.
 |-
 |5
+|JTAG_TMS
 |
-|
+|Connects to 20-pin ARM JTAG header.
 |-
 |6
+|JTAG_TCK
 |
-|
+|Connects to 20-pin ARM JTAG header.
 |-
 |7
+|JTAG_VREF
 |
-|
+|Connects to 20-pin ARM JTAG header. All JTAG_ pins have 100k pull-up to this pin. Must set to appropriate value.
 |-
 |8
+|JTAG_nRST
 |
-|
+|Connects to 20-pin ARM JTAG header.
 |-
 |9
+|GND
 |
 |
 |-
 |10
+|GND
 |
 |
 |-
 |11
+|HDR1
 |
-|
+|J10, J12, J15: Pin 1
 |-
 |12
+|HDR2
 |
-|
+|J10, J12, J15: Pin 2
 |-
 |13
+|HDR3
 |
-|
+|J10, J12, J15: Pin 3
 |-
 |14
+|HDR4
 |
-|
+|J10, J12, J15: Pin 4
 |-
 |15
+|HDR5
 |
-|
+|J10, J12, J15: Pin 5
 |-
 |16
+|HDR6
 |
-|
+|J10, J12, J15: Pin 6
 |-
 |17
+|HDR7
 |
-|
+|J10, J12: Pin 7
 |-
 |18
+|HDR8
 |
-|
+|J10, J12: Pin 8
 |-
 |19
+|HDR9
 |
-|
+|J10: Pin 9
 |-
 |20
+|HDR10
 |
-|
+|J11: Pin 10
 |}
 
 
 {| class="wikitable"
-!J7 (West, A)
+!J7 (East, C)
 !Function
+!Direction
 !Notes
 |-
 |1
+|GND
 |
 |
 |-
 |2
+|SHUNTL
 |
-|
+|Low-Side Shunt Connection (connects to SMA)
 |-
 |3
+|SHUNTH
 |
-|
+|High-Side Shunt Connection (power input side)
 |-
 |4
+|GND
 |
 |
 |-
 |5
-|
-|
+|FILT_HP
+|CW308 --> Victim
+|High-Power filter output (same as FILT_LP on this hardware)
 |-
 |6
-|
-|
+|FILT_LP
+|CW308 --> Victim
+|Low-Power filter output (same as FILT_HP on this hardware)
 |-
 |7
+|GND
 |
 |
 |-
 |8
-|
-|
+|FILTIN
+|CW308 <-- Victim
+|Input to power supply filter.
 |-
 |9
+|GND
 |
 |
 |-
 |10
+|GND
 |
 |
 |-
 |11
-|
-|
+|1.2V
+|CW308 --> Victim
+|1.2V LDO Regulator output
 |-
 |12
-|
-|
+|1.8V
+|CW308 --> Victim
+|1.8V LDO Regulator output
 |-
 |13
-|
-|
+|2.5V
+|CW308 --> Victim
+|2.5V LDO Regulator output
 |-
 |14
-|
-|
+|3.3V
+|CW308 --> Victim
+|3.3V LDO Regulator output OR 3.3V from 20-pin connector
 |-
 |15
-|
-|
+|5.0V
+|CW308 --> Victim
+|5.0V from either DC-Power jack or 20-pin connector
 |-
 |16
+|GND
 |
 |
 |-
 |17
+|GND
 |
 |
 |-
 |18
-|
-|
+|LED1
+|CW308 <-- Victim
+|Active-high buffered LED driver. 100k pull-down.
 |-
 |19
-|
-|
+|LED2
+|CW308 <-- Victim
+|Active-high buffered LED driver. 100k pull-down.
 |-
 |20
-|
-|
+|LED3
+|CW308 <-- Victim
+|Active-high buffered LED driver. 100k pull-down.
 |}
 
 == I/O Connections ==
