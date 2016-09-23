@@ -370,6 +370,8 @@ The CW308 contains a crystal oscillator driver. This allows you to use a standar
 
 === Clock Selection ===
 
+[[File:cw308_clockrouting.png|400px]]
+
 == Power Distribution ==
 
 === External Power Sources ===
