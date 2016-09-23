@@ -1,6 +1,14 @@
 The CW308 UFO Board is a handy main-board for attacking all sorts of embedded targets. Released in 2016, it forms the basis for most of our upcoming target boards. It can be used stand-alone (with an oscilloscope) or with the ChipWhisperer-Capture hardware.
 
+== Overview ==
+
+== Target Board Connectors ==
+
 == I/O Connections ==
+
+There are two main I/O connection points: the pin headers which duplicate the target board connections, and the 20-pin ChipWhisperer header.
+
+The ChipWhisperer header pins (most of the pins on header J5) have diode protection to set a maximum voltage level. The maximum voltage is set by the voltage present on the middle pin of J4.
 
 == Clock Network ==
 
@@ -15,5 +23,7 @@ The CW308 UFO Board is a handy main-board for attacking all sorts of embedded ta
 === On-Board LDOs ===
 
 == Programmer Connections ==
+
+== Jumper Summary ==
 
 == Schematic ==
