@@ -8,7 +8,7 @@ The "victim board" fits into three 20-pin female headers. They provide both elec
 
 The following shows the dimensions of the main connector:
 
-[[File:CW308_victim_dims.png]]
+[[File:CW308_victim_dims.png|left|frameless|518x518px|The CW308 victim board has contacts on a 100 mil spacing, allowing you to use regular prototype boards. Click for full size.]]
 
 == I/O Connections ==
 
