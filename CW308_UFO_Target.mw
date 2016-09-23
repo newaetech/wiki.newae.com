@@ -2,6 +2,11 @@ The CW308 UFO Board is a handy main-board for attacking all sorts of embedded ta
 
 == Overview ==
 
+[[File:cw308_mainphoto1.jpg|400px]]
+
+[[File:cw308_mainphoto2.jpg|400px]]
+
+
 == Victim Board Connectors ==
 
 The "victim board" fits into three 20-pin female headers. They provide both electrical and mechanical connections for the board. There is optional mounting holes which can be used if additional mechanical support is required (especially if you need a locked-down victim for use with an EM probe).
