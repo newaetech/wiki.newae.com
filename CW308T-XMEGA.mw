@@ -54,6 +54,10 @@ The CW308T-XMEGA fits an Atmel XMEGA device.
 |In-System programming.
 |}
 
+== Hardware AES ==
+The XMEGA device that ships with most standard boards is the ATXmega128D4-AU, the same device on the ChipWhisperer-Lite. This board ''does not'' contain hardware AES to simplify compliance with export rules.
+
+The pin-compatible ATXmega128A4U-AU contains a hardware AES accelerator. If you wish to attack this device, you can purchase the blank CW308T-XMEGA PCB (or download gerbers from the GIT repository and make them yourselves) and mount the appropriate XMEGA device.
 
 == Programming Header ==
 
