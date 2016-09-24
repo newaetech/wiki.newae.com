@@ -370,6 +370,12 @@ The CW308 contains a crystal oscillator driver. This allows you to use a standar
 
 === Clock Selection ===
 
+The clock routing is selected using jumper J3. This allows the following use cases:
+
+Routing crystal oscillator (X1) to victim CLKIN.
+Routing crystal oscillator (X1) to ChipWhisperer HS-IN, then routing HS-OUT to victim CLKIN (for glitch insertion).
+Routing CLKFB from victim to ChipWhisperer HS-IN.
+
 [[File:cw308_clockrouting.png|400px]]
 
 == Power Distribution ==
