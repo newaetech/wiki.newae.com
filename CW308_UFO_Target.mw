@@ -572,7 +572,6 @@ The CW308 can be used stand-alone. This is accomplished by providing an external
 If using a simple-serial target (such as the XMEGA or AVR), you can connect a USB-Serial device to provide communication.
 
 [[File:P1090078.jpg|400px]]
-
 [[File:P1090080.jpg|400px]]
 
 == Usage Hints ==
