@@ -28,6 +28,8 @@ The SAMR21E uses the 2-pin programming (SWDIO/SWCLK) interface. This is routed t
 
 == Schematic ==
 
+NOTE: Schematic is marked as unapproved until hardware has been fully validated.
+
 [[File:CW308T_SAMR21E_Schematic.png|1000px]]
 
 See GIT Repo for PDF of schematic.
