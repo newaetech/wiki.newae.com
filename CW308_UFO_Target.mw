@@ -394,8 +394,10 @@ In addition there is a 20-pin JTAG header. This uses the standard JTAG ARM pinou
 
 == Jumper Summary ==
 
-J3: Clock Selection.
-J4: VREF Selection.
+J3: Clock selection.
+
+J4: VREF selection.
+
 J14: Filter input selection.
 
 == Schematic ==
