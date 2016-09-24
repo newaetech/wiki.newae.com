@@ -573,7 +573,34 @@ In addition there is a 20-pin JTAG header. This uses the standard JTAG ARM pinou
 
 === J3: Clock selection. ===
 
-Selects clock routing on the board.
+Selects clock routing on the board. The following shows various examples of settings for this jumper:
+
+{| class="wikitable"
+! 
+!1
+!2
+!Meaning
+|-
+! scope="row" | 1
+| style="background: blue;" | X 
+| style="background: blue;" | X 
+| Connect crystal oscillator output to CLKIN on Victim.
+|-
+! scope="row" | 2
+| style="background: white;" |
+| style="background: white;" |
+| 
+|-
+! scope="row" | 3
+| style="background: white;" |
+| style="background: white;" |
+| 
+|-
+! scope="row" | 4
+| style="background: white;" |
+| style="background: white;" |
+| 
+|}
 
 === J4: VREF selection. ===
 
