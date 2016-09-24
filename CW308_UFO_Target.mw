@@ -574,6 +574,11 @@ In addition there is a 20-pin JTAG header. This uses the standard JTAG ARM pinou
 === J3: Clock selection. ===
 
 Selects clock routing on the board.
+
+=== J4: VREF selection. ===
+
+Selects levels for the diode clamps, selects voltage set on ChipWhisperer 20-pin connector VREF pin, selects I/O level for crystal oscillator.
+
 {| class="wikitable"
 !1
 !2
@@ -596,15 +601,33 @@ Selects clock routing on the board.
 |VREF voltage can be fed into center pin via a jumper wire.
 |}
 
-=== J4: VREF selection. ===
-
-Selects levels for the diode clamps, selects voltage set on ChipWhisperer 20-pin connector VREF pin, selects I/O level for crystal oscillator.
-
 === J14: Filter input selection. ===
 
 Selects source of FILT_IN pin. This pin can either come from the victim board (where victim sets own voltage), or the VADJ network (where adjustable regulator is used).
 
 The adjustable regulator is often required when overcoming the voltage drop in the shunt and/or filter.
+
+{| class="wikitable"
+!1
+!2
+!3
+!Meaning
+|-
+| 
+| style="background: blue;" | X 
+| style="background: blue;" | X 
+| Filter input set by FILT Pin from Victim Board (DEFAULT)
+|-
+| style="background: blue;" | X 
+| style="background: blue;" | X 
+|
+| Filter input set by VADJ. Be sure to adjust voltage before using this.
+|-
+|
+|
+|
+| Filter voltage can be fed into center pin via a jumper wire.
+|}
 
 == Usage Example: Stand-Alone ==
 
