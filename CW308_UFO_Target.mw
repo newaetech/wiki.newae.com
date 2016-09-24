@@ -360,6 +360,120 @@ There are two main I/O connection points: the pin headers which duplicate the ta
 
 The ChipWhisperer header pins (most of the pins on header J5) have diode protection to set a maximum voltage level. The maximum voltage is set by the voltage present on the middle pin of J4.
 
+=== 20-Pin Pinout ===
+
+The pinout is as follows:
+
+{| class="wikitable"
+! Number
+! Name
+! Dir
+! Description
+|-
+| 1
+| +VUSB (5V)
+| O
+| Not Connected on ChipWhisperer-Lite.
+|-
+| 2
+| GND
+| O
+| System GND.
+|-
+| 3
+| +3.3V
+| O
+| +3.3V to Target Device, can be turned off, 200mA available.
+|-
+| 4
+| FPGA-HS1
+| I/O
+| High Speed Input (normally clock in).
+|-
+| 5
+| PROG-RESET
+| I/O
+| Target RESET Pin (AVR Programmer).
+|-
+| 6
+| FPGA-HS2
+| I/O
+| High Speed Output (normally clock or glitch out).
+|-
+| 7
+| PROG-MISO
+| I/O
+| SPI input: MISO (for SPI + AVR Programmer).
+|-
+| 8
+| VTarget
+| I
+| Drive this pin with desired I/O voltage in range 1.5V-5V.
+|-
+| 9
+| PROG-MOSI
+| I/O
+| SPI output: MOSI (for SPI + AVR Programmer).
+|-
+| 10
+| FPGA-TARG1
+| I/O
+| TargetIO Pin 1 - Usually UART TX or RX.
+|-
+| 11
+| PROG-SCK
+| I/O
+| SPI output: SCK (for SPI + AVR Programmer).
+|-
+| 12
+| FPGA-TARG2
+| I/O
+| TargetIO Pin 2 - Usually UART RX or TX.
+|-
+| 13
+| PROG-PDIC
+| I/O
+| PDI Programming Clock (XMEGA Programmer), or CS pin (SPI).
+|-
+| 14
+| FPGA-TARG3
+| I/O
+| TargetIO Pin 3 - Usually bidirectional IO for smartcard.
+|-
+| 15
+| PROG-PDID
+| I/O
+| PDI Programming Data (XMEGA Programmer).
+|-
+| 16
+| FPGA-TARG4
+| I/O
+| TargetIO Pin 4 - Usually trigger input.
+|-
+| 17
+| GND
+| O
+|
+
+|-
+| 18
+| +3.3V
+| O
+|
+
+|-
+| 19
+| GND
+| O
+|
+
+|-
+| 20
+| +VUSB (5V)
+| O
+| Not Connected on ChipWhisperer-Lite.
+|}
+
 == Clock Network ==
 
 === Crystal Driver ===
