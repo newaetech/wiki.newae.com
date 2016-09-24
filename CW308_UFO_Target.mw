@@ -574,6 +574,27 @@ In addition there is a 20-pin JTAG header. This uses the standard JTAG ARM pinou
 === J3: Clock selection. ===
 
 Selects clock routing on the board.
+{| class="wikitable"
+!1
+!2
+!3
+!Meaning
+|-
+|
+|
+|
+|VREF Network set by VREF Pin from Victim Board (DEFAULT)
+|-
+|
+|
+|
+|VREF Network set to 3.3V from ChipWhisperer 20-pin header. If using board stand-alone this option cannot be used.
+|-
+|
+|
+|
+|VREF voltage can be fed into center pin via a jumper wire.
+|}
 
 === J4: VREF selection. ===
 
