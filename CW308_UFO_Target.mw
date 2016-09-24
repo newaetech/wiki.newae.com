@@ -582,9 +582,90 @@ Selects clock routing on the board. The following shows various examples of sett
 !Meaning
 |-
 ! scope="row" | 1
+| style="background: white;" |  
+| style="background: white;" | 
+| 
+|-
+! scope="row" | 2
+| style="background: white;" |
+| style="background: white;" |
+| 
+|-
+! scope="row" | 3
+| style="background: blue;" | X
+| style="background: blue;" | X
+| Sends clock from ChipWhisperer-Capture to Victim board. (DEFAULT)
+|-
+! scope="row" | 4
+| style="background: white;" |
+| style="background: white;" |
+| 
+|}
+
+{| class="wikitable"
+! 
+!1
+!2
+!Meaning
+|-
+! scope="row" | 1
 | style="background: blue;" | X 
 | style="background: blue;" | X 
 | Connect crystal oscillator output to CLKIN on Victim.
+|-
+! scope="row" | 2
+| style="background: green;" |
+| style="background: green;" |
+| Route clock to ChipWhisperer-Capture input for synchronization.
+|-
+! scope="row" | 3
+| style="background: white;" |
+| style="background: white;" |
+| 
+|-
+! scope="row" | 4
+| style="background: white;" |
+| style="background: white;" |
+| 
+|}
+
+{| class="wikitable"
+! 
+!1
+!2
+!Meaning
+|-
+! scope="row" | 1
+| style="background: blue;" |  X
+| style="background: white;" | 
+| 
+|-
+! scope="row" | 2
+| style="background: blue;" | X
+| style="background: white;" |
+| Route crystal oscillator to ChipWhisperer-Capture only (and not to target device).
+|-
+! scope="row" | 3
+| style="background: green;" | X
+| style="background: green;" | X
+| Route clock from ChipWhisperer-Capture to device (i.e., may be glitchy version of input clock).
+|-
+! scope="row" | 4
+| style="background: white;" |
+| style="background: white;" |
+| 
+|}
+
+{| class="wikitable"
+! 
+!1
+!2
+!Meaning
+|-
+! scope="row" | 1
+| style="background: white;" |  
+| style="background: white;" | 
+| 
 |-
 ! scope="row" | 2
 | style="background: white;" |
@@ -597,9 +678,9 @@ Selects clock routing on the board. The following shows various examples of sett
 | 
 |-
 ! scope="row" | 4
-| style="background: white;" |
-| style="background: white;" |
-| 
+| style="background: blue;" |
+| style="background: blue;" |
+| Route output clock from victim to ChipWhisperer-Capture for synchronization.
 |}
 
 === J4: VREF selection. ===
