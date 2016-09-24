@@ -493,8 +493,11 @@ The clock routing is selected using jumper J3. This allows the following use cas
 [[File:cw308_clockrouting.png|400px]]
 
 == Power Distribution ==
+The following shows the routing of power to the victim board:
 
 [[File:cw308_switch.png|600px]]
+
+The following summarizes the switches:
 
 === External Power Sources ===
 
