@@ -1,67 +1,10 @@
-[[File:P1090078.jpg|thumb|600x600px|Example of attaching to the AVR target device.]]
 
-== Board/Jumper Settings ==
-The following specifies what various jumpers should be set to:
-{| class="wikitable"
-!style="width: 150px;"|Switch
-!style="width: 300px;"|Setting
-!style="width: 200px;"|Note
-|-
-|EXT-DC Switch (S1)
-|ON
-|Can be used as on/off switch.
-|-
-|3.3V Source
-|LDO
-|Set VCC3.3 as coming from LDO.
-|-
-|3.3V LDO Source
-|EXT-DC
-|Set LDO source as DC-Power Jack.
-|-
-|Others
-|Don't Care
-|
-|}
-{| class="wikitable"
-!style="width: 150px;"|Jumper
-!style="width: 300px;"|Setting
-!style="width: 200px;"|Note
-|-
-|J3
-|Jumper mounted on "CRYSTAL" setting (top row of pins).
-|Route on-board crystal oscillator
-|-
-|J4
-|Jumper mounted on right two pins (board default).
-|Specifies victim board sets VREF voltage.
-|-
-|J14
-|Jumper mounted on left two pins (board default).
-|Uses FILT output from victim board.
-|}
-{| class="wikitable"
-!style="width: 150px;"|X1 Crystal Socket
-!style="width: 500px;"|Note
-|-
-|7.37 MHz Crystal
-|This is default frequency for programmed software. Can use another frequency for custom programs.
-|}
+== Board Settings ==
 
-With that setup done, you can proceed to the next section.
+== USB Serial Example ==
 
-== Mounting Target Board ==
-The selected target board (AVR or XMEGA) should be placed onto the main victim area. See the [[CW308 UFO Target]] page for details.
 
-== Connecting Oscilloscope ==
-The oscilloscope needs two connections. The trigger should be connected to GPIO4 (a test point is provided for this), and the measurement should be done via the SMA J17 (marked VOUT). Note you can also use test point TP5 with a regular oscilloscope probe, but it will provide much worse performance.
+[[File:P1090078.jpg]]
 
-The oscilloscope should be set to AC-coupled mode to eliminate the constant DC offset.
 
-== USB Serial Usage ==
-
-[[File:P1090080.jpg|thumb|600x600px|Details of a possible oscilloscope connection on the trigger pin, along with a USB-serial on GPIO1/GPIO2.]]A serial connection is needed on GPIO1/GPIO2. This can be provided by any 3.3V USB-Serial cable (DO NOT use a cable which outputs either RS232 levels, or 5V levels).
-
-This can either be connected at J1 (the 20-pin ChipWhisperer header), or the pin headers directly beside the victim board. The pin headers do not provide diode clamping, where as the connections at J1 have diode clamping.
-
-[[Category: CW308 Targets]]
+[[File:P1090080.jpg]]
