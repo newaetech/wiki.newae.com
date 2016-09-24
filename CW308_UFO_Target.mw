@@ -360,6 +360,14 @@ There are two main I/O connection points: the pin headers which duplicate the ta
 
 The ChipWhisperer header pins (most of the pins on header J5) have diode protection to set a maximum voltage level. The maximum voltage is set by the voltage present on the middle pin of J4.
 
+=== VREF Level Setting ===
+
+The on-board 'VREF' network sets the reference voltage to allow usage with multiple I/O levels. Note there are no voltage translators on-board, instead you can use the [CW506 Advanced Breakout Board] to provide voltage translation. One of the pins on the 20-pin connector outputs the reference voltage (VREF), so the CW506 knows what voltage level to translate I/O signals to.
+
+The on-board crystal oscillator is powered from the VREF network, ensuring the on-board oscillator is at an appropriate voltage reference.
+
+The I/O pins connected to the 20-pin header have diode clamping, with the maximum level set by the VREF network. You must ensure jumper J4 sets a correct reference level. If using any of the official victim boards this is done by setting J4 to receive it's reference level from "J5-VREF" pin.
+
 === 20-Pin Pinout ===
 
 The pinout is as follows:
