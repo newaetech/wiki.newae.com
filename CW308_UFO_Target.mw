@@ -366,7 +366,9 @@ The on-board 'VREF' network sets the reference voltage to allow usage with multi
 
 The on-board crystal oscillator is powered from the VREF network, ensuring the on-board oscillator is at an appropriate voltage reference.
 
-{{Infobox|The I/O pins connected to the 20-pin header have diode clamping, with the maximum level set by the VREF network. You must ensure jumper J4 sets a correct reference level. If using any of the official victim boards this is done by setting J4 to receive it's reference level from "J5-VREF" pin.}}
+The I/O pins connected to the 20-pin header have diode clamping, with the maximum level set by the VREF network. You must ensure jumper J4 sets a correct reference level. If using any of the official victim boards this is done by setting J4 to receive it's reference level from "J5-VREF" pin.
+
+{{Infobox|If you do NOT set a correct VREF level, the diode clamps will pull I/O pins down to invalid levels. If you are using the prototyping board be sure to connect pin A20 (the 'VREF' pin) on the victim connector strip to the desired I/O level!}}
 
 === 20-Pin Pinout ===
 
