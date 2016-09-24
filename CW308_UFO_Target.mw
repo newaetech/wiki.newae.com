@@ -380,6 +380,8 @@ The clock routing is selected using jumper J3. This allows the following use cas
 
 == Power Distribution ==
 
+[[File:cw308_switch.png|400px]]
+
 === External Power Sources ===
 
 There are two main sources to supply power to the CW308:
