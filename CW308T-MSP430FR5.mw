@@ -30,9 +30,11 @@ Double-clicking on this file should give you a command prompt which now has tool
 
 == Schematic ==
 
-See GIT Repo for PDF of schematic.
+NOTE: Schematic is marked as unapproved until hardware has been fully validated.
 
 [[File:CW308T_MSP430FR5xxx_Schematic.png|1000px]]
+
+See GIT Repo for PDF of schematic.
 
 == Board Layout ==
 
