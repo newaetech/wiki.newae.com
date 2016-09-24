@@ -2,6 +2,55 @@
 
 The CW308T-XMEGA fits an Atmel XMEGA device.
 
+== I/O Connections ==
+
+{| class="wikitable"
+!CW308 Pin
+!ATMega328P Pin
+!Notes
+|-
+|GPIO1
+|PD0 (RXD)
+|Serial INPUT to AVR.
+|-
+|GPIO2
+|PD1 (TXD)
+|Serial OUTPUT from AVR.
+|-
+|GPIO3
+|N/C
+|
+|-
+|GPIO4
+|PC0
+|Trigger pin (mapped to ADC-port such that I/O driver power comes from AVCC).
+|-
+|CLKIN
+|XTAL1
+|
+|-
+|CLKFB
+|PB0
+|Can set this pin as CLKO with fuse. Useful for synchronizing to internal RC oscillator.
+|-
+|nRST
+|nRST (PC6)
+|Used by in-system-programming (ISP) interface.
+|-
+|MOSI
+|PB3 (MOSI)
+|Used by in-system-programming (ISP) interface.
+|-
+|MISO
+|PB4 (MISO)
+|Used by in-system-programming (ISP) interface.
+|-
+|SCK
+|PB5 (SCK)
+|Used by in-system-programming (ISP) interface.
+|}
+
+
 == Programming Header ==
 
 The 6-pin programming heading can be used with the Atmel PDI interface. The pinout of the 6-pin programming header on the main-board allows it to work with standard Atmel ISP tools:
