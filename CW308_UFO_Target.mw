@@ -382,7 +382,21 @@ The clock routing is selected using jumper J3. This allows the following use cas
 
 === External Power Sources ===
 
+There are two main sources to supply power to the CW308:
+
+* DC-input power jack (2.1mm barrel jack, center positive, 5.0V)
+* ChipWhisperer 20-pin connector (5.0V and 3.3V).
+
+Note you can use the DC-input power jack alongside the ChipWhisperer power supply. The CW308 can switch the DC-power on/off, allowing the ChipWhisperer to still control the target power.
+
+
 === On-Board LDOs ===
+
+There are five LDOs on-board the CW308. While they are mostly rated for 800mA, the board does not have sufficient thermal dissipation to operate at these conditions.
+
+Four of the LDOs have fixed voltage settings: 1.2V, 1.8V, 2.5V, and 3.3V. The fifth LDO is adjustable, and is especially useful if you need to either (a) overcome the voltage drop of a shunt, or (b) feed a power supply into a device to turn off an internal regulator.
+
+=== Adjustable Voltage Example ===
 
 == Programmer Connections ==
 
