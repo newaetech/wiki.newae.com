@@ -124,6 +124,10 @@ The following aren't complete tutorials as the above, but instead show you a lit
 * [[CW305: Clock Glitching]]
 * [[CW305: Voltage Glitching with crowbars]]
 
+=== CW308 (UFO Board) ===
+
+* [[CW308T-AVR / CW308T-XMEGA: Stand-Alone Simple Serial Example ]]
+
 = Source Code and Releases =
 
 * Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository].
