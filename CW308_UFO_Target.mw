@@ -614,9 +614,9 @@ Selects clock routing on the board. The following shows various examples of sett
 | Connect crystal oscillator output to CLKIN on Victim.
 |-
 ! scope="row" | 2
-| style="background: green;" |
-| style="background: green;" |
-| Route clock to ChipWhisperer-Capture input for synchronization.
+| style="background: green;" | X
+| style="background: green;" | X
+| Also send clock to ChipWhisperer-Capture input for synchronization.
 |-
 ! scope="row" | 3
 | style="background: white;" |
