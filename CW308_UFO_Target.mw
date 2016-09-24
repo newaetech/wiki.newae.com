@@ -371,62 +371,62 @@ The pinout is as follows:
 ! Description
 |-
 | 1
-| +VUSB (5V)
-| O
-| Not Connected on ChipWhisperer-Lite.
+| +5V
+| I
+| +5V from ChipWhisperer-Capture.
 |-
 | 2
 | GND
-| O
+| I
 | System GND.
 |-
 | 3
 | +3.3V
-| O
-| +3.3V to Target Device, can be turned off, 200mA available.
+| I
+| +3.3V from ChipWhisperer-Capture.
 |-
 | 4
-| FPGA-HS1
-| I/O
-| High Speed Input (normally clock in).
+| HS1
+| O
+| High Speed output (normally clock in to ChipWhisperer-Capture).
 |-
 | 5
-| PROG-RESET
+| nRST
 | I/O
 | Target RESET Pin (AVR Programmer).
 |-
 | 6
-| FPGA-HS2
-| I/O
-| High Speed Output (normally clock or glitch out).
+| HS2
+| I
+| High Speed input (normally clock or glitch out from ChipWhisperer-Capture).
 |-
 | 7
-| PROG-MISO
+| MISO
 | I/O
 | SPI input: MISO (for SPI + AVR Programmer).
 |-
 | 8
 | VTarget
-| I
-| Drive this pin with desired I/O voltage in range 1.5V-5V.
+| O
+| Set I/O voltage reference level.
 |-
 | 9
-| PROG-MOSI
+| MOSI
 | I/O
 | SPI output: MOSI (for SPI + AVR Programmer).
 |-
 | 10
-| FPGA-TARG1
+| TARG1
 | I/O
 | TargetIO Pin 1 - Usually UART TX or RX.
 |-
 | 11
-| PROG-SCK
+| SCK
 | I/O
 | SPI output: SCK (for SPI + AVR Programmer).
 |-
 | 12
-| FPGA-TARG2
+| GPIO2
 | I/O
 | TargetIO Pin 2 - Usually UART RX or TX.
 |-
@@ -436,9 +436,9 @@ The pinout is as follows:
 | PDI Programming Clock (XMEGA Programmer), or CS pin (SPI).
 |-
 | 14
-| FPGA-TARG3
+| GPIO3
 | I/O
-| TargetIO Pin 3 - Usually bidirectional IO for smartcard.
+| TargetIO Pin 3 - Extra I/O.
 |-
 | 15
 | PROG-PDID
@@ -446,9 +446,9 @@ The pinout is as follows:
 | PDI Programming Data (XMEGA Programmer).
 |-
 | 16
-| FPGA-TARG4
+| GPIO4
 | I/O
-| TargetIO Pin 4 - Usually trigger input.
+| TargetIO Pin 4 - Usually trigger output.
 |-
 | 17
 | GND
@@ -459,7 +459,7 @@ The pinout is as follows:
 | 18
 | +3.3V
 | O
-|
+|<nowiki>+3.3V from ChipWhisperer-Capture.</nowiki>
 
 |-
 | 19
@@ -469,9 +469,9 @@ The pinout is as follows:
 
 |-
 | 20
-| +VUSB (5V)
+| +5V
 | O
-| Not Connected on ChipWhisperer-Lite.
+| +5V from ChipWhisperer-Capture.
 |}
 
 == Clock Network ==
