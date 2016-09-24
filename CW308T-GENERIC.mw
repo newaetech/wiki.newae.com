@@ -12,11 +12,15 @@ The following shows several examples of this board in use.
 
 This shows an extreme example of mounting a board onto the victim board. The actual analysis was being done on the SAMR21R on the main board, but this provided mechanical stability to allow tacking wires onto that area.
 
+[[File:P1090112.jpg|400px]]
+
 [[File:huebridge2.JPG|400px]]
 
 === Hue ATMega2564RF2R Based Bulb ===
 
 The SPI traffic was wired out as well in this example, and a ChipWhisperer-Pro was used to trigger on SPI traffic.
+
+[[File:P1090114.jpg|400px]]
 
 [[File:huebulb_m2564rfr2.jpg|400px]]
 
@@ -24,6 +28,9 @@ The SPI traffic was wired out as well in this example, and a ChipWhisperer-Pro w
 
 This example allowed both power analysis and clock glitching to be performed against the board. A small shunt resistor is soldered in-line for the VCC pin.
 
+[[File:P1090112.jpg|400px]]
+
 [[File:riscure_ctf.jpg|400px]]
 
 [[Category: CW308 Targets]]
+[[Category: Real Targets]]
