@@ -497,7 +497,38 @@ The following shows the routing of power to the victim board:
 
 [[File:cw308_switch.png|600px]]
 
-The following summarizes the switches:
+The following summarizes the switch information:
+{| class="wikitable"
+!Switch
+!Function
+!Location
+!Notes
+|-
+|S1
+|Switch 5.0V from DC-Power Jack On/Off
+|Lower Left
+|Selects if DC 5.0V from DC-Jack is "always on", or gets gated by 3.3V source from 20-pin connector ('auto'). If 'auto' mode selected and no 20-pin cable connected, this is equivalent to turning the main supply to the board on/off. Thus when using the board stand-alone S1 acts as a power switch for the board.
+|-
+|S3
+|Choose 5.0V source to connect to victim board.
+|
+|Can be used to turn on/off 5.0V to victim board.
+|-
+|S3-S7
+|Selected fixed LDO input source.
+|
+|Can be used to turn on/off certain LDOs.
+|-
+|S8
+|Select adjustable LDO input source.
+|
+|Select 5.0V or 3.3V input (3.3V comes from ChipWhisperer).
+|-
+|S2
+|Choose 3.3V source to connect to victim board.
+|
+|Select 3.3V from 20-pin ChipWhisperer cable, or local LDO.
+|}
 
 === External Power Sources ===
 
