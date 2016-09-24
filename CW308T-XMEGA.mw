@@ -6,48 +6,52 @@ The CW308T-XMEGA fits an Atmel XMEGA device.
 
 {| class="wikitable"
 !CW308 Pin
-!ATMega328P Pin
+!ATXMega Pin
 !Notes
 |-
 |GPIO1
-|PD0 (RXD)
-|Serial INPUT to AVR.
-|-
-|GPIO2
-|PD1 (TXD)
+|PC3 (TXD0)
 |Serial OUTPUT from AVR.
 |-
+|GPIO2
+|PC2 (RXD0)
+|Serial INPUT to AVR.
+|-
 |GPIO3
-|N/C
-|
+|PA1
+|Spare pin.
 |-
 |GPIO4
-|PC0
-|Trigger pin (mapped to ADC-port such that I/O driver power comes from AVCC).
+|PA0
+|Trigger pin.
 |-
 |CLKIN
 |XTAL1
 |
 |-
 |CLKFB
-|PB0
-|Can set this pin as CLKO with fuse. Useful for synchronizing to internal RC oscillator.
+|PB3
+|Can output clock on this pin. Useful for synchronizing to internal RC oscillator.
 |-
-|nRST
-|nRST (PC6)
-|Used by in-system-programming (ISP) interface.
+|LED1
+|PA5
+|
 |-
-|MOSI
-|PB3 (MOSI)
-|Used by in-system-programming (ISP) interface.
+|LED2
+|PA6
+|
 |-
-|MISO
-|PB4 (MISO)
-|Used by in-system-programming (ISP) interface.
+|LED3
+|PA7
+|
 |-
-|SCK
-|PB5 (SCK)
-|Used by in-system-programming (ISP) interface.
+|PDID
+|PDID
+|In-System programming.
+|-
+|PDIC/nRST
+|nRST/PDIC
+|In-System programming.
 |}
 
 
