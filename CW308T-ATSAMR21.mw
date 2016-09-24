@@ -18,7 +18,7 @@ Both of these have internal voltage regulators. If you wish to 'disable' them, y
 # Using J14, set FILT_LP/FILT_HP source as being VADJ.
 # Measuring voltage at TP5 still, continue to carefully adjust VADJ such that a higher voltage is seen on TP5. You may need to perform this step to overcome voltage drops in the filter and/or shunt resistor.
 
-WARNING: Be VERY CAREFUL when adjusting VADJ. In addition once done it is recommended to set J14 back to 'default' values. If you switch P1 to the wrong setting and forget that J14 is set to use VADJ, you could have an incorrect voltage applied to your microcontroller.
+'''WARNING: Be VERY CAREFUL when adjusting VADJ. In addition once done it is recommended to set J14 back to 'default' values. If you switch P1 to the wrong setting and forget that J14 is set to use VADJ, you could have an incorrect voltage applied to your microcontroller.'''
 
 == JTAG Programming ==
 
