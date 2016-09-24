@@ -3,9 +3,9 @@
 == Board/Jumper Settings ==
 The following specifies what various jumpers should be set to:
 {| class="wikitable"
-!Switch
-!Setting
-!Note
+!style="width: 150px;"|Switch
+!style="width: 300px;"|Setting
+!style="width: 200px;"|Note
 |-
 |EXT-DC Switch (S1)
 |ON
@@ -24,9 +24,9 @@ The following specifies what various jumpers should be set to:
 |
 |}
 {| class="wikitable"
-!Jumper
-!Setting
-!Note
+!style="width: 150px;"|Jumper
+!style="width: 300px;"|Setting
+!style="width: 200px;"|Note
 |-
 |J3
 |Jumper mounted on "CRYSTAL" setting (top row of pins).
@@ -41,8 +41,8 @@ The following specifies what various jumpers should be set to:
 |Uses FILT output from victim board.
 |}
 {| class="wikitable"
-!X1 Crystal Socket
-!Note
+!style="width: 150px;"|X1 Crystal Socket
+!style="width: 500px;"|Note
 |-
 |7.37 MHz Crystal
 |This is default frequency for programmed software. Can use another frequency for custom programs.
