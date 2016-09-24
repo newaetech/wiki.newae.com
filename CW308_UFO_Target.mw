@@ -613,14 +613,14 @@ The adjustable regulator is often required when overcoming the voltage drop in t
 !3
 !Meaning
 |-
+| style="background: blue;" | X 
+| style="background: blue;" | X 
+| 
+| Filter input set by FILT Pin from Victim Board (DEFAULT)
+|-
 | 
 | style="background: blue;" | X 
 | style="background: blue;" | X 
-| Filter input set by FILT Pin from Victim Board (DEFAULT)
-|-
-| style="background: blue;" | X 
-| style="background: blue;" | X 
-|
 | Filter input set by VADJ. Be sure to adjust voltage before using this.
 |-
 |
