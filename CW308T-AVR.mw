@@ -4,8 +4,51 @@
 
 The pinout of this module matches the "NOTDuino" kit along with the "CW301 Multi-Target Board" routing. The following is the connection between GPIO1-4 and the I/O lines on the AVR:
 
-
-
+{| class="wikitable"
+!CW308 Pin
+!ATMega328P Pin
+!Notes
+|-
+|GPIO1
+|PD0 (RXD)
+|Serial INPUT to AVR.
+|-
+|GPIO2
+|PD1 (TXD)
+|Serial OUTPUT from AVR.
+|-
+|GPIO3
+|N/C
+|
+|-
+|GPIO4
+|PC0
+|Trigger pin (mapped to ADC-port such that I/O driver power comes from AVCC).
+|-
+|CLKIN
+|XTAL1
+|
+|-
+|CLKFB
+|PB0
+|Can set this pin as CLKO with fuse. Useful for synchronizing to internal RC oscillator.
+|-
+|nRST
+|nRST (PC6)
+|Used by in-system-programming (ISP) interface.
+|-
+|MOSI
+|PB3 (MOSI)
+|Used by in-system-programming (ISP) interface.
+|-
+|MISO
+|PB4 (MISO)
+|Used by in-system-programming (ISP) interface.
+|-
+|SCK
+|PB5 (SCK)
+|Used by in-system-programming (ISP) interface.
+|}
 
 == Programming Header ==
 
