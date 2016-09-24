@@ -539,6 +539,7 @@ There are two main sources to supply power to the CW308:
 
 Note you can use the DC-input power jack alongside the ChipWhisperer power supply. The CW308 can switch the DC-power on/off, allowing the ChipWhisperer to still control the target power.
 
+If using the board stand-alone, you can use the 3.3V pin of the CW20 pin to turn on/off the board remotely. This pin can be used as a digital input, which will turn on/off the 5.0V power jack. Be sure to switch all regulators to use the 5.0V DC-Jack in this case to avoid having a load on the 3.3V pin.
 
 === On-Board LDOs ===
 
