@@ -1,5 +1,12 @@
 [[File:P1090088.jpg|600px]]
 
+== I/O Connections ==
+
+The pinout of this module matches the "NOTDuino" kit along with the "CW301 Multi-Target Board" routing. The following is the connection between GPIO1-4 and the I/O lines on the AVR:
+
+
+
+
 == Programming Header ==
 
 The 6-pin programming heading can be used with the Atmel ISP interface. The pinout of the 6-pin programming header on the main-board allows it to work with standard Atmel ISP tools:
