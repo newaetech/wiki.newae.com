@@ -385,7 +385,12 @@ The clock routing is selected using jumper J3. This allows the following use cas
 === On-Board LDOs ===
 
 == Programmer Connections ==
-There are several headers that can be used as programming headers for the victim board. 
+
+There are several headers that can be used as programming headers for the victim board. These are J10, J12, an J15. They are routed to pins 10 to 20 (H1 to H10) on the victim board connector J9. These connectors function is defined by the specific victim board mounted.
+
+[[File:cw308_programming.png]]
+
+In addition there is a 20-pin JTAG header. This uses the standard JTAG ARM pinout.
 
 == Jumper Summary ==
 
