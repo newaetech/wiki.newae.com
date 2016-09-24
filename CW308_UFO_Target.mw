@@ -678,9 +678,9 @@ Selects clock routing on the board. The following shows various examples of sett
 | 
 |-
 ! scope="row" | 4
-| style="background: blue;" |
-| style="background: blue;" |
-| Route output clock from victim to ChipWhisperer-Capture for synchronization.
+| style="background: blue;" | X
+| style="background: blue;" | X
+| Route clock from victim to ChipWhisperer-Capture for synchronization.
 |}
 
 === J4: VREF selection. ===
