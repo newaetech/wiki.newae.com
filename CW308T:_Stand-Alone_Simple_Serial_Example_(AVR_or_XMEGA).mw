@@ -61,4 +61,6 @@ The oscilloscope should be set to AC-coupled mode to eliminate the constant DC o
 
 == USB Serial Usage ==
 
-[[File:P1090080.jpg|frame]]
+[[File:P1090080.jpg|thumb|600x600px|Details of a possible oscilloscope connection on the trigger pin, along with a USB-serial on GPIO1/GPIO2.]]A serial connection is needed on GPIO1/GPIO2. This can be provided by any 3.3V USB-Serial cable (DO NOT use a cable which outputs either RS232 levels, or 5V levels).
+
+This can either be connected at J1 (the 20-pin ChipWhisperer header), or the pin headers directly beside the victim board. The pin headers do not provide diode clamping, where as the connections at J1 have diode clamping.
