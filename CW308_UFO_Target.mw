@@ -561,6 +561,14 @@ Four of the LDOs have fixed voltage settings: 1.2V, 1.8V, 2.5V, and 3.3V. The fi
 
 === Adjustable Voltage Example ===
 
+== Power Filter ==
+
+The CW308 contains a L-C low-pass filter. This filter is designed to provide a highly filtered version of the power supply to the victim board. The various voltages on the victim board power headers can be directly routed to the various required power pins. For example if your device has an on-board PLL, this power supply is something we do not need to measure as part of the power analysis.
+
+The "core" voltage supply for the device should first be fed through the on-board filter. This is accomplished by feeding the desired voltage (for example a 1.8V supply) into the "FILT" pin (pin C8). The output of the filter will be present on the FILT_LP and FILT_HP pins. You can then feed this through your shunt resistor, and finally to the core voltage of the device being measured.
+
+Note jumper J14 can be used to override the filter input voltage. This override can come from the adjustable regulator as previously mentioned.
+
 == Programmer Connections ==
 
 There are several headers that can be used as programming headers for the victim board. These are J10, J12, an J15. They are routed to pins 10 to 20 (H1 to H10) on the victim board connector J9. These connectors function is defined by the specific victim board mounted.
