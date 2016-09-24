@@ -1,5 +1,13 @@
 [[File:P1090089.jpg|600px]]
 
+The CW308T-XMEGA fits an Atmel XMEGA device.
+
+== Programming Header ==
+
+The 6-pin programming heading can be used with the Atmel PDI interface. The pinout of the 6-pin programming header on the main-board allows it to work with standard Atmel ISP tools:
+
+[[File:xmega_pdi.jpg|400px]]
+
 == Schematic ==
 
 [[File:CW308T_XMEGA_Schematic_Page_1.png|1100px]]
