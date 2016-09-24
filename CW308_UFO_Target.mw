@@ -581,12 +581,12 @@ Selects clock routing on the board.
 !Meaning
 |-
 |
-|
-|
+| style="background: blue;" X
+| style="background: blue;" X
 |VREF Network set by VREF Pin from Victim Board (DEFAULT)
 |-
-|
-|
+| style="background: blue;" X
+| style="background: blue;" X
 |
 |VREF Network set to 3.3V from ChipWhisperer 20-pin header. If using board stand-alone this option cannot be used.
 |-
