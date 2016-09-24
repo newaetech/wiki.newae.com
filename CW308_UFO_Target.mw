@@ -565,6 +565,18 @@ J4: VREF selection.
 
 J14: Filter input selection.
 
+== Usage Example: Stand-Alone ==
+
+The CW308 can be used stand-alone. This is accomplished by providing an external DC power supply, and using a SMA-BNC to connect the voltage measurement to an oscilloscope.
+
+If using a simple-serial target (such as the XMEGA or AVR), you can connect a USB-Serial device to provide communication.
+
+[[File:P1090078.jpg|400px]]
+
+[[File:P1090080.jpg|400px]]
+
+== Usage Hints ==
+
 == Schematic ==
 
 The schematic is available in PDF format here: .
