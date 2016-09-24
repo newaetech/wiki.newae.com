@@ -13,6 +13,8 @@ The following shows the dimensions of the main connector:
 
 [[File:CW308_victim_dims.png|518x518px|The CW308 victim board has contacts on a 100 mil spacing, allowing you to use regular prototype boards. Click for full size.|none|thumb]]
 
+Note the middle mounting hole is slightly offset to one direction! This was done to keep the mounting hole on a 100-mil grid spacing.
+
 {| class="wikitable"
 !J7 (West, A)
 !Function
