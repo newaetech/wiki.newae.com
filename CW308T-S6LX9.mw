@@ -2,6 +2,14 @@
 
 [[File:spartan6_target.jpg|500px]]
 
+== Programming ==
+
+The ChipWhisperer will eventually support programming this target. Until then, you will need an external programmer. This is connected via JTAG to the pin headers:
+
+[[File:xilinx_jtag_small.jpg|400px]]
+
+You can purchase clone JTAG programmers off AliExpress/E-Bay for low cost (search 'Xilinx JTAG').
+
 == Schematic ==
 
 NOTE: Schematic is marked as unapproved until hardware has been fully validated. 
@@ -17,7 +25,6 @@ See GIT Repo for PDF of schematic.
 == Board Layout ==
 
 See GIT Repo for gerber files.
-
 
 [[Category:Targets]]
 [[Category:CW308 Targets]]
