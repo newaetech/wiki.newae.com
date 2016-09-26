@@ -5,6 +5,21 @@ The CW308 UFO Board is a handy main-board for attacking all sorts of embedded ta
 [[File:cw308_fpga.png]]
 [[File:cw308_top.png|700px]]
 
+== Supported Targets ==
+
+Details of the targets are held on their own wiki page. Some targets are available premade, but all have gerber files in the GIT repo so you can build them yourself.
+
+* [[CW308T-GENERIC]] (Protoboard)
+* [[CW308T-AVR]] (Atmel AVR, 8-bit)
+* [[CW308T-XMEGA]] (Atmel XMEGA, 8-bit)
+* [[CW308T-87C51]] (Intel 87C51RB, 8-bit)
+* [[CW308T-ATSAMR21]] (Atmel SAMR21 with 802.15.4 radio, 32-bit ARM Cortex M0)
+* [[CW308T-MEGARF]] (Atmel MegaRF2564RFR2, 8-bit AVR)
+* [[CW308T-MSP430FR5]] (TI MSP430FR5xxx, 16-bit)
+* [[CW308T-S6LX9]] (Xilinx Spartan 6 LX9 in TQFP, FPGA)
+
+If you need to support a new target, it's generally very simple to build a custom board.
+
 == Victim Board Connectors ==
 
 The "victim board" fits into three 20-pin female headers. They provide both electrical and mechanical connections for the board. There is optional mounting holes which can be used if additional mechanical support is required (especially if you need a locked-down victim for use with an EM probe).
