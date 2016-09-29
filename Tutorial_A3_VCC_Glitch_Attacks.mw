@@ -234,7 +234,7 @@ False</pre>
 | Offset
 |-
 | Script Command
-| ['Glitch Module', 'Glitch Offset (as % of period)', 0.0]
+| ['Glitch Module', 'Glitch Offset (as % of period)']
 |-
 | Data Format
 | Float
