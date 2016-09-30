@@ -9,7 +9,7 @@ The device can be programmed with an external programmer using JTAG or Spy-Bi-Wi
 
 == Side Channel Attacks ==
 
-Many considerations of side-channel attacks on the MSP430FR5969 have been presented by Amir Moradi and Gesine Hinterwalder in their paper [https://eprint.iacr.org/2015/199.pdf Side-Channel Security Analysis of Ultra-Low-Power FRAM-based MCUs]. This includes considerations on the architecture of these devices, and also presents an attack against the hardware AES peripheral. The hardware attack has not yet been replicated on the ChipWhisperer-Lite hardware, but this section will be updated once that occurs.
+Many considerations of side-channel attacks on the MSP430FR5969 have been presented by Amir Moradi and Gesine Hinterwalder in their paper [https://eprint.iacr.org/2015/199.pdf Side-Channel Security Analysis of Ultra-Low-Power FRAM-based MCUs], which was presented at [http://link.springer.com/chapter/10.1007%2F978-3-319-21476-4_16 COSADE 2015]. This includes considerations on the architecture of these devices, and also presents an attack against the hardware AES peripheral. The hardware attack has not yet been replicated on the ChipWhisperer-Lite hardware, but this section will be updated once that occurs.
 
 ==Build Environment==
 
