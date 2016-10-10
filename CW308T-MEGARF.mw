@@ -2,4 +2,10 @@
 
 [[File:megarf_render.png|400px]]
 
+The following is the original (-01) schematic, which was never publically released. The following changes were made in -02:
+
+* MOSI/MISO was switched on Atmel device (requires PCB fix)
+* GPIO3 is now optionally in control of 4066 instead of being hardwired
+* Serial resistors added on SCK/MISO/MOSI lines
+
 [[File:CW308T_ATMegaRF_01.png|1000px]]
