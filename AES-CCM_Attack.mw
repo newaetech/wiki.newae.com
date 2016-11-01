@@ -7,3 +7,15 @@ The following is an overview of the AES-CMM attack done by Eyal Ronen, detailed 
 == Performing Attack ==
 
 === Building Example ===
+
+=== Collecting Traces ===
+
+=== Step #1: AES-CBC MAC Block #1 ===
+
+=== Step #2: AES-CBC MAC Block #2 ===
+
+=== Step #3: Recovery of AES-CTR Nonce ===
+
+=== Step #4: Recovery of AES-CBC I.V. ===
+
+=== Step #5: AES-CTR Pad ===
