@@ -56,19 +56,25 @@ The example bootloader has a simplified AES-CCM implementation (NB: do NOT use t
 
 Each block sent to the bootloader is 19 bytes long. The first byte indicates the type - header, auth tag, or data. If a new 'header' message is received it will abort any ongoing processing of existing data and restart the bootloader process.
 
-The following shows the three message types, where length in the header is the number of encrypted data frames. This is used for the bootloader to know when to perform the AES-MAC comparison.
-
-This frame has four parts:
-* <code>0x00</code>: 1 byte of fixed header
-* Signature: A secret 4 byte constant. The bootloader will confirm that this signature is correct after decrypting the frame.
-* Data: 12 bytes of the incoming firmware. This system forces us to send the code 12 bytes at a time; more complete bootloaders may allow longer variable-length frames.
+All messages share this feature:
 * CRC-16: A 16-bit checksum using the CRC-CCITT polynomial (0x1021). The LSB of the CRC is sent first, followed by the MSB. The bootloader will reply over the serial port, describing whether or not this CRC check was valid.
+
+'''Header Frame'''
+* <code>0x01</code>: 1 byte of fixed header
+* Header Info: 14 bytes of "header" data which could be version or other such stuff.
+* Length: Number of encrypted data frames (NOT including the auth-tag frame) that will follow.
+
+Note the 16 bytes of the header info + length are fed into the AES-CBC algorithm as part of the auth-tag generation. That is this data is authenticated but not encrypted.
 
 <pre>
 +------+------+------+------+ .... +------+------+------+------+
 | 0x01 |     Header Info (14 bytes)|    Length   |   CRC-16    |
 +------+------+------+------+ .... +------+------+------+------+
 </pre>
+
+'''Auth Tag Frame'''
+* <code>0x02</code>: 1 byte of fixed header
+* Auth-Tag: The expected output of the AES-CBC algorithm after processing the authenticated only data + decrypted data frames. This is then encrypted in AES-CTR mode with the CTR set to 0.
 
 <pre>
        
@@ -80,6 +86,9 @@ This frame has four parts:
 +------+------+------+------+ .... +------+------+------+------+
 </pre>
 
+'''Data block frame'''
+* <code>0x03</code>: 1 byte of fixed header
+* Encrypted Data: Data encrypted in AES-CTR mode, with the CTR starting at 1 and incrementing.
 
 <pre>
        |<----- Encrypted block (16 bytes) ------>|
@@ -92,3 +101,27 @@ This frame has four parts:
 
 
 The bootloader responds to each command with a single byte indicating if the CRC-16 was OK or not:
+
+<pre>
+            +------+
+CRC-OK:     | 0xA1 |
+            +------+
+
+            +------+
+CRC Failed: | 0xA4 |
+            +------+
+</pre>
+
+Once ALL messages are received, the bootloader will respond with a signature OK or not message:
+
+<pre>
+            +------+
+Sig-OK:     | 0xB1 |
+            +------+
+
+            +------+
+Sig Failed: | 0xB4 |
+            +------+
+</pre>
+
+Note details of the AES-CTR nonce, AES-CBC I.V., and key are stored in the firmware itself. In this example they are not downloaded as part of the encrypted firmware file.
