@@ -1,4 +1,4 @@
-The following is an overview of the AES-CMM attack done by Eyal Ronen, detailed in his paper TODO ADD LINK. If using this attack please '''do not cite this page''', instead cite the original research paper.
+The following is an overview of the AES-CMM attack done by Eyal Ronen, detailed in his paper [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction]. If using this attack please '''do not cite this page''', instead cite the original research. Note as of now (Nov/2016) the paper has not been submitted to any conference, so this is still very much new/draft research.
 
 == AES-CCM Overview ==
 
