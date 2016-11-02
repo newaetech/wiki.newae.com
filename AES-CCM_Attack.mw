@@ -1,6 +1,6 @@
 WARNING: This page under construction!
 
-The following is an overview of the AES-CMM attack done by Eyal Ronen, detailed in his paper [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction]. If using this attack please '''do not cite this page''', instead cite the original research. Note as of now (Nov/2016) the paper has not been submitted to any conference, so this is still very much new/draft research.
+The following is an overview of the AES-CMM attack done by Eyal Ronen, detailed in his draft/limited release paper [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction]. If using this attack please '''do not cite this page''', instead cite the research paper only. The paper is currently a draft so there is no proceedings information etc as it has not yet been presented anywhere.
 
 This page is presented as an example of using Python/ChipWhisperer to perform attacks against the AES-CCM cipher, without needing to do a more complex attack against AES-CTR mode.
 
