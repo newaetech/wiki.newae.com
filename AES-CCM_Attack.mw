@@ -43,7 +43,11 @@ The first step is to recover the AES encryption key used in round 1. This isn't 
 
 <TODO>
 
-I've gone out of my way & marked the location of AES on it. Let's assume you didn't have that - why might you do? We can actually first do a CPA attack with the "XOR" leakage model:
+I've gone out of my way & marked the location of AES on it. Let's assume you didn't have that - why might you do? We can actually first do a CPA attack with the "XOR" leakage model to determine where data is being manipulated.
+
+==== 1-B: Finding interesting areas ====
+
+Doing this requires switching the attack algorithm to the '''AddRoundKey''' output (where AddRoundKey is just an XOR operation):
 
 <TODO>
 
@@ -62,8 +66,35 @@ Note this is basically showing us where the AES-CTR output occurs, then where th
 * XOR of previous with the old AES-CBC state as part of AES-CBC input processing.
 * AddRoundKey of previous during AES-ECB block.
 
+==== 1-C: Modified First-Round Key ====
 
-180000 - 22000. We can now bring that down to (18600,19200)
+The first step is to perform a standard CPA attack. The only issue is we won't recover the actual encryption key used <math>k</math>, instead we recover <math>k \oplus CBC_{m-1} \oplus CTR_{m}</math>, since we basically roll all the constant inputs into what we call a `modified key'.
+
+So let's do a first-round attack focused around points (180000,22000) to start (roughly picked from the power traces). To do this:
+* Turn back on all bytes (if previously disabled).
+* Switch leakage model to S-Box output.
+
+You'll likely find after a number of traces you could plot correlation for bytes 0 & 15, and get a better idea where the attack should happen. Looking at the following I can see we could focus on points (18600,19200) and might get a more reliable attack.
+
+Finally, you should get this `modified key', in this example we can see it appears to be '''94 28 5D 4D 6D CF EC 08 D8 AC DD F6 BE 25 A4 99''':
+
+(block1_round1_key.png)
+
+The next step is to use this to recover the complete round-key.
+
+==== 1-D: True Second-Round Key ====
+
+In what might seem like magic, we can use this modified key to directly determine the second-round key (the true key). This was originally presented by J. Jaffe in [https://www.iacr.org/archive/ches2007/47270001/47270001.pdf A First-Order DPA Attack Against AES in Counter Mode with Unknown Initial Counter]. The reason this works is if you remember we recovered  <math>k' = k \oplus CBC_{m-1} \oplus CTR_{m}</math>. In the AES algorithm the first thing we do is the AddRoundKey, which is:
+
+<math>AddRoundKey(a,b) = a \oplus b</math>. 
+
+In the true algorithm we have the case of:
+<math>AddRoundKey(k, CBC_{m-1} \oplus CTR_{m} \oplus CT)</math>
+
+And when we use our modified key, we are feeding the CT directly into AddRoundKey:
+<math>AddRoundKey(k', CT)</math>
+
+Where the <math>k'</math> basically includes those additional constants, instead of them being added as part of the ciphertext. Ultimately it means the output of AddRoundKey, and thus processing of later rounds, is identical in both cases. So we can perform a CPA attack on the 2nd-round key, and directly recover the "true" first-round key by rolling back the key schedule.
 
 === Step #2: AES-CBC MAC Block #2 ===
 
