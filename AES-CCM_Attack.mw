@@ -99,7 +99,11 @@ The next step is to use this to recover the complete round-key.
 
 ==== 1-D: True Second-Round Key ====
 
-In what might seem like magic, we can use this modified key to directly determine the second-round key (the true key). This was originally presented by J. Jaffe in [https://www.iacr.org/archive/ches2007/47270001/47270001.pdf A First-Order DPA Attack Against AES in Counter Mode with Unknown Initial Counter]. The reason this works is if you remember we recovered  <math>k' = k \oplus CBC_{m-1} \oplus CTR_{m}</math>. In the AES algorithm the first thing we do is the AddRoundKey, which is:
+In what might seem like magic, we can use this modified key to directly determine the second-round key (the true key). This was originally presented by J. Jaffe in [https://www.iacr.org/archive/ches2007/47270001/47270001.pdf A First-Order DPA Attack Against AES in Counter Mode with Unknown Initial Counter], and details were described earlier in this page.
+
+For our case we are using <math>PT_m = CT_m \oplus CTR_{m}</math>, that is we don't have <math>PT</math> directly, but we actually have the input to the AES-CTR decryption. Ultimately the AES-CTR output will become another unknown constant we will deal with later.
+
+To repeat the previous explanation: the reason this works is if you remember we recovered  <math>k' = k \oplus CBC_{m-1} </math>. In the AES algorithm the first thing we do is the AddRoundKey, which is:
 
 <math>AddRoundKey(a,b) = a \oplus b</math>. 
 
