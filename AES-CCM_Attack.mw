@@ -35,14 +35,14 @@ In what might seem like magic, we can use this modified key to directly determin
 <math>AddRoundKey(a,b) = a \oplus b</math>. 
 
 In the true algorithm we have the case of:
-<math>AddRoundKey(k, CBC_{m-1} \oplus CT)</math>
+<math>AddRoundKey(k, CBC_{m-1} \oplus PT)</math>
 
-And when we use our modified key, we are feeding the CT directly into AddRoundKey:
-<math>AddRoundKey(k', CT)</math>
+And when we use our modified key, we are feeding the PT directly into AddRoundKey:
+<math>AddRoundKey(k', PT)</math>
 
-Where the <math>k'</math> basically includes those additional constants, instead of them being added as part of the ciphertext. Ultimately it means the output of AddRoundKey, and thus processing of later rounds, is identical in both cases. So we can perform a CPA attack on the 2nd-round key, and directly recover the "true" first-round key by rolling back the key schedule.
+Where the <math>k'</math> basically includes those additional constants, instead of them being added to the plaintext as part of the input processing. Ultimately it means the output of AddRoundKey, and thus processing of later rounds, is identical in both cases. So we can perform a CPA attack on the 2nd-round key, and directly recover the "true" first-round key by rolling back the key schedule.
 
-This is the solution now - we simply perform a CPA attack on the 2nd round of the AES algorithm, where we use the AES algorithm to determine the inputs to the second-round based on our modified key.
+This is the solution now - we simply perform a CPA attack on the 2nd round of the AES algorithm, where we use the AES algorithm to determine the inputs to the second-round based on our modified key & the known plaintext.
 
 == Performing Attack ==
 
