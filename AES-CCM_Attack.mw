@@ -38,6 +38,32 @@ PT = E_k({IV || m}) \oplus CT
 
 === Step #1: AES-CBC MAC Block #1 ===
 
+The first step is to recover the AES encryption key used in round 1. This isn't too difficult - we'll first take our power traces, which if you recall look something like this:
+
+<TODO>
+
+I've gone out of my way & marked the location of AES on it. Let's assume you didn't have that - why might you do? We can actually first do a CPA attack with the "XOR" leakage model:
+
+<TODO>
+
+Note running it against all points might give you a memory error (especially on a 32-bit system). We don't need all bytes though, so to avoid this just change these settings:
+
+* Only enable a single subkey (i.e., say byte 0).
+* Set reporting interval & traces per attack to same value (say 100 I used here).
+
+The result will show you correlation where the input data was used (possibly XORd with any constant). You'll get something like the top graph, where I've added an overlay of the power trace below it:
+
+<TODO>
+
+Note this is basically showing us where the AES-CTR output occurs, then where the AES-CBC input happens. The correlations correspond to the following I think (there may be a mixup of where the load occurs - if any of those intermediate states are loaded/saved it would show up):
+* Load of CT data.
+* XOR of AES-CTR output 'pad' with input CT.
+* XOR of previous with the old AES-CBC state as part of AES-CBC input processing.
+* AddRoundKey of previous during AES-ECB block.
+
+
+180000 - 22000. We can now bring that down to (18600,19200)
+
 === Step #2: AES-CBC MAC Block #2 ===
 
 === Step #3: Recovery of AES-CTR Nonce ===
