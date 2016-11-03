@@ -63,7 +63,7 @@ Note this is basically showing us where the AES-CTR output occurs, then where th
 
 ==== 1-C: Modified First-Round Key ====
 
-The first step is to perform a standard CPA attack. The only issue is we won't recover the actual encryption key used <math>k</math>, instead we recover <math>k \oplus CBC_{m-1} \oplus CTR_{m}</math>, since we basically roll all the constant inputs into what we call a `modified key'.
+The first step is to perform a standard CPA attack. Remember we won't recover the actual encryption key used <math>k</math>, instead we recover <math>k \oplus CBC_{m-1} \oplus CTR_{m}</math>, since we basically roll all the constant inputs into what we call a `modified key'.
 
 So let's do a first-round attack focused around points (180000,22000) to start (roughly picked from the power traces). To do this:
 * Turn back on all bytes (if previously disabled).
