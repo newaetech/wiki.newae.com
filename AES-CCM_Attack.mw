@@ -159,7 +159,9 @@ Once you recover Block #1, you can calculate <math>CBC_{m}</math>. Recovering bl
 
 === Step #2B: AES-CTR Pad Output DPA ===
 
-As an alternative to doing the same thing on the second block, we can use a DPA attack to figure out the AES-CTR output pad.
+As an alternative to doing the CPA attack on a second block, we can use a DPA attack to figure out the AES-CTR output pad. The advantage of the DPA attack method is it doesn't require any additional traces to be captured.
+
+To begin with, we'll be using stand-alone Python scripts for this. The first thing we'll do is simply display differences, where we assume the key was "0x00", and an XOR leakage model. This will simply give us positive/negative spikes depending on the value of bits being XORd with the known input data. A simple script to do this is:
 
 <syntaxhighlight lang="python">
 from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
@@ -198,8 +200,16 @@ for bnum in [0]:
 show()
 </syntaxhighlight>
 
+The results should look something like this:
+[[File:dpa_total.png|800px]]
 
 
+You might notice the 4 spikes will line up with the spikes coming from the XOR correlation. Of interest if we zoom in on the first spike, we should be able to detect multiple "paths" being taken. We'll set a threshold location somewhat arbitrarily as a first test:
+[[File:dpa_zoom.png|800px]]
+
+Now we'll simply go through and read off each bit by deciding if it's above/below zero. Note that (a) there is multiple potential threshold locations, and (b) you might get the inverse of the correct answer (each bit flipped) depending on your hardware. In practice we might need to test a few possibile locations.
+
+By doing the same plotting operation with bnum = 1, then bnum = 2, you should be able to figure out the "shift". This is to say how many points you need to move forward in time by.
 
 A final example that worked on my system:
 <syntaxhighlight lang="python">
