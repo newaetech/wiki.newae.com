@@ -265,6 +265,21 @@ for bnum in [0]: #Use this first to test on a single byte
 print("Best Guess: [" + ", ".join(["0x%02X"%x for x in best_guess]) + "]")
 </syntaxhighlight>
 
+Finally - we decrypt the best guess. If this was a valid AES-CTR mode output we'd expect to see the lower bytes as being '''00 01''' for the first data packet:
+
+<syntaxhighlight>
+from Crypto.Cipher import AES
+key_from_cbcattack = [0x94, 0x28, 0x5D, 0x4D, 0x6D, 0xCF, 0xEC, 0x08, 0xD8, 0xAC, 0xDD, 0xF6, 0xBE, 0x25, 0xA4, 0x99]
+aes = AES.new(str(bytearray(key_from_cbcattack)), AES.MODE_ECB)
+best_guess = [0x54, 0x61, 0xEB, 0x14, 0xE7, 0x7A, 0xD5, 0xD9, 0xB8, 0x7A, 0xB9, 0x46, 0x57, 0xA4, 0x49, 0xAA]
+ctr_test = aes.decrypt(str(bytearray(best_guess)))
+print(" ".join(["%02x"%ord(x) for x in ctr_test]))
+</syntaxhighlight>
+
+This gives us the decrypted value of '''c1 25 68 df e7 d3 19 da 10 e2 41 71 33 b0 00 01'''. This happens to be the same value as saved in the bootloader supersecret.h file, with the expected counter values. So it looks like our attack was a success! We now know the AES-CTR nonce.
+
+NB: The nonce in your firmware file (saved in supersecret.h) will probably be different from this.
+
 == Example Bootloader Details ==
 
 The example bootloader has a simplified AES-CCM implementation (NB: do NOT use this as a reference for a good implementation!). It accomplishes the basic goals only of having:
