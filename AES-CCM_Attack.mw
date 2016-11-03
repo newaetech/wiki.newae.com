@@ -161,6 +161,99 @@ Once you recover Block #1, you can calculate <math>CBC_{m}</math>. Recovering bl
 
 As an alternative to doing the same thing on the second block, we can use a DPA attack to figure out the AES-CTR output pad.
 
+<syntaxhighlight lang="python">
+from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+from matplotlib.pylab import *
+from chipwhisperer.analyzer.utils.populations import partition_traces, dpa
+import chipwhisperer.analyzer.utils.partitiontools as ptools
+import chipwhisperer.analyzer.attacks.models.AES128_8bit as AES128_8bit
+
+class XOR_Test(AES128_8bit.AESLeakageHelper):
+    name = 'HW: XOR Test'
+    def leakage(self, pt, ct, key, bnum):       
+        return pt[bnum] ^ key[bnum]
+
+cwapi = CWCoreAPI()
+cwapi.openProject(r'c:\users\colin\chipwhisperer_projects\tmp\aes_ccm_block1_500traces_clk1x.cwp')
+
+tm = cwapi.project().traceManager()
+ntraces = tm.numTraces()
+
+mod = XOR_Test()
+
+col = ['r', 'b', 'g', 'm', 'k', 'c', 'y', 'b--']
+
+for bnum in [0]:
+    print "Working on byte %d"%bnum
+    for bit in range(0, 8):
+        print "  Bit %d"%bit
+        bmask = 1<<bit
+        ptool = ptools.HWAES(tm, bnum=bnum, model=mod, bmask=bmask)
+        groups = partition_traces(tm,ptool,0, key_guess=0x00)
+        diff = dpa(groups)
+      
+        plot(diff, col[bit])
+        hold(True)
+    
+show()
+</syntaxhighlight>
+
+
+
+
+A final example that worked on my system:
+<syntaxhighlight lang="python">
+from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+from matplotlib.pylab import *
+from chipwhisperer.analyzer.utils.populations import partition_traces, dpa
+import chipwhisperer.analyzer.utils.partitiontools as ptools
+import chipwhisperer.analyzer.attacks.models.AES128_8bit as AES128_8bit
+
+class XOR_Test(AES128_8bit.AESLeakageHelper):
+    name = 'HW: XOR Test'
+    def leakage(self, pt, ct, key, bnum):       
+        return pt[bnum] ^ key[bnum]
+
+
+cwapi = CWCoreAPI()
+cwapi.openProject(r'c:\users\colin\chipwhisperer_projects\tmp\aes_ccm_block1_500traces_clk1x.cwp')
+
+tm = cwapi.project().traceManager()
+ntraces = tm.numTraces()
+
+mod = XOR_Test()
+
+startingpoint = 17758
+diffpoint = 19
+
+best_guess = [0] * 16
+
+for bnum in [0]: #Use this first to test on a single byte
+#for bnum in range(0,16): #Uncomment this to break all bytes
+    print "Working on byte %d"%bnum
+    bguess = 0
+    for bit in range(0, 8):
+        print "  Bit %d "%bit,
+        bmask = 1<<bit
+        ptool = ptools.HWAES(tm, bnum=bnum, model=mod, bmask=bmask)
+        groups = partition_traces(tm,ptool,0, key_guess=0x00)
+        diff = dpa(groups)
+      
+        dp = diff[startingpoint + (diffpoint*bnum)]
+        print " (%+0.4f) = "%dp,
+
+        if dp > 0:
+            print "1"
+            bguess |= bmask
+        else:
+            print "0"
+    
+    print " guess = %02X"%bguess
+    best_guess[bnum] = bguess
+
+print("Best Guess: [" + ", ".join(["0x%02X"%x for x in best_guess]) + "]")
+</syntaxhighlight>
+
 == Example Bootloader ==
 
 The example bootloader has a simplified AES-CCM implementation (NB: do NOT use this as a reference for a good implementation!). It accomplishes the basic goals only of having:
