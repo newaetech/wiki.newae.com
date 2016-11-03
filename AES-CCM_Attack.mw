@@ -1,4 +1,4 @@
-WARNING: This page under construction!
+{{Infobox|WARNING: This page under construction!}}
 
 The following is an overview of the AES-CMM attack done by Eyal Ronen, detailed in his draft/limited release paper [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction]. If using this attack please '''do not cite this page''', instead cite the research paper only. The paper is currently a draft so there is no proceedings information etc as it has not yet been presented anywhere.
 
@@ -16,24 +16,17 @@ AES-CCM provides both encryption and authentication using the AES block cipher. 
 
 [[File:Block-Cipher-CTR.png]]
 
+In AES-CCM mode, the AES-CBC encryption is used to generate a nice "authentication tag". If a single byte changed anywhere in the data fed into the AES-CBC block, the final output will differ. 
 
 == Background on Attack ==
 
-The following uses the notation from [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction].
-
-Assume first the basic AES-ECB cipher is <math>CT = E_k(PT)</math>, where we are encrypting a block with secret key <math>k</math>.
-
-AES-CCM combines AES-CTR mode and AES-CBC mode as mentioned. We could consider AES-CTR to be performing the following operation:
-
-<math>
-PT = E_k({IV || m}) \oplus CT
-</math>
-
-The problem with a straight-forward CPA attack on CTR mode is only 2 bytes vary (the number of bytes with <math>m</math>), so the CPA attack cannot recover all bytes of the key. A solution to this is presented in the paper
+The following will use the notation from [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction].
 
 == Performing Attack ==
 
 === Building Example ===
+
+There is an example of a simple bootloader which uses AES-CCM in the firmware directory. 
 
 === Collecting Traces ===
 
