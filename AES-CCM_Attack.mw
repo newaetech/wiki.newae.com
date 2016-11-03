@@ -35,7 +35,7 @@ In what might seem like magic, we can use this modified key to directly determin
 <math>AddRoundKey(a,b) = a \oplus b</math>. 
 
 In the true algorithm we have the case of:
-<math>AddRoundKey(k, CBC_{m-1} \oplusCT)</math>
+<math>AddRoundKey(k, CBC_{m-1} \oplus CT)</math>
 
 And when we use our modified key, we are feeding the CT directly into AddRoundKey:
 <math>AddRoundKey(k', CT)</math>
