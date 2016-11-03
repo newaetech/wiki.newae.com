@@ -16,7 +16,9 @@ AES-CCM provides both encryption and authentication using the AES block cipher. 
 
 [[File:Block-Cipher-CTR.png]]
 
-In AES-CCM mode, the AES-CBC encryption is used to generate a nice "authentication tag". If a single byte changed anywhere in the data fed into the AES-CBC block, the final output will differ. 
+In AES-CCM mode, the AES-CBC encryption is used to generate a nice "authentication tag". If a single byte changed anywhere in the data fed into the AES-CBC block, the final output will differ.
+
+The AES-CTR mode is used for the actual data encryption.
 
 == Background on Attack ==
 
