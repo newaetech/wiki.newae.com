@@ -254,7 +254,7 @@ for bnum in [0]: #Use this first to test on a single byte
 print("Best Guess: [" + ", ".join(["0x%02X"%x for x in best_guess]) + "]")
 </syntaxhighlight>
 
-== Example Bootloader ==
+== Example Bootloader Details ==
 
 The example bootloader has a simplified AES-CCM implementation (NB: do NOT use this as a reference for a good implementation!). It accomplishes the basic goals only of having:
 
@@ -333,7 +333,6 @@ Sig Failed: | 0xB4 |
 </pre>
 
 Note details of the AES-CTR nonce, AES-CBC I.V., and key are stored in the firmware itself. In this example they are not downloaded as part of the encrypted firmware file.
-
 
 == Bootloader Interface Code ==
 
