@@ -41,7 +41,7 @@ The problem with a straight-forward CPA attack on CTR mode is only 2 bytes vary 
 
 The first step is to recover the AES encryption key used in round 1. This isn't too difficult - we'll first take our power traces, which if you recall look something like this:
 
-<TODO>
+[[File:powertrace_aesccm_block1.png|400px]]
 
 I've gone out of my way & marked the location of AES on it. Let's assume you didn't have that - why might you do? We can actually first do a CPA attack with the "XOR" leakage model to determine where data is being manipulated.
 
@@ -49,7 +49,7 @@ I've gone out of my way & marked the location of AES on it. Let's assume you did
 
 Doing this requires switching the attack algorithm to the '''AddRoundKey''' output (where AddRoundKey is just an XOR operation):
 
-<TODO>
+[[File:roundkey_cpa_select.png|400px]]
 
 Note running it against all points might give you a memory error (especially on a 32-bit system). We don't need all bytes though, so to avoid this just change these settings:
 
@@ -58,7 +58,7 @@ Note running it against all points might give you a memory error (especially on 
 
 The result will show you correlation where the input data was used (possibly XORd with any constant). You'll get something like the top graph, where I've added an overlay of the power trace below it:
 
-<TODO>
+[[File:xor_comparison_powertrace.png|400px]]
 
 Note this is basically showing us where the AES-CTR output occurs, then where the AES-CBC input happens. The correlations correspond to the following I think (there may be a mixup of where the load occurs - if any of those intermediate states are loaded/saved it would show up):
 * Load of CT data.
@@ -78,7 +78,7 @@ You'll likely find after a number of traces you could plot correlation for bytes
 
 Finally, you should get this `modified key', in this example we can see it appears to be '''94 28 5D 4D 6D CF EC 08 D8 AC DD F6 BE 25 A4 99''':
 
-(block1_round1_key.png)
+[[File:block1_round1_key.png|400px]]
 
 The next step is to use this to recover the complete round-key.
 
@@ -96,13 +96,46 @@ And when we use our modified key, we are feeding the CT directly into AddRoundKe
 
 Where the <math>k'</math> basically includes those additional constants, instead of them being added as part of the ciphertext. Ultimately it means the output of AddRoundKey, and thus processing of later rounds, is identical in both cases. So we can perform a CPA attack on the 2nd-round key, and directly recover the "true" first-round key by rolling back the key schedule.
 
+This requires a custom leakage model, which we can make fairly easily:
+
+<syntaxhighlight lang="python">
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import AESLeakageHelper
+
+class Round2(AESLeakageHelper):
+    name = 'HW: Round-2 Key'
+    def leakage(self, pt, ct, key, bnum):
+        r1key = [0x94, 0x28, 0x5D, 0x4D, 0x6D, 0xCF, 0xEC, 0x08, 0xD8, 0xAC, 0xDD, 0xF6, 0xBE, 0x25, 0xA4, 0x99]
+        state = [pt[i] ^ r1key[i] for i in range(0, 16)]
+        state = self.subbytes(state)
+        state = self.shiftrows(state)
+        state = self.mixcolumns(state)
+        return self.sbox(state[bnum] ^ key[bnum])
+</syntaxhighlight >
+
+And we insert it into the system by modifying the analysis script in initAnalysis():
+
+<syntaxhighlight lang="python">
+leakage_object = chipwhisperer.analyzer.attacks.models.AES128_8bit.AES128_8bit(Round2)
+</syntaxhighlight >
+
+You can perform the same CPA attack, modified to occur around the second round. In this example I found points (20520, 21950) worked well - but you can try a much larger point-range, and then scale that down to get a faster calculation. This gives us the round-2 key, in this example appears to be '''AA 61 B3 E3 C7 AE 5F EB 1F 02 82 1D A1 27 26 84''':
+[[File:block1_round2_key.png|400px]]
+
+Using the key-schedule widget, you can then determine the true initial key was '''94285d4d6dcfec08d8acddf6be25a499''' (which matches what was programmed in this example):
+
+[[File:keyschedule.png|400px]]
+
+Note in addition you can perform the operation <math>k' \oplus k</math> to recover <math>CBC_{m-1} \oplus CTR_{m}</math>. If we knew either one of those we could then completely break AES-CCM, since we would know the AES-CBC I.V., along with the AES-CTR nonce/format.
+
+For a well-known implementation (say in IEEE 802.15.4) we are done, as the nonce format is known. You can perform an encryption with the known nonce to recover <math>CTR_{m}</math>, then immediately recover <math>CBC_{m-1}</math>. Note this isn't the true I.V. as written in the file, but the result of the AES-CBC state up until the first encryption block was performed. Thus you cannot change the authentication-only blocks without doing further work to reverse back to the original I.V.
+
+In the event the AES-CTR nonce input is unknown, additional work is required (detailed below).
+
 === Step #2: AES-CBC MAC Block #2 ===
 
-=== Step #3: Recovery of AES-CTR Nonce ===
+Repeating this for block #2 is exactly the same as before. Note you will need to perform a capture which triggers on the second block, which may require changes to the firmware source code.
 
-=== Step #4: Recovery of AES-CBC I.V. ===
-
-=== Step #5: AES-CTR Pad ===
+Once you recover Block #1, you can calculate <math>CBC_{m}</math>. Recovering block #2 means you could use <math>CBC_{m}</math> to determine <math>CTR_{m+1}</math>. Then you can decrypt <math>CTR_{m+1}</math> to determine the AES-CTR nonce format.
 
 == Example Bootloader ==
 
