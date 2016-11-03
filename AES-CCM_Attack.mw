@@ -22,7 +22,27 @@ The AES-CTR mode is used for the actual data encryption.
 
 == Background on Attack ==
 
-The following will use the notation from [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction].
+The following will use the notation from [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction]. This notation will be adopted throughout this wiki page.
+
+=== Breaking AES-CBC Encryption with unknown I.V. ===
+
+If you've performed a standard CPA attack, you'll realize the problem with attacking AES-CBC is we don't directly control the input, which we call <math>PT</math>. Instead it's XORd with some unknown bytes (the AES-CBC ciphertext output).
+
+But if we are always attacking the same block (that is, we reset the AES state to initial by say resetting the device, and rerun the algorithm up to the first block), the unknown bytes are constant. As it turns out this is a pretty easy problem to solve. The first step is to perform a standard CPA attack. The only issue is we won't recover the actual encryption key used <math>k</math>, instead we recover <math>k \oplus CBC_{m-1} \oplus PT</math>, since we basically roll all the constant inputs into what we call a `modified key'. Note <math>CBC_{m-1}</math> is the output of the previous-block AES-CBC ciphertext.
+
+In what might seem like magic, we can use this modified key to directly determine the second-round key (the true key). This was originally presented by J. Jaffe in [https://www.iacr.org/archive/ches2007/47270001/47270001.pdf A First-Order DPA Attack Against AES in Counter Mode with Unknown Initial Counter]. The reason this works is if you remember we recovered  <math>k' = k \oplus CBC_{m-1}</math>. In the AES algorithm the first thing we do is the AddRoundKey, which is:
+
+<math>AddRoundKey(a,b) = a \oplus b</math>. 
+
+In the true algorithm we have the case of:
+<math>AddRoundKey(k, CBC_{m-1} \oplusCT)</math>
+
+And when we use our modified key, we are feeding the CT directly into AddRoundKey:
+<math>AddRoundKey(k', CT)</math>
+
+Where the <math>k'</math> basically includes those additional constants, instead of them being added as part of the ciphertext. Ultimately it means the output of AddRoundKey, and thus processing of later rounds, is identical in both cases. So we can perform a CPA attack on the 2nd-round key, and directly recover the "true" first-round key by rolling back the key schedule.
+
+This is the solution now - we simply perform a CPA attack on the 2nd round of the AES algorithm, where we use the AES algorithm to determine the inputs to the second-round based on our modified key.
 
 == Performing Attack ==
 
