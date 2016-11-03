@@ -201,17 +201,18 @@ show()
 </syntaxhighlight>
 
 The results should look something like this:
+
 [[File:dpa_total.png|800px]]
 
+You might notice the 4 spikes will line up with the spikes coming from the XOR correlation. Of interest if we zoom in on the first spike, we should be able to detect multiple "paths" being taken. We'll set a threshold location 
+somewhat arbitrarily as a first test:
 
-You might notice the 4 spikes will line up with the spikes coming from the XOR correlation. Of interest if we zoom in on the first spike, we should be able to detect multiple "paths" being taken. We'll set a threshold location somewhat arbitrarily as a first test:
 [[File:dpa_zoom.png|800px]]
 
-Now we'll simply go through and read off each bit by deciding if it's above/below zero. Note that (a) there is multiple potential threshold locations, and (b) you might get the inverse of the correct answer (each bit flipped) depending on your hardware. In practice we might need to test a few possibile locations.
+Now we'll simply go through and read off each bit by deciding if it's above/below zero. Note that (a) there is multiple potential threshold locations, and (b) you might get the inverse of the correct answer (each bit flipped) depending on your hardware. In practice we might need to test a few possible locations.
 
-By doing the same plotting operation with bnum = 1, then bnum = 2, you should be able to figure out the "shift". This is to say how many points you need to move forward in time by.
+By doing the same plotting operation with bnum = 1, then bnum = 2, you should be able to figure out the "shift". This is to say how many points you need to move forward in time by, in this case it was 19 points. A final example attack that worked on my system (again you'll have to modify '''startingpoint''' and '''diffpoint'''):
 
-A final example that worked on my system:
 <syntaxhighlight lang="python">
 from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
 from matplotlib.pylab import *
