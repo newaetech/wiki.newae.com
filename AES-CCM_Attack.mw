@@ -150,11 +150,16 @@ For a well-known implementation (say in IEEE 802.15.4) we are done, as the nonce
 
 In the event the AES-CTR nonce input is unknown, additional work is required (detailed below).
 
-=== Step #2: AES-CBC MAC Block #2 ===
+=== Step #2A: AES-CBC MAC Block #2 ===
 
 Repeating this for block #2 is exactly the same as before. Note you will need to perform a capture which triggers on the second block, which may require changes to the firmware source code.
 
 Once you recover Block #1, you can calculate <math>CBC_{m}</math>. Recovering block #2 means you could use <math>CBC_{m}</math> to determine <math>CTR_{m+1}</math>. Then you can decrypt <math>CTR_{m+1}</math> to determine the AES-CTR nonce format.
+
+
+=== Step #2B: AES-CTR Pad Output DPA ===
+
+As an alternative to doing the same thing on the second block, we can use a DPA attack to figure out the AES-CTR output pad.
 
 == Example Bootloader ==
 
