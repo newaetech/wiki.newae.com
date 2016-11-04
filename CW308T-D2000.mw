@@ -1,0 +1,20 @@
+{{Infobox|This is a BETA target and not yet available. This wiki page will continue to be updated until release. Gerbers are available in the GIT repo if you live dangerously. }}
+
+[[File:d2000_render.png|400px]]
+
+== Programming ==
+
+An external programmer is needed for this target. The Quark D2000 dev-board can be used with jumper wires, or a standard OpenOCD programmer can be used.
+
+== Schematic ==
+
+See GIT Repo for PDF of schematic.
+
+[[File:CW308T-D2000-02_schematic.png|1000px]]
+
+== Board Layout ==
+
+See GIT Repo for gerber files.
+
+[[Category:Targets]]
+[[Category:CW308 Targets]]
