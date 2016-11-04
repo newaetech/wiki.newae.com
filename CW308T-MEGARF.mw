@@ -1,8 +1,24 @@
 {{Infobox|This is a BETA target and not yet available. This wiki page will continue to be updated until release. }}
 
-[[File:megarf_render.png|400px]]
+[[File:meagrf_render_02.png|400px]]
 
-The following is the original (-01) schematic, which was never publically released. The following changes were made in -02:
+== Programming ==
+
+The ChipWhisperer's AVR programmer supports this target directly. No external programmer is required.
+
+== Schematic ==
+
+See GIT Repo for PDF of schematic.
+
+[[File:CW308T_ATMegaRF_02.png|1000px]]
+
+== Board Layout ==
+
+See GIT Repo for gerber files.
+
+== Historical Note ==
+
+The following is the original (-01) schematic. The following changes were made in -02:
 
 * MOSI/MISO was switched on Atmel device (requires PCB fix on -01, or PCB will not work)
 * TST connected to ground (requires PCB fix on -01, or PCB will not work)
@@ -10,4 +26,7 @@ The following is the original (-01) schematic, which was never publically releas
 * GPIO3 is now optionally in control of 4066 instead of being hardwired
 * Serial resistors added on SCK/MISO/MOSI lines
 
-[[File:CW308T_ATMegaRF_01.png|1000px]]
+[[File:CW308T_ATMegaRF_01.png|200px]]
+
+[[Category:Targets]]
+[[Category:CW308 Targets]]
