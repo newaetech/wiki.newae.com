@@ -18,7 +18,7 @@ See GIT Repo for gerber files.
 
 == Historical Note ==
 
-The following is the original (-01) schematic. The following changes were made in -02:
+The following is the original (-01) schematic. The -01 PCBs were never publicly released and used during development only. The following changes were made in -02:
 
 * MOSI/MISO was switched on Atmel device (requires PCB fix on -01, or PCB will not work)
 * TST connected to ground (requires PCB fix on -01, or PCB will not work)
