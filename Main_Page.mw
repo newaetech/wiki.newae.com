@@ -72,6 +72,7 @@ ChipWhisperer Target boards:
 ** [[CW308T-MEGARF]] (Atmel MegaRF2564RFR2, 8-bit AVR)
 ** [[CW308T-MSP430FR5]] (TI MSP430FR5xxx, 16-bit)
 ** [[CW308T-S6LX9]] (Xilinx Spartan 6 LX9 in TQFP, FPGA)
+** [[CW308T-D2000]] (Intel Quark D2000, x86 microcontroller)
 
 
 3rd-Party Target Boards:
