@@ -1,5 +1,7 @@
 {{Infobox|This is a BETA target and not yet available. This wiki page will continue to be updated until release. }}
 
+This target is for the ATMega2564RFR2. This makes a great target for exploring IoT technologies, such as mesh networking protocols.
+
 [[File:meagrf_render_02.png|400px]]
 
 == Programming ==
@@ -15,6 +17,10 @@ See GIT Repo for PDF of schematic.
 == Board Layout ==
 
 See GIT Repo for gerber files.
+
+== Radio Usage ==
+
+Note NO ANTENNA is provided as the board is sold only as a sub-assembly and not designed to be used as a radio transmitter. Mounting a 2.4 GHz radio antenna (SMA, NOT reverse-polarity SMA) like Digi-Key P/N 1475-1014-ND could potentially require you to meet FCC/CE guidelines for RF emissions and is UNSUPPORTED USAGE.
 
 == Historical Note ==
 
