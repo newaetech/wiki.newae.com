@@ -4,6 +4,21 @@ This target is for the ATMega2564RFR2. This makes a great target for exploring I
 
 [[File:meagrf_render_02.png|400px]]
 
+== Usage Notes ==
+
+=== Internal / External VCC-INT Supply ===
+
+By default the MegaRF will provide the VCC-INT supply. If you wish to use an external supply you will have to use the VADJ setting on the CW308 to set the VCC-INT supply to be slightly higher than 1.8V, which would cause the MegaRF on-board regulator to shut down.
+
+In our experimentation the internal VCC-INT regulator worked fairly well, and did not add significant noise to any measurements.
+
+=== SPI Connections ===
+
+There is a SPI flash chip connected to the ATmegaRF2564RFR2. During development you may require an external programmer to load this flash chip, and the MegaRF must be disconnected to do this safely. If you do not disconnect the MegaRF SPI lines & try holding the MegaRF in reset to tri-state the SPI lines, you may end up accidentally loading an ISP programming command.
+
+GPIO3 is normally used to switche the 4066 electronic switch from connecting the external SPI connections between the SPI-Flash memory chip and the MegaRF device. You must set GPIO3 high to allow programming of the MegaRF chip, otherwise it is pulled low which disconnects the MegaRF.
+
+
 == Programming ==
 
 The ChipWhisperer's AVR programmer supports this target directly. No external programmer is required.
