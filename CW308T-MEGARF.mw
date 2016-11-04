@@ -6,11 +6,11 @@ This target is for the ATMega2564RFR2. This makes a great target for exploring I
 
 == Usage Notes ==
 
-=== Internal / External VCC-INT Supply ===
+=== Internal / External DVDD Supply ===
 
-By default the MegaRF will provide the VCC-INT supply. If you wish to use an external supply you will have to use the VADJ setting on the CW308 to set the VCC-INT supply to be slightly higher than 1.8V, which would cause the MegaRF on-board regulator to shut down.
+By default the MegaRF will provide the DVDD supply using a regulator inside the MegaRF chip. If you wish to use an external supply you will have to use the VADJ setting on the CW308 to set the DVDD supply to be slightly higher than 1.8V, which would cause the MegaRF on-board regulator to shut down.
 
-In our experimentation the internal VCC-INT regulator worked fairly well, and did not add significant noise to any measurements.
+In our experimentation the internal DVDD regulator worked fairly well, and did not add significant noise to any measurements.
 
 === SPI Connections ===
 
