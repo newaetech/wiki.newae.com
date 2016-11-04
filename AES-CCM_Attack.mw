@@ -52,6 +52,12 @@ There is an example of a simple bootloader which uses AES-CCM in the firmware di
 
 === Collecting Traces ===
 
+Collecting traces requires the following steps:
+
+# Program into the target the aes-ccm bootloader. This bootloader can be found in the git repo.
+# Set the target type to the special AES-CCM bootloader driver. This target module is detailed in the appendix on this page.
+# Run a capture with ~500 traces.
+
 === Step #1: AES-CBC MAC Block #1 ===
 
 The first step is to recover the AES encryption key used in round 1. This isn't too difficult - we'll first take our power traces, which if you recall look something like this:
