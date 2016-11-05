@@ -36,9 +36,95 @@ Additional usage information:
 * A nonce format is required for AES-CTR. This nonce can be based on information in the packet, such as source address, or be random.
 * An IV is required for the AES-CCM block. This I.V. can be sent (possibly encrypted) to the AES-CCM block, or be part of secret information stored in the bootloader.
 
+== Example Bootloader Details ==
+
+To perform this attack, we will define a simple bootloader. We will be using this example since we cannot use AES-CCM "standalone" without having a little bit of structure (i.e., how we do the AES-ECB demos). This `bootloader' is really just a demo of something that downloads a block of encrypted data, since it doesn't perform any actual bootloading.
+
+The example bootloader has a simplified AES-CCM implementation (NB: do NOT use this as a reference for a good implementation!). It accomplishes the basic goals only of having:
+
+* Header data that is authenticated but not encrypted
+* An encrypted MAC tag
+* A bunch of encrypted firmware blocks
+
+Each block sent to the bootloader is 19 bytes long. The first byte indicates the type - header, auth tag, or data. If a new 'header' message is received it will abort any ongoing processing of existing data and restart the bootloader process.
+
+All messages share this feature:
+* CRC-16: A 16-bit checksum using the CRC-CCITT polynomial (0x1021). The LSB of the CRC is sent first, followed by the MSB. The bootloader will reply over the serial port, describing whether or not this CRC check was valid.
+
+'''Header Frame'''
+* <code>0x01</code>: 1 byte of fixed header
+* Header Info: 14 bytes of "header" data which could be version or other such stuff.
+* Length: Number of encrypted data frames (NOT including the auth-tag frame) that will follow.
+
+Note the 16 bytes of the header info + length are fed into the AES-CBC algorithm as part of the auth-tag generation. That is this data is authenticated but not encrypted.
+
+<pre>
++------+------+------+------+ .... +------+------+------+------+
+| 0x01 |     Header Info (14 bytes)|    Length   |   CRC-16    |
++------+------+------+------+ .... +------+------+------+------+
+</pre>
+
+'''Auth Tag Frame'''
+* <code>0x02</code>: 1 byte of fixed header
+* Auth-Tag: The expected output of the AES-CBC algorithm after processing the authenticated only data + decrypted data frames. This is then encrypted in AES-CTR mode with the CTR set to 0.
+
+<pre>
+       
+       |<----- Encrypted block (16 bytes) ------>|
+       |    AES-CTR Encryption with CTR=0        |
+       |                                         |
++------+------+------+------+ .... +------+------+------+------+
+| 0x02 |     Auth-Tag (encrypted MAC)            |   CRC-16    |
++------+------+------+------+ .... +------+------+------+------+
+</pre>
+
+'''Data block frame'''
+* <code>0x03</code>: 1 byte of fixed header
+* Encrypted Data: Data encrypted in AES-CTR mode, with the CTR starting at 1 and incrementing.
+
+<pre>
+       |<----- Encrypted block (16 bytes) ------>|
+       |   AES-CTR Encryption with CTR=1,2,3..N  |
+       |                                         |
++------+------+------+------+ .... +------+------+------+------+
+| 0x03 |            Data (16 Bytes)              |   CRC-16    |
++------+------+------+------+ .... +------+------+------+------+
+</pre>
+
+
+The bootloader responds to each command with a single byte indicating if the CRC-16 was OK or not:
+
+<pre>
+            +------+
+CRC-OK:     | 0xA1 |
+            +------+
+
+            +------+
+CRC Failed: | 0xA4 |
+            +------+
+</pre>
+
+Once ALL messages are received, the bootloader will respond with a signature OK or not message:
+
+<pre>
+            +------+
+Sig-OK:     | 0xB1 |
+            +------+
+
+            +------+
+Sig Failed: | 0xB4 |
+            +------+
+</pre>
+
+Note details of the AES-CTR nonce, AES-CBC I.V., and key are stored in the firmware itself. In this example they are not downloaded as part of the encrypted firmware file.
+
 == Background on Attack ==
 
 The following will use the notation from [http://iotworm.eyalro.net/ IoT Goes Nuclear: Creating a ZigBee Chain Reaction]. This notation will be adopted throughout this wiki page.
+
+From the figure of AES-CCM, you can see that we don't directly control the input to any of the AES blocks. It could be possible to perform an AES-CTR attack (such as described by J. Jaffe in [https://www.iacr.org/archive/ches2007/47270001/47270001.pdf A First-Order DPA Attack Against AES in Counter Mode with Unknown Initial Counter]), but this will have issues if the bootloader limits the number of blocks we can send.
+
+But, as it turns out we can still break AES-CBC with a little additional computational effort (but not requiring any additional traces).
 
 === Breaking AES-CBC Encryption with unknown I.V. ===
 
@@ -64,14 +150,14 @@ This is the solution now - we simply perform a CPA attack on the 2nd round of th
 
 === Building Example ===
 
-There is an example of a simple bootloader which uses AES-CCM in the firmware directory. 
+There is an example of a simple bootloader which uses AES-CCM in the firmware directory. A hex-file is also present for the Atmel XMEGA device on the ChipWhisperer-Lite board.
 
 === Collecting Traces ===
 
 Collecting traces requires the following steps:
 
-# Program into the target the aes-ccm bootloader. This bootloader can be found in the git repo.
-# Set the target type to the special AES-CCM bootloader driver. This target module is detailed in the appendix on this page.
+# Program into the target the aes-ccm bootloader. This bootloader can be found in the git repo, which also includes a .hex file.
+# Set the target type to the special AES-CCM bootloader driver. This target module is detailed in the appendix on this page, you can copy that code into a new file in the `target' directory.
 # Run a capture with ~500 traces.
 
 === Step #1: AES-CBC MAC Block #1 ===
