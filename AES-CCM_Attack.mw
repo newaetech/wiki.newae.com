@@ -10,9 +10,11 @@ AES-CCM provides both encryption and authentication using the AES block cipher. 
 
 [[File:cbc_mac_source.png]]
 
+The "Calculated Tag" and "Expected Tag" are compared together, and only if they match is the decrypted data used. A change of any of the data blocks OR the header would change the calculated tag, resulting in an error.
+
 Some nice features of AES-CCM:
 
-* Can decrypt any data block, or decrypt blocks out of order.
+* Can decrypt any data block, or decrypt blocks out of order due to AES-CTR usage.
 * Authentication Tag provides authentication that data has not been modified in transit.
 * Auth tag can include non-encrypted information, such as a header with address or length information.
 * Auth tag can be shortened (i.e., not full 16-byte length) for use with protocols with very sensitive length limitations.
