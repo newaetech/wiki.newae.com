@@ -6,7 +6,18 @@ This page is presented as an example of using Python/ChipWhisperer to perform at
 
 == AES-CCM Overview ==
 
-AES-CCM provides both encryption and authentication using the AES block cipher. This is a widely used mode since it requires only a single cryptographic primitive. That primitive is used in two different modes: CBC and CTR mode. The difference is explained below:
+AES-CCM provides both encryption and authentication using the AES block cipher. This is a widely used mode since it requires only a single cryptographic primitive. That primitive is used in two different modes: CBC and CTR mode. The following shows how AES-CCM generally works:
+
+[[File:cbc_mac_source.png]]
+
+Some nice features of AES-CCM:
+
+* Can decrypt any data block, or decrypt blocks out of order.
+* Authentication Tag provides authentication that data has not been modified in transit.
+* Auth tag can include non-encrypted information, such as a header with address or length information.
+* Auth tag can be shortened (i.e., not full 16-byte length) for use with protocols with very sensitive length limitations.
+
+ The difference between the two modes is explained below:
 
 '''Cipher Block Chaining (CBC):''' The plaintext is XORed with the previous ciphertext before being encrypted. There is no ciphertext before the first plaintext, so a randomly chosen initialization vector (IV) is used instead:
 
@@ -18,7 +29,12 @@ AES-CCM provides both encryption and authentication using the AES block cipher. 
 
 In AES-CCM mode, the AES-CBC encryption is used to generate a nice "authentication tag". If a single byte changed anywhere in the data fed into the AES-CBC block, the final output will differ.
 
-The AES-CTR mode is used for the actual data encryption.
+The AES-CTR mode is used for the actual data encryption. Note AES-CTR encryption and decryption is the same operation, as AES-CTR is basically generating a unique "pad" we XOR with the data.
+
+Additional usage information:
+
+* A nonce format is required for AES-CTR. This nonce can be based on information in the packet, such as source address, or be random.
+* An IV is required for the AES-CCM block. This I.V. can be sent (possibly encrypted) to the AES-CCM block, or be part of secret information stored in the bootloader.
 
 == Background on Attack ==
 
