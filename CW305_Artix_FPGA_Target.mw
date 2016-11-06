@@ -273,6 +273,24 @@ The ChipWhisperer software is used to communicate with this board. This can be u
 
 ==Driver and Software Installation==
 
+=== Windows Drivers ===
+
+Signed Windows drivers are provided in the GIT repository, or can be [https://github.com/newaetech/chipwhisperer/raw/master/hardware/victims/cw305_artixtarget/usb_driver.zip downloaded from here]. To install drivers:
+
+* If you don't have a clone of the GIT repository, download & unzip the zip-file somewhere.
+* Plug the USB cable in, and once Windows detects the board you will be able to point it to a folder with drivers. Point it to either (a) the unzipped folder if you downloaded drivers, or (b) the folder <code>/chipwhisperer/hardware/victims/cw305_artixtarget/usb_driver/</code> if using the GIT repository.
+
+Note you can also try using the installer present in this folder, but it's suggested instead to point the Windows installer to the driver folder.
+
+=== Linux Drivers ===
+
+If you have previously setup the CW-Lite or CW-1200 on Linux, you should already have a rules.d file with some NewAE products. You can add the following to get the CW305 working:
+
+ # allow users to claim the device
+ SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="c305", MODE="0664", GROUP="plugdev"
+
+If you haven't previously set this up, see the page [[Linux Driver Setup]] for details.
+
 == Python Example ==
 
 {{Infobox|The following examples assume you are using the 35T sized FPGA. You will have to change the bitstream location if using the 100T - see details of example projects above. The short answer is you should be able to change "35t" to "100t" in the example paths. }}
