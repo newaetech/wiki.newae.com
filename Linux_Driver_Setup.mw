@@ -1,0 +1,19 @@
+Linux does not require drivers persay, but it does require some setup to allow you to use hardware as a non-root user. The required setup assumes you are using the udev system. If you are, proceed as follows:
+
+1. Make a file called <code>/etc/udev/rules.d/99-newae.rules</code> . The contents of this file should be:
+ # allow users to claim the device
+ SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="ace1", MODE="0664", GROUP="plugdev"
+ SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="ace2", MODE="0664", GROUP="plugdev" #CW-Lite
+ SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="ace3", MODE="0664", GROUP="plugdev" #CW1200
+ SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="c305", MODE="0664", GROUP="plugdev" #CW305 FPGA Target
+ SUBSYSTEM=="usb", ATTRS{idVendor}=="2b3e", ATTRS{idProduct}=="c000", MODE="0664", GROUP="plugdev" #FTDI-Based JTAG Programmer
+
+2. Add your username to the plugdev group:
+ $ sudo usermod -a -G plugdev YOUR-USERNAME
+
+3. And reset the udev system:
+    $ sudo udevadm control --reload-rules
+
+4. Finally log out & in again for the group change to take effect.
+
+5. Connect the USB cable of your device.
