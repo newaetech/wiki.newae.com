@@ -160,7 +160,7 @@ Collecting traces requires the following steps:
 
 # Program into the target the aes-ccm bootloader. This bootloader can be found in the git repo, which also includes a .hex file.
 # Set the target type to the special AES-CCM bootloader driver. This target module is detailed in the appendix on this page, you can copy that code into a new file in the `target' directory.
-# Run a capture with ~500 traces.
+# Run a capture with ~500 traces. Use 1x CLKGEN for the ADC speed and the full point-range to be able to capture both software AES rounds. See capture script example for details.
 
 === Step #1: AES-CBC MAC Block #1 ===
 
