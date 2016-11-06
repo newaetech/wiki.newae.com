@@ -19,7 +19,7 @@ Some nice features of AES-CCM:
 * Auth tag can include non-encrypted information, such as a header with address or length information.
 * Auth tag can be shortened (i.e., not full 16-byte length) for use with protocols with very sensitive length limitations.
 
- The difference between the two modes is explained below:
+The difference between the two modes is explained below:
 
 '''Cipher Block Chaining (CBC):''' The plaintext is XORed with the previous ciphertext before being encrypted. There is no ciphertext before the first plaintext, so a randomly chosen initialization vector (IV) is used instead:
 
