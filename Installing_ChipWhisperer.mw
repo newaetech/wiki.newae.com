@@ -203,6 +203,6 @@ You can easily use brew to install avr-gcc, as decribed at [https://github.com/o
 Try running the automated test scripts at chipwhisperer/software/chipwhisperer/tests/. Example:
  $ python chipwhisperer/software/chipwhisperer/tests/aescpaeattackscript.py
  $ python chipwhisperer/software/chipwhisperer/tests/descpaeattackscript.py 
- $ python chipwhisperer/software/chipwhisperer/tests/glitchscript.p
+ $ python chipwhisperer/software/chipwhisperer/tests/glitchscript.py
  $ python chipwhisperer/software/chipwhisperer/tests/templateattackscript.py
 They should all work out of the box with the Chipwhisper Lite hardware.
