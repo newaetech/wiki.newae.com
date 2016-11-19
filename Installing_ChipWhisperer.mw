@@ -205,4 +205,4 @@ Try running the automated test scripts at chipwhisperer/software/chipwhisperer/t
  $ python chipwhisperer/software/chipwhisperer/tests/descpaeattackscript.py 
  $ python chipwhisperer/software/chipwhisperer/tests/glitchscript.p
  $ python chipwhisperer/software/chipwhisperer/tests/templateattackscript.py
-They should all work out of the box.
+They should all work out of the boxwith the Chipwhisper Lite hardware.
