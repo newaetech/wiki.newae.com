@@ -199,7 +199,7 @@ You can easily use brew to install avr-gcc, as decribed at [https://github.com/o
  
  $ brew install avr-libc
 
-== Making sure that everything is working ==
+== Making sure that everything works ==
 Try running the automated test scripts at chipwhisperer/software/chipwhisperer/tests/. Example:
  $ python chipwhisperer/software/chipwhisperer/tests/aescpaeattackscript.py
  $ python chipwhisperer/software/chipwhisperer/tests/descpaeattackscript.py 
