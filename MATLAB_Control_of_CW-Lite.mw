@@ -24,3 +24,19 @@ You will need to first install Python 2.7 + ChipWhisperer. Note you'll need matc
 # Hopefully you see some waveforms show up on the screen!
 
 == MATLAB Setup ==
+
+MATLAB will need to be told about your Python location most likely. You can check this by seeing the value of the pyversion variable at the MATLAB command prompt:
+
+  >> pyversion
+
+         version: ''
+      executable: ''
+         library: ''
+            home: ''
+        isloaded: 0
+
+This indicates it does not have a valid Python environment. Simply point to your Python binary:
+
+  >> pyversion 'C:\WinPython-64bit-2.7.9.5\python-2.7.9.amd64\python.exe'
+
+Where you will need to adjust the path for your local version/install. You can confirm with pyversion this worked. You shouldn't need to do any more setup now, it should remember this Python environment.
