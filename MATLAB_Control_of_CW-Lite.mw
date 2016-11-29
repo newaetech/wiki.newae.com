@@ -54,9 +54,9 @@ The matlab files internally will reference a .py file in that same directory. Yo
 If this works it should print the information about the 'cw' object:
 
  cw = 
-
+ 
   Python CWCoreAPI with properties:
-
+ 
                  sigNewProject: [1x1 py.chipwhisperer.common.utils.util.Signal]
                      valid_aux: [1x1 py.collections.OrderedDict]
                       auxParam: [1x1 py.chipwhisperer.common.utils.parameter.Parameter]
@@ -79,7 +79,7 @@ If this works it should print the information about the 'cw' object:
               sigAttackChanged: [1x1 py.chipwhisperer.common.utils.util.Signal]
                sigCampaignDone: [1x1 py.chipwhisperer.common.utils.util.Signal]
     valid_preprocessingModules: [1x1 py.collections.OrderedDict]
-
+ 
     <chipwhisperer.common.api.CWCoreAPI.CWCoreAPI object at 0x000000013312FD30>
 
 
@@ -98,3 +98,7 @@ You can plot this power trace with:
   plot(trace)
 
 [[File:matlab_plot.png|400px]]
+
+You can run a number of measure_AES() calls with the same cw object without running cwconnect() again. Note if you want to reconnect, you will first need to run cw.disconnect() to close the USB connection.
+
+If you receive 'device in use' error messages, this is likely the problem. You can also simply unplug/replug the USB connection to force-close any existing connections.
