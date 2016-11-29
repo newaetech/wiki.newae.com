@@ -28,7 +28,7 @@ You will need to first install Python 2.7 + ChipWhisperer. Note you'll need matc
 MATLAB will need to be told about your Python location most likely. You can check this by seeing the value of the pyversion variable at the MATLAB command prompt:
 
   >> pyversion
-
+ 
          version: ''
       executable: ''
          library: ''
