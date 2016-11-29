@@ -1,0 +1,26 @@
+The following is designed to demonstrate how to control the CW-Lite directly from MATLAB.
+
+== About MATLAB to Python Interface ==
+
+This system relies on the Mathworks Python interface, which is built in as of R2014B. See [https://www.mathworks.com/help/matlab/examples/call-python-from-matlab.html MathWorks Reference Page] for more details.
+
+The code is currently held in a separate repository at [https://github.com/newaetech/cw-apiexample1/tree/master/matlab]. You'll have to clone that repository (or use the download link inside of GITHub) to copy the files into your own local working directory.
+
+== Python/ChipWhisperer Setup ==
+
+You will need to first install Python 2.7 + ChipWhisperer. Note you'll need match the type of Python to your MATLAB install (i.e., 64-bit Python if using 64-bit MATLAB). Specific steps follow:
+
+# Download [https://sourceforge.net/projects/winpython/files/WinPython_2.7/2.7.10.3/ WinPython 2.7.10.3], most likely you will require the 64-bit version (most recent MATLAB installs will be 64-bit).
+# Run the installer - it will actually just extract this somewhere, I suggest to use a location such as c:\WinPython-64bit-2.7.10.3 rather than the default which will just install in a subdirectory of whereever you downloaded the installer to.
+# Run the 'WinPython Command Prompt' - this will be in the directory you installed WinPython to.
+# Run <code>pip install chipwhisperer</code> in the WinPython prompt which should install ChipWhisperer.
+# Plug in CW-Lite, when prompted for drivers you'll have to download the [https://github.com/newaetech/chipwhisperer/raw/master/hardware/capture/chipwhisperer-lite/cwlite_usb_driver.zip driver zip-file] and extract that somewhere, then point the installer to this location.
+# Once drivers are installed, you should be able to run the examples from the WinPython command prompt. To do run the command <code>python</code> to start Python interpreter, then run:
+
+   >>> import chipwhisperer
+   >>> chipwhisperer.capture_gui()
+
+# This should open the capture GUI. From the 'Project' and 'Example Scripts' menu, select 'ChipWhisperer-Lite: AES SimpleSerial on XMEGA'.
+# Hopefully you see some waveforms show up on the screen!
+
+== MATLAB Setup ==
