@@ -102,3 +102,9 @@ You can plot this power trace with:
 You can run a number of measure_AES() calls with the same cw object without running cwconnect() again. Note if you want to reconnect, you will first need to run cw.disconnect() to close the USB connection.
 
 If you receive 'device in use' error messages, this is likely the problem. You can also simply unplug/replug the USB connection to force-close any existing connections.
+
+== Usage Notes ==
+
+Most of the capture parameters are set inside of the 'cwapi.py' Python file. For example sample rate is fixed at 4x the clock frequency, and the clock frequency is fixed at 7.37 MHz. However the sample offset from trigger & length of capture can be set on the call to 'cwconnect'. By default the CW-Lite starts recording at 1250 samples after the trigger (1250 / 4 = 312.5 target device clock cyles), and records for 3000 samples (3000 / 4 = 750 target device clock cycles). These are suitable for the example AES in C, but you may need to reduce the offset if running AES in assembly for example.
+
+The ChipWhisperer-Lite has a maximum capture length of about 24000 samples. The maximum offset is 4294967294.
