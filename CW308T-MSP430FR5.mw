@@ -32,6 +32,14 @@ Double-clicking on this file should give you a command prompt which now has tool
 
 == Example Projects ==
 
+== Using JTAG Programmer ==
+
+The ChipWhisperer does not contain a JTAG programmer, but you can use any MSP430 programmer instead. If you don't already have one, a cheap/easy solution is to purchase a MSP-EXP430FR5969 which is TI's MSP430FR5969 development kit. It contains an integrated debugger/programmer which uses the 2-wire JTAG protocol.
+
+To interface to the chip, remove the jumpers connecting to the target section labeled RST and TST. Then using jumper wires connect these to TODO and TODO respectively, as shown here (also be sure to connect a ground reference):
+
+Note if using the MSP430-BSL target on the ChipWhisperer-Lite it will control the RST/TST lines as well, so you'll have to tristate those lines from the ChipWhisperer-Lite.
+
 == Schematic ==
 
 NOTE: Schematic is marked as unapproved until hardware has been fully validated.
