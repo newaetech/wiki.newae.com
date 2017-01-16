@@ -24,10 +24,15 @@ Other than these, the last interesting setting is the number of traces. By defau
 Once you're ready, save your project and click Capture Many to record 5000 traces.
 
 = Analysis =
-- Load project
-- Most default settings are fine
-- Change leakage to HD
-- Results
+Once we have our data, the analysis is pretty straightforward: a standard CPA attack is easy to do in the ChipWhisperer Analyzer. To set this up, open the Analyzer and load the captured data. Then, only one setting needs to be changed. In the Attack tab, change the Hardware Model to "HD: AES Last-Round State":
+
+[[File:CW305Attack.PNG]]
+
+Once this is done, start the attack. The analysis will take some time - 5000 traces is quite a bit of data to crunch. However, we should be rewarded with the secret key:
+
+[[File:CW305Results.PNG]]
+
+Notice how small the correlations are in this data! In the standard XMEGA software AES attack, we saw correlations on the order of 98%; this FPGA attack gave us closer to 10%. Make sure to take a good look at the other output (correlation vs. traces, PGE vs traces, etc) to get a good idea of how much work is required for a successful attack on the Artix target.
 
 = Suggestions =
 
