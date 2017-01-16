@@ -18,10 +18,12 @@ Using a ChipWhisperer Lite, the full hardware setup looks like:
 In the ChipWhisperer examples, the Artix-7 FPGA is programmed using Verilog. This section describes how to open and build one of these projects. It also describes the layout of the AES-128 example, which is a good starting point for making new FPGA projects.
 
 == Opening the Project ==
+To get us started, a pre-existing AES-128 encryption example is waiting for us deep inside the ChipWhisperer repository. You can find this at <code>chipwhisperer\hardware\victims\cw305_artixtarget\fpga\vivado_examples\aes128_verilog</code>. There are a couple of files and directories here:
+
+* <code>aes128_verilog.xpr</code> is the project file. You can open this 
+
 == FPGA Code Layout ==
 == Building the Project ==
-
-
 
 = Capture Setup =
 - Example script
