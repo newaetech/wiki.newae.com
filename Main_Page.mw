@@ -122,12 +122,6 @@ The following aren't complete tutorials as the above, but instead show you a lit
 
 == Hardware-Specific Examples/Tutorials ==
 
-=== CW305 (Artix FPGA Board) ===
-
-* [[CW305: Building a Project]]
-* [[CW305: Clock Glitching]]
-* [[CW305: Voltage Glitching with crowbars]]
-
 === CW308 (UFO Board) ===
 
 * [[CW308T-AVR / CW308T-XMEGA: Stand-Alone Simple Serial Example ]]
