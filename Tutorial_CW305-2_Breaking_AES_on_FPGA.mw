@@ -34,9 +34,5 @@ Once this is done, start the attack. The analysis will take some time - 5000 tra
 
 Notice how small the correlations are in this data! In the standard XMEGA software AES attack, we saw correlations on the order of 98%; this FPGA attack gave us closer to 10%. Make sure to take a good look at the other output (correlation vs. traces, PGE vs traces, etc) to get a good idea of how much work is required for a successful attack on the Artix target.
 
-= Suggestions =
-
-
-
 {{Template:Tutorials}}
 [[Category:Tutorials]]
