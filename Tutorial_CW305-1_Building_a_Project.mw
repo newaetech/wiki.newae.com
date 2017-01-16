@@ -3,7 +3,6 @@ The CW305 target is an FPGA target board for use with the ChipWhisperer capture 
 = CW305 Hardware =
 If you're used to working with the ChipWhisperer Lite XMEGA or the UFO targets, the CW305 board will feel a bit different. Rather than sending data through a UART directly from the capture hardware, we'll now use two separate connections to the target board.
 
-== Hardware Setup ==
 To get started, we need to make three connections to the CW305 target:
 
 # We'll control the Artix-7 directly from the laptop via USB. This is done through the USB-B port on the left side of the board. (On the target, the Atmel SAM3U chip converts these USB packets into signals that the FPGA can understand.)
