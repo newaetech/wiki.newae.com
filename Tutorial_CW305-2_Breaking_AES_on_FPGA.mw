@@ -1,4 +1,25 @@
-Under construction
+This tutorial is a continuation from [[Tutorial CW305-1 Building a Project]]. Here, we'll use our hardware setup to find a fixed secret key that the Artix FPGA is using for AES encryption. This tutorial relies on previous knowledge from [[Tutorial B5 Breaking AES (Straightforward)]], so make sure you know how that attack works.
+
+= Theoretical Background =
+- Hardware AES
+- Operations done in single clock cycle
+- Spectrum of speed vs size
+- Difficulty of finding leakage (HW vs HD)
+
+= Capture Setup =
+- Reference last tutorial
+- Mention what the default settings are
+- Look at one trace (especially for the length)
+- Explain that there's little leakage
+- Set up for 5000 traces
+- Capture many
+
+= Analysis =
+- Load project
+- Most default settings are fine
+- Change leakage to HD
+- Results
+
 
 {{Template:Tutorials}}
 [[Category:Tutorials]]
