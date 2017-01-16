@@ -69,3 +69,5 @@ Select the bitstream file that we generated earlier (<code>chipwhisperer/hardwar
 [[File:CW305SampleCapture.PNG|800px]]
 
 Success! We've built a project and recorded a power trace using the Artix target.
+
+For further analysis using this project, check out the next tutorial: [[CW305: Breaking AES on FPGA]].
