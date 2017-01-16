@@ -1,38 +1,4 @@
-This tutorial is a continuation from [[Tutorial CW305-1 Building a Project]]. Here, we'll use our hardware setup to find a fixed secret key that the Artix FPGA is using for AES encryption. This tutorial relies on previous knowledge from [[Tutorial B5 Breaking AES (Straightforward)]], so make sure you know how that attack works.
-
-= Theoretical Background =
-During this tutorial, we'll be working with a hardware AES implementation. This type of attack can be much more difficult than a software AES attack. In the software AES attacks, we needed hundreds or thousands of clock cycles to capture the algorithm's full execution. In contrast, a hardware AES implementation may have a variety of speeds. Depending on the performance of the hardware, a whole spectrum of execution speeds can be achieved by executing many operations in a single clock cycle. It is theoretically possible to execute the entire AES encryption in a single cycle, given enough hardware space and provided that the clock is not too fast. Most hardware accelerators are designed to complete one round or one large part of a round in a single cycle. 
-
-This fast execution may cause problems with a regular CPA attack. In software, we found that it was easy to search for the outputs of the s-boxes because these values would need to be loaded from memory onto a high-capacitance data bus. This is not necessarily true on an FPGA, where the output of the s-boxes may be directly fed into the next stage of the algorithm. In general, we may need some more knowledge of the hardware implementation to successfully complete an attack.
-
-In our case, let's suppose that every round of AES is completed in a single clock cycle. Recall the execution of AES:
-
-[[File:AES_Encryption.png|300px]]
-
-Here, every blue block is executed in one clock cycle. This means that an excellent candidate for a CPA attack is the difference between the input and output of the final round. It is likely that this state is stored in a port that is updated every round, so we expect that the Hamming distance between the round input and output is the most important factor on the power consumption. Also, the last round is the easiest to attack because it has no MixColumns operation. We'll use this Hamming distance as the target in our CPA attack.
-
-= Capture Setup =
-The hardware and software setup was completed in the previous tutorial. If you haven't completed it, finish [[Tutorial CW305-1 Building a Project]] first. If you don't want to build the entire project, use the second section of that tutorial to see how to connect to the board using the default bitstream.
-
-Most of the capture settings are similar to the standard ChipWhisperer scope settings. However, there are a couple of interesting points:
-
-* We're only capturing 250 samples, and the encryption appears to be finished in less than 60 samples with an x4 ADC clock. This makes sense - as we mentioned above, our AES implementation is probably computing each round in a single clock cycle.
-* We're using EXTCLK x4 for our ADC clock. This means that the FPGA is outputting a clock signal, and we aren't driving it. 
-
-Other than these, the last interesting setting is the number of traces. By default, the capture software is ready to capture 5000 traces - many more than were required for software AES! It is difficult for us to measure the small power spikes from the Hamming distance on the last round: these signals are dwarfed by noise and the other operations on the chip. To deal with this small signal level, we need to capture many more traces.
-
-Once you're ready, save your project and click Capture Many to record 5000 traces.
-
-= Analysis =
-Once we have our data, the analysis is pretty straightforward: a standard CPA attack is easy to do in the ChipWhisperer Analyzer. To set this up, open the Analyzer and load the captured data. Then, only one setting needs to be changed. In the Attack tab, change the Hardware Model to "HD: AES Last-Round State":
-
-[[File:CW305Attack.PNG]]
-
-Once this is done, start the attack. The analysis will take some time - 5000 traces is quite a bit of data to crunch. However, we should be rewarded with the secret key:
-
-[[File:CW305Results.PNG]]
-
-Notice how small the correlations are in this data! In the standard XMEGA software AES attack, we saw correlations on the order of 98%; this FPGA attack gave us closer to 10%. Make sure to take a good look at the other output (correlation vs. traces, PGE vs traces, etc) to get a good idea of how much work is required for a successful attack on the Artix target.
+Under construction
 
 {{Template:Tutorials}}
 [[Category:Tutorials]]
