@@ -41,6 +41,17 @@ If you're planning on making your own projects for side channel analysis, it's h
 * <code>aes_core.v</code>: The AES core module is an implementation of AES from Google. This is taken from the [https://github.com/ProjectVault/orp/tree/master/hardware/mselSoC/src/systems/geophyte/rtl/verilog/crypto_aes/rtl/verilog ProjectVault repository].
 
 == Building the Project ==
+This project is already fully built for us. However, if you want to make your own project, you'll need to know how to build it. There are three steps that Vivado takes to turn our Verilog into a fully functional piece of code:
+
+* ''Synthesis'': the Verilog code is synthesized into a gate-level representation
+* ''Implementation'': the synthesized logic is routed to fit onto the device
+* ''Bitstream Generation'': an Artix-ready file is created, allowing us to upload our firmware onto the FPGA
+
+This process can take a while - on an average laptop, the sample project takes around 7 minutes to build. 
+
+'''Gotcha''': This project can be implemented to fit into an Artix-7A35T or an Artix-7A100T chip. Make sure that you have the correct one selected (right click -> "Make Active") before you build the project:
+
+[[File:CW305MakeActive.png]]
 
 = Capture Setup =
 - Example script
