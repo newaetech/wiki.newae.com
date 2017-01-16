@@ -12,18 +12,25 @@ In our case, let's suppose that every round of AES is completed in a single cloc
 Here, every blue block is executed in one clock cycle. This means that an excellent candidate for a CPA attack is the difference between the input and output of the final round. It is likely that this state is stored in a port that is updated every round, so we expect that the Hamming distance between the round input and output is the most important factor on the power consumption. Also, the last round is the easiest to attack because it has no MixColumns operation. We'll use this Hamming distance as the target in our CPA attack.
 
 = Capture Setup =
-- Reference last tutorial
-- Mention what the default settings are
-- Look at one trace (especially for the length)
-- Explain that there's little leakage
-- Set up for 5000 traces
-- Capture many
+The hardware and software setup was completed in the previous tutorial. If you haven't completed it, finish [[Tutorial CW305-1 Building a Project]] first.
+
+Most of the capture settings are similar to the standard ChipWhisperer scope settings. However, there are a couple of interesting points:
+
+* We're only capturing 250 samples, and the encryption appears to be finished in less than 60 samples with an x4 ADC clock. This makes sense - as we mentioned above, our AES implementation is probably computing each round in a single clock cycle.
+* We're using EXTCLK x4 for our ADC clock. This means that the FPGA is outputting a clock signal, and we aren't driving it. 
+
+Other than these, the last interesting setting is the number of traces. By default, the capture software is ready to capture 5000 traces - many more than were required for software AES! It is difficult for us to measure the small power spikes from the Hamming distance on the last round: these signals are dwarfed by noise and the other operations on the chip. To deal with this small signal level, we need to capture many more traces.
+
+Once you're ready, save your project and click Capture Many to record 5000 traces.
 
 = Analysis =
 - Load project
 - Most default settings are fine
 - Change leakage to HD
 - Results
+
+= Suggestions =
+
 
 
 {{Template:Tutorials}}
