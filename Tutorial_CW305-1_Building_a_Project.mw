@@ -32,6 +32,14 @@ When you open the project file, you should be greeted with a screen like:
 This is enough for us to start poking around in the code.
 
 == FPGA Code Layout ==
+If you're planning on making your own projects for side channel analysis, it's helpful to understand how the sample project is set up. Here's a high-level description of the different pieces:
+
+* <code>cw305_main.xdc</code>: The constraints file has a list of pins on the Artix-7 package. It describes how these physical pins are connected to the internal structures on the FPGA.
+* <code>cw305_top.v</code>: The top-level module defines all of the ports that are referenced in the constraints file. It connects these ports to the lower level modules. For example, the USB data and address pins are connected to a USB module here. Notably, there are two 1024 byte ports that are shared between the USB module and the register module.
+* <code>usb_module.v</code>: The USB module is used to communicate with the Atmel SAM3U microcontroller. It allows the Atmel to access the 1024 byte memory, reading from or writing to various locations in memory. 
+* <code>registers.v</code>: The registers module is used to place various data into the shared memory, allowing the USB module's reads and writes to affect other modules in the code. It places this data at known, fixed offsets in the memory. For example, reading from address 0x100 allows the Atmel to recover the plaintext from an encryption.
+* <code>aes_core.v</code>: The AES core module is an implementation of AES from Google. This is taken from the [https://github.com/ProjectVault/orp/tree/master/hardware/mselSoC/src/systems/geophyte/rtl/verilog/crypto_aes/rtl/verilog ProjectVault repository].
+
 == Building the Project ==
 
 = Capture Setup =
