@@ -1,0 +1,16 @@
+The CW305 target is an FPGA target board for use with the ChipWhisperer capture hardware. This board lets you test side channel analysis techniques on an Artix-7 FPGA. With this setup, a different toolchain is required: we won't be building C firmware with a makefile. This tutorial walks through the various steps required to run an AES-128 example on the CW305 target.
+
+= Target Firmware =
+== Opening the Project ==
+== FPGA Code Layout ==
+== Building the Project ==
+
+= Hardware Connections =
+- USB for configuring target
+- 20 pin header
+- Measurement (LNA output)
+
+= Capture Setup =
+- Example script
+- Upload bitstream
+- Sample captures
