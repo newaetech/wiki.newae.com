@@ -1,16 +1,14 @@
-= CW1173: ChipWhisperer-Lite Board =
-
 The ChipWhisperer-Lite Bare Board consists of two main parts: a multi-purpose power analysis capture instrument, and a target board. The target board is a standard microcontroller which you can implement algorithms onto. For example if you wish to evaluate an AES library, you can program that library into the target board and perform the power analysis.
 
 [[File:cwlite_basic.png|image]]
 
-== Quick-Start Guide ==
+= Quick-Start Guide =
 
 You can see a [http://www.youtube.com/watch?v=MJmkYqA-LeM&hd=1 Video] of the quickstart guide, which will take you through all the setup items discussed here:
 
 [[File:cwlite_demo_video.png|YouTubeCW1173Demo]]_
 
-=== Connection Quick-Start ===
+== Connection Quick-Start ==
 
 <ol style="list-style-type: decimal;">
 <li>Install Python and Dependancies
@@ -101,11 +99,11 @@ SUBSYSTEM==&quot;usb&quot;, ATTRS{idVendor}==&quot;2b3e&quot;, ATTRS{idProduct}=
 <p>From there, hit the &quot;FIND&quot; button beside the &quot;FPGA .zip (Release)&quot; option. Point it to the file located at <code>chipwhisperer/hardware/capture/chipwhisperer-lite/cwlite_firmware.zip</code> on your filesystem.</p></li>
 <li>Your ChipWhisperer-Lite is now connected. See the next section for details of the demo attack.</li></ol>
 
-=== Capture and Attack Quickstart ===
+== Capture and Attack Quickstart ==
 
 # See [[Tutorial_B5_Breaking_AES_(Straightforward)]]for details. Note the hardware setup is slightly different -- but you can skip to step 5.5.3, and should be able to pick up from there. Be sure to use the <code>ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script instead of the one referenced in step 5.5.3.
 
-=== Important Bugs/Caveats ===
+== Important Bugs/Caveats ==
 
 The following includes various things that might trip you up:
 
@@ -115,20 +113,20 @@ The following includes various things that might trip you up:
 # The &quot;Total Ops&quot; window which checks for proper AES operation requires PyCrypto to be installed.
 # By default the XMEGA device was programmed with a partial AES implementation only. This is done to avoid any crypto export issues. This does not affect your side-channel analysis, but be aware the returned value might not appear to be correct (since only the first couple rounds of AES occurred).
 
-== Basic Usage Instructions ==
+= Basic Usage Instructions =
 
 <blockquote></blockquote>
-=== CW-Lite: Programming AVR/XMEGA Device ===
+== CW-Lite: Programming AVR/XMEGA Device ==
 
 The CW1173 has built-in support for programming either Atmel AVR or Atmel XMEGA device. This is designed to allow you to program our target boards (either the built-in XMEGA target, or the Multi-Target board).
 
 Note this programmer is fairly simple, and ''does not'' provide all the features of a stand-alone programmer.
 
-==== AVR Programmer ====
+=== AVR Programmer ===
 
 The AVR device programmer requires four connections to the target: RESET, MOSI, MISO, SCK. See [[#20-Pin_Connector]] for details of AVR programming pin connections.
 
-===== Accessing the Programming =====
+==== Accessing the Programming ====
 
 To access the AVR Programmer, select the &quot;CW-Lite AVR Programmer&quot; from the pull-down Tools menu:
 
@@ -136,7 +134,7 @@ To access the AVR Programmer, select the &quot;CW-Lite AVR Programmer&quot; from
 
 Which should give you the AVR Programmer Window.
 
-===== Clock Source Selection =====
+==== Clock Source Selection ====
 
 Note to use the AVR programmer you may require a valid clock source for the AVR. It is suggested to select one of the setup scripts (such as <code>ChipWhisperer-Lite: AES Simple-Serial on ATMega328P</code>) which will generate a 7.37 MHz clock.
 
@@ -154,7 +152,7 @@ The default SPI data rate for the programmer is too fast for devices which are r
 
 The 'slow clock mode' is used to provide a slower SPI clock than would otherwise be possible. When switching into 'slow clock mode' it will cause all DCM blocks in the FPGA to become unlocked. You will need to reset the DCM blocks, or simply restart the CW-Capture software and run the setup script.
 </blockquote>
-===== Programming the Fuses =====
+==== Programming the Fuses ====
 
 By default the AVR programmer allows you to modify the LOW fuse byte only, as this byte controls the clock source selection. To change the value of the fuse byte:
 
@@ -171,7 +169,7 @@ See [http://eleccelerator.com/fusecalc/fusecalc.php?chip=atmega328p an Online Fu
 
 The low fuse byte must be changed to <code>D0</code> to use the external clock provided by the ChipWhisperer toolchain.
 </blockquote>
-===== Programming the Flash =====
+==== Programming the Flash ====
 
 Programming the flash is accomplished by selecting the new .hex file in the &quot;Find&quot; menu, and pressing the &quot;Erase/Program/Verify FLASH&quot; button. The &quot;Status&quot; line will show the following information:
 
@@ -181,13 +179,13 @@ Programming the flash is accomplished by selecting the new .hex file in the &quo
 
 [[File:avrprog_progok.png|image]]
 
-==== XMEGA Programmer ====
+=== XMEGA Programmer ===
 
 The XMEGA device programmer requires only two connections to the target: clock (PDIC) and data (PDID). The PDIC line is usually shared with the RESET pin, and the PDID pin is a specific pin on the XMEGA device. See [[#20-Pin_Connector]] for details of XMEGA programming pin connections.
 
 [[File:xmegaprog_main.png|image]]
 
-=== Using Glitch Port ===
+== Using Glitch Port ==
 
 The &quot;GLITCH&quot; port is used for voltage glitching. It's connected to two MOSFET elements, as the following figure shows:
 
@@ -199,11 +197,11 @@ The CW1173 glitch output can be commanded to turn on either of those MOSFETs via
 </blockquote>
 Be careful using this feature, as you don't want to short the MOSFETs for too long. It's also possible to damage the ChipWhisperer-Lite by burning these MOSFETs up if used incorrectly. See tutorial #A3 for more information on using this feature.
 
-=== Using Measure Port ===
+== Using Measure Port ==
 
 The &quot;MEASURE&quot; port is the input to the low-noise amplifier and ADC.
 
-=== 20-Pin Connector ===
+== 20-Pin Connector ==
 
 The pinout is as follows:
 
@@ -317,7 +315,7 @@ The pinout is as follows:
 | Not Connected on ChipWhisperer-Lite.
 |}
 
-=== 8-Pin SmartCard Connector ===
+== 8-Pin SmartCard Connector ==
 
 The CW1173 contains two 8-pin connectors, which use our standard 8-pin Smart-Card header pinout. One header connects to the SAM3U device (which has ISO-7816 drivers), one header connects to the FPGA. Note there is currently no firmware support for these devices, but the hardware is designed for any of the following:
 
@@ -424,7 +422,7 @@ Header J6 (Connects to FPGA):
 | Spare line (FPGA: P97)
 |}
 
-=== Upgrading SAM3U Firmware ===
+== Upgrading SAM3U Firmware ==
 
 When talking about the ChipWhisperer-Lite's firmware, there is really two parts to this:
 
@@ -433,7 +431,7 @@ When talking about the ChipWhisperer-Lite's firmware, there is really two parts 
 
 The FPGA bitstream alone is what is normally configured by the ChipWhisperer-Capture software. This bitstream is always the most up-to-date, since it's automatically reloaded by the computer every time you power cycle the ChipWhisperer-Capture. The SAM3U firmware however is not automatically updated, but it tends to change less frequently.
 
-==== Checking Firmware Version ====
+=== Checking Firmware Version ===
 
 The firmware version is printed at start-up. You will see a line that looks like this indicating the version of the SAM3U Firmware:
 
@@ -446,7 +444,7 @@ If your firmware version is outdated, a warning will be printed. You can also se
 </blockquote>
 Note the main version is 0.11 in this example. The &quot;b0&quot; indicates a &quot;build&quot; number. Typically this will be &quot;build 0&quot;, but special versions will use a different build number to indicate a variant of a regular version.
 
-==== Upgrading Firmware ====
+=== Upgrading Firmware ===
 
 Before updating, you must put your ChipWhisperer-Lite into bootloader mode. Once put into this mode you will need to load a new firmware file. There is two ways of doing it: the ''automatic'' method, and the ''manual'' method. The automatic method is done through the GUI, and works if you have valid firmware image loaded. The ''manual'' method is always guaranteed to work.
 
@@ -483,11 +481,11 @@ Once we are in bootloader mode, you can follow these steps:
 # Once completed, unplug/replug your device and it should come to life.
 # Close the update widgets, and reconnect to your ChipWhisperer-Lite.
 
-==== Manual Update ====
+=== Manual Update ===
 
 If the above instructions fail, there is no big problem. The SAM3U chip contains a hardware-resident bootloader. You may need to follow instructions on the [[Manual SAM3U Firmware Update]] page (including using BOSSA) if you are unable to use the automatic system that is part of ChipWhisperer-Capture.
 
-=== Breaking Target Section Apart ===
+== Breaking Target Section Apart ==
 
 You may wish to break the target section apart from the main capture board. This can easily be accomplished by following these instructions:
 
@@ -519,9 +517,9 @@ You can see a [http://www.youtube.com/watch?v=8sIrvG5jqiQ&hd=1 Video] of the pro
 
 Applying even pressure will help prevent damage to the ChipWhisperer-Lite main section. Flexing the PCB too much may cause damage to solder joints, but by holding the entire board flat against the edge this is prevented.
 
-== Advanced Usage ==
+= Advanced Usage =
 
-=== Mounting Jumpers ===
+== Mounting Jumpers ==
 
 Note the ChipWhisperer-Lite main board and target section contain a number of jumper options. By default these are not mounted, and solder jumper bridges on the PCB have been bridged to select the appropriate options when required. Some options are only solder jumpers, which to move the jumper requires a soldering iron to bridge or clear the appropriate connections.
 
