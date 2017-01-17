@@ -45,3 +45,6 @@ You can of course build a complete AVR test board, as in the following:
 <blockquote><p><math>\text{Offset} = \frac{S}{29.49} \times 1500</math><math>\text{Length} = \frac{S}{29.49} \times 3000</math></p></blockquote>
 <p>e.g. for a sample rate of 156 MS/s, Offset=7935, Length=15870. These values are based on the SimpleSerial ChipWhisperer example, where the offset is 1500 &amp; sample length is 3000.</p></li>
 <li>Run the 'Capture Many' and save the project, just as in previous examples.</li></ol>
+
+
+{{Template:Hardware}}
