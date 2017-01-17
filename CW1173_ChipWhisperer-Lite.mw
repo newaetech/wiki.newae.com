@@ -486,36 +486,9 @@ Once we are in bootloader mode, you can follow these steps:
 If the above instructions fail, there is no big problem. The SAM3U chip contains a hardware-resident bootloader. You may need to follow instructions on the [[Manual SAM3U Firmware Update]] page (including using BOSSA) if you are unable to use the automatic system that is part of ChipWhisperer-Capture.
 
 == Breaking Target Section Apart ==
-
-You may wish to break the target section apart from the main capture board. This can easily be accomplished by following these instructions:
-
-<ol style="list-style-type: decimal;">
-<li><p>Using a sharp knife (such as Xacto knife or retractable safety knife), cut the traces on the bottom side of the board along the cut line. Pass the knife back and forth several times. Scoring the board deeply will make the breaking process easier and less stressful on the PCB:</p>
-<p>[[File:breakstep1.png|image]]</p></li>
-<li>Score the board on the top side:</li></ol>
-
-<blockquote>[[File:breakstep2.png|image]]
-</blockquote>
-<ol start="3" style="list-style-type: decimal;">
-<li>Select a surface to break the board over. It is suggested to have a piece of cardboard or boxboard down to protect components on the bottom side of the ChipWhisperer:</li></ol>
-
-<blockquote>[[File:breakstep3.png|image]]
-</blockquote>
-<ol start="4" style="list-style-type: decimal;">
-<li>Hold the main board section flat, apply even pressure to the target board section. It should snap downward:</li></ol>
-
-<blockquote>[[File:breakstep4.png|image]]
-</blockquote>
-<ol start="5" style="list-style-type: decimal;">
-<li>Separate the two sections:</li></ol>
-
-<blockquote>[[File:breakstep5.png|image]]
-</blockquote>
-You can see a [http://www.youtube.com/watch?v=8sIrvG5jqiQ&hd=1 Video] of the process here:
-
-[[File:cw1173breakvideo.png|YouTubeCW1173Break]]_
-
-Applying even pressure will help prevent damage to the ChipWhisperer-Lite main section. Flexing the PCB too much may cause damage to solder joints, but by holding the entire board flat against the edge this is prevented.
+<div class="mw-collapsible">
+{{:CW1173_ChipWhisperer-Lite/Breaking Target Section Apart}}
+</div>
 
 = Advanced Usage =
 
