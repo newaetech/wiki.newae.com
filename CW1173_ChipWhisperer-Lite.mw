@@ -488,7 +488,7 @@ If the above instructions fail, there is no big problem. The SAM3U chip contains
 == Breaking Target Section Apart ==
 <div class="mw-collapsed mw-collapsible">
 Breaking apart
-<div class="mw-collapsible-content"">
+<div class="mw-collapsible-content">
 {{:CW1173_ChipWhisperer-Lite/Breaking Target Section Apart}}
 </div>
 </div>
