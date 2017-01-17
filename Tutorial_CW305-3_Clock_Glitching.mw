@@ -1,0 +1,34 @@
+The goal of this tutorial is to apply clock glitching to the CW305 Artix target, causing it to produce erroneous results during the encryption process. This isn't the most interesting software to glitch - in [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)]], we glitched past a password check, which is a much more rewarding target. However, the setup and process in this tutorial is applicable to a wide range of FPGA programs.
+
+= Background =
+- One round per clock cycle
+- Should be possible to apply glitches near the clock edges
+- Causes a "fake" execution, overwriting the state data
+
+= Glitch Setup =
+== Hardware Setup ==
+- Tutorial Cw305-1
+- Run script
+- Clock switches
+- ChipWhisperer clock output (glitch module)
+
+== Glitch Explorer ==
+- Fixed plaintext and key
+- Look for exact output match for "normal" output
+- Everything else is success
+- Ranges for glitch width/offset
+
+= Results =
+- Glitch explorer plot
+- Examples of erroneous output
+- Repeatability
+
+
+= Further Analysis =
+- AES intermediate script
+- Outline code process
+- Show code in appendix
+- Show output plots
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
