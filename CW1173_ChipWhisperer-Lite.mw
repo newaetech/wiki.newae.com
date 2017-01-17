@@ -535,3 +535,6 @@ The following lists jumpers on the ChipWhisperer-Lite / Target Section:
 * JP6 connects the "GLITCH" SMA to the XMEGA VCC Rail. Shorted by default with SJ5.
 * JP12 can be used to feed an external voltage into the XMEGA VCC Rail. By default SJ3 connects this to 3.3V.
 * SJ2 selects if the 3.3V rail comes from the 20-pin IDC connector (i.e. ChipWhisperer-Lite board), or via an optional LDO and USB connector.
+
+
+{{Template:Hardware}}
