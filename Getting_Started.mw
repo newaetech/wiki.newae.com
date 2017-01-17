@@ -1,7 +1,12 @@
 Interested in side channel analysis? This page should help you get some ideas of where to start.
 
 = Hardware =
-ChipWhisperer is maintained by NewAE Technology Inc. The ChipWhisperer boards take away the frustration of setting up the hardware for side channel attacks.. You can get your hands on one of the boards at [https://store.newae.com/ The NewAE Store]. As of June 2016, The ChipWhisperer Lite (CW1173) is a great way to get started: it comes with a "victim" already connected, so you can start the tutorials out-of-the-box.
+ChipWhisperer is maintained by NewAE Technology Inc. The ChipWhisperer boards take away the frustration of setting up the hardware for side channel attacks. You can get your hands on one of the boards at [https://store.newae.com/ The NewAE Store]. 
+
+To perform a side channel attack, you need two things:
+* A '''capture''' board. This is an oscilloscope on steroids: it has special hardware that it uses to capture very small signals with a precisely synchronized clock. 
+* A '''target''' board. This is typically a processor that can be programmed to perform some kind of secure operation. 
+The simplest way to get started is to get a [[CW1173 ChipWhisperer-Lite]]: this comes with the capture hardware and the target together on a single board. For more advanced work, you can get a [[CW308 UFO Target]], which is a base board that supports many types of targets. Alternatively, you can attack an FPGA target with the [[CW305 Artix FPGA Target]].
 
 = Software =
 ChipWhisperer's software is open-source and freely available online.
