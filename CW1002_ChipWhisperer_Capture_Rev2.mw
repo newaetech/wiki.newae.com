@@ -355,3 +355,5 @@ NOTE: It appears sometimes the resulting hid.pyd file causes a crash on Windows.
 === Re-Programming the AVR ===
 
 You need to use the '''ChipWhispererSPI.hex''' file in the AVR-USB. See the details earlier in this guide for reprogramming instructions.
+
+{{Template:Hardware}}
