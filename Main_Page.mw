@@ -18,7 +18,7 @@ If you're stuck, you can also get help on the [https://www.newae.com/forum Discu
 
 ChipWhisperer is an open-source project. All of the source code is available from the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository]. For more information about the software releases, see [https://www.assembla.com/spaces/chipwhisperer/wiki/ChipWhisperer_Software_Firmware_Releases Releases].
 
-The following pages document some of the many features of the ChipWhisperer Capture and Analyzer software:
+The following pages document some of the many features of the ChipWhisperer Capture and Analyzer software, along with some other ChipWhisperer interfaces:
 
 * [[Installing ChipWhisperer]]
 * [[Common Tool Information]]
@@ -29,6 +29,7 @@ The following pages document some of the many features of the ChipWhisperer Capt
 ** [[Serial Terminal]]
 * [[CW-Analyzer Tool]]
 * [[File Formats]]
+* [[MATLAB Control of CW-Lite]]
 
 The remaining documentation is intended for developers:
 
