@@ -38,63 +38,7 @@ You can get help on the [https://www.newae.com/forum Discussion Forum].
 
 == Hardware Instructions ==
 
-=== Capture Hardware ===
-
-ChipWhisperer-Hardware:
-
-* [[CW1173 ChipWhisperer-Lite]]
-* [[CW1200 ChipWhisperer-Pro]]
-
-Old Hardware (no longer available, still supported)
-
-* [[CW1002 ChipWhisperer Capture Rev2]]
-
-Generic test equipment:
-
-* [[PicoScope (USB Scope) ]]
-* [[VISA Connected Oscilloscope]]
-
-=== Target Boards ===
-
-ChipWhisperer Target boards:
-
-* [[CW301 Multi-Target]]
-* [[CW303 XMEGA Target]]
-* [[CW304 Notduino Target]]
-* [[CW305 Artix FPGA Target]]
-* [[CW306 Smart / SIM card Target]]
-* [[CW308 UFO Target]]
-** [[CW308T-GENERIC]] (Protoboard)
-** [[CW308T-AVR]] (Atmel AVR, 8-bit)
-** [[CW308T-XMEGA]] (Atmel XMEGA, 8-bit)
-** [[CW308T-87C51]] (Intel 87C51RB, 8-bit)
-** [[CW308T-ATSAMR21]] (Atmel SAMR21 with 802.15.4 radio, 32-bit ARM Cortex M0)
-** [[CW308T-MEGARF]] (Atmel MegaRF2564RFR2, 8-bit AVR)
-** [[CW308T-MSP430FR5]] (TI MSP430FR5xxx, 16-bit)
-** [[CW308T-S6LX9]] (Xilinx Spartan 6 LX9 in TQFP, FPGA)
-** [[CW308T-D2000]] (Intel Quark D2000, x86 microcontroller)
-
-
-3rd-Party Target Boards:
-
-* [[SAKURA-G Target]]
-* [[SASEBO-GII Target]]
-* [[SASEBO-W Target]]
-* [[Breadboard Arduino Target]]
-
-=== Tools ===
-
-* [[CW501 Differential Probe]]
-* [[CW502 Low Noise Amplifier]]
-* [[CW503 Probe Power Supply]]
-* [[CW505 Planar H-Field Probe]]
-* [[CW506 Advanced Breakout Board]]
-* [[CW508 SMA Analog Filters]]
-
-=== Other / Community Boards ===
-
-* [[Clock Recovery Board]]
-* [[802.15.4 8-bit SoC Test Board]]
+{{Template:Hardware}}
 
 == Theory ==
 
