@@ -66,7 +66,7 @@ The following aren't complete tutorials as the above, but instead show you a lit
 
 * [[CW308T-AVR / CW308T-XMEGA: Stand-Alone Simple Serial Example ]]
 
-= Example Attacks / Other =
+== Example Attacks / Other ==
 
 While ChipWhisperer started as a side-channel power analysis platform, it has grown to be useful in other attack types. This section is designed to show you a wide variety of attacks on embedded systems, to give you an idea of what is required for building secure embedded systems. These are held on the page [[Embedded Attacks]].
 
