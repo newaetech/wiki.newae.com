@@ -122,3 +122,5 @@ Note this means code written for the Mega163 card will require minor changes to 
 The quick-start guide for the SASEBO-W includes details of using the 'avrdude' program to program the MegaCard. This will also work for the AtMega328P, it simply requires you to change the device on the command line to 'mega328p'.
 
 There appears to be an error in the programming system that requires you to remove and reinsert the SASEBO-W adapter card before the programming will succeed. Once it has occurred once, you must again power remove/reinsert the adapter, or remove/reinsert the 8-pin connector.
+
+{{Template:Hardware}}
