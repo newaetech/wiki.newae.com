@@ -2,6 +2,8 @@ The CW305 is a FPGA target board. It brings features including a simplified USB 
 
 This board requires an external oscilloscope or capture box for performing the power measurement. The board is designed to interface to hardware such as the ChipWhisperer-Lite 2-Part version or the CW1200 (ChipWhisperer-Pro).
 
+[[File:Artix_Board.jpg|800px]]
+
 =Feature Overviews=
 
 ==USB Interface==
