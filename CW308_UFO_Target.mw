@@ -762,7 +762,7 @@ The adjustable regulator is often required when overcoming the voltage drop in t
 
 == Usage Example: Stand-Alone ==
 
-The CW308 can be used stand-alone. This is accomplished by providing an external DC power supply, and using a SMA-BNC to connect the voltage measurement to an oscilloscope.
+The CW308 can be used stand-alone. This is accomplished by providing an external DC power supply, and using a SMA-BNC to connect the voltage measurement to an oscilloscope. For more details, see [[CW308T: Stand-Alone Simple Serial Example (AVR or XMEGA)]].
 
 If using a simple-serial target (such as the XMEGA or AVR), you can connect a USB-Serial device to provide communication.
 
