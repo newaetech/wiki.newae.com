@@ -39,12 +39,6 @@ The remaining documentation is intended for developers:
 
 = Sample Projects and Tutorials =
 
-== Theory ==
-
-* [[Correlation Power Analysis]]
-* [[Template Attacks]]
-* [[Extending AES-128 Attacks to AES-256]]
-
 == ChipWhisperer Tutorials ==
 
 The following tutorials use the ChipWhisperer software and/or hardware. They are designed to take you through a complete attack. You may also want to check the page on [[Embedded Attacks]] for more snippets of simple attacks and other things you should verify when making a secure system.
