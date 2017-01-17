@@ -4,41 +4,39 @@ Welcome to ChipWhisperer - the complete open-source toolchain for side-channel p
 
 ChipWhisperer is maintained by [https://www.newae.com NewAE Technology Inc.], which sells a combination of open-source hardware, supporting tools, training, and consulting services. ChipWhisperer is trademark of NewAE Technology Inc., registered in the US and Europe. This means only NewAE can sell official products under the ChipWhisperer name, and was done to ensure products meet [[Quality Control Guidelines]], as these fairly complex products require good testing to ensure you don't have a frustrating experience.
 
-= Recent/Upcoming Events =
-
-The following events will be either be attended by someone from NewAE, or have a presentation using the ChipWhisperer.
-
-* Blackhat USA 2016 (Training based on ChipWhisperer + 2x talks by Colin + Arsenal)
-* CHES 2016 (Sponsor, will have exhibit booth)
-
 = Getting Started =
 
 Where to begin? If you're new to this area, see the [[Getting Started]] page, which details how you can get involved in side-channel power analysis. From there you can see the hardware documentation (linked below), or take one of the [http://newae.com/training/ Training Courses].
 
-Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository].
+If you're stuck, you can also get help on the [https://www.newae.com/forum Discussion Forum].
 
-You can get help on the [https://www.newae.com/forum Discussion Forum].
-
-= ChipWhisperer Documentation =
-== Software Instructions ==
-
-[[Installing ChipWhisperer]]
-
-[[Common Tool Information]]
-* [[Making Scripts]]
-* [[Adding Modules/Parameters]]
-
-[[CW-Capture Tool]]
-* [[Glitch Explorer]]
-* [[Serial Terminal]]
-
-[[CW-Analyzer Tool]]
-
-[[File Formats]]
-
-== Hardware Instructions ==
+= Hardware Documentation =
 
 {{Template:Hardware}}
+
+= Software Documentation =
+
+ChipWhisperer is an open-source project. All of the source code is available from the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository]. For more information about the software releases, see [https://www.assembla.com/spaces/chipwhisperer/wiki/ChipWhisperer_Software_Firmware_Releases Releases].
+
+The following pages document some of the many features of the ChipWhisperer Capture and Analyzer software:
+
+* [[Installing ChipWhisperer]]
+* [[Common Tool Information]]
+** [[Making Scripts]]
+** [[Adding Modules/Parameters]]
+* [[CW-Capture Tool]]
+** [[Glitch Explorer]]
+** [[Serial Terminal]]
+* [[CW-Analyzer Tool]]
+* [[File Formats]]
+
+The remaining documentation is intended for developers:
+
+* [[Error Messages / Common Problems]]
+* [[FPGA Details]]
+* [[CW Release Steps]]
+
+= Sample Projects and Tutorials =
 
 == Theory ==
 
@@ -66,49 +64,25 @@ The following aren't complete tutorials as the above, but instead show you a lit
 
 == Hardware-Specific Examples/Tutorials ==
 
-=== CW308 (UFO Board) ===
-
 * [[CW308T-AVR / CW308T-XMEGA: Stand-Alone Simple Serial Example ]]
-
-= Source Code and Releases =
-
-* Source code is held in the [https://www.assembla.com/spaces/chipwhisperer/git/source Git Repository].
-* See [https://www.assembla.com/spaces/chipwhisperer/wiki/ChipWhisperer_Software_Firmware_Releases Releases] for details of software releases.
-
-== Developer Documentation ==
-
-=== Software Development ===
-
-[[Error Messages / Common Problems]]
-
-=== Hardware Development ===
-
-* [[FPGA Details]]
-
-=== Various Development Notes ===
-
-* [[CW Release Steps]]
-
-= ChipWhisperer Training Material =
-
-See the above links for a wide range of tutorials. These take you through several examples.
-
-If you're looking for a more structured course, we offer a 2-day training course at Blackhat USA 2016. In addition we're working to make some of this training material available online.
 
 = Example Attacks / Other =
 
-While ChipWhisperer started as a side-channel power analysis platform, it has grown to be useful in other attack types. This section is designed to show you a wide variety of attacks on embedded systems, to give you an idea of what is required for building secure embedded systems.
+While ChipWhisperer started as a side-channel power analysis platform, it has grown to be useful in other attack types. This section is designed to show you a wide variety of attacks on embedded systems, to give you an idea of what is required for building secure embedded systems. These are held on the page [[Embedded Attacks]].
 
-These are held on the page [[Embedded Attacks]].
+In 2016 ChipWhisperer is used as part of the CHES2016 CTF challenge. See details of the event on the [[CHES2016 CTF]] page.
 
-= Capture The Flag =
+= Recent/Upcoming Events =
 
-In 2016 ChipWhisperer is used as part of the [[CHES2016 CTF]]. See details of the event on the [[CHES2016 CTF]] page.
+The following events will be either be attended by someone from NewAE, or have a presentation using the ChipWhisperer.
+
+* Blackhat USA 2016 (Training based on ChipWhisperer + 2x talks by Colin + Arsenal)
+* CHES 2016 (Sponsor, will have exhibit booth)
+
 
 = Extra Notes =
 
 See the page [[Thanks]] for a note about the people who made this project possible.
-
 
 
 
