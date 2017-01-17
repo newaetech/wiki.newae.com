@@ -48,3 +48,5 @@ The following can be found on the front panel of the device:
 <blockquote><p>This pin header connects to the &quot;Aux Out&quot; pin on the 6-pin connector.</p></blockquote></li>
 <li><p>USB-GND Pin Header:</p>
 <blockquote><p>This pin header connects to the USB negative (ground). You can connect this to the PROBE-GND to remove the isolation, or use a resistor if you want to reduce voltage differential without directly connecting them.</p></blockquote></li></ul>
+
+{{Template:Hardware}}
