@@ -70,7 +70,7 @@ The following aren't complete tutorials as the above, but instead show you a lit
 
 While ChipWhisperer started as a side-channel power analysis platform, it has grown to be useful in other attack types. This section is designed to show you a wide variety of attacks on embedded systems, to give you an idea of what is required for building secure embedded systems. These are held on the page [[Embedded Attacks]].
 
-In 2016 ChipWhisperer is used as part of the CHES2016 CTF challenge. See details of the event on the [[CHES2016 CTF]] page.
+In 2016, ChipWhisperer was used as part of the CHES2016 CTF challenge. See details of the event on the [[CHES2016 CTF]] page.
 
 = Recent/Upcoming Events =
 
