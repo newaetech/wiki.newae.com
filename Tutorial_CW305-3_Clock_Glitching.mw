@@ -1,9 +1,11 @@
 The goal of this tutorial is to apply clock glitching to the CW305 Artix target, causing it to produce erroneous results during the encryption process. This isn't the most interesting software to glitch - in [[Tutorial A2 Introduction to Glitch Attacks (including Glitch Explorer)]], we glitched past a password check, which is a much more rewarding target. However, the setup and process in this tutorial is applicable to a wide range of FPGA programs.
 
 = Background =
-- One round per clock cycle
-- Should be possible to apply glitches near the clock edges
-- Causes a "fake" execution, overwriting the state data
+In the previous tutorials, we said that our FPGA implementation of AES executes each round of the algorithm in a single clock cycle. This probably means that there's one 128-bit port used to store the internal state. On each clock cycle, this state is fed through a couple of different blocks (<code>SubBytes()</code>, <code>ShiftRows()</code>, <code>MixColumns()</code>, and <code>AddRoundKey()</code>), and the output is stored back into the state port. 
+
+Our goal in this tutorial is to cause the AES execution to fail by applying clock glitches. If we trigger a short clock glitch right next to a clock edge, we might be able to corrupt some of the bits of the state array. If we can manage this, the output ciphertext will be totally different! Remember that one of the primary goals of cryptographic algorithms is diffusion: if we change a single bit of the input, the round function will cause that one bit to affect all 128 bits of the output. 
+
+In this tutorial, we'll say that a successful glitch is any glitch that causes the ciphertext to change. However, at the end of the tutorial, we'll look a bit deeper into the exact position and magnitude of these glitches to see exactly how our glitches are changing the output.
 
 = Glitch Setup =
 == Hardware Setup ==
