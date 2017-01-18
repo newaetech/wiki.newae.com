@@ -37,10 +37,15 @@ Using our fixed key and plaintext, we can set up the glitch explorer to detect w
 Once everything is ready, click <code>Use this value</code> and start capturing.
 
 = Results =
-- Glitch explorer plot
-- Examples of erroneous output
-- Repeatability
+When your capture is finished, there are two places to check the results. First, the glitch map shows us which glitch widths and offsets caused successful glitches. The green points on this map indicate combinations of tuning parameters that caused the encryption to fail. With some luck, your glitch map should look something like ours:
 
+[[File:CW305GlitchMap.PNG|600px]]
+
+This map doesn't tell us what the actual ciphertext was with each of these settings, but it does give us a clue about where to look in the glitch explorer. The other thing that we can check is the glitch explorer output: looking at the glitched ciphertexts shows a wide variety of different outputs with different glitch settings.
+
+[[File:CW305GlitchOutput.PNG]]
+
+That's it - if your goal was to set up clock glitching the CW305, you're done. The last section of this tutorial will be a deeper analysis of this AES setup to check if we can determine exactly what effect our glitches had.
 
 = Further Analysis =
 - AES intermediate script
