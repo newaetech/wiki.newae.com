@@ -39,15 +39,33 @@ That should be everything. Hit Capture 1 and make sure you see a glitch. This pi
 From here, you can use the Glitch Explorer to sweep the glitch settings and search for a successful glitch, as we did in [[Tutorial CW305-3 Clock Glitching]]. Good luck!
 
 = Hints =
-- Might be easier on the edge of working conditions
-- Changing core voltage level
-- Changing clock speed
-  - CLKGEN output
-  - CW305 PLL
-  - Max speed depends on FPGA implementation
-- Enable-only output
-  - Only use repeat and offset
-  - EXTCLK for speed-up
+We had a lot of trouble creating a successful voltage glitch. If you're stuck, this section has a few ideas that you can try.
+
+'''Core voltage''': the CW305 board has a programmable power supply with an adjustable output voltage. This voltage level can be modified in the Target Settings tab: the VCC-INT field can be adjusted to any level from 0.6 to 1.1 V.
+
+[[File:CW305VCCTargetSettings.PNG]]
+
+You might find that your glitch attacks work better when the target is on the edge of its operating limits. For example, we found that our AES implementation stops working when VCC-INT is below 0.75 V, and it was much easier to produce effective glitching with the voltage at this level.
+
+'''Clock speed''': The onboard PLL is also programmable to produce a range of clock frequencies. This setting can be accessed from the same tab as the core voltage - the relevant field is the PLL1 Frequency. 
+
+The maximum frequency that the FPGA can use depends on the details of the program's implementation. The internal connections inside the FPGA cause a non-zero amount of delay, and running at very high speeds can cause things to go haywire. Again, you can sweep this setting to find the highest working frequency and try your glitch attacks at the highest working speed to increase your chances of success.
+
+'''Enable-only glitches''': During our tests, we found that the Glitch Only output was too soft - we couldn't get any useful glitches out of this. As an alternative method, you can try the Enable Only output setting. This effectively causes the glitch signal to have a duty cycle of 100%, so the glitch width and offset have no effect. Then, this pulse can be adjusted with the Ext Trigger Offset and Repeat settings. Be warned that this type of glitch is more likely to corrupt the FPGA configuration with its longer pulses!
+
+'''High-speed glitches''': There is one extra trick that can help with the Enable Only output mode. Try the following:
+* Make sure that the Artix-7 is being driven by its onboard PLL, not the CLKGEN output.
+* Under CLKGEN Settings, change the Input Source to <code>extclk</code>. Now, the CLKGEN clock will be a multiple of the EXTCLK clock.
+* Adjust the CLKGEN speed with the Multiply and Divide settings. It might be helpful to use the Frequency Counter here to make sure that the CLKGEN frequency is as fast as you think it is.
+* Set up the ADC to use EXTCLK (x1 or x4) as its source - CLKGEN will probably be too fast for the ADC.
+* Set the glitch module's clock source to CLKGEN.
+Now, you can run the glitch module as fast as you want! This allows for better resolution while working with Enable Only mode: one extra "clock cycle" of glitch output is a much shorter period of time. Make sure that all of the clocks are locked when you're working with this setup, as it's very easy for them to become unlocked.
+
+For reference, we successfully glitched the AES implementation with the following setup:
+* CLKGEN running from EXTCLK with Multiply = 8 and Divide = 2
+* Glitch module running from CLKGEN with Repeat = 9 and Offset = 0
+* Target running at VCC-INT = 0.75 V and PLL1 = 50 MHz
+
 
 {{Template:Tutorials}}
 [[Category:Tutorials]]
