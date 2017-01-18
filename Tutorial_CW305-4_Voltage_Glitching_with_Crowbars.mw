@@ -1,0 +1,29 @@
+= Background Information =
+- Difficulties with voltage glitching 
+  - FPGAs do everything at the same time
+  - SRAM holds configuration
+- Crowbar circuit
+
+= Setup =
+== Hardware Setup ==
+- SMA cable 
+- Picture
+
+== Software Setup ==
+- Script
+- Bitstream (same as Tutorial 1)
+- Glitch module setup
+  - Glitch only
+  - HS-Glitch
+- Same idea as Tutorial 3
+
+= Hints =
+- Might be easier on the edge of working conditions
+- Changing core voltage level
+- Changing clock speed
+  - CLKGEN output
+  - CW305 PLL
+  - Max speed depends on FPGA implementation
+- Enable-only output
+  - Only use repeat and offset
+  - EXTCLK for speed-up
