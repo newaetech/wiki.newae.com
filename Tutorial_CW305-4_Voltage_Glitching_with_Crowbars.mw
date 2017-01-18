@@ -20,12 +20,23 @@ To set up the hardware for voltage glitching, only one extra connection is requi
 Note that the original SMA cable (connected to the ChipWhisperer's Measure input) is not required for voltage glitching - if you only have one cable, you can just move it over. However, it is helpful to have power traces to see what effects the voltage glitches are having on the power rails, so connect both if you can.
 
 == Software Setup ==
-- Script
-- Bitstream (same as Tutorial 1)
-- Glitch module setup
-  - Glitch only
-  - HS-Glitch
-- Same idea as Tutorial 3
+As in the previous tutorial, we can use the CW305 example script to get us started. Follow the instructions from [[Tutorial CW305-1 Building a Project]] to connect to the target and load the bitstream onto the FPGA.
+
+Next, we'll set up the glitch module:
+* Make sure the clock source is Target IO-IN
+* Set the glitch trigger to Ext Trigger:Single-Shot
+* Set the output mode to Glitch Only
+* Take a look at the glitch width/offset, the trigger offset, and repeat - feel free to experiment with these throughout the tutorial
+
+[[File:CW305VCCGlitchModule.PNG]]
+
+Then, in CW Extra Settings, turn on one or both of the HS-Glitch Out Enable checkboxes. These are used to enable low-power and high-power MOSFETs, respectively; we found that the low-power output is powerful enough for this board, but you might see different effects with the different outputs.
+
+That should be everything. Hit Capture 1 and make sure you see a glitch. This picture was taken with a glitch width of 20%:
+
+[[File:CW305VCCTrace.PNG]]
+
+From here, you can use the Glitch Explorer to sweep the glitch settings and search for a successful glitch, as we did in [[Tutorial CW305-3 Clock Glitching]]. Good luck!
 
 = Hints =
 - Might be easier on the edge of working conditions
