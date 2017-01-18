@@ -1,8 +1,15 @@
+Our final goal with the CW305 Artix target is to experiment with voltage glitching. This is the CW305 equivalent of the VCC glitch attack done in [[Tutorial A3 VCC Glitch Attacks]]. 
+
 = Background Information =
-- Difficulties with voltage glitching 
-  - FPGAs do everything at the same time
-  - SRAM holds configuration
-- Crowbar circuit
+The ChipWhisperer capture hardware comes with a glitch output, which is connected to a power MOSFET in the following configuration:
+
+(image)
+
+This circuit allows us to temporarily ground the Artix power rails. If these short-circuit events are timed very precisely, they can cause all kinds of fun effects in the FPGA's operation. 
+
+Voltage glitching works quite well against microcontrollers: it's pretty straightforward to use these glitches to target a specific point in an algorithm's execution. However, voltage glitching is not as easy on an FPGA target. FPGAs can perform many operations in parallel: they are not limited to one instruction of arithmetic per clock cycle. This parallel execution makes it very tricky to focus on a specific operation. There are also some serious practical concerns:
+* The Artix-7 uses SRAM to store its configuration files (ie: the contents of the bitstream). SRAM is a form of volatile memory, which means that it only stores data until the device is turned off. If we cut off the power to our FPGA for too long, it's possible for some of this configuration data to be lost. We've found that around 1000 bits can be corrupted with a 600 ns glitch, but this will be device- and environment-dependent. If you find that your device isn't working properly, your first thought should be to reprogram the bitstream.
+* If we ground the FPGA's power pins, then the power supply will effectively be driving the shunt resistor. With a supply voltage of 1.0 V and a 0.5 ohm shunt, this is a 2 A current; with a 0.1 ohm shunt, this is 10 A. It's probably a good idea to use an external power supply for this type of glitch. 
 
 = Setup =
 == Hardware Setup ==
