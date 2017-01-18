@@ -56,7 +56,12 @@ This process can take a while - on an average laptop, the sample project takes a
 = Capture Setup =
 With our FPGA bitstream in hand, we're now ready to capture a power trace. We can set this up using the ChipWhisperer Capture software.
 
-To make this process simple, there is an existing sample script that connects to the CW305 using the ChipWhisperer Lite. This script is located in <code>Project -> Example Scripts -> CW305 Artix Target w/ ChipWhisperer-Lite</code>:
+The first thing we need to do is set up the DIP switches on the CW305. These are the four switches next to the 20-pin connector. We need to set two of them for this project:
+* '''J16: 0''' - use the on-board PLL to clock the FPGA
+* '''K16: 1''' - route the FPGA's clock to the ChipWhisperer's HS-Out channel
+The other two switches have no effect on the clock routing, so they can be in either position.
+
+Next, we need to set up the software. To make this process simple, there is an existing sample script that connects to the CW305 using the ChipWhisperer Lite. This script is located in <code>Project -> Example Scripts -> CW305 Artix Target w/ ChipWhisperer-Lite</code>:
 
 [[File:CW305Script.png|800px]]
 
