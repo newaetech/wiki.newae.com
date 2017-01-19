@@ -207,7 +207,7 @@ Two user switches are provided: one push-button, and one 4-item DIP switch.
 
 The push-button (SW4) routes to FPGA pin R1.
 
-The dip-switch (S2) routes to FPGA pins J16, K16, K15, and L14 (see PCB silkscreen). With generic designs that dip-switch has the following uses:
+The dip-switch (S2) routes to FPGA pins J16, K16, K15, and L14 (see PCB silkscreen). With designs based on the reference that dip-switch has the following uses:
 
 {| class="wikitable"
 !J16
