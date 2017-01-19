@@ -16,6 +16,8 @@ Using a ChipWhisperer Lite, the full hardware setup looks like:
 = Target Firmware =
 In the ChipWhisperer examples, the Artix-7 FPGA is programmed using Verilog. This section describes how to open and build one of these projects. It also describes the layout of the AES-128 example, which is a good starting point for making new FPGA projects.
 
+Note if you just want to follow along with the rest of the tutorials, you can use the pre-built bitstream (<code>.bit</code> file). In which case simply skip ahead to any of the following tutorials.
+
 == Opening the Project ==
 The first thing we'll need is [https://www.xilinx.com/support/download.html Xilinx Vivado HLx], which is their FGPA design software. The fully featured versions of this software require a $3000+ license. However, the WEBPACK version is free, with the limitation that it can only be used with 4 families of devices (including the Artix-7). This is a huge download, so get it started while you read (possibly also you'll have time for lunch and a few drinks).
 
