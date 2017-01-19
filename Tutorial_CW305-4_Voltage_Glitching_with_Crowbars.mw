@@ -13,9 +13,9 @@ Voltage glitching works quite well against microcontrollers: it's pretty straigh
 
 = Setup =
 == Hardware Setup ==
-To set up the hardware for voltage glitching, only one extra connection is required. Connect an SMA cable between the ChipWhisperer's glitch output and the CW305 connector labeled X3:
+To set up the hardware for voltage glitching, only one extra connection is required compared to the setup for power analysis. Connect an SMA cable between the ChipWhisperer's glitch output and the CW305 connector labeled X3:
 
-[[File:CW305VCCSetup.jpg|800px]]
+[[File:CW305_CWLite_VCCGlitch.jpg|800px]]
 
 Note that the original SMA cable (connected to the ChipWhisperer's Measure input) is not required for voltage glitching - if you only have one cable, you can just move it over. However, it is helpful to have power traces to see what effects the voltage glitches are having on the power rails, so connect both if you can.
 
