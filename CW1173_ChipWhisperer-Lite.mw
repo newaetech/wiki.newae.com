@@ -489,9 +489,8 @@ If the above instructions fail, there is no big problem. The SAM3U chip contains
  <div class="mw-collapsible-toggle toccolours" style="float: none;">
   <div class="mw-collapsible-toggle-row">
    <div class="mw-collapsible-toggle-header">
-== Breaking Target Section Apart ==
-</div>
-<br><div class="mw-collapsible-toggle-indicator">[[File:right-black-arrow.png|150px|link=]]</div>
+== Breaking Target Section Apart ==</div>
+<div class="mw-collapsible-toggle-indicator">[[File:right-black-arrow.png|150px|link=]]</div>
   </div>
  </div>
 <div class="mw-collapsible-content">
