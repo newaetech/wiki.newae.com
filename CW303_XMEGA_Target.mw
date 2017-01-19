@@ -10,7 +10,7 @@ The board looks as follows:
 
 The two LEDs on the XMEGA board are active-low, which is done to reduce the impact on power consumption in the VCC power signature. The connections are as follows:
 
-{|
+{| class="wikitable"
 ! Item
 ! Connection
 ! Note
