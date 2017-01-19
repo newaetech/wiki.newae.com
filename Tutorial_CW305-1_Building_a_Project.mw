@@ -11,7 +11,7 @@ To get started, we need to make three connections to the CW305 target:
 
 Using a ChipWhisperer Lite, the full hardware setup looks like:
 
-[[File:CW305Setup.jpg|800px]]
+[[File:CW305_CWLite_SCA.jpg|800px]]
 
 = Target Firmware =
 In the ChipWhisperer examples, the Artix-7 FPGA is programmed using Verilog. This section describes how to open and build one of these projects. It also describes the layout of the AES-128 example, which is a good starting point for making new FPGA projects.
