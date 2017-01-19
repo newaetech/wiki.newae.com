@@ -485,12 +485,17 @@ Once we are in bootloader mode, you can follow these steps:
 
 If the above instructions fail, there is no big problem. The SAM3U chip contains a hardware-resident bootloader. You may need to follow instructions on the [[Manual SAM3U Firmware Update]] page (including using BOSSA) if you are unable to use the automatic system that is part of ChipWhisperer-Capture.
 
+<div id="collapse-pre-one" class="mw-collapsible mw-collapsed">
+ <div class="mw-collapsible-toggle toccolours" style="float: none;">
+  <div class="mw-collapsible-toggle-row">
+   <div class="mw-collapsible-toggle-header">
 == Breaking Target Section Apart ==
-<div class="mw-collapsed mw-collapsible included-page">
-Breaking apart
+</div>
+   <div class="mw-collapsible-toggle-indicator">[[File:right-black-arrow.png|150px|link=]]</div>
+  </div>
+ </div>
 <div class="mw-collapsible-content">
 {{:CW1173_ChipWhisperer-Lite/Breaking Target Section Apart}}
-</div>
 </div>
 
 = Advanced Usage =
