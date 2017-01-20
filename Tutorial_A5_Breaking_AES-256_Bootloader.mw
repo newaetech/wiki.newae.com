@@ -736,3 +736,6 @@ if __name__ == '__main__':
     app.exec_()                     # Comment if you don't need the GUITraceback (most recent call last):
 
 </pre>
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
