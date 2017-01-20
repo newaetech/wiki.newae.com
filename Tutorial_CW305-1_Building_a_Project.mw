@@ -61,36 +61,36 @@ With our FPGA bitstream in hand, we're now ready to capture a power trace. We ca
 
 <ol style="list-style-type: decimal;">
 
-<li>We'll need to set up the DIP switches on the CW305. These are the four switches next to the 20-pin connector. We need to set two of them for this project:
+<li><p>We'll need to set up the DIP switches on the CW305. These are the four switches next to the 20-pin connector. We need to set two of them for this project:
 
 * '''J16: 0''' - use the on-board PLL to clock the FPGA
 * '''K16: 1''' - route the FPGA's clock to the ChipWhisperer's HS-In channel
 
-The other two switches have no effect on the clock routing, so they can be in either position.</li>
+The other two switches have no effect on the clock routing, so they can be in either position.</p></li>
 
-<li>Next, we need to set up the software. To make this process simple, there is an existing sample script that connects to the CW305 using the ChipWhisperer Lite. This script is located in <code>Project -> Example Scripts -> CW305 Artix Target w/ ChipWhisperer-Lite</code>
+<li><p>Next, we need to set up the software. To make this process simple, there is an existing sample script that connects to the CW305 using the ChipWhisperer Lite. This script is located in <code>Project -> Example Scripts -> CW305 Artix Target w/ ChipWhisperer-Lite</code></p>
 
-[[File:CW305Script.png|800px]]
+<p>[[File:CW305Script.png|800px]]</p>
 
-This script will connect to the CW305 and ChipWhisperer Lite, setting them up for a capture.
+<p>This script will connect to the CW305 and ChipWhisperer Lite, setting them up for a capture.</p>
 </li>
 
-<li>
-The FPGA bitstream needs to be programmed onto the Artix board. There is a button called "Program FPGA" that takes a bitstream (specified the line above that button) and programs it into the FPGA.
+<li><p>
+The FPGA bitstream needs to be programmed onto the Artix board. There is a button called "Program FPGA" that takes a bitstream (specified the line above that button) and programs it into the FPGA.</p>
 
-[[File:CW305Bitstream.PNG]]
+<p>[[File:CW305Bitstream.PNG]]</p>
 </li>
 <li>
-Select the bitstream file that we generated earlier (<code>chipwhisperer/hardware/victims/cw305_artixtarget/fpga/vivado_examples/aes128_verilog/aes128_verilog.runs/impl_35t/cw305_top.bit</code>) and program it onto the FPGA. If using the '''100T''' size FPGA, you will find the file in a directory labeled '''impl_100t''' instead.
+<p>Select the bitstream file that we generated earlier (<code>chipwhisperer/hardware/victims/cw305_artixtarget/fpga/vivado_examples/aes128_verilog/aes128_verilog.runs/impl_35t/cw305_top.bit</code>) and program it onto the FPGA. If using the '''100T''' size FPGA, you will find the file in a directory labeled '''impl_100t''' instead.</p>
 
-NOTE: Even if you haven't completed the build portion, you can simply use the pre-built bitstream!
+<p>NOTE: Even if you haven't completed the build portion, you can simply use the pre-built bitstream!</p>
 </li>
 <li>
-Now, the Capture 1 button should give us a short and sweet power trace: 
+<p>Now, the Capture 1 button should give us a short and sweet power trace:</p>
 
-[[File:CW305SampleCapture.PNG|800px]]
+<p>[[File:CW305SampleCapture.PNG|800px]]</p>
 
-Success! We've built a project and recorded a power trace using the Artix target.
+<p>Success! We've built a project and recorded a power trace using the Artix target.</p>
 </li>
 </ol>
 For further analysis using this project, check out the next tutorial: [[Tutorial CW305-2 Breaking AES on FPGA]].
