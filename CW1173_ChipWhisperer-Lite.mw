@@ -6,6 +6,115 @@ The ChipWhisperer-Lite Bare Board consists of two main parts: a multi-purpose po
 
 = Quick-Start Guide =
 
+You can see a [http://www.youtube.com/watch?v=MJmkYqA-LeM&hd=1 Video] of the quickstart guide, which will take you through all the setup items discussed here:
+
+[[File:cwlite_demo_video.png|YouTubeCW1173Demo]]_
+
+== Connection Quick-Start ==
+
+<ol style="list-style-type: decimal;">
+<li>Install Python and Dependancies
+<dl>
+<dt>Windows:</dt>
+<dd><ul>
+<li>Install Python distribution (such as WinPython), see [[Installing_WinPython]]</li>
+<li><p>Using the Python Command Prompt, use pip to install the following:</p>
+<pre>pip install pyside
+pip install configobj
+pip install pyusb
+pip install pyqtgraph </pre></li></ul>
+
+<blockquote><p>What is included in releases varies. If you get a message saying it is already installed you can simply continue with this tutorial.</p></blockquote></dd>
+<dt>Linux:</dt>
+<dd><ul>
+<li><p>Python should come pre-installed. If so you'll also need to install the following from your package manager:</p>
+<blockquote><ul>
+<li>pyside</li>
+<li>configobj</li>
+<li>scipy</li>
+<li>numpy</li></ul>
+
+<p>For example the following shows the install command for Ubuntu:</p>
+<pre>sudo apt-get install python2.7 python2.7-dev python2.7-libs python-numpy python-scipy python-pyside python-configobj python-setuptools python-pip</pre></blockquote></li>
+<li><p>Some packages may require installation via 'pip', as they are not always in your package manager repo:</p>
+<pre>$pip install pyusb
+$pip install pyqtgraph         </pre></li></ul>
+</dd>
+<dt>Mac OS-X:</dt>
+<dd><ul>
+<li>Install homebrew, pyside, libusb, along with required Python modules.</li>
+<li>See [[MacOSX_Installation]] for full details.</li></ul>
+</dd></dl>
+</li>
+<li><p>Download and install ChipWhisperer</p>
+<ul>
+<li>Download the latest release linked from ChipWhisperer.com</li>
+<li>Unzip the file somewhere. Generally 'somewhere' will become your ChipWhisperer working directory. These examples assume you've chosen <code>C:\chipwhisperer</code> as your working directory.</li>
+<li><p>Open a Python terminal (again if using WinPython be sure to run the specific Python command prompt), and run the following, adjusting paths as needed to refelct your working directory:</p>
+<pre>cd c:\chipwhisperer\openadc\controlsw\python
+python setup.py develop
+cd c:\chipwhisperer\software
+python setup.py develop</pre></li></ul>
+
+<blockquote><p>If you wish to confirm the installation worked, you can run ChipWhispererAnalyzer in the same terminal:</p>
+<pre>cd c:\chipwhisperer\software\chipwhisperer
+python CWAnalyzer.pyw</pre></blockquote></li>
+<li>Connect ChipWhisperer-Lite, install USB Drivers:
+<dl>
+<dt>Windows:</dt>
+<dd><ul>
+<li>Plug micro-USB cable into ChipWhisperer-Lite</li>
+<li>If the &quot;New Hardware Found&quot; wizard doesn't prompt you for drivers, go to the control panel and find the &quot;ChipWhisperer-Lite&quot; device, and select "Update Drivers".</li>
+<li>You can find drivers in <code>c:\chipwhisperer\hardware\capture\chipwhisperer-lite\</code>. You will likely need to extract them from the <code>cwlite_usb_driver.zip</code> file. If so simply extract them somewhere (i.e. your desktop), and then point the new hardware found wizard to that location.</li></ul>
+</dd>
+<dt>Linux:</dt>
+<dd><ul>
+<li><p>Driver installation is not required, but if you do not update the 'udev' system, you will be unable to run ChipWhisperer-Capture as a regular user. To update the udev system, first make sure the ChipWhisperer-Lite is Make a file called <code>/etc/udev/rules.d/99-cwlite.rules</code> . The contents of this file should be:</p>
+<pre># allow users to claim the device
+SUBSYSTEM==&quot;usb&quot;, ATTRS{idVendor}==&quot;2b3e&quot;, ATTRS{idProduct}==&quot;ace2&quot;, MODE=&quot;0664&quot;, GROUP=&quot;plugdev&quot;</pre></li>
+<li><p>Add your username to the plugdev group:</p>
+<pre>$ sudo usermod -a -G plugdev YOUR-USERNAME</pre></li>
+<li><p>And reset the udev system:</p>
+<pre>$ sudo udevadm control --reload-rules</pre></li>
+<li>Finally log out &amp; in again for the group change to take effect.</li>
+<li>Connect the micro-USB cable</li></ul>
+</dd>
+<dt>MAC:</dt>
+<dd><ul>
+<li>No special installation required - must ensure you have installed libusb via homebrew (see instructions at [[MacOSX_Installation]]).</li></ul>
+</dd></dl>
+</li>
+<li><p>Run ChipWhisperer-Capture. This can be done from one of three ways:</p>
+<blockquote><ul>
+<li>Double-click on <code>CWCapture.pyw</code> in the <code>chipwhisperer\software</code> folder. You must have installed Python into your path for this to work.</li>
+<li>run <code>python CWCapture.pyw</code> from the <code>chipwhisperer\software</code> folder using a command prompt with Python in the path.</li>
+<li>run <code>python CWCaptureGUI.py</code> from the <code>chipwhisperer\software\chipwhisperer\capture\ui</code> directory.</li></ul>
+
+<p>The last option is the most reliable, in that it should always work on all platforms. If it doesn't start look for possible missing modules or other useful errors.</p>
+<blockquote><p>'''hint'''</p>
+<p>The first time you run ChipWhisperer-Capture or -Analyzer, the default setup of the screen is somewhat insane. You can drag windows around or close them to make it look more like the demos here. See the Video quickstart guide as well for details of that.</p></blockquote></blockquote></li>
+<li><p>From the &quot;Scripts&quot; directory, run the <code>ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script:</p>
+<p>[[File:cwlite_simpleserial.png|image]]</p>
+<p>This should connect to the ChipWhisperer-Lite, program the FPGA, and run a few captures. Your screen should look something like this now:</p>
+<p>[[File:cwdemo_normal.png|image]]</p></li>
+<li><p>If the previous step fails, you may need to set the path for the &quot;firmware&quot;. This is done by going to the &quot;Tools&quot; menu and selecting the &quot;Config CW Firmware&quot; option. Note on MAC OS X a special command is required instead sometimes, see [[MacOSX_Installation]].</p>
+<p>From there, hit the &quot;FIND&quot; button beside the &quot;FPGA .zip (Release)&quot; option. Point it to the file located at <code>chipwhisperer/hardware/capture/chipwhisperer-lite/cwlite_firmware.zip</code> on your filesystem.</p></li>
+<li>Your ChipWhisperer-Lite is now connected. See the next section for details of the demo attack.</li></ol>
+
+== Capture and Attack Quickstart ==
+
+# See [[Tutorial_B5_Breaking_AES_(Straightforward)]]for details. Note the hardware setup is slightly different -- but you can skip to step 5.5.3, and should be able to pick up from there. Be sure to use the <code>ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script instead of the one referenced in step 5.5.3.
+
+== Important Bugs/Caveats ==
+
+The following includes various things that might trip you up:
+
+# If you save the project ''before'' running the capture, you can specify any directory. Traces will be copied to the appropriate location during capture.
+# If you save the project ''after'' running the capture, you must save the project to the same directory that &quot;default-data-dir&quot; exists in. This is normally the folder from where you invoked the Python GUI.
+# There are a few warnings/exceptions that come up (i.e. divide-by-zero). Generally just keep going and see if things are still working. A number of those are on the ''TODO'' list to fix but I didn't get around to it yet.
+# The &quot;Total Ops&quot; window which checks for proper AES operation requires PyCrypto to be installed.
+# By default the XMEGA device was programmed with a partial AES implementation only. This is done to avoid any crypto export issues. This does not affect your side-channel analysis, but be aware the returned value might not appear to be correct (since only the first couple rounds of AES occurred).
+
 = Basic Usage Instructions =
 
 <blockquote></blockquote>
