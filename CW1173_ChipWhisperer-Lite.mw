@@ -1,4 +1,4 @@
-<span class="expand-all">
+<span class="expandall">
 The ChipWhisperer-Lite Bare Board consists of two main parts: a multi-purpose power analysis capture instrument, and a target board. The target board is a standard microcontroller which you can implement algorithms onto. For example if you wish to evaluate an AES library, you can program that library into the target board and perform the power analysis.
 
 [[File:cwlite_basic.png|image]]
