@@ -1,3 +1,4 @@
+<span class="expand-all">
 The ChipWhisperer-Lite Bare Board consists of two main parts: a multi-purpose power analysis capture instrument, and a target board. The target board is a standard microcontroller which you can implement algorithms onto. For example if you wish to evaluate an AES library, you can program that library into the target board and perform the power analysis.
 
 [[File:cwlite_basic.png|image]]
@@ -517,5 +518,6 @@ The following lists jumpers on the ChipWhisperer-Lite / Target Section:
 * JP12 can be used to feed an external voltage into the XMEGA VCC Rail. By default SJ3 connects this to 3.3V.
 * SJ2 selects if the 3.3V rail comes from the 20-pin IDC connector (i.e. ChipWhisperer-Lite board), or via an optional LDO and USB connector.
 
+</span>
 
 {{Template:Hardware}}
