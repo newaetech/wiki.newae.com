@@ -1,0 +1,4 @@
+
+The XMEGA device programmer requires only two connections to the target: clock (PDIC) and data (PDID). The PDIC line is usually shared with the RESET pin, and the PDID pin is a specific pin on the XMEGA device. See [[#20-Pin_Connector]] for details of XMEGA programming pin connections.
+
+[[File:xmegaprog_main.png|image]]
