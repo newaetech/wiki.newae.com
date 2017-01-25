@@ -1,9 +1,11 @@
 {{CollapsibleSection
-|intro = AVR Programmer
+|intro = ===AVR Programmer===
+this si a cool section about AVR Programmer
 |content= CW1173_ChipWhisperer-Lite/AVR Programmer
 }}
 
 {{CollapsibleSection
-|intro = XMEGA Programmer
+|intro = ===XMEGA Programmer===
+this si a cool section about XMEGA 
 |content= CW1173_ChipWhisperer-Lite/XMEGA Programmer
 }}
