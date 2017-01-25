@@ -1,19 +1,17 @@
 == Using VMWare Virtual Machine ==
 
-== Windows XP/7 ==
+== Windows (XP or later) ==
 
-Assuming you want to install the full ChipWhisperer software, you can follow the following steps to do so. Note it is recommended to use the VMWare image if possible, since it includes all required tools out of the box!
+This section describes how to install the ChipWhisperer software for Windows. Note it is recommended to use the VMWare image if possible, since it includes all required tools out of the box!
 
 === Python Setup ===
 
-You may already have Python installed, in which case you can skip some of these steps. If you already have Python installed make sure it is the correct version (2.7.x). Python 3.x will not work with this codebase.
-
-==== Installing Python via WinPython ====
+The first step is to install Python 2. If you already a recent version of Python installed (2.7.x), you can skip this step. Note that Python 3.x will not work with this codebase.
 
 The recommend method of installing Python is to use a distribution called [http://winpython.github.io/ WinPython]. This setup avoids installing Python globally, and includes most of the software you will need. In addition it makes it possible to install 32-bit and 64-bit Python on the same system with minimal problems. This can be very useful as the 64-bit version is handy for doing analysis on large data sets.
 
 <ol style="list-style-type: decimal;">
-<li>Install WinPython 2.7.x. Download the latest release in the 2.7.x branch from the [http://winpython.github.io/ WinPython] site. It's recommended to use the 32-bit version, but you can also use the 64-bit version. Note that certain drivers (such as the SmartCard driver) ''do not'' work on the 64-bit version. Choose a reasonable location to install this to - note the default is simply in the download directory. Instead it's recommended to find a directory such as <code>c:\WinPython32bit-2.7.6.4</code>, or into your local directory such as <code>c:\Users\yourname\WinPython-32bit-2.7.6.4</code>.</li>
+<li>Install WinPython 2.7.x. Download the latest release in the 2.7.x branch from the [http://winpython.github.io/ WinPython] site. It's recommended to use the 32-bit version, but you can also use the 64-bit version. Note that certain drivers (such as the SmartCard driver) ''do not'' work on the 64-bit version. Choose a reasonable location to install this to - note the default is simply in the download directory. Instead it's recommended to find a directory such as <code>c:\WinPython32bit-2.7.10.3</code>, or into your local directory such as <code>c:\Users\yourname\WinPython-32bit-2.7.10.3</code>.</li>
 <li>Go to your installation directory for WinPython, and run the shortcut called '''WinPython Command Prompt.exe'''. This will give you a command prompt which is setup to run Python along with associated scripts.</li>
 <li><p>Run the following commands to get needed packages:</p>
 <pre>pip install pyqtgraph
@@ -25,8 +23,6 @@ pip install configobj</pre>
 <li><p>Optional: You can add the python.exe you just installed to your path. To do so navigate to your installation folder, and run the '''WinPython Control Panel.exe''' program. Then select ''Advanced -&gt; Register distribution...''. If you do not do this, you will have to run all commands in this document via the '''WinPython Command Prompt.exe'''.</p>
 <p>If you plan on running both 32-bit and 64-bit Python, you should not register them. Instead explicitly call the correct Python by always running the '''WinPython Command Prompt.exe''', and then calling specific programs (such as CW Capture or Analyzer) from that command prompt.</p></li>
 <li>Jump to [[#Getting_.26_Installing_ChipWhisperer]] to install ChipWhisperer software.</li></ol>
-
-==== Optional Packages ====
 
 Note there are some optional packages you may want. Generally you can avoid them unless you have specific need of the features they enable:
 
