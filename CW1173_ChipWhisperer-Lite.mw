@@ -117,19 +117,12 @@ The following includes various things that might trip you up:
 
 = Basic Usage Instructions =
 
-<blockquote></blockquote>
-== CW-Lite: Programming AVR/XMEGA Device ==
-
-The CW1173 has built-in support for programming either Atmel AVR or Atmel XMEGA device. This is designed to allow you to program our target boards (either the built-in XMEGA target, or the Multi-Target board).
-
-Note this programmer is fairly simple, and ''does not'' provide all the features of a stand-alone programmer.
-
 {{CollapsibleSection
-|intro = === AVR Programmer ===
+|intro = == AVR Programmer ==
 |content= CW1173_ChipWhisperer-Lite/AVR Programmer}}
 
 {{CollapsibleSection
-|intro = === XMEGA Programmer ===
+|intro = == XMEGA Programmer ==
 |content= CW1173_ChipWhisperer-Lite/XMEGA Programmer}}
 
 {{CollapsibleSection
