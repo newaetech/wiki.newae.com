@@ -124,37 +124,27 @@ The CW1173 has built-in support for programming either Atmel AVR or Atmel XMEGA 
 
 Note this programmer is fairly simple, and ''does not'' provide all the features of a stand-alone programmer.
 
-{{CollapseStartHeader}}
-=== AVR Programmer ===
-{{CollapseEndHeader}}
-{{CollapseStartContent}}
-{{:CW1173_ChipWhisperer-Lite/AVR Programmer}}
-{{CollapseEndContent}}
+{{CollapsibleSection
+|intro = === AVR Programmer ===
+|content= CW1173_ChipWhisperer-Lite/AVR Programmer
+}}
 
 
-{{CollapseStartHeader}}
-=== XMEGA Programmer ===
-{{CollapseEndHeader}}
-{{CollapseStartContent}}
-{{:CW1173_ChipWhisperer-Lite/XMEGA Programmer}}
-{{CollapseEndContent}}
 
+{{CollapsibleSection
+|intro = === XMEGA Programmer ===
+|content= CW1173_ChipWhisperer-Lite/XMEGA Programmer
+}}
 
-{{CollapseStartHeader}}
+{{CollapsibleSection
+|intro = == Using Glitch Port ==
+|content= CW1173_ChipWhisperer-Lite/Glitch Port
+}}
 
-== Using Glitch Port ==
-{{CollapseEndHeader}}
-{{CollapseStartContent}}
-{{:CW1173_ChipWhisperer-Lite/Glitch Port}}
-{{CollapseEndContent}}
-
-{{CollapseStartHeader}}
-== Using Measure Port ==
-{{CollapseEndHeader}}
-{{CollapseStartContent}}
-The &quot;MEASURE&quot; port is the input to the low-noise amplifier and ADC.
-{{CollapseEndContent}}
-
+{{CollapsibleSection
+|intro = == Using Measure Port ==
+|content= CW1173_ChipWhisperer-Lite/Measure Port
+}}
 
 {{CollapseStartHeader}}
 == 20-Pin Connector ==
@@ -445,12 +435,10 @@ Once we are in bootloader mode, you can follow these steps:
 
 If the above instructions fail, there is no big problem. The SAM3U chip contains a hardware-resident bootloader. You may need to follow instructions on the [[Manual SAM3U Firmware Update]] page (including using BOSSA) if you are unable to use the automatic system that is part of ChipWhisperer-Capture.
 
-{{CollapseStartHeader}}
-== Breaking Target Section Apart ==
-{{CollapseEndHeader}}
-{{CollapseStartContent}}
-{{:CW1173_ChipWhisperer-Lite/Breaking Target Section Apart}}
-{{CollapseEndContent}}
+{{CollapsibleSection
+|intro = == Breaking Target Section Apart ==
+|content= CW1173_ChipWhisperer-Lite/Breaking Target Section Apart
+}}
 
 = Advanced Usage =
 
