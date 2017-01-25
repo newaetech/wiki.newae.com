@@ -1,14 +1,9 @@
-{{CollapseStartHeader}}
-=== AVR Programmer ===
-{{CollapseEndHeader}}
-{{CollapseStartContent}}
-{{:CW1173_ChipWhisperer-Lite/AVR Programmer}}
-{{CollapseEndContent}}
+{{CollapsibleSection
+|intro = ===AVR Programmer===
+|content= CW1173_ChipWhisperer-Lite/AVR Programmer
+}}
 
-
-{{CollapseStartHeader}}
-=== XMEGA Programmer ===
-{{CollapseEndHeader}}
-{{CollapseStartContent}}
-{{:CW1173_ChipWhisperer-Lite/XMEGA Programmer}}
-{{CollapseEndContent}}
+{{CollapsibleSection
+|intro = ===XMEGA Programmer===
+|content= CW1173_ChipWhisperer-Lite/XMEGA Programmer
+}}
