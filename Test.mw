@@ -1,35 +1,14 @@
-{{CollapsibleSection
-|intro = =AVR Programmer=
-this is a cool section about AVR Programmer
-|content= CW1173_ChipWhisperer-Lite/AVR Programmer
-|indentation = 20
-}}
+{{CollapseStartHeader}}
+=== AVR Programmer ===
+{{CollapseEndHeader}}
+{{CollapseStartContent}}
+{{:CW1173_ChipWhisperer-Lite/AVR Programmer}}
+{{CollapseEndContent}}
 
-{{CollapsibleSection
-|intro = =AVR Programmer=
-this is a cool section about AVR Programmer
-|content= CW1173_ChipWhisperer-Lite/AVR Programmer
-|indentation = 30
-}}
 
-{{CollapsibleSection
-|intro = =XMEGA Programmer=
-this si a cool section about XMEGA 
-|content= CW1173_ChipWhisperer-Lite/XMEGA Programmer
-|indentation = 50
-}}
-
-==Infobox==
-{{Infobox item
-|name                   = Some name
-|image                  = File:P1090088.jpg
-|caption                = Some caption for the image
-|Target Device          = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Target Architecture    = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Hardware Crypto        = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Purchase Hardware      = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Design Files           = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Supported Applications = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-}}
-some free text around here
-__NOTOC__
+{{CollapseStartHeader}}
+=== XMEGA Programmer ===
+{{CollapseEndHeader}}
+{{CollapseStartContent}}
+{{:CW1173_ChipWhisperer-Lite/XMEGA Programmer}}
+{{CollapseEndContent}}
