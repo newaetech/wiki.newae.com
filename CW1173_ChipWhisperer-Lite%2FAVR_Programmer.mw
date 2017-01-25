@@ -1,3 +1,7 @@
+The CW1173 has built-in support for programming either Atmel AVR or Atmel XMEGA device. This is designed to allow you to program our target boards (either the built-in XMEGA target, or the Multi-Target board).
+
+Note this programmer is fairly simple, and ''does not'' provide all the features of a stand-alone programmer.
+
 The AVR device programmer requires four connections to the target: RESET, MOSI, MISO, SCK. See [[#20-Pin_Connector]] for details of AVR programming pin connections.
 
 ==== Accessing the Programming ====
