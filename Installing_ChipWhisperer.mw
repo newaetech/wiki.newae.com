@@ -1,10 +1,19 @@
-== Using VMWare Virtual Machine ==
+This page describes how to install the ChipWhisperer software. There are a number of ways to set this up: you can use a pre-prepared virtual machine, or you can run the software on your own environment. 
 
-== Windows (XP or later) ==
+= Using VMWare Virtual Machine =
+If this is your first time using the ChipWhisperer toolchain, the easiest way to start is to use a virtual machine with everything already set up for you.
+
+The ChipWhisperer virtual machine image is made to run on the free VMWare Player. You can download VMWare 7.1.4 [https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_player/7_0 here]. Note that this program is available for Windows and Linux - if you're running a Mac, you're out of luck. 
+
+Once you've downloaded VMWare, you can get the ChipWhisperer Ubuntu image from the [https://app.assembla.com/wiki/show/chipwhisperer/ChipWhisperer_Software_Firmware_Releases Releases Page]. Download and unzip the VMWare image. Then, you can open the file <code>ChipWhisperer Lubuntu 32-bit.vmdk</code> in VMWare Player, and you're ready to go.
+
+There's a [https://www.youtube.com/watch?v=UrtsWAJa0m4&hd=1 Youtube tutorial] of this setup available online.
+
+= Windows (XP or later) =
 
 This section describes how to install the ChipWhisperer software for Windows. Note it is recommended to use the VMWare image if possible, since it includes all required tools out of the box!
 
-=== Python Setup ===
+== Python Setup ==
 
 The first step is to install Python 2. If you already a recent version of Python installed (2.7.x), you can skip this step. Note that Python 3.x will not work with this codebase.
 
@@ -37,7 +46,7 @@ This package will also require you to install the [http://www.ftdichip.com/Drive
 '''PYSCARD''': If planning on using a PS/SC smartcard reader (i.e. standard USB-connected reader), you will need to install [https://sourceforge.net/projects/pyscard/files/pyscard/ pyscard].
 
 
-=== Getting &amp; Installing ChipWhisperer ===
+== Getting &amp; Installing ChipWhisperer ==
 
 Assuming you've got a working Python installation, the next step is to install &amp; run ChipWhisperer itself. This requires you to get a copy of ChipWhisperer, you should download the [https://www.assembla.com/wiki/show/chipwhisperer/ChipWhisperer_Software_Firmware_Releases Latest Release]. Download &amp; unzip the file somewhere. Note if you are adventurous you can clone the GIT Repository <code>git://git.assembla.com/chipwhisperer.git</code> instead, but this '''may be broken''' so you should start with the latest release instead.
 
@@ -59,11 +68,11 @@ You can see a [http://www.youtube.com/watch?v=qd86cUD8iBs&hd=1 Video] of the Ins
 
 [[File:Youtube-win7-install.png|YouTubeWin7Install]]_
 
-=== Installing Hardware Drivers ===
+== Installing Hardware Drivers ==
 
 Details of driver installation are on specific pages for supported hardware (such as hwcapturerev2 and naecw1173_cwlite). Drivers are available from [http://chipwhisperer.com ChipWhisperer] release section.
 
-=== Getting AVR Compiler Toolchain ===
+== Getting AVR Compiler Toolchain ==
 
 The following section is '''NOT REQUIRED''' for your first attack - you can jump right to the tutorial if you wish. However you'll ultimately wish to modify the code of the device under test, and these instructions tell you how. You should first follow the tutorial to confirm your system is working before modifying the code however!
 
@@ -80,9 +89,9 @@ make</pre>
 <p>If instead you get an error something like <code>make: *** No rule to make target `simpleserial.elf', needed by `elf'.  Stop.</code>, this means a required file was missing.</p></li>
 <li>Programming the target AVR is accomplished in one of two methods depending on your hardware. The ChipWhisperer Capture Rev 2 uses the external "AVR Studio" program, whereas the CW1173 and CW1200 use a programmer menu from the ChipWhisperer-Capture software. To see details refer to either [[CW1002_ChipWhisperer_Capture-Rev2#CWCR2:_Using_the_AVR_Programmer]] or [[CW1173_ChipWhisperer-Lite#CW-Lite:_Programming_AVR.2FXMEGA_Device]].</li></ol>
 
-== Linux ==
+= Linux =
 
-=== Python Setup ===
+== Python Setup ==
 
 On Linux, installing Python &amp; all the associated packages is much easier than on Windows. Typically you can install them from a package manager, if you are using Fedora Core or similar, just type:
 
@@ -95,7 +104,7 @@ $ sudo pip install pyusb
 $ sudo pip install pyqtgraph
 </pre>
 
-=== Getting ChipWhisperer ===
+== Getting ChipWhisperer ==
 
 As in the Windows release, you can download a complete ChipWhisperer software release. Alternatively you can clone the ChipWhisperer repository with git, which is very simple on Linux:
 
@@ -110,7 +119,7 @@ $ sudo python setup.py develop</syntaxhighlight >
 
 '''NB''': This assumes the python command links to Python-2.7, and not Python-3.x. You may need to specify either python2.7 or python27 as the command instead of python to force this.
 
-=== Hardware Drivers ===
+== Hardware Drivers ==
 
 The ''driver'' for Linux is built in, however you need to allow your user account to access the peripheral. To do so, you'll have to make a file called <code>/etc/udev/rules.d/99-newae.rules</code> . The contents of this file should be:
 
@@ -138,7 +147,7 @@ Finally log out &amp; in again for the group change to take effect.
 You can always find the latest version of this file in [https://app.assembla.com/spaces/chipwhisperer/git/source/master/hardware/99-newae.rules GIT].
 
 
-=== FTDI Hardware Driver (SASEBO-W, SAKURA-G, SASEBO-GII) ===
+== FTDI Hardware Driver (SASEBO-W, SAKURA-G, SASEBO-GII) ==
 
 '''This is only required for supporting FTDI-connected hardware''' such as the SASEBO-W, SAKURA-G, SASEBO-GII. This is NOT required for the ChipWhisperer Capture Rev2.
 
@@ -156,11 +165,11 @@ And reset the udev system:
 <pre>$ sudo udevadm control --reload-rules</pre>
 Finally log out &amp; in again for the group change to take effect.
 
-== MAC OS X ==
+= MAC OS X =
 
 The following have been tested on Mac OS X Yosemite (10.10) - earlier versions may not have a recent enough Python installation (recommended 2.7.6 or later). It's possible to install other Python versions on your Mac OS X via the 'homebrew' system, we will use this for installing a few additional required tools.
 
-=== Python Setup ===
+== Python Setup ==
 
 <ol style="list-style-type: decimal;">
 <li>Ensure your user account has a password. In order for the 'sudo' command to work it requires you to type your password, so if you don't have one enabled be sure to set a temporary password now.</li>
@@ -174,7 +183,7 @@ The following have been tested on Mac OS X Yosemite (10.10) - earlier versions m
 <pre>$ mkdir -p /Users/macmini/Library/Python/2.7/lib/python/site-packages
 $ echo 'import site; site.addsitedir("/usr/local/lib/python2.7/site-packages")' >> /Users/macmini/Library/Python/2.7/lib/python/site-packages/homebrew.pth</pre></li></ol>
 
-=== Working SciPy Distribution ===
+== Working SciPy Distribution ==
 
 You may need to upgrade your scipy from the base install, if you wish to do template attacks. This is not needed for other attacks, so please only proceed with the following if you receive an error that your version of scipy is too old.
 
@@ -186,7 +195,7 @@ You will also need to follow the instructions as above (inserting the link to th
 
  brew link --overwrite numpy
 
-=== AVR-GCC Install ===
+== AVR-GCC Install ==
 
 You can easily use brew to install avr-gcc, as decribed at [https://github.com/osx-cross/homebrew-avr/ OSX-Cross Project]:
 
@@ -194,7 +203,7 @@ You can easily use brew to install avr-gcc, as decribed at [https://github.com/o
  
  $ brew install avr-libc
 
-== Making sure that everything works ==
+= Making sure that everything works =
 Try running the automated test scripts at chipwhisperer/software/chipwhisperer/tests/. Example:
  $ python chipwhisperer/software/chipwhisperer/tests/aescpaeattackscript.py
  $ python chipwhisperer/software/chipwhisperer/tests/descpaeattackscript.py 
