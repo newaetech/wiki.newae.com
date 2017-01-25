@@ -1,0 +1,9 @@
+The &quot;GLITCH&quot; port is used for voltage glitching. It's connected to two MOSFET elements, as the following figure shows:
+
+<blockquote>[[File:glitch_lp_hp.png|image]]
+</blockquote>
+The CW1173 glitch output can be commanded to turn on either of those MOSFETs via the &quot;Glitch Out Enable&quot; checkboxes:
+
+<blockquote>[[File:glitch_gui.png|image]]
+</blockquote>
+Be careful using this feature, as you don't want to short the MOSFETs for too long. It's also possible to damage the ChipWhisperer-Lite by burning these MOSFETs up if used incorrectly. See tutorial #A3 for more information on using this feature.
