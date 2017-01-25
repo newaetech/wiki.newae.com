@@ -133,7 +133,7 @@ Note this programmer is fairly simple, and ''does not'' provide all the features
 
 
 {{CollapseStartHeader}}
-=== AVR Programmer ===
+=== XMEGA Programmer ===
 {{CollapseEndHeader}}
 {{CollapseStartContent}}
 {{:CW1173_ChipWhisperer-Lite/XMEGA Programmer}}
@@ -141,6 +141,7 @@ Note this programmer is fairly simple, and ''does not'' provide all the features
 
 
 {{CollapseStartHeader}}
+
 == Using Glitch Port ==
 {{CollapseEndHeader}}
 {{CollapseStartContent}}
