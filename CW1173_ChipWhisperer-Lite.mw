@@ -489,13 +489,10 @@ If the above instructions fail, there is no big problem. The SAM3U chip contains
 
 {{CollapseStartHeader}}
 == Breaking Target Section Apart ==
-</div>
-<div class="mw-collapsible-toggle-indicator">[[File:right-black-arrow.png|150px|link=]]</div>
-  </div>
- </div>
-<div class="mw-collapsible-content">
+{{CollapseEndHeader}}
+{{CollapseStartContent}}
 {{:CW1173_ChipWhisperer-Lite/Breaking Target Section Apart}}
-</div>
+{{CollapseEndContent}}
 
 = Advanced Usage =
 
