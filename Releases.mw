@@ -1,0 +1,7 @@
+=Latest Releases=
+
+All ChipWhisperer releases are now managed from the [https://github.com/newaetech/chipwhisperer/releases ChipWhisperer GITHub page]. You'll see several options, including the:
+
+* Source download (basically a copy of the GIT)
+* VMWare download (ready-to-go VM Image)
+* Drivers download
