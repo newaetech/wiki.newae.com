@@ -169,33 +169,27 @@ The next step is to program our own leakage model. The following Python code mod
 <pre>
 # Imports for AES256 Attack
 from chipwhisperer.analyzer.attacks.models.base import ModelsBase
-from chipwhisperer.analyzer.attacks.models.aes.funcs import sbox, inv_sbox, inv_shiftrows, inv_mixcolumns, inv_subbytes
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import AESLeakageHelper, AES128_8bit
 
-
-class AES256Attack(ModelsBase):  
-   _name = 'AES 128'
-
-   def __init__(self):
-        ModelsBase.__init__(self, 16, 256, model=None)
-        self.numRoundKeys = 10
-   
-   def leakage(self, textin, textout, guess, bnum, state):
-        knownkey = [0xba, 0x41, 0x9b, 0x11, 0x07, 0x7b, 0x5d, 0x32, 0x1d, 0xa0, 0x7f, 0x0a, 0x85, 0x05, 0xd8, 0xcd]
-        xored = [knownkey[i] ^ textin[i] for i in range(0, 16)]
+class AES256_Model(AESLeakageHelper):
+    name = 'Our model'
+    def leakage(self, pt, ct, guess, bnum):
+        knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
+        xored = [knownkey[i] ^ pt[i] for i in range(0, 16)]
         block = xored
-        block = inv_shiftrows(block)
-        block = inv_subbytes(block)
-        block = inv_mixcolumns(block)
-        block = inv_shiftrows(block)
+        block = self.inv_shiftrows(block)
+        block = self.inv_subbytes(block)
+        block = self.inv_mixcolumns(block)
+        block = self.inv_shiftrows(block)
         result = block
-        return self.HW[inv_sbox((result[bnum] ^ guess))]
+        return self.inv_sbox((result[bnum] ^ guess[bnum]))
 </pre>
 You can look back at the C code of the AES-256 decryption to see how this is implementing the decryption code. Note that because of the Inverse MixColumns operation, we need the entire input ciphertext -- otherwise, we would only need to operate on one byte of the ciphertext.
 
 The last step is to perform the attack using this model:
 # Add the above function to your custom script file.
 # Change the <code>setAnalysisAlgorithm</code> in the script to use your custom functions by making the following call:
-#:<pre>self.attack.setAnalysisAlgorithm(CPAProgressive, AES256Attack, None)</pre>
+#:<pre>leakage_object = AES128_8bit(AES256_Model)</pre>
 # As we did in the 14th round attack, reducing the point range can speed up the attack. For example, to use a smaller range of points, try changing the <code>setPointRange()</code> function call to
 #:<pre>self.attack.setPointRange((8000,10990))</pre>
 # Start the attack! Wait for the attack to complete, and you will determine the 13th round key:
