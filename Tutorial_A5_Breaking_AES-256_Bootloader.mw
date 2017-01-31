@@ -656,31 +656,24 @@ import chipwhisperer.analyzer.attacks.models.AES128_8bit
 
 # Imports for AES256 Attack
 from chipwhisperer.analyzer.attacks.models.base import ModelsBase
-from chipwhisperer.analyzer.attacks.models.aes.funcs import sbox, inv_sbox, inv_shiftrows, inv_mixcolumns, inv_subbytes
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import AESLeakageHelper, AES128_8bit
 
-
-class AES256Attack(ModelsBase):  
-   _name = 'AES 128'
-
-   def __init__(self):
-        ModelsBase.__init__(self, 16, 256, model=None)
-        self.numRoundKeys = 10
-   
-   def leakage(self, textin, textout, guess, bnum, state):
+class AES256_Model(AESLeakageHelper):
+    name = 'Our model'
+    def leakage(self, pt, ct, guess, bnum):
         knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
-        xored = [knownkey[i] ^ textin[i] for i in range(0, 16)]
+        xored = [knownkey[i] ^ pt[i] for i in range(0, 16)]
         block = xored
-        block = inv_shiftrows(block)
-        block = inv_subbytes(block)
-        block = inv_mixcolumns(block)
-        block = inv_shiftrows(block)
+        block = self.inv_shiftrows(block)
+        block = self.inv_subbytes(block)
+        block = self.inv_mixcolumns(block)
+        block = self.inv_shiftrows(block)
         result = block
-        return self.HW[inv_sbox((result[bnum] ^ guess))]
-
+        return self.inv_sbox((result[bnum] ^ guess[bnum]))
 
 class UserScript(UserScriptBase):
-    name = "Auto-generated"
-    description = "Auto-generated Attack Script"
+    _name = "Auto-generated"
+    _description = "Auto-generated Attack Script"
     def __init__(self, api):
         UserScriptBase.__init__(self, api)
         self.initProject()
@@ -700,14 +693,17 @@ class UserScript(UserScriptBase):
 
     def initAnalysis(self):
         self.attack = CPA()
+        self.attack.setProject(self.api.project())
         self.attack.setTraceSource(self.traces, blockSignal=True)
-        self.attack.setAnalysisAlgorithm(CPAProgressive, AES256Attack, None)
+        leakage_object = AES128_8bit(AES256_Model)
+        #leakage_object = chipwhisperer.analyzer.attacks.models.AES128_8bit.AES128_8bit(chipwhisperer.analyzer.attacks.models.AES128_8bit.SBox_output)
+        self.attack.setAnalysisAlgorithm(chipwhisperer.analyzer.attacks.cpa_algorithms.progressive.CPAProgressive,leakage_object)
+        self.attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
         self.attack.setTraceStart(0)
-        self.attack.setTracesPerAttack(200)
+        self.attack.setTracesPerAttack(150)
         self.attack.setIterations(1)
         self.attack.setReportingInterval(10)
-        self.attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-        self.attack.setPointRange((8500,10991))
+        self.attack.setPointRange((0,10991))
 
     def initReporting(self):
         # Configures the attack observers (usually a set of GUI widgets)
@@ -724,16 +720,14 @@ class UserScript(UserScriptBase):
         self.attack.processTraces()
 
 if __name__ == '__main__':
-    from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
     import chipwhisperer.analyzer.ui.CWAnalyzerGUI as cwa
     from chipwhisperer.common.utils.parameter import Parameter
-    app = cwa.makeApplication()     # Comment if you don't need the GUI
-    Parameter.usePyQtGraph = True   # Comment if you don't need the GUI
-    api = CWCoreAPI()               # Instantiate the API
-    gui = cwa.CWAnalyzerGUI(api)    # Comment if you don't need the GUI
-    gui.show()                      # Comment if you don't need the GUI
-    api.runScriptClass(UserScript)  # Run UserScript through the API
-    app.exec_()                     # Comment if you don't need the GUITraceback (most recent call last):
+    Parameter.usePyQtGraph = True            # Comment if you don't need the GUI
+    api = CWCoreAPI()                        # Instantiate the API
+    app = cwa.makeApplication("Analyzer")    # Comment if you don't need the GUI
+    gui = cwa.CWAnalyzerGUI(api)             # Comment if you don't need the GUI
+    api.runScriptClass(UserScript)           # Run UserScript through the API
+    app.exec_()                              # Comment if you don't need the GUI
 
 </pre>
 
