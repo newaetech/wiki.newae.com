@@ -690,7 +690,6 @@ class UserScript(UserScriptBase):
         self.attack.setProject(self.api.project())
         self.attack.setTraceSource(self.traces, blockSignal=True)
         leakage_object = AES128_8bit(AES256_Model)
-        #leakage_object = chipwhisperer.analyzer.attacks.models.AES128_8bit.AES128_8bit(chipwhisperer.analyzer.attacks.models.AES128_8bit.SBox_output)
         self.attack.setAnalysisAlgorithm(chipwhisperer.analyzer.attacks.cpa_algorithms.progressive.CPAProgressive,leakage_object)
         self.attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
         self.attack.setTraceStart(0)
