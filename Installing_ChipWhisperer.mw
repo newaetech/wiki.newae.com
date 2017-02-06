@@ -165,6 +165,12 @@ And reset the udev system:
 <pre>$ sudo udevadm control --reload-rules</pre>
 Finally log out &amp; in again for the group change to take effect.
 
+== Getting the AVR Toolchain ==
+Many of the tutorials use the AVR XMEGA microcontrollers as a target. In order to compile code for these targets, you'll need the AVR toolchain. This is easy to set up:
+<pre>
+sudo apt-get install avr-libc gcc-avr
+</pre>
+
 = MAC OS X =
 
 The following have been tested on Mac OS X Yosemite (10.10) - earlier versions may not have a recent enough Python installation (recommended 2.7.6 or later). It's possible to install other Python versions on your Mac OS X via the 'homebrew' system, we will use this for installing a few additional required tools.
