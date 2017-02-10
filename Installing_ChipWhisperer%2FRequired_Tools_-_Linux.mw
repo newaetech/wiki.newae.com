@@ -1,5 +1,5 @@
 == Python ==
-On Linux, installing Python &amp; all the associated packages is much easier than on Windows. Typically you can install them from a package manager, if you are using Fedora Core or similar, just type:
+On Linux, installing Python &amp; all the associated packages is straightforward. Typically you can install them from a package manager, if you are using Fedora Core or similar, just type:
 
 <pre>$ sudo yum install python27 python27-devel python27-libs python-pyside numpy scipy python-configobj pyusb
 $ sudo pip install pyqtgraph</pre>
