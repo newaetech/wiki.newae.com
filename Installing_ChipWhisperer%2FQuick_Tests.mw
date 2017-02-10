@@ -1,0 +1,6 @@
+Try running the automated test scripts at chipwhisperer/software/chipwhisperer/tests/. Example:
+ $ python chipwhisperer/software/chipwhisperer/tests/aescpaeattackscript.py
+ $ python chipwhisperer/software/chipwhisperer/tests/descpaeattackscript.py 
+ $ python chipwhisperer/software/chipwhisperer/tests/glitchscript.py
+ $ python chipwhisperer/software/chipwhisperer/tests/templateattackscript.py
+They should all work out of the box with the Chipwhisper Lite hardware.
