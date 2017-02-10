@@ -7,14 +7,9 @@ There are four ways to set up ChipWhisperer:
 * '''Git Repository:''' Get the latest, bleeding-edge features and bugs. Recommended if you're an experienced developer and you want to contribute to ChipWhisperer.
 
 
-= Using VMWare Virtual Machine =
-If this is your first time using the ChipWhisperer toolchain, the easiest way to start is to use a virtual machine with everything already set up for you.
-
-# Install the [https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_player/7_0 VMWare Player software] (free). Note that this program is available for Windows and Linux - if you're running a Mac, you're out of luck. 
-# Download a ChipWhisperer virtual machine image release. The current latest release with a VM image is [https://github.com/newaetech/chipwhisperer/releases/tag/0.11RC1 v0.11RC1].
-# Unzip the VMWare image and open the file <code>ChipWhisperer Lubuntu 32-bit.vmdk</code> in VMWare Player.
-
-There's an old [https://www.youtube.com/watch?v=UrtsWAJa0m4&hd=1 Youtube tutorial] of this setup available online.
+{{CollapsibleSection
+|intro = = Using VMWare Virtual Machine =
+|content= Installing ChipWhisperer/Using VMWare Virtual Machine}}
 
 = Windows (XP or later) =
 
