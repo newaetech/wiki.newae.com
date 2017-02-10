@@ -10,6 +10,8 @@ Once you've got the file, run the Python install procedure (setup.py). Use the '
 cd c:\chipwhisperer\software
 python setup.py develop</pre>
 
+'''NB''': This assumes the python command links to Python-2.7, and not Python-3.x. You may need to specify either python2.7 or python27 as the command instead of python to force this.
+
 ''In Linux, you might need to run this as root:''
 <code>sudo python setup.py develop</code>
 
