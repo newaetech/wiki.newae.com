@@ -1,0 +1,53 @@
+For any of the other installation methods, you'll need to have Python 2 installed on your computer. If you already a recent version of Python installed (2.7.x), you can skip this step. Note that Python 3.x will not work with this codebase. There's also a bit of setup that's needed to get other tools and prepare other drivers.
+
+== Python ==
+The recommend method of installing Python is to use a distribution called [http://winpython.github.io/ WinPython]. This setup avoids installing Python globally, and includes most of the software you will need. In addition it makes it possible to install 32-bit and 64-bit Python on the same system with minimal problems. This can be very useful as the 64-bit version is handy for doing analysis on large data sets.
+
+<ol style="list-style-type: decimal;">
+<li>Install WinPython 2.7.x. Download the latest release in the 2.7.x branch from the [http://winpython.github.io/ WinPython] site. It's recommended to use the 32-bit version, but you can also use the 64-bit version. Note that certain drivers (such as the SmartCard driver) ''do not'' work on the 64-bit version. Choose a reasonable location to install this to - note the default is simply in the download directory. Instead it's recommended to find a directory such as <code>c:\WinPython32bit-2.7.10.3</code>, or into your local directory such as <code>c:\Users\yourname\WinPython-32bit-2.7.10.3</code>.</li>
+<li>Go to your installation directory for WinPython, and run the shortcut called '''WinPython Command Prompt.exe'''. This will give you a command prompt which is setup to run Python along with associated scripts.</li>
+</ol>
+<ol style="list-style-type: decimal;">
+<li><p>Run the following commands to get needed packages:</p>
+<pre>pip install pyqtgraph
+pip install configobj</pre>
+<p>Assuming you are planning on using the ChipWhisperer Capture Rev2 hardware, you also require [http://sourceforge.net/projects/pyusb/ PyUSB]. The easiest method is to again use pip:</p>
+<pre>pip install pyusb</pre>
+<p>If that command fails, you may need to specify a version. Note the latest version printed by the command, and try:</p>
+<pre>pip install pyusb==1.0.0b1</pre></li>
+<li><p>Optional: You can add the python.exe you just installed to your path. To do so navigate to your installation folder, and run the '''WinPython Control Panel.exe''' program. Then select ''Advanced -&gt; Register distribution...''. If you do not do this, you will have to run all commands in this document via the '''WinPython Command Prompt.exe'''.</p>
+<p>If you plan on running both 32-bit and 64-bit Python, you should not register them. Instead explicitly call the correct Python by always running the '''WinPython Command Prompt.exe''', and then calling specific programs (such as CW Capture or Analyzer) from that command prompt.</p></li>
+<li>Jump to [[#Getting_.26_Installing_ChipWhisperer]] to install ChipWhisperer software.</li></ol>
+
+Note there are some optional packages you may want. Generally you can avoid them unless you have specific need of the features they enable:
+
+'''FTD2XX''': [https://github.com/snmishra/ftd2xx ftd2xx] is required for SASEBO-W, SAKURA-G, and SASEBO-GII Support. To install this package, [https://github.com/snmishra/ftd2xx/archive/master.zip download a copy of the ftd2xx repository] and unzip it somewhere. Then run the following where you unzipped it:
+
+<pre>python setup.py install</pre>
+This package will also require you to install the [http://www.ftdichip.com/Drivers/D2XX.htm FTDI D2XX Drivers]. In the preceeding link simply find the correct driver for your OS Version &amp; install that.
+
+'''MYSQL''': If you want to use the MySQL trace format (not used by default), you'll need to install [https://pypi.python.org/pypi/umysql umysql]:
+
+<pre>pip install umysql</pre>
+'''PYSCARD''': If planning on using a PS/SC smartcard reader (i.e. standard USB-connected reader), you will need to install [https://sourceforge.net/projects/pyscard/files/pyscard/ pyscard].
+
+== Installing Hardware Drivers ==
+
+Details of driver installation are on specific pages for supported hardware (such as hwcapturerev2 and naecw1173_cwlite). Drivers are available from [http://chipwhisperer.com ChipWhisperer] release section.
+
+== Getting AVR Compiler Toolchain ==
+
+The following section is '''NOT REQUIRED''' for your first attack - you can jump right to the tutorial if you wish. However you'll ultimately wish to modify the code of the device under test, and these instructions tell you how. You should first follow the tutorial to confirm your system is working before modifying the code however!
+
+To build the code, you'll need to install WinAVR on Windows (if using the Virtual Machine, the following is ''not required'', as the VM comes setup with the AVR compiler already).
+
+Note that the default codebase ''does not'' include the cryptographic code we attack. Instead you are required to add this code into the system -- if the external code changes, this may eventually be instead rolled into the main codebase. To setup the code, follow the following steps:
+
+<ol style="list-style-type: decimal;">
+<li><p><code>cd</code> to the directory with the avr-serial example, and run <code>make</code>:</p>
+<pre>cd c:\chipwhisperer\hardware\victims\firmware\simpleserial-aes
+make</pre>
+<p>If this is successful, you'll see an output like the following:</p>
+<p>[[File:Avr-build-ok.png|image]]</p>
+<p>If instead you get an error something like <code>make: *** No rule to make target `simpleserial.elf', needed by `elf'.  Stop.</code>, this means a required file was missing.</p></li>
+<li>Programming the target AVR is accomplished in one of two methods depending on your hardware. The ChipWhisperer Capture Rev 2 uses the external "AVR Studio" program, whereas the CW1173 and CW1200 use a programmer menu from the ChipWhisperer-Capture software. To see details refer to either [[CW1002_ChipWhisperer_Capture-Rev2#CWCR2:_Using_the_AVR_Programmer]] or [[CW1173_ChipWhisperer-Lite#CW-Lite:_Programming_AVR.2FXMEGA_Device]].</li></ol>
