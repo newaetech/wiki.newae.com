@@ -1,14 +1,14 @@
 If you want the cutting-edge version of ChipWhisperer, you can clone the repository. If you have Git already set up, this is easy to do:
-<code>
+<pre>
 git clone git@github.com:newaetech/chipwhisperer.git
 cd chipwhisperer/software
 python setup.py develop
-</code>
+</pre>
 
 You may also want the OpenADC software, which is necessary to build new firmware for the ChipWhisperer FPGA. This is unnecessary for most users. If you need it:
-<code>
+<pre>
 cd ..
 git clone git://git.assembla.com/openadc.git
 cd openadc/controlsw/python
 python setup.py develop
-</code>
+</pre>
