@@ -1,5 +1,1 @@
-An alternative install method is to get ChipWhisperer directly from the Python Package Index. To do this, run the command
-
-<code>pip install chipwhisperer</code>
-
-Note that this package doesn't include anything except the software. The hardware pieces (including schematics, gerbers, and firmware for victims/scopes) isn't included here. However, if you need a couple of the utilities from the software, this is a quick and lightweight way to install them.
+TODO
