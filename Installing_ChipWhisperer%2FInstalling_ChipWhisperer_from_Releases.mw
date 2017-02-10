@@ -1,36 +1,25 @@
-== Windows ==
-Assuming you've got a working Python installation, the next step is to install &amp; run ChipWhisperer itself. This requires you to get a copy of ChipWhisperer, you should download the [https://www.assembla.com/wiki/show/chipwhisperer/ChipWhisperer_Software_Firmware_Releases Latest Release]. Download &amp; unzip the file somewhere. Note if you are adventurous you can clone the GIT Repository <code>git://git.assembla.com/chipwhisperer.git</code> instead, but this '''may be broken''' so you should start with the latest release instead.
+Once you have a working Python installation, you're ready to install and run ChipWhisperer. 
 
-Generally 'somewhere' will become your ChipWhisperer working directory. These examples assume you've chosen <code>C:\chipwhisperer</code> as your working directory.
+First, download a ChipWhisperer release. You can get these from the [https://github.com/newaetech/chipwhisperer/releases/ Releases] page. Generally, the latest release is a good choice, but you might need an older version for various reasons. You want the source code in .zip or .tar.gz format - not a VMWare image.
 
-Once you've got the file, we run the Python install procedure again (setup.py). We slightly modify it to use the ''develop'' command to reflect that the files will probably be changing frequently. Again open a terminal and run the following, adjusting paths as needed:
+Next, uncompress your downloaded source code somewhere. Generally, 'somewhere' will become your ChipWhisperer working directory. For example, on Windows, you might want to use <code>C:\chipwhisperer\</code>. 
 
-<pre>cd c:\chipwhisperer\openadc\controlsw\python
-python setup.py develop
+Once you've got the file, run the Python install procedure (setup.py). Use the ''develop'' command to indicate that the files will probably be changing frequently. to do this, open a terminal and run the following, adjusting paths as needed:
+
+<pre>
 cd c:\chipwhisperer\software
 python setup.py develop</pre>
-If you wish to confirm the installation worked, you can run ChipWhispererAnalyzer in the same terminal:
+
+''In Linux, you might need to run this as root:''
+<code>sudo python setup.py develop</code>
+
+The installation is now finished. To confirm the installation worked, you can run ChipWhispererAnalyzer in the same terminal:
 
 <pre>cd c:\chipwhisperer\software\chipwhisperer\
 python CWAnalyzer.pyw</pre>
-Alternatively you can just double-click on <code>CWAnalyzer.py</code> from Windows explorer, which should run the file using Python, ''provided you've registered Python to execute the .py extension''.
 
-You can see a [http://www.youtube.com/watch?v=qd86cUD8iBs&hd=1 Video] of the Installation Procedure:
+Alternatively you can just double-click on <code>CWAnalyzer.py</code>, which should run the file using Python, ''provided you've registered Python to execute the .py extension''.
+
+You can see a [http://www.youtube.com/watch?v=qd86cUD8iBs&hd=1 Video] of the installation procedure:
 
 [[File:Youtube-win7-install.png|YouTubeWin7Install]]_
-
-== Linux ==
-As in the Windows release, you can download a complete ChipWhisperer software release. Alternatively you can clone the ChipWhisperer repository with git, which is very simple on Linux:
-
-<syntaxhighlight lang="bash">$ git clone git://git.assembla.com/chipwhisperer.git
-$ cd chipwhisperer
-$ git clone git://git.assembla.com/openadc.git</syntaxhighlight >
-Be aware that the git code may be broken, although we try not to commit completely untested code to the master branch. Either way once you have the chipwhisperer directory somewhere, do the following from within that directory:
-<syntaxhighlight lang="bash">$ cd software
-$ sudo python setup.py develop
-$ cd ../openadc/controlsw/python
-$ sudo python setup.py develop</syntaxhighlight >
-
-'''NB''': This assumes the python command links to Python-2.7, and not Python-3.x. You may need to specify either python2.7 or python27 as the command instead of python to force this.
-
-== Mac ==
