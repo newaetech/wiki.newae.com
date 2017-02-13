@@ -104,90 +104,83 @@ Has the modules that generate the keys. If you want to generate custom key or pl
 Usefull if you want to execute something before, during or after the capture.
 
 Exemple ([http://newae.com/forum/viewtopic.php?f=7&t=202#p1026 provided by GABRIEL_F]):
- import logging<br>
- import time<br>
- from chipwhisperer.capture.auxiliary._base import AuxiliaryTemplate<br>
- from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI<br>
- from chipwhisperer.common.utils import util, timer<br>
- <br>
- <br>
- class SerialBeforeArm(AuxiliaryTemplate):<br>
-     '''<br>
-     This auxillary module allows for serial data to be sent to the target<br>
-     during the capture process i.e., before and after arming the scope<br>
-     and after the trace has recorded. This enables the ability for the<br>
-     scope to trigger on serial communication that need to start after a<br>
-     reset but before the scope is armed and after.<br>
+ import logging
+ import time
+ from chipwhisperer.capture.auxiliary._base import AuxiliaryTemplate
+ from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+ from chipwhisperer.common.utils import util, timer
+ 
+ 
+ class SerialBeforeArm(AuxiliaryTemplate):
+     <nowiki>'''</nowiki> 
+     This auxillary module allows for serial data to be sent to the target
+     during the capture process i.e., before and after arming the scope
+     and after the trace has recorded. This enables the ability for the
+     scope to trigger on serial communication that need to start after a
+     reset but before the scope is armed and after.
      
- <br>
-     Compare to SimpleSerial send Go Command.<br>
+     Compare to SimpleSerial send Go Command.
      
- <br>
-     TODO:<br>
-     Parser to chop up multiple commands sent in single string seperated by<br>
-     whitespace. Modify to iterate over returned lists.<br>
- <br>
-     Uses non-blocking sleep methods poached from ResetCW1173Read.<br>
-     
- <br>
-     Gabe 25-NOV-16<br>
-     '''<br>
- <br>
+     TODO:
+     Parser to chop up multiple commands sent in single string seperated by
+     whitespace. Modify to iterate over returned lists.
+ 
+     Uses non-blocking sleep methods poached from ResetCW1173Read.
+     <br>    Gabe 25-NOV-16
+     <nowiki>'''</nowiki>    
      _name = "Send Serial During Capture"<br>
- <br>
-     def __init__(self):<br>
-         AuxiliaryTemplate.__init__(self)<br>
-         self.getParams().addChildren([<br>
-             {'name':'Pre-Arm Message', 'type':'str', 'key':'prearmmssg', 'value':''},<br>
-             {'name':'Post-Arm Message', 'type':'str', 'key':'postarmmssg', 'value':''},<br>
-             {'name':'Post-Capture Message', 'type':'str', 'key':'postcapmssg', 'value':''},<br>
-             {'name':'Delay (Pre-Message)' , 'type':'int',  'key':'predelay',  'limits':(0, 10E3), 'value':0, 'suffix':' ms'},<br>
-             {'name':'Delay (Post-Message)', 'type':'int',  'key':'postdelay', 'limits':(0, 10E3), 'value':0, 'suffix':' ms'},<br>
-             {'name':'Test Reset', 'type':'action', 'action':self.testSend}<br>
-         ])<br>
- <br>
-     def traceArm(self):<br>
-         """Before arming the scope, send some serial messages and wait"""<br>
-         string = self.findParam('prearmmssg').getValue()<br>
-         self.sendSerial(string)<br>
- <br>
-     def traceArmPost(self):<br>
-         """After arming the scope, send some serial message and wait"""<br>
-         string = self.findParam('postarmmssg').getValue()<br>
-         self.sendSerial(string)<br>
- <br>
-     def traceDone(self):<br>
-         """After the trace is captured, send some serial messages and wait"""<br>
-         string = self.findParam('postcapmssg').getValue()<br>
-         self.sendSerial(string)<br>
- <br>
-     def sendSerial(self, string):<br>
-         # Send a string!<br>
- <br>
-         if string is None or len(string) == 0:<br>
-             return<br>
- <br>
-         dly = self.findParam('predelay').getValue()<br>
-         if dly > 0:<br>
-             self.nonblockingSleep(dly / 1000.0)<br>
- <br>
-         CWCoreAPI.getInstance().getTarget().ser.write(string)<br>
+     def __init__(self):
+         AuxiliaryTemplate.__init__(self)
+         self.getParams().addChildren([
+             {'name':'Pre-Arm Message', 'type':'str', 'key':'prearmmssg', 'value':''},''
+             {'name':'Post-Arm Message', 'type':'str', 'key':'postarmmssg', 'value':''},''
+             {'name':'Post-Capture Message', 'type':'str', 'key':'postcapmssg', 'value':''},''
+             {'name':'Delay (Pre-Message)' , 'type':'int',  'key':'predelay',  'limits':(0, 10E3), 'value':0, 'suffix':' ms'},
+             {'name':'Delay (Post-Message)', 'type':'int',  'key':'postdelay', 'limits':(0, 10E3), 'value':0, 'suffix':' ms'},
+             {'name':'Test Reset', 'type':'action', 'action':self.testSend}
+         ])
+ 
+     def traceArm(self):
+         """Before arming the scope, send some serial messages and wait"""
+         string = self.findParam('prearmmssg').getValue()
+         self.sendSerial(string)
+ 
+     def traceArmPost(self):
+         """After arming the scope, send some serial message and wait"""
+         string = self.findParam('postarmmssg').getValue()
+         self.sendSerial(string)
+ 
+     def traceDone(self):
+         """After the trace is captured, send some serial messages and wait"""
+         string = self.findParam('postcapmssg').getValue()
+         self.sendSerial(string)
+ 
+     def sendSerial(self, string):
+         """Send a string!"""
+ 
+         if string is None or len(string) == 0:
+             return
+ 
+         dly = self.findParam('predelay').getValue()
+         if dly > 0:
+             self.nonblockingSleep(dly / 1000.0)
+ 
+         CWCoreAPI.getInstance().getTarget().ser.write(string)
          
- <br>
-         dly = self.findParam('postdelay').getValue()<br>
-         if dly > 0:<br>
-             self.nonblockingSleep(dly / 1000.0)<br>
- <br>
-     def nonblockingSleep_done(self):<br>
-         self._sleeping = False<br>
- <br>
-     def nonblockingSleep(self, stime):<br>
-         """Sleep for given number of seconds (~50mS resolution), but don't block GUI while we do it"""<br>
-         timer.Timer.singleShot(stime * 1000, self.nonblockingSleep_done)<br>
-         self._sleeping = True<br>
-         while(self._sleeping):<br>
-             time.sleep(0.01)<br>
-             util.updateUI()<br>
- <br>
-     def testSend(self, _=None):<br>
+         dly = self.findParam('postdelay').getValue()
+         if dly > 0:
+             self.nonblockingSleep(dly / 1000.0)
+ 
+     def nonblockingSleep_done(self):
+         self._sleeping = False
+ 
+     def nonblockingSleep(self, stime):
+         """Sleep for given number of seconds (~50mS resolution), but don't block GUI while we do it"""
+         timer.Timer.singleShot(stime * 1000, self.nonblockingSleep_done)
+         self._sleeping = True
+         while(self._sleeping):
+             time.sleep(0.01)
+             util.updateUI()
+ 
+     def testSend(self, _=None):
          self.sendSerial('Hello')
