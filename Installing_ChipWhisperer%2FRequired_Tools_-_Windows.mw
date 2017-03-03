@@ -3,7 +3,9 @@ For any of the other installation methods, you'll need to have Python 2 installe
 
 The recommend method of installing Python is to use a distribution called [http://winpython.github.io/ WinPython]. This setup avoids installing Python globally, and includes most of the software you will need. In addition it makes it possible to install 32-bit and 64-bit Python on the same system with minimal problems. This can be very useful as the 64-bit version is handy for doing analysis on large data sets.
 
-To install WinPython 2.7.x, Download the latest release in the 2.7.x branch from the [http://winpython.github.io/ WinPython] site. It's recommended to use the 32-bit version, but you can also use the 64-bit version. Note that certain drivers (such as the SmartCard driver) ''do not'' work on the 64-bit version. Choose a reasonable location to install this to - note the default is simply in the download directory. Instead it's recommended to find a directory such as <code>c:\WinPython32bit-2.7.10.3</code>, or into your local directory such as <code>c:\Users\yourname\WinPython-32bit-2.7.10.3</code>.
+To install WinPython 2.7.x, Download a release in the 2.7.x branch from the [http://winpython.github.io/ WinPython] site. It's recommended to use the 32-bit version, but you can also use the 64-bit version. Also, note that the recent releases (like WinPython-32bit-2.7.13.0Zero) don't come with any pre-installed packages. We recommend [https://sourceforge.net/projects/winpython/files/WinPython_2.7/2.7.10.3/ WinPython 2.7.10.3].
+
+Note that certain drivers (such as the SmartCard driver) ''do not'' work on the 64-bit version. Choose a reasonable location to install this to - note the default is simply in the download directory. Instead it's recommended to find a directory such as <code>c:\WinPython32bit-2.7.10.3</code>, or into your local directory such as <code>c:\Users\yourname\WinPython-32bit-2.7.10.3</code>.
 
 Go to your installation directory for WinPython, and run the shortcut called '''WinPython Command Prompt.exe'''. This will give you a command prompt which is setup to run Python along with associated scripts.
 
