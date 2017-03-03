@@ -1,7 +1,7 @@
 If this is your first time using the ChipWhisperer toolchain, the easiest way to start is to use a virtual machine with everything already set up for you.
 
 # Install the [https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_player/7_0 VMWare Player software] (free). Note that this program is available for Windows and Linux - if you're running a Mac, you're out of luck. 
-# Download a ChipWhisperer virtual machine image release. The current latest release with a VM image is [https://github.com/newaetech/chipwhisperer/releases/tag/0.11RC1 v0.11RC1].
+# Download a ChipWhisperer virtual machine image release. The current latest release with a VM image is [https://github.com/newaetech/chipwhisperer/releases/tag/3.2.0 v3.2.0].
 # Unzip the VMWare image and open the file <code>ChipWhisperer Lubuntu 32-bit.vmdk</code> in VMWare Player.
 Once you've opened this, you may want the latest version of the ChipWhisperer software - the version packaged with the VM image could be quite old. To do this, open LXTerminal in Ubuntu and run the following commands:
 <pre>
