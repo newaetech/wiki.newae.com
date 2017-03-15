@@ -1,0 +1,18 @@
+The ChipWhisperer Pro has a streaming mode that allows extremely long captures as long as relatively low sampling rates are used. For example, this plot shows an exerpt from two traces with nearly 1 million samples:
+
+[[File:Cwpro-stream-example.png|800px]]
+
+This capture mode is useful for many types of attacks, including:
+* Full captures of slow software AES libraries
+* Power analysis on ECC
+* Context switches on embedded operating systems
+
+While streaming, the ChipWhisperer hardware sends ADC data back to the capture software while recording more samples (instead of waiting until the end of the capture). During this process, the ADC samples are sent back to the computer in packets of approximately 3000 samples at a time. As a block diagram, this looks like:
+
+[[File:Cwpro-stream.PNG|800px]]
+
+The main danger in streaming mode is that the FPGA's sample buffer can overflow if the PC doesn't request these packets quickly enough. In practice, the maximum transfer rate is around 10 Msamples/s, so the maximum ADC frequency is approximately 10 MHz in streaming mode. Trying to stream above this rate will usually cause data to be lost: the FPGA overwrites samples after the buffer is full, so it's impossible to recover these samples after overrunning the buffer.
+
+On the software end, there are two things to watch for:
+* Long captures from streaming mode (millions of points) may take several seconds to record. When working with these long captures, make sure the software's timeouts are long enough.
+* Extremely long captures take a lot of memory. 64-bit Python is recommended if you plan on capturing many traces with millions of samples - you can hit the memory limit on 32-bit Python pretty quickly.
