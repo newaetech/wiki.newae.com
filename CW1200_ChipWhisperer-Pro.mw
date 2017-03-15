@@ -117,6 +117,43 @@ The Pro has an extra SMA connector intended to be used for additional trigger lo
 '''Output''': When the trigger module produces a trigger signal, the ChipWhisperer can reproduce this signal on the Aux SMA. This allows an external oscilloscope to be used to capture traces alongside the ChipWhisperer.
 
 = Touchscreen =
+The touchscreen on the ChipWhisperer Pro shows various details about its status and current settings.
+
+== Screen 1: Clock ==
+The clock screen shows the status of the CLKGEN and ADC clocks along with the frequency counter. 
+
+'''TODO: picture'''
+* '''CLKGEN''': Current frequency of CLKGEN clock in kHz
+** '''Source''': Input to CLKGEN DCM. Could be system clock or EXTCLK
+** '''DCM''': Lock status of CLKGEN DCM
+** '''Reset DCM''': Reset the CLKGEN output. Useful if clock has locked at the wrong frequency
+* '''ADC Clock''': Current ADC sampling rate in kHz
+** '''Source''': Input to ADC DCM. Could be related to CLKGEN or EXTCLK
+** '''DCM''': Lock status of ADC DCM
+** '''Reset DCM''': Reset the ADC clock output
+* '''Frequency Counter''': Current frequency measured by the frequency counter
+** '''Source''': Input to frequency counter. Could be either EXTCLK or CLKGEN
+
+== Screen 2: Routing ==
+The routing screen shows the status of the various I/O pins.
+
+'''TODO: picture'''
+* '''Aux Output''': Status of the aux SMA connections. Could be used as trigger input/output, glitch output, and/or clock output
+* '''IO Pins''': Status of each of the IO pins on the 20 pin connector. Possible values depend on pin
+* '''Target Power State''': Status of the 3.3 V output. Can be toggled here to reset target
+* '''Target HS IO-Out''': Signal connected to high-speed output (HS2). Could be CLKGEN, glitch module, or disabled
+
+== Screen 3: Trigger ==
+The trigger screen shows the current settings for the trigger module.
+
+'''TODO: picture'''
+
+== Screen 4: Glitch ==
+The glitch screen shows the current settings for the glitch module.
+
+'''TODO: picture'''
+
+
 - Pictures of screens
 - Descriptions of displays
 
