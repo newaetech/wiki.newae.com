@@ -5,10 +5,12 @@ Check out a [https://youtu.be/qS6JwX4SBOI sneak peek of the CW-Pro].
 '''(TODO: picture of CW-Pro)'''
 
 = Power Supply =
-- 5 V power supply
-- Can't power from USB
-- Needs both connections
-- Recommend power supplies for high-power targets
+The ChipWhisperer Pro can only be powered through its 5 V jack. It cannot be powered through the USB port - internally, there are no connections to the USB port's 5 V rail. This limitation is primarily due to the high current draw of the Pro: while powering the touchscreen running and an external target, it would be easy to exceed the USB current limit, causing all sorts of issues.
+
+To make this setup more flexible, the Pro ships with two power sources:
+* A 5 V, 2.1 A power supply. This supply is suitable for a permanent bench setup.
+* A USB-to-barrel jack cable. This solution is more portable: if you're travelling with a laptop, you can use a second USB port for power. A USB charger will also work here.
+If you're using the USB power cable, it is recommended to use a separate power supply to power any external target boards.
 
 = Basic Usage =
 The basic features on the Pro are exactly the same as the ChipWhisperer Lite. This means that any scripts and tutorials made for the Lite will work on the Pro, too: the connectors and pinouts are exactly the same.
