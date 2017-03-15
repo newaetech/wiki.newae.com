@@ -1,0 +1,5 @@
+The Pro has an extra SMA connector intended to be used for additional trigger logic. It can be used either as a trigger input or output.
+
+'''Input''': The Aux SMA trigger input can be used in the exact same manner as the other trigger inputs: the digital level is combined with the other active triggers (through an AND or OR gate) and this is used as the trigger signal. This is helpful for using other creative trigger signals. For example, if you have a custom target board, you could connect an FPGA output as an additional trigger signal. Alternatively, you could use a high-end oscilloscope's pattern detection as a trigger input.
+
+'''Output''': When the trigger module produces a trigger signal, the ChipWhisperer can reproduce this signal on the Aux SMA. This allows an external oscilloscope to be used to capture traces alongside the ChipWhisperer.
