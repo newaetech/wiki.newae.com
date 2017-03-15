@@ -1,6 +1,34 @@
-Coming soon! Expected release is Q1 2017.
+The CW1200 (ChipWhisperer Pro) is an upgraded version of the ChipWhisperer Lite capture hardware. The Pro includes an FPGA with much more space than the Lite, allowing many new features to be added, including a larger sample buffer, streaming-mode captures, additional trigger methods, and a touchscreen interface. These features make it a high-end device suitable for laboratory use.
 
-[[File:Mysterybox2.jpg]]
+Check out a [https://youtu.be/qS6JwX4SBOI sneak peek of the CW-Pro].
 
+'''(TODO: picture of CW-Pro)'''
+
+= Power Supply =
+- 5 V power supply
+- Can't power from USB
+- Needs both connections
+- Recommend power supplies for high-power targets
+
+= Basic Usage =
+The basic features on the Pro are exactly the same as the ChipWhisperer Lite. This means that any scripts and tutorials made for the Lite will work on the Pro, too: the connectors and pinouts are exactly the same.
+
+- AVR programmer
+- XMEGA programmer
+- Glitch
+- Measure
+- 20 pin
+- Smart card
+- Firmware upgrades
+
+= Advanced Features =
+== Streaming Mode ==
+== SAD Trigger ==
+== UART/SPI Trigger ==
+== SMA I/O ==
+
+= Touchscreen =
+- Pictures of screens
+- Descriptions of displays
 
 {{Template:Hardware}}
