@@ -144,17 +144,43 @@ The routing screen shows the status of the various I/O pins.
 * '''Target HS IO-Out''': Signal connected to high-speed output (HS2). Could be CLKGEN, glitch module, or disabled
 
 == Screen 3: Trigger ==
-The trigger screen shows the current settings for the trigger module.
+The trigger screen shows the current settings for the trigger module and the ADC capture settings.
 
 '''TODO: picture'''
+* '''Trigger Pins''': Whether each trigger input is enabled. Active inputs are highlighted
+** '''Mode''': Trigger combination method. Could be AND, OR, or NAND
+* '''Trigger Source''': The trigger type in use. Active trigger module is highlighted
+** '''State''': The current output level of the trigger module
+* '''Trigger Mode''': The ADC trigger type. Active mode is highlighted
+* '''Samples''':
+** '''Delay''': Current ADC offset. This is the number of samples to wait after trigger before recording begins
+** '''Pre''': Number of pre-trigger samples to be saved
+** '''Time''': Delay, but converted into a time
+** '''Total''': Number of samples to be recorded in total
+* '''ADC gain''':
+** '''Mode''': Amplification type. Either low or high
+** '''Setting''': Low noise amplifier gain level
 
 == Screen 4: Glitch ==
 The glitch screen shows the current settings for the glitch module.
 
 '''TODO: picture'''
+* '''Clock Src''': Input to the glitch module's clock. Active clock is highlighted
+** '''DCM''': Lock status of the glitch module's DCM
+* '''Glitch Setup''':
+** '''Width''': Duty cycle of glitch pulse, as a fraction of one period
+** '''Fine''': Adjustment on width
+** '''Offset''': Distance between clock rising edge and glitch pulse rising edge, as a fraction of one period
+** '''Fine''': Adjustment on offset
+* '''View''': Schematic of glitch clock. Shows regular clock above (blue) and glitch module output below (black)
+* '''Trigger Src''': Input for glitch module. Active source is highlighted
+* '''Trigger Setup''':
+** '''Trigger''': Cause a manual trigger. Has no effect unless trigger source is set to Manual
+** '''Offset''': Number of cycles to wait before starting glitch pulses
+** '''Repeat''': Number of consecutive pulses to generate
+* '''Output Status'''
+** '''VCC''': Status of glitching MOSFETs. Shows warning sign if VCC glitching is enabled
+** '''Cnt''': Total number of glitch pulses generated
 
-
-- Pictures of screens
-- Descriptions of displays
 
 {{Template:Hardware}}
