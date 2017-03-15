@@ -1,4 +1,4 @@
-When talking about the ChipWhisperer-Lite's firmware, there is really two parts to this:
+When talking about the ChipWhisperer's firmware, there is really two parts to this:
 
 # The FPGA Bitstream file.
 # The SAM3U USB interface chip firmware.
@@ -20,17 +20,17 @@ Note the main version is 0.11 in this example. The &quot;b0&quot; indicates a &q
 
 === Upgrading Firmware ===
 
-Before updating, you must put your ChipWhisperer-Lite into bootloader mode. Once put into this mode you will need to load a new firmware file. There is two ways of doing it: the ''automatic'' method, and the ''manual'' method. The automatic method is done through the GUI, and works if you have valid firmware image loaded. The ''manual'' method is always guaranteed to work.
+Before updating, you must put your ChipWhisperer into bootloader mode. Once put into this mode you will need to load a new firmware file. There is two ways of doing it: the ''automatic'' method, and the ''manual'' method. The automatic method is done through the GUI, and works if you have valid firmware image loaded. The ''manual'' method is always guaranteed to work.
 
 The automatic method is:
 
 Using ChipWhisperer-Capture GUI
 
-# Connect to the ChipWhisperer-Lite.
+# Connect to the ChipWhisperer.
 # From the ''Tools'' menu select ''Config CW Firmware''
 # Select the ''Open SAM3U Update Widget'' button.
 # Press the ''Enable Bootloader Mode'' button.
-# You will get an error, and the ChipWhisperer-Lite will disconnect. This is normal, and indicates the USB mode changed suddenly.
+# You will get an error, and the ChipWhisperer will disconnect. This is normal, and indicates the USB mode changed suddenly.
 # The blue LED will stop flashing, and the device will reconnect in programmer mode (see below).
 
 Once you are in bootloader mode, both the blue and red LED will be very dimmly lit:
@@ -53,7 +53,7 @@ Once we are in bootloader mode, you can follow these steps:
 # To use the default firmware file, leave the "Built-in" radio-box selected. If you want a custom firmware you can select the "External" mode.
 # Hit the "Run Program" button
 # Once completed, unplug/replug your device and it should come to life.
-# Close the update widgets, and reconnect to your ChipWhisperer-Lite.
+# Close the update widgets, and reconnect to your ChipWhisperer.
 
 === Manual Update ===
 
