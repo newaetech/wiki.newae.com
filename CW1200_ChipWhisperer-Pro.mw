@@ -15,13 +15,29 @@ If you're using the USB power cable, it is recommended to use a separate power s
 = Basic Usage =
 The basic features on the Pro are exactly the same as the ChipWhisperer Lite. This means that any scripts and tutorials made for the Lite will work on the Pro, too: the connectors and pinouts are exactly the same.
 
-- AVR programmer
-- XMEGA programmer
-- Glitch
-- Measure
-- 20 pin
-- Smart card
-- Firmware upgrades
+{{CollapsibleSection
+|intro = == AVR Programmer ==
+|content= CW1173_ChipWhisperer-Lite/AVR Programmer}}
+
+{{CollapsibleSection
+|intro = == XMEGA Programmer ==
+|content= CW1173_ChipWhisperer-Lite/XMEGA Programmer}}
+
+{{CollapsibleSection
+|intro = == Using Glitch Port ==
+|content= CW1173_ChipWhisperer-Lite/Glitch Port}}
+
+{{CollapsibleSection
+|intro = == Using Measure Port ==
+|content= CW1173_ChipWhisperer-Lite/Measure Port}}
+
+{{CollapsibleSection
+|intro = == 20-Pin Connector ==
+|content= CW1173_ChipWhisperer-Lite/20-Pin Connector}}
+
+{{CollapsibleSection
+|intro = == Upgrading SAM3U Firmware ==
+|content= CW1173_ChipWhisperer-Lite/Upgrading SAM3U Firmware}}
 
 = Advanced Features =
 == Streaming Mode ==
