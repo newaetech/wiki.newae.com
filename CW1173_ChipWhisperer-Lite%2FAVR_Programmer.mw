@@ -1,4 +1,4 @@
-The CW1173 has built-in support for programming either Atmel AVR or Atmel XMEGA device. This is designed to allow you to program our target boards (either the built-in XMEGA target, or the Multi-Target board).
+The CW1173 and CW1200 have built-in support for programming either Atmel AVR or Atmel XMEGA device. This is designed to allow you to program our target boards (including the built-in XMEGA target).
 
 Note this programmer is fairly simple, and ''does not'' provide all the features of a stand-alone programmer.
 
@@ -42,8 +42,7 @@ See [http://eleccelerator.com/fusecalc/fusecalc.php?chip=atmega328p an Online Fu
 
 <blockquote>'''tip'''
 
-; If programming a virgin ATMega328P device, the default low-fuse value of <code>62</code> results in the internal
-: 8 MHz oscillator being divided down to 1 MHz. Any external clock is ignored.
+; If programming a virgin ATMega328P device, the default low-fuse value of <code>62</code> results in the internal 8 MHz oscillator being divided down to 1 MHz. Any external clock is ignored.
 
 The low fuse byte must be changed to <code>D0</code> to use the external clock provided by the ChipWhisperer toolchain.
 </blockquote>
