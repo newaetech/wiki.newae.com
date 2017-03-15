@@ -1,0 +1,64 @@
+The touchscreen on the ChipWhisperer Pro shows various details about its status and current settings.
+
+== Screen 1: Clock ==
+The clock screen shows the status of the CLKGEN and ADC clocks along with the frequency counter. 
+
+'''TODO: picture'''
+* '''CLKGEN''': Current frequency of CLKGEN clock in kHz
+** '''Source''': Input to CLKGEN DCM. Could be system clock or EXTCLK
+** '''DCM''': Lock status of CLKGEN DCM
+** '''Reset DCM''': Reset the CLKGEN output. Useful if clock has locked at the wrong frequency
+* '''ADC Clock''': Current ADC sampling rate in kHz
+** '''Source''': Input to ADC DCM. Could be related to CLKGEN or EXTCLK
+** '''DCM''': Lock status of ADC DCM
+** '''Reset DCM''': Reset the ADC clock output
+* '''Frequency Counter''': Current frequency measured by the frequency counter
+** '''Source''': Input to frequency counter. Could be either EXTCLK or CLKGEN
+
+== Screen 2: Routing ==
+The routing screen shows the status of the various I/O pins.
+
+'''TODO: picture'''
+* '''Aux Output''': Status of the aux SMA connections. Could be used as trigger input/output, glitch output, and/or clock output
+* '''IO Pins''': Status of each of the IO pins on the 20 pin connector. Possible values depend on pin
+* '''Target Power State''': Status of the 3.3 V output. Can be toggled here to reset target
+* '''Target HS IO-Out''': Signal connected to high-speed output (HS2). Could be CLKGEN, glitch module, or disabled
+
+== Screen 3: Trigger ==
+The trigger screen shows the current settings for the trigger module and the ADC capture settings.
+
+'''TODO: picture'''
+* '''Trigger Pins''': Whether each trigger input is enabled. Active inputs are highlighted
+** '''Mode''': Trigger combination method. Could be AND, OR, or NAND
+* '''Trigger Source''': The trigger type in use. Active trigger module is highlighted
+** '''State''': The current output level of the trigger module
+* '''Trigger Mode''': The ADC trigger type. Active mode is highlighted
+* '''Samples''':
+** '''Delay''': Current ADC offset. This is the number of samples to wait after trigger before recording begins
+** '''Pre''': Number of pre-trigger samples to be saved
+** '''Time''': Delay, but converted into a time
+** '''Total''': Number of samples to be recorded in total
+* '''ADC gain''':
+** '''Mode''': Amplification type. Either low or high
+** '''Setting''': Low noise amplifier gain level
+
+== Screen 4: Glitch ==
+The glitch screen shows the current settings for the glitch module.
+
+'''TODO: picture'''
+* '''Clock Src''': Input to the glitch module's clock. Active clock is highlighted
+** '''DCM''': Lock status of the glitch module's DCM
+* '''Glitch Setup''':
+** '''Width''': Duty cycle of glitch pulse, as a fraction of one period
+** '''Fine''': Adjustment on width
+** '''Offset''': Distance between clock rising edge and glitch pulse rising edge, as a fraction of one period
+** '''Fine''': Adjustment on offset
+* '''View''': Schematic of glitch clock. Shows regular clock above (blue) and glitch module output below (black)
+* '''Trigger Src''': Input for glitch module. Active source is highlighted
+* '''Trigger Setup''':
+** '''Trigger''': Cause a manual trigger. Has no effect unless trigger source is set to Manual
+** '''Offset''': Number of cycles to wait before starting glitch pulses
+** '''Repeat''': Number of consecutive pulses to generate
+* '''Output Status'''
+** '''VCC''': Status of glitching MOSFETs. Shows warning sign if VCC glitching is enabled
+** '''Cnt''': Total number of glitch pulses generated
