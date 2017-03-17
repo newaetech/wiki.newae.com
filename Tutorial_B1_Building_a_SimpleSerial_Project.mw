@@ -2,7 +2,7 @@ This tutorial will introduce you to the 'simpleserial' communications system. It
 
 = What is SimpleSerial =
 
-SimpleSerial is the communications protocol used for almost all of the ChipWhisperer demo project. It's a very basic serial protocol which can be easily implemented on most systems. This system communicates using a standard asyncronous serial protocol, 38400 baud, 8-N-1.
+[[SimpleSerial]] is the communications protocol used for almost all of the ChipWhisperer demo project. It's a very basic serial protocol which can be easily implemented on most systems. This system communicates using a standard asyncronous serial protocol, 38400 baud, 8-N-1.
 
 All messages are sent in ASCII-text, and are normally terminated with a line-feed ('\n'). This allows you to interact with the simpleserial system over a standard terminal emulator.
 
