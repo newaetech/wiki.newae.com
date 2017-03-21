@@ -3,15 +3,23 @@ The build system for the "victim" target firmware is related to all files in the
 
 Note there is two build systems - Release 3.3.0 and later use the newer build system. The old build system is described later, and should not be used for current development.
 
+The build system generally has the following important folders/Makefiles:
+ application-specific-folder/Makefile
+ application-specific-folder/Makefile.platform [OPTIONAL]
+ crypto/Makefile.crypto
+ hal/Makefile.hal
+ Makefile.inc
 
 
+To build an application, you run make in that application's folder. You can either specify the platform to build for at the command prompt, or you can save it to a specific file. For example to build simpleserial-aes for the XMEGA Target (used in CW-Lite):
 
-
-
-
-
-
+ $ cd chipwhisperer/hardware/victims/firmware/simpleserial-aes
+ $ make PLATFORM=CW303
 
 = Old Build System =
 
-The old build system could only work with AVR/XMEGA targets. It had the following files:
+The old build system could only work with AVR/XMEGA targets. It had the following files defining what was built:
+ application-folder/Makefile
+ hal/PLATFORM_INCLUDE.mk
+
+Where the application Makefile (e.g., simpleserial-aes/Makefile) described both the build commands to use and what files to build. The PLATFORM_INCLUDE.mk was only used to pull in hardware-specific files (the HAL).
