@@ -1,0 +1,17 @@
+
+The build system for the "victim" target firmware is related to all files in the folder '''chipwhisperer/hardware/victims/firmware'''. This page describes how the build system works.
+
+Note there is two build systems - Release 3.3.0 and later use the newer build system. The old build system is described later, and should not be used for current development.
+
+
+
+
+
+
+
+
+
+
+= Old Build System =
+
+The old build system could only work with AVR/XMEGA targets. It had the following files:
