@@ -214,11 +214,11 @@ Now, download the FPGA Firmware:
 
 = Completing Tutorial with CW1173/CW1200 =
 
-Note the following is only applicable to the use of the ChipWhisperer-Lite hardware (aka the CW1173). See [[#Completing_Tutorial_with_CW1002_(ChipWhisperer_Capture_Rev2)]] if you are not using this hardware.
+Note the following is only applicable to the use of the CW1173 (ChipWhisperer Lite) or CW1200 (ChipWhisperer Pro) hardware. See [[#Completing_Tutorial_with_CW1002_(ChipWhisperer_Capture_Rev2)]] if you are not using this hardware.
 
 == Setting up the Hardware ==
 
-This tutorial uses the [[CW1173_ChipWhisperer-Lite]] hardware. No hardware setup is required normally, simply plug in the micro-USB cable:
+This tutorial uses the [[CW1173_ChipWhisperer-Lite]] or [[CW1200_ChipWhisperer-Pro]] hardware. No hardware setup is required normally, simply plug in the USB cable:
 
 [[File:cw1173_microusb.jpg|image]]
 
@@ -260,7 +260,7 @@ Next, you'll have to configure the target module:
 
 <ol start="6" style="list-style-type: decimal;">
 <li>Switch to the ''Target Settings'' tab</li>
-<li>As the ''connection'', select the ''ChipWhisperer-Lite'' option</li></ol>
+<li>As the ''connection'', select the ''NewAE USB (CWLite/CW1200)'' option</li></ol>
 
 [[File:connect.png|image]]
 
