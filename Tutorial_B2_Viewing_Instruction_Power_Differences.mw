@@ -170,13 +170,13 @@ At this point you've completed the same amount of information as the previous tu
 This tutorial is using either an AtMega328p which is an Atmel AVR device, or AtXMEGA128D4 which is an Atmel XMEGA device. We are comparing the power consumption of two different instructions, the <code>MUL</code> (multiply) instruction and the <code>NOP</code> (no operation) instruction. Some information on these two instructions:
 
 ; mul
-: ;* Multiples two 8-bit numbers together.
-;* Takes 2 clock cycles to complete
-;* Intuitively expect fairly large power consumption due to complexity of operation required
+* Multiples two 8-bit numbers together.
+* Takes 2 clock cycles to complete
+* Intuitively expect fairly large power consumption due to complexity of operation required
 ; nop
-: ;* Does nothing
-;* Takes 1 clock cycle to complete
-;* Intuitively expect low power consumption due to core doing nothing
+* Does nothing
+* Takes 1 clock cycle to complete
+* Intuitively expect low power consumption due to core doing nothing
 
 Note that the capture clock is running at 4x the device clock. Thus a single <code>mul</code> instruction should span 8 samples on our output graph, since it takes 4 samples to cover a complete clock cycle.
 
