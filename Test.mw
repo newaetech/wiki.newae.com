@@ -1,16 +1,3 @@
-==Infobox==
-{{Infobox item
-|name                   = Some name
-|image                  = File:P1090088.jpg
-|caption                = Some caption for the image
-|Target Device          = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Target Architecture    = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Hardware Crypto        = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Purchase Hardware      = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Design Files           = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-|Supported Applications = some stuff and [https://wiki.newae.com/CW308T-AVR links]
-}}
-some free text around here
 ==Other stuff==
 {{CollapsibleSection
 |intro = =AVR Programmer=
@@ -29,4 +16,17 @@ this si a cool section about XMEGA
 |content= CW1173_ChipWhisperer-Lite/XMEGA Programmer
 |indentation = 50
 }}
+==Infobox==
+{{Infobox item
+|name                   = Some name
+|image                  = File:P1090088.jpg
+|caption                = Some caption for the image
+|Target Device          = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Target Architecture    = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Hardware Crypto        = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Purchase Hardware      = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Design Files           = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Supported Applications = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+}}
+some free text around here
 __NOTOC__
