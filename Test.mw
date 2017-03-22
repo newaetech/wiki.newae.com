@@ -1,12 +1,12 @@
 ==Infobox==
 {{Infobox item
-|name           = Some name
-|image          = File:P1090088.jpg
-|caption        = Some caption for the image
-|Target Device  = some stuff
-|Target Architecture = some stuff
-|Hardware Crypto     = some stuff
-|Purchase Hardware   = some stuff
-|Design Files        = some stuff
-|Supported Applications = some stuff and links https://wiki.newae.com/CW308T-AVR
+|name                   = Some name
+|image                  = File:P1090088.jpg
+|caption                = Some caption for the image
+|Target Device          = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Target Architecture    = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Hardware Crypto        = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Purchase Hardware      = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Design Files           = some stuff and [https://wiki.newae.com/CW308T-AVR links]
+|Supported Applications = some stuff and [https://wiki.newae.com/CW308T-AVR links]
 }}
