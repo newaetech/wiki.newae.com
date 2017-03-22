@@ -1,12 +1,12 @@
 ==Infobox==
-{{Infobox machine
-| name           = Some name
-| image          = File:P1090088.jpg
-| caption        = Some caption for the image
-|Target Device = some stuff
+{{Infobox item
+|name           = Some name
+|image          = File:P1090088.jpg
+|caption        = Some caption for the image
+|Target Device  = some stuff
 |Target Architecture = some stuff
-|Hardware Crypto= some stuff
-|Purchase Hardware= some stuff
-|Design Files= some stuff
-|Supported Applications=some stuff
+|Hardware Crypto     = some stuff
+|Purchase Hardware   = some stuff
+|Design Files        = some stuff
+|Supported Applications = some stuff
 }}
