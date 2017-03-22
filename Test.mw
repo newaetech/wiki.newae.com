@@ -1,42 +1,12 @@
-{{CollapsibleSection
-|intro = =AVR Programmer=
-this si a cool section about AVR Programmer
-|content= CW1173_ChipWhisperer-Lite/AVR Programmer
-}}
-{{CollapsibleSection
-|intro = =AVR Programmer=
-this si a cool section about AVR Programmer
-|content= CW1173_ChipWhisperer-Lite/AVR Programmer
-|indentation = 30
-}}
-{{CollapsibleSection
-|intro = ===XMEGA Programmer===
-this si a cool section about XMEGA 
-|content= CW1173_ChipWhisperer-Lite/XMEGA Programmer
-|indentation = 50
-}}
-__NOTOC__
-
 ==Infobox==
 {{Infobox machine
-| name           = Automobile 
-| image          = Benz-velo.jpg
-| caption        = Karl Benz's "Velo" model (1894) - entered into an early automobile race
-| classification = [[Vehicle]]
-| industry       = Various
-| application    = [[Transport|Conveyance]] 
-| dimensions     = 
-| weight         =
-| fuel_source    = [[Gasoline]], [[Diesel fuel|Diesel]], [[Electric]]
-| powered        = Yes
-| self-propelled = Yes
-| wheels         = 3-4
-| tracks         =
-| legs           =
-| aerofoils      =
-| axles          = 0-2
-| components     =
-| invented       = 1672
-| inventor       = [[Ferdinand Verbiest]]
-| examples       =
+| name           = Some name
+| image          = File:P1090088.jpg
+| caption        = Some caption for the image
+|Target Device = some stuff
+|Target Architecture = some stuff
+|Hardware Crypto= some stuff
+|Purchase Hardware= some stuff
+|Design Files= some stuff
+|Supported Applications=some stuff
 }}
