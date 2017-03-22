@@ -102,10 +102,10 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 <li>Start ChipWhisperer-Capture</li>
 <li>As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option.</li>
 <li>As the ''Target Module'', select the ''Simple Serial'' option.</li>
-<li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer'' (for CW1002) or ''ChipWhisperer-Lite'' (for CW1173 or CW1180).</li>
-<li>Switch to the ''Scope Settings'' tab, and ensure the ''connection'' is set to either ''ChipWhisperer'' (for CW1002) or ''ChipWhisperer-Lite'' (for CW1173 or CW1180).</li>
+<li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer'' (for CW1002) or ''NewAE USB (CWLite/CW1200)'' (for ChipWhisperer Lite/Pro).</li>
+<li>Switch to the ''Scope Settings'' tab, and ensure the ''connection'' is set to either ''ChipWhisperer'' (for CW1002) or ''NewAE USB (CWLite/CW1200)'' (for ChipWhisperer Lite/Pro).</li>
 <li>Run the master connect (click the button labeled ''Master: DIS''). Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
-<li><p>For the CW1173/CW1180 (ChipWhisperer-Lite based systems), perform the following:</p>
+<li><p>For the CW1173/CW1180/Cw1200 (ChipWhisperer-Lite/Pro based systems), perform the following:</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
 <li>Set the ''CLKGEN'' frequency to ''7.37 MHz''</li>
 <li>Set the*Target HS-IO Out* as ''CLKGEN''</li></ol>
@@ -140,7 +140,7 @@ At this point you've completed the same amount of information as the previous tu
 <li>Change the ''ADC Clock'' ''source'' as being ''EXTCLK x4 via DCM''. This routes the external clock through a 4x multiplier, and routes it to the ADC.</li></ol>
 </blockquote>
 <ol start="13" style="list-style-type: decimal;">
-<li>For the CW1173/CW1180 (ChipWhisperer-Lite based hardware), perform the following:</li></ol>
+<li>For the CW1173/CW1180/Cw1200 (ChipWhisperer-Lite/Pro based hardware), perform the following:</li></ol>
 
 <blockquote><ol start="4" style="list-style-type: lower-alpha;">
 <li>Change the ''ADC Clock'' ''source'' as being ''CLKGEN x4 via DCM''. This routes the device clock through a 4x multiplier, and routes it to the ADC.</li></ol>
