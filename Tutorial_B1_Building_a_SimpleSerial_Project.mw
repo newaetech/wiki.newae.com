@@ -31,8 +31,8 @@ Once you have a working compiler (check by typing 'avr-gcc' at the command line 
 </li>
 <li><p>Change the terminal to the newly copied directory. For example:</p>
 <pre>cd c:\chipwhisperer\hardware\victims\firmware\simpleserial-base-lab1</pre></li>
-<li><p>Then run <code>make</code> to build the system:</p>
-<pre>make</pre>
+<li><p>Then, run <code>make</code> to build the system. Make sure you specify which platform you're using as your target. For example, for the ChipWhisperer Lite target, run</p>
+<pre>make PLATFORM=CW303</pre>
 <p>Which should have the following output:</p>
 <pre>...Bunch of lines removed...
 Creating Extended Listing: simpleserial-base.lss
