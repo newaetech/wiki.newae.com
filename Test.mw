@@ -18,20 +18,25 @@ this si a cool section about XMEGA
 __NOTOC__
 
 ==Infobox==
-{{Infobox prepared food
-| name             = Crostata
-| image            = Crostata di mele e mandorle di Adriano a profilo.jpg
-| imagesize        = 
-| caption          = Apple crostata with slivered almonds
-| alternate_name   = 
-| country          = [[Italy]]
-| region           = 
-| creator          = 
-| course           = [[Dessert]]
-| type             = [[Tart]]
-| served           = 
-| main_ingredient  = Pastry crust, [[jam]] or [[ricotta]], fruit
-| variations       = ''Crostata di frutta'', ''crostata di ricotta'', many other sweet or savoury variations
-| calories         = 
-| other            = 
+{{Infobox machine
+| name           = Automobile 
+| image          = Benz-velo.jpg
+| caption        = Karl Benz's "Velo" model (1894) - entered into an early automobile race
+| classification = [[Vehicle]]
+| industry       = Various
+| application    = [[Transport|Conveyance]] 
+| dimensions     = 
+| weight         =
+| fuel_source    = [[Gasoline]], [[Diesel fuel|Diesel]], [[Electric]]
+| powered        = Yes
+| self-propelled = Yes
+| wheels         = 3-4
+| tracks         =
+| legs           =
+| aerofoils      =
+| axles          = 0-2
+| components     =
+| invented       = 1672
+| inventor       = [[Ferdinand Verbiest]]
+| examples       =
 }}
