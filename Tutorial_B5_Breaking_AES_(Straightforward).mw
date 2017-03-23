@@ -3,7 +3,7 @@ This tutorial will take you through a complete attack on a software AES implemen
 = Capturing =
 This tutorial runs on four different hardware targets. You only need to follow the steps for your given hardware.
 
-== Capturing with ChipWhisperer-Lite with default XMEGA Target (CW1173 + CW303) ==
+== Capturing with ChipWhisperer-Lite/Pro with default XMEGA Target (CW303) ==
 
 NOTE: You can see a Quick-Start Guide and Video for this target on the [[CW1173_ChipWhisperer-Lite]] page:
 
@@ -12,7 +12,7 @@ NOTE: You can see a Quick-Start Guide and Video for this target on the [[CW1173_
 === Hardware Setup ===
 
 <ol style="list-style-type: decimal;">
-<li><p>Connect the CW1173 by micro USB cable to computer.</p>
+<li><p>Connect the CW1173/CW1200 by USB cable to computer.</p>
 <blockquote><p>[[File:cw1173_microusb.jpg|image]]</p></blockquote>
 </li>
 <li> The software AES implementation that will run on the target is located in <code>chipwhisperer\hardware\victims\firmware\simpleserial-aes</code>. In a terminal window, navigate here and run the command <code>make</code> to build the firmware. 
@@ -64,14 +64,14 @@ Make sure that the platform is correct.
 <li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
 <li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
 
-== Capturing with ChipWhisperer-Lite with NOTDuino (CW1173 + CW304) ==
+== Capturing with ChipWhisperer-Lite/Pro with NOTDuino (CW304) ==
 
 === Hardware Setup ===
 
 <ol style="list-style-type: decimal;">
 <li>Set jumpers on NOTDuino to default position (see silkscreen on bottom of NOTDuino for default positions).</li>
 <li>Connect the NOTDuino using the SMA cable on the &quot;measure&quot; port, and the 20-pin IDC cable:</li>
-<li><p>Connect the CW1173 by micro USB cable to computer.</p>
+<li><p>Connect the CW1173/CW1200 by USB cable to computer.</p>
 <p>[[File:cw1173_avr_microusb.jpg|image]]</p></li></ol>
 
 === Capturing the Traces ===
