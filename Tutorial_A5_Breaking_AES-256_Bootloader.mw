@@ -71,8 +71,7 @@ Note that you '''don't need hardware''' to complete the tutorial. Instead, you c
 == Building/Programming the Bootloader ==
 The firmware that implements the bootloader is available inside the ChipWhisperer folder at <code>chipwhisperer\hardware\victims\firmware\bootloader-aes256</code>. If you've uploaded the firmware for any of the other tutorials, the process is identical:
 
-# Open the Makefile inside this folder. For the ChipWhisperer Lite, make sure that the line <code>PLATFORM = CW303</code> is uncommented. For other devices, make sure that the appropriate line is uncommented.
-# Open a command prompt/terminal window and navigate to this folder. Enter the command <code>make</code> and ensure that the program is successfully compiled. The output should end with a line like
+# Open a command prompt/terminal window and navigate to this folder. Enter the command <code>make PLATFORM=X</code>, where X is the name of your target. For instance, use <code>PLATFORM=CW303</code> on the ChipWhisperer Lite. Ensure that the program is successfully compiled. The output should end with a line like
 #: <pre>Built for platform CW-Lite XMEGA</pre>
 # Open the ChipWhisperer Capture software and connect to your hardware. Open the programmer window (''Tools > CW-Lite XMEGA Programmer''), find the <code>.hex</code> file that you just made, and ''Erase/Program/Verify FLASH''.
 
