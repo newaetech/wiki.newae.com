@@ -108,3 +108,5 @@ Using these new equations, we can perform a full attack on AES-256 with the foll
 # Transform the hypothetical round key into the actual value of the 13th round key.
 # Reverse the 13th and 14th round keys using the AES-256 key schedule to determine the 256 bit secret encryption key.
 Once this is done, we have successfully attacked an AES-256 implementation by looking at two separate AES S-boxes.
+
+[[Category:Theory]]
