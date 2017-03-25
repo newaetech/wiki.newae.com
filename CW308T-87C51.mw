@@ -221,5 +221,6 @@ When performing side channel attacks on the verify process, the relative phase o
 The 87C51 has a synchronous reset input (?!) - a reset requires 12 oscillator cycles to take effect, and the machine clock's phase does not change during a reset! This means that the only way to change the machine clock's phase is to power cycle the 87C51. (The "Read Signature" button in the AVR Programmer does this. Pulling out the processor and re-mounting it does too.)
 
 {{Template:Hardware}}
-[[Category:Targets]]
-[[Category:CW308 Targets]]
+[[Category: Hardware]]
+[[Category: Targets]
+[[Category: CW308 Targets]]
