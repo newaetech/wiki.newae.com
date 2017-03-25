@@ -6,6 +6,3 @@
 [https://cr.yp.to/antiforgery/cachetiming-20050414.pdf D. Bernsein - Cache-timing attacks on AES]
 
 [https://koclab.cs.ucsb.edu/docs/koc/c38.pdf Onur Acıicmez et al. - Cache Based Remote Timing Attack on the AES]
-
-The following paper contains a description of this effect, although the presence is described as occurring due to a 'Flash Accelerator' block.
-[https://eprint.iacr.org/2010/408.pdf J.F. Gallais et al. - Improved Trace-Driven Cache-Collision Attacks against Embedded AES Implementations]
