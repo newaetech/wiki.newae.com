@@ -1,0 +1,8 @@
+
+== Useful References ==
+
+[https://www.tau.ac.il/~tromer/papers/cache.pdf D Osvik et al. - Cache Attacks and Countermeasures: the Case of AES]
+
+[https://cr.yp.to/antiforgery/cachetiming-20050414.pdf D. Bernsein - Cache-timing attacks on AES]
+
+[https://koclab.cs.ucsb.edu/docs/koc/c38.pdf Onur Acıicmez et al. - Cache Based Remote Timing Attack on the AES]
