@@ -632,3 +632,4 @@ class BootloaderTarget(TargetTemplate):
 </syntaxhighlight>
 
 [[Category:Examples]]
+[[Category:Theory]]
