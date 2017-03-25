@@ -630,3 +630,5 @@ class BootloaderTarget(TargetTemplate):
         else:
             raise IOError("Failed to communicate, no response")
 </syntaxhighlight>
+
+[[Category:Examples]]
