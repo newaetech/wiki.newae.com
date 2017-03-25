@@ -1,3 +1,14 @@
+{{Infobox cw308target
+|name                   = CW308T-GENERIC / CW308T-25.4
+|image                  = File:P1090088.jpg
+|caption                = Image of PCB
+|Target Device          = 
+|Target Architecture    = 
+|Hardware Crypto        =
+|Purchase Hardware      = 
+|Design Files           = 
+|Supported Applications = N/A
+}}
 
 This is a basic prototype board which can be used for mounting other chips on the [[CW308 UFO Target]]. It can also be used to mount small boards (see the examples for photos).
 
