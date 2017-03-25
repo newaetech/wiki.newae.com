@@ -1,6 +1,19 @@
 {{Warningbox|This is a BETA target and not yet available. This wiki page will continue to be updated until release. }}
 
 
+{{Infobox cw308target
+|name                   = CW308T-87C51
+|image                  = 
+|caption                = 
+|Target Device          = 8xC51
+|Target Architecture    = 8-bit 8051
+|Hardware Crypto        = Possible
+|Purchase Hardware      = 
+|Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/87c51 GITHub Link]
+[https://oshpark.com/shared_projects/i31Y8CLo Order PCB from OSHPark]
+|Supported Applications =
+}}
+
 The 87C51 target is designed for a line of 8051 processors made by Intel in PLCC44 package, although other manufactures make equivalent devices as well (notably NXP as well). This target board allows for two types of side channel attacks:
 # Regular power analysis or glitching on the 87C51 firmware (ex: attacking an AES key while the 87C51 performs AES encryption)
 # Attacks on the verification process in order to bypass the device's encryption table or security fuses
