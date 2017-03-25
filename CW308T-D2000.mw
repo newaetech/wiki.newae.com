@@ -1,5 +1,17 @@
 {{Warningbox|This is a BETA target and not yet available. This wiki page will continue to be updated until release. Gerbers are available in the GIT repo if you live dangerously. }}
 
+{{Infobox cw308target
+|name                   = CW308T-D2000
+|image                  = 
+|caption                = 
+|Target Device          = Intel Quark D2000
+|Target Architecture    = x86
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+|Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/d2000 GITHub link]
+|Supported Applications =
+}}
+
 [[File:d2000_render.png|400px]]
 
 == Programming ==
