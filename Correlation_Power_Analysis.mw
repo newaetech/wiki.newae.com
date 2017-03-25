@@ -112,3 +112,5 @@ h_{d, i} = \text{Hamming Weight}(\text{sbox}[p_d \oplus i])
 </math>
 
 Then, we can proceed with the attack as described above. Since we are attacking one byte of the key at a time, we will have to try <math>I = 2^8</math> values for each subkey. Then, there are 16 bytes in the key, so our attack will take <math>16 \times 2^8 = 2^{12}</math> time. This is an enormous improvement over trying every possible key, which would take <math>2^{128}</math> time.
+
+[[Category:Theory]]
