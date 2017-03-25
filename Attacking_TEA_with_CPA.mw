@@ -345,3 +345,7 @@ This guide has walked through a very basic CPA attack on TEA encryption. However
 * This was a very "manual" attack: we had to guide our code through each of the single-byte attacks. It would be good to have a more automatic attack that combines all of the information from all three attack points, rather than picking and choosing bytes to attack.
 * We had to use a lower optimization level so that we could see the power signature from the sensitive attack points. Can we avoid this? Maybe it's possible to use a different sampling method to find more leakage.
 * A template attack might be a more powerful way to perform this attack. There are several points that we could create a template for, including the three points that we examined in this attack.
+
+
+[[Category:Examples]]
+[[Category:Half Baked Tutorials]]
