@@ -392,7 +392,7 @@ NB: The nonce in your firmware file (saved in supersecret.h) will probably be di
 
 == Bootloader Interface Code ==
 
-<syntaxhighlight>
+<syntaxhighlight lang="python">
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
