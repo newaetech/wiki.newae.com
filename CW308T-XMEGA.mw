@@ -1,3 +1,17 @@
+{{Infobox cw308target
+|name                   = CW308T-XMEGA
+|image                  = File:P1090089.jpg
+|caption                = 
+|Target Device          = Atmel XMEGA
+|Target Architecture    = 8-bit Harvard
+|Hardware Crypto        = Possible
+|Purchase Hardware      = 
+|Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/avr GITHub Link]
+[https://oshpark.com/shared_projects/jhjT2fUN Order PCB from OSHPark]
+|Supported Applications =
+}}
+
+
 [[File:P1090089.jpg|600px]]
 
 The CW308T-XMEGA fits an Atmel XMEGA device.
