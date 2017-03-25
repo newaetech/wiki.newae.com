@@ -295,7 +295,7 @@ If you haven't previously set this up, see the page [[Linux Driver Setup]] for d
 
 == Python Example ==
 
-{{Infobox|The following examples assume you are using the 35T sized FPGA. You will have to change the bitstream location if using the 100T - see details of example projects above. The short answer is you should be able to change "35t" to "100t" in the example paths. }}
+{{Warningbox|The following examples assume you are using the 35T sized FPGA. You will have to change the bitstream location if using the 100T - see details of example projects above. The short answer is you should be able to change "35t" to "100t" in the example paths. }}
 
 === Connecting and Programming ===
 You can connect to the board using the following command:<syntaxhighlight lang="python">
