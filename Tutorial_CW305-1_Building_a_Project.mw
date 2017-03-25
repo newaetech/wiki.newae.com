@@ -51,7 +51,7 @@ This project is already fully built for us. However, if you want to make your ow
 
 This process can take a while - on an average laptop, the sample project takes around 7 minutes to build. 
 
-{{Infobox|'''Gotcha''': This project can be implemented to fit into an Artix-7A35T or an Artix-7A100T chip. Make sure that you have the correct one selected (right click -> "Make Active") before you build the project:
+{{Warningbox|'''Gotcha''': This project can be implemented to fit into an Artix-7A35T or an Artix-7A100T chip. Make sure that you have the correct one selected (right click -> "Make Active") before you build the project:
 
 [[File:CW305MakeActive.png]]
 }}
