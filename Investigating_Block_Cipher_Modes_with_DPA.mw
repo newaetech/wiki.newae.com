@@ -197,3 +197,5 @@ Running this script on all five datasets produced the following five graphs:
 [[File:Block-Cipher-CTR-Plot.png|600px]]
 
 It is quite clear from these graphs which encryption modes are being used, so the attack was successful.
+
+[[Category:Examples]]
