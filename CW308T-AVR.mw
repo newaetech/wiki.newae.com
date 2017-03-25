@@ -1,3 +1,15 @@
+{{Infobox cw308target
+|name                   = CW308T-AVR
+|image                  = File:P1090088.jpg
+|caption                = 
+|Target Device          = Atmel AVR
+|Target Architecture    = 8-bit Harvard
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+|Design Files           = 
+|Supported Applications =
+}}
+
 [[File:P1090088.jpg|600px]]
 
 == I/O Connections ==
