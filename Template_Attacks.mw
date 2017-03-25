@@ -215,3 +215,5 @@ Comparing these logarithms will give us the same results without the precision i
 The number of attack traces required to complete a template attack can vary wildly depending on the quality of the preprocessing. As described in the original papers on template attacks (Chari, Rao, and Rohatgi), when using high-quality templates made from many traces, it is possible to attack a system with a single trace. In the ChipWhisperer tutorials, we'll save ourselves a bit of processing time and only record a few thousand traces for generating the templates, meaning that we'll need more attack traces to recover the key from the victim. 
 
 It may be interesting to experiment with different amounts of processing. Can you break AES in one trace? How many template traces does it take?
+
+[[Category:Theory]]
