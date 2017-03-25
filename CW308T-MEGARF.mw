@@ -1,5 +1,18 @@
 {{Warningbox|This is a BETA target and not yet available. This wiki page will continue to be updated until release. }}
 
+{{Infobox cw308target
+|name                   = CW308T-MEGARF
+|image                  = 
+|caption                = 
+|Target Device          = Atmel AVR
+|Target Architecture    = 8-bit Harvard
+|Hardware Crypto        = Yes
+|Purchase Hardware      = 
+|Design Files           = 
+|Supported Applications =
+}}
+
+
 This target is for the ATMega2564RFR2. This makes a great target for exploring IoT technologies, such as mesh networking protocols.
 
 [[File:meagrf_render_02.png|400px]]
