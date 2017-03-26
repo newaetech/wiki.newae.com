@@ -11,4 +11,4 @@ What might be nice here is some way to tell it NOT to include some type of categ
 Presumably this would just be an option in LocalSettings to turn such logic on/off.
 
 
-<categorytree mode=all depth=4 hideroot='on' style="float:right; clear:right; margin-left:1ex; border:1px solid gray; padding:0.7ex; background-color:white;">TocRoot</categorytree>
+<categorytree mode=all depth=4 hideroot='on' >TocRoot</categorytree>
