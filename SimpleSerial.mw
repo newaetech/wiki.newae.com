@@ -101,9 +101,9 @@ SimpleSerial is the name given to the default communication protocol used by New
 |
 |-
 |v
-|
-|
-|
+|v\n
+|Select protocol version (0 = original, 1 = 1.1)
+|In
 |
 |
 |-
