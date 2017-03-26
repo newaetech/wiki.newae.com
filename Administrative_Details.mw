@@ -1,3 +1,6 @@
+
+== Mods to CategoryTree ==
+
 In the 1.26 version (https://www.upwork.com/leaving?ref=https%3A%2F%2Fgithub.com%2Fwikimedia%2Fmediawiki-extensions-CategoryTree%2Ftree%2FREL1_26) you need to go to extensions/CategoryTree/CategoryPageSubclass.php at line 39 repalce "global $wgRequest;" with global $wgRequest, $wgExpandedLevelsOnCategoryPages;
 if (!$wgExpandedLevelsOnCategoryPages){
 $wgExpandedLevelsOnCategoryPages = 0;
