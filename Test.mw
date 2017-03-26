@@ -30,14 +30,3 @@ this si a cool section about XMEGA
 }}
 some free text around here
 __NOTOC__
-
-
-==categorytree==
-
-Issues:
-
-1) The categorytree isn't rebuilt. Is there a way to rebuild ALL of them across the wiki (for example I use a few on https://wiki.newae.com/Category:Knowledge_base)? I'd rather not just disable the cache sitewide.
-
-2) Weird circular dependancies. See the 'Knowledge Base' - I think this comes about because [[Category:Tutorials]] links to both the TocCategory & the Examples category?
-
-<categorytree mode=all depth=4 hideroot='on' style="float:right; clear:right; margin-left:1ex; border:1px solid gray; padding:0.7ex; background-color:white;">TocRoot</categorytree>
