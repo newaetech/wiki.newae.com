@@ -2,8 +2,11 @@
 
 Issues:
 
-# The categorytree isn't rebuilt. Make a new category & add to [[Category:TocRoot]] for example, it wont' appear until you come back & save this page. Or add a page to that category and still no love until you resave this page. Is there a way to rebuild ALL of them across the wiki (for example I use a few on https://wiki.newae.com/Category:Knowledge_base)? I'd rather not just disable the cache sitewide.
-# Weird circular dependencies. See the 'Knowledge Base' - I think this comes about because [[Category:Tutorials]] links to both the TocRoot & the Examples category? I want this link for other reasons (the tutorials are a type of Example, but I also want them at a seperate location in the categorytree).   What might be nice here is some way to tell it NOT to include some type of category in the categorytree. For example the 'Knowledge Base' entry shouldn't have the 'Examples', because that category is already listed elsewhere directly under the TocRoot. This might be the best logic: if a subcategory is already a direct child of the root of the categorytree, DON'T include it as a subcategory.
+1. The categorytree isn't rebuilt. Make a new category & add to [[Category:TocRoot]] for example, it wont' appear until you come back & save this page. Or add a page to that category and still no love until you resave this page. Is there a way to rebuild ALL of them across the wiki (for example I use a few on https://wiki.newae.com/Category:Knowledge_base)? I'd rather not just disable the cache sitewide.
+
+2. Weird circular dependencies. See the 'Knowledge Base' contins 'Knowledge Base' as a subcategory - I think this comes about because [[Category:Tutorials]] links to both the TocRoot & the Examples category? I want this link for other reasons (the tutorials are a type of Example, but I also want them at a separate location in the categorytree).
+
+What might be nice here is some way to tell it NOT to include some type of category in the categorytree. For example the 'Knowledge Base' entry shouldn't have the 'Examples', because that category is already listed elsewhere directly under the TocRoot. This might be the best logic: if a subcategory is already a direct child of the root of the categorytree, DON'T include it as a subcategory.
 
 
 <categorytree mode=all depth=4 hideroot='on' style="float:right; clear:right; margin-left:1ex; border:1px solid gray; padding:0.7ex; background-color:white;">TocRoot</categorytree>
