@@ -4,7 +4,7 @@ Welcome to ChipWhisperer - the complete open-source toolchain for side-channel p
 
 ChipWhisperer is maintained by [https://www.newae.com NewAE Technology Inc.], which sells a combination of open-source hardware, supporting tools, training, and consulting services. ChipWhisperer is trademark of NewAE Technology Inc., registered in the US and Europe. This means only NewAE can sell official products under the ChipWhisperer name, and was done to ensure products meet [[Quality Control Guidelines]], as these fairly complex products require good testing to ensure you don't have a frustrating experience.
 
-This wiki aims to grown from simple supporting for NewAE's tools into a complete reference on side-channel analysis.
+Beyond supporting just the ChipWhisperer project, this wiki is now growing towards the objective of offering a complete reference on embedded security.
 
 = Getting Started =
 
