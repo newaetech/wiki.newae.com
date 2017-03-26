@@ -1,6 +1,8 @@
 
 == Mods to CategoryTree ==
 
+==== Addition to allow expansion by default ====
+
 In the 1.26 version (https://www.upwork.com/leaving?ref=https%3A%2F%2Fgithub.com%2Fwikimedia%2Fmediawiki-extensions-CategoryTree%2Ftree%2FREL1_26) you need to go to extensions/CategoryTree/CategoryPageSubclass.php at line 39 repalce "global $wgRequest;" with global $wgRequest, $wgExpandedLevelsOnCategoryPages;
 if (!$wgExpandedLevelsOnCategoryPages){
 $wgExpandedLevelsOnCategoryPages = 0;
@@ -9,3 +11,7 @@ and on few lines below replace $this->children[] = $tree->renderNodeInfo( $title
 Or you can directly copy this file completely from test.
 
 After this you need to add this $wgExpandedLevelsOnCategoryPages = 10; to localsettings (it represents the expanding levels on category pages)
+
+==== Fixes for sidebar ===
+
+See https://www.mediawiki.org/w/index.php?title=Topic:Sde4gvisgd1ffcez&topic_showPostId=sdynp60mol2zsrsb#flow-post-sdynp60mol2zsrsb
