@@ -1,5 +1,7 @@
 <strong> ChipWhisperer® by NewAE Technology Inc. </strong>
 
+<categorytree mode=all depth=4 hideroot='on' style="float:right; clear:right; margin-left:1ex; border:1px solid gray; padding:0.7ex; background-color:white;">TocRoot</categorytree>
+
 
 Welcome to ChipWhisperer - the complete open-source toolchain for side-channel power analysis and glitching attacks. This is the main landing page for ChipWhisperer. ChipWhisperer has been presented at conferences such as DEFCON and Blackhat, had a [https://www.kickstarter.com/projects/coflynn/chipwhisperer-lite-a-new-era-of-hardware-security successful Kickstarter (that delivered ahead of schedule)], and placed 2nd place in the first annual Hackaday Prize. ChipWhisperer has been used in a number of academic articles, and is featured in the Car Hacking Handbook. Portions of the design have even been used by [http://permalink.lanl.gov/object/tr?what=info:lanl-repo/lareport/LA-UR-15-26344 Los Alamos Labs for an electron accelerator]. You can see a full list of references on the [[Press]] page.
 
