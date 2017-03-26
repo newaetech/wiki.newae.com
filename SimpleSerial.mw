@@ -123,10 +123,10 @@ SimpleSerial is the name given to the default communication protocol used by New
 |-
 |z
 |z\n
-|ACK - Command processing done / received OK
-|
-|
-|
+|ACK - Command processing done
+|Out
+|Y
+|Y
 |}
 Y = YES, Command support for application.
 
