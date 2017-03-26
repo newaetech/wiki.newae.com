@@ -12,6 +12,6 @@ Or you can directly copy this file completely from test.
 
 After this you need to add this $wgExpandedLevelsOnCategoryPages = 10; to localsettings (it represents the expanding levels on category pages)
 
-==== Fixes for sidebar ===
+==== Fixes for sidebar ====
 
 See https://www.mediawiki.org/w/index.php?title=Topic:Sde4gvisgd1ffcez&topic_showPostId=sdynp60mol2zsrsb#flow-post-sdynp60mol2zsrsb
