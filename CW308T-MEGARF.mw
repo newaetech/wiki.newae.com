@@ -2,7 +2,7 @@
 
 {{Infobox cw308target
 |name                   = CW308T-MEGARF
-|image                  = 
+|image                  = File:meagrf_render_02.png
 |caption                = 
 |Target Device          = Atmel AVR
 |Target Architecture    = 8-bit Harvard
@@ -11,7 +11,6 @@
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/megarf GITHub link]
 |Supported Applications =
 }}
-
 
 This target is for the ATMega2564RFR2. This makes a great target for exploring IoT technologies, such as mesh networking protocols.
 
