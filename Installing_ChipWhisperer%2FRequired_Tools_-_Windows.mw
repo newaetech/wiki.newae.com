@@ -45,8 +45,8 @@ The following section is not required for your first attack - you can jump right
 
 To build the code, you'll need to install avr-gcc on Windows (if using the Virtual Machine, the following is ''not required'', as the VM comes setup with the AVR compiler already). On Windows, you could choose to install:
 
-* Atmel AVR-GCC standalone - see [http://www.atmel.com/tools/atmelavrtoolchainforwindows.aspx Atmel avr-gcc standalone]
-* WinAVR. Last release - 2010, see [https://sourceforge.net/projects/winavr/files/latest/download?source=typ_redirect WinAVR Page]
+* Atmel AVR-GCC standalone - see [http://www.atmel.com/tools/atmelavrtoolchainforwindows.aspx Atmel avr-gcc standalone] (registration required)
+* WinAVR. Last release - 2010, see [https://sourceforge.net/projects/winavr/files/latest/download?source=typ_redirect WinAVR Page] (no registration required)
 
 To test the code build, follow these steps:
 
