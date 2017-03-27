@@ -19,7 +19,7 @@ The tutorials on this wiki provide an introduction to ChipWhisperer. The main fo
 A full list of tutorials is:
 
 {{Template:Tutorials}}
-
+{{Category:Introduction}}
 = Further Reading =
 Some various papers, slides, books, and other places to look to get you excited about side channel analysis...
 * The [http://www.cryptography.com/public/pdf/DPA.pdf original paper on side channel analysis], which started all of this
