@@ -43,9 +43,12 @@ Details of driver installation are on specific pages for supported hardware (suc
 
 The following section is not required for your first attack - you can jump right to the tutorial if you wish. However you'll ultimately wish to modify the code of the device under test, and these instructions tell you how. You should first follow the tutorial to confirm your system is working before modifying the code however!
 
-To build the code, you'll need to install WinAVR on Windows (if using the Virtual Machine, the following is ''not required'', as the VM comes setup with the AVR compiler already).
+To build the code, you'll need to install avr-gcc on Windows (if using the Virtual Machine, the following is ''not required'', as the VM comes setup with the AVR compiler already). On Windows, you could choose to install:
 
-Note that the default codebase ''does not'' include the cryptographic code we attack. Instead you are required to add this code into the system -- if the external code changes, this may eventually be instead rolled into the main codebase. To setup the code, follow the following steps:
+* Atmel AVR-GCC standalone - see [http://www.atmel.com/tools/atmelavrtoolchainforwindows.aspx Atmel avr-gcc standalone]
+* WinAVR. Last release - 2010, see [https://sourceforge.net/projects/winavr/files/latest/download?source=typ_redirect WinAVR Page]
+
+To test the code build, follow these steps:
 
 <ol style="list-style-type: decimal;">
 <li><p><code>cd</code> to the directory with the avr-serial example, and run <code>make</code>:</p>
@@ -57,3 +60,16 @@ make</pre>
 <li>Programming the target AVR is accomplished in one of two methods depending on your hardware. The ChipWhisperer Capture Rev 2 uses the external "AVR Studio" program, whereas the CW1173 and CW1200 use a programmer menu from the ChipWhisperer-Capture software. 
 
 For details about programming the targets, see [[Tutorial B1 Building a SimpleSerial Project]].
+
+=== WinAVR Path Settings ===
+
+By default, WinAVR is added to your system path. This means you can run avr-gcc, make and other programs from your normal Windows command line. You may not want this on certain systems where you already have similar tools installed. In which case either uncheck the Add WinAVR to Path option, or edit your system path to remove the WinAVR directories.
+
+If you do not add it to the system path, you’ll need a method of readding the WinAVR directories when you want to use WinAVR. To do so create a file called winavr.bat in C:\WinAVR-20100110 with the following contents:
+
+ set PATH=%PATH%;C:\WinAVR-20100110\bin;C:\WinAVR-20100110\utils\bin
+ cmd
+
+Now when you want to run WinAVR (e.g. to continue the examples here), you can simply double-click on the winavr.bat file. This will configure the path for just that terminal, rather than every terminal you open.
+
+Note if using WinAVR on Windows 8.1, you must replace the dll msys-1.0.dll with an updated version. See [http://www.avrfreaks.net/forum/windows-81-compilation-error Windows 8.1 Fix] for a link to this DLL replacement.
