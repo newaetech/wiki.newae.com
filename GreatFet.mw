@@ -1,4 +1,13 @@
 
+==What's this all about?==
+
+This page will hold notes/development on planned GreatFET + ChipWhisperer interface.
+
+==Overall Goal==
+
+* Use M0 core in LPC4330 to cause low-latency triggers
+
+==Random Links==
 
 USB Interface code:
 https://github.com/ktemkin/Facedancer
