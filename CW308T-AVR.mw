@@ -7,7 +7,9 @@
 |Hardware Crypto        = No
 |Purchase Hardware      = 
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/avr GITHub link]
+
 [https://github.com/newaetech/chipwhisperer/blob/master/hardware/victims/cw308_ufo_target/avr/cw308t-avr-bom-1click.tsv 1-Click BOM]
+
 [https://oshpark.com/shared_projects/65GO0ZHN OSH Park PCBs]
 |Supported Applications =
 }}
