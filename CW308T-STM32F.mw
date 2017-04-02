@@ -9,11 +9,16 @@
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/stm32f GITHub Link]
 
 |Supported Applications =
+|Programmer             = ST-LINK/V2
 }}
 
+== Hardware AES ==
+
+== Programming Connection ==
+
+Pin J6 can be used with the [https://www.digikey.com/product-detail/en/stmicroelectronics/ST-LINK-V2/497-10484-ND/2214535 ST-LINK/V2] which is a low-cost JTAG programmer. Currently this 
 
 == Schematic ==
-
 [[File:CW308T_STM32F_02.png|1100px]]
 
 
