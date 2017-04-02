@@ -12,11 +12,18 @@
 |Programmer             = ST-LINK/V2
 }}
 
+== Supported Devices ==
+
+todo
+
+
 == Hardware AES ==
+
+Certain versions of the STM32F have hardware AES. For example the STM32F415RGT6 has hardware AES.
 
 == Programming Connection ==
 
-Pin J6 can be used with the [https://www.digikey.com/product-detail/en/stmicroelectronics/ST-LINK-V2/497-10484-ND/2214535 ST-LINK/V2] which is a low-cost JTAG programmer. Currently this 
+The 20-pin JTAG port (J6 on CW308 Board) can be used with the [https://www.digikey.com/product-detail/en/stmicroelectronics/ST-LINK-V2/497-10484-ND/2214535 ST-LINK/V2] which is a low-cost JTAG programmer. Other JTAG programmers (such as OpenOCD) may work.
 
 == Schematic ==
 [[File:CW308T_STM32F_02.png|1100px]]
