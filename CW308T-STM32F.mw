@@ -14,8 +14,53 @@
 
 == Supported Devices ==
 
-todo
+The STM32F board supports several STM32F devices in the TQFP-64 package. Various solder jumpers need to bet set to either the "A" or "B" position to select appropriate VCC supply for the different series. The following table summarizes examples of suitable devices:
+{| class="wikitable"
+!STM32F Series
+!Package
+!Device
+!Hardware AES
+!Tested
+!Jumper
+|-
+|F0
+|TQFP-64
+|
+|
+|
+|B
+|-
+|F1
+|TQFP-64
+|
+|
+|
+|B
+|-
+|F2
+|TQFP-64
+|
+|
+|
+|A
+|-
+|F3
+|TQFP-64
+|
+|
+|
+|B
+|-
+|F4
+|TQFP-64
+|STM32F415RGT6
+|Yes
+|Yes
+|A
+|}
 
+=== VCC-Int Supply ===
+Several devices (F2, F4) have internal core voltage regulators. By default the CW308 board attempts to provide power for these pins, but the voltage may not be high enough to cause the internal regulator to disable itself. In this case you can use the VADJ regulator to ensure the internal regulator is disabled. See [[Targets with Internal Regulators]] for details.
 
 == Hardware AES ==
 
