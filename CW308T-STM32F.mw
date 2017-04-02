@@ -64,7 +64,7 @@ Several devices (F2, F4) have internal core voltage regulators. By default the C
 
 == Hardware AES ==
 
-Certain versions of the STM32F have hardware AES. For example the STM32F415RGT6 has hardware AES.
+The STM32F21x, and STM32F41x/43x have hardware crypto modules (AES, DES, TDES) along with hardware hash (SHA1, MD5).
 
 == Programming Connection ==
 
