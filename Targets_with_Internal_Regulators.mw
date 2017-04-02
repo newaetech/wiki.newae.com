@@ -1,5 +1,7 @@
-Many devices will have an internal voltage regulator - for example the following 
+Many devices will have an internal voltage regulator - for example the following excerpt from the ATMega128RFA1 datasheet shows a 3.3V input being regulated by an internal voltage regulator:
+
 [[File:vreg_internal.png|400px]]
 
+This may seem to be a problem for performing side-channel power analysis. There is two possible ways around this:
 
 [[Category: Tips]]
