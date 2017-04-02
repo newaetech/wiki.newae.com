@@ -4,4 +4,10 @@ Many devices will have an internal voltage regulator - for example the following
 
 This may seem to be a problem for performing side-channel power analysis. There is two possible ways around this:
 
+
+[[File:vreg_noexternal.png|400px]]
+
+[[File:vreg_external.png|400px]]
+
+
 [[Category: Tips]]
