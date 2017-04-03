@@ -10,6 +10,8 @@
 |Purchase Hardware      = 
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/msp430 GITHub link]
 |Supported Applications =
+|Programmer             = TI MSP Programmer
+|Status                 = Released
 }}
 
 [[File:msp430fr5xxx_target.jpg|500px]]
