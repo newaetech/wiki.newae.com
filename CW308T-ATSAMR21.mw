@@ -6,10 +6,12 @@
 |caption                = 
 |Target Device          = Cortex M0+
 |Target Architecture    = 32-bit Von Neumann
-|Hardware Crypto        = AES-128 Accelerator
+|Hardware Crypto        = Yes
 |Purchase Hardware      = 
 |Design Files           = 
 |Supported Applications =
+|Programmer             = Atmel ICE (JTAG/SDW)
+|Status                 = BETA (Bug fixes needed)
 }}
 
 [[File:atsam21_target.jpg|500px]]
