@@ -8,7 +8,7 @@
 |Purchase Hardware      = 
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/stm32f GITHub Link]
 
-|Supported Applications = [[SimpleSerial | Simple Serial ENC/Auth]]
+|Supported Applications = [[SimpleSerial | Simple Serial Enc/Auth]]
 |Programmer             = ST-LINK/V2
 |Status                 = Released
 }}
