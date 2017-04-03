@@ -11,7 +11,7 @@
 [https://github.com/newaetech/chipwhisperer/blob/master/hardware/victims/cw308_ufo_target/avr/cw308t-avr-bom-1click.tsv 1-Click BOM]
 
 [https://oshpark.com/shared_projects/65GO0ZHN OSH Park PCBs]
-|Supported Applications =
+|Supported Applications =  [[SimpleSerial | Simple Serial Enc/Auth]]
 |Programmer             = CW Integrated (ISP)
 Atmel ICE (ISP)
 |Status                 = Released
