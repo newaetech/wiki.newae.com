@@ -148,3 +148,5 @@ The authentication application does not expose the result of the encryption. Ins
 # Device compares the resulting ciphertext with the challenge set with 't'.
 # If challenge and ciphertext match (auth OK), device responds with 'r1000000000000000\n'. If do not match, device response with 'r0000000000000000\n'.
 The authentication application is the '''default shipped with ALL programmed modules'''.
+
+[[Category: Victim Firmware]]
