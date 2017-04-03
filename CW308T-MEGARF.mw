@@ -10,6 +10,9 @@
 |Purchase Hardware      = 
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/megarf GITHub link]
 |Supported Applications =
+|Programmer             = CW-Integrated (ISP)
+Atmel ICE (ISP/JTAG)
+|Status                 = BETA (Bug fixes needed)
 }}
 
 This target is for the ATMega2564RFR2. This makes a great target for exploring IoT technologies, such as mesh networking protocols.
