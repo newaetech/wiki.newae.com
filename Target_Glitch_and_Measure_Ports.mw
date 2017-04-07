@@ -1,0 +1,5 @@
+Some of the target boards (CW303 XMEGA, CW304 NOTDuino) have two SMA connectors - one for the Measure port and one for the Glitch port. On these boards, the two connectors are attached to the same traces, so you can use them interchangeably. 
+
+This trick is useful, for example, if you want to record your glitch output with an external oscilloscope. You can connect the ChipWhisperer glitch port to one of the target's SMA connectors and the oscilloscope to the other SMA - no T junctions required. 
+
+[[Category: Tips]]
