@@ -4,7 +4,7 @@
 |caption                = 
 |Target Device          = 8xC51
 |Target Architecture    = 8-bit 8051
-|Hardware Crypto        = Possible
+|Hardware Crypto        = No
 |Purchase Hardware      = 
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/87c51 GITHub Link]
 
