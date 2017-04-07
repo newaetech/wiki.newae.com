@@ -34,6 +34,12 @@ NOTE: The Intel datasheet is fairly short (20 pages) and does not include full d
 
 There are 2 20-pin headers on the top side of the board connected to the pins of the 87C51. If you're keeping track, the remaining 4 pins are labelled NC - they aren't used internally, so all of the functional pins are broken out to these headers. These headers make it easier to connect an oscilloscope or logic analyzer to the target.
 
+'''NOTE:''' The 87C51 devices are either EPROM memories. Some may have a UV window but some don't, those without the UV window are OTP devices. You may wish to use a 89C51 device instead in some cases. See note below about 89C51 devices.
+
+=== Using 89C51 Devices ===
+
+The 89C51 devices are also possible to be used with this board, which can be more easily reprogrammed. The 89C51 devices do not normally have the "XOR encryption table" however, so you cannot attempt attacks on that encryption table.
+
 == Jumpers ==
 
 A number of jumpers are present on the target board. They are mostly used to select different features and options on the target board. First, there are 7 jumpers that connect to the IO lines of the two microcontrollers
