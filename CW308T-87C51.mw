@@ -1,9 +1,6 @@
-{{Warningbox|This is a BETA target and not yet available. This wiki page will continue to be updated until release. }}
-
-
 {{Infobox cw308target
 |name                   = CW308T-87C51
-|image                  = 
+|image                  = 87C51-top.JPG
 |caption                = 
 |Target Device          = 8xC51
 |Target Architecture    = 8-bit 8051
