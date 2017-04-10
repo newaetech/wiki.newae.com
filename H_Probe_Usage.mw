@@ -6,7 +6,8 @@ The [[CW505_Planar_H-Field_Probe]] (or another H-field probe) can be used to per
 
 {{#evt:
 service=youtube
-|id=https://www.youtube.com/watch?v=zmGKZw_txJc
+|id=https://www.youtube.com/watch?v=zmGKZw_txJc&hd=1
+|dimensions=1000
 }}
 
 == Trace Comparison ==
