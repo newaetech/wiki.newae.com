@@ -1,3 +1,16 @@
+The [[CW505_Planar_H-Field_Probe]] (or another H-field probe) can be used to perform side-channel power analysis on a target without inserting a series shunt resistor. In practice this is very simple, it ends up requiring you to (reliably) hold the probe over the chip, for example as shown here:
+
+[[File:hprobe_xmega.jpg|400px]]
+
+== Video Example ==
+
+{{#evt:
+service=youtube
+|id=https://www.youtube.com/watch?v=zmGKZw_txJc
+}}
+
+== Trace Comparison ==
+
 
 
 [[Category: Tips]]
