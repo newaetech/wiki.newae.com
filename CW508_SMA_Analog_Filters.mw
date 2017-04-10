@@ -1,0 +1,8 @@
+The CW508 Analog Filters provide an easily method of filtering out noise at both low and high frequency.
+
+Low frequency noise often comes from switch-mode power supplies, which typically operate at 50-500kHz.
+
+== HPF 500 KHz Response ==
+
+
+== LPF 20 MHz Response ==
