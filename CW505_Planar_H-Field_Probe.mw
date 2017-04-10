@@ -4,9 +4,11 @@
 
 The H-Probe can be mated with the LNA for the best performance. This is shown below:
 
-[[File:hprobe_lna.jpg|400px]]
+[[File:hprobe_lna.jpg|600px]]
 
 If using the H-Probe for SCA, you will need to place the probe on top of your target chip. For example see the following location used to attacked the XMEGA:
+
+[[File:hprobe_xmega.jpg|400px]]
 
 For more details, see the [[H Probe Usage]] tip which includes a video with details.
 
