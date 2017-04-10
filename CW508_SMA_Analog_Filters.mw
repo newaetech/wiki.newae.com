@@ -4,5 +4,11 @@ Low frequency noise often comes from switch-mode power supplies, which typically
 
 == HPF 500 KHz Response ==
 
+[[File:500khzhpf_50khz_5mhz.png|800px]]
+
+[[File:500khzhpf_50khz_100mhz.png|800px]]
 
 == LPF 20 MHz Response ==
+
+
+[[File:20mhzlpf_100khz_100mhz.png|800px]]
