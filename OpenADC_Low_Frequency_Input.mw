@@ -1,11 +1,11 @@
 
-This is based on the following technical report: [http://permalink.lanl.gov/object/tr?what=info:lanl-repo/lareport/LA-UR-15-26344 A Four Channel Beam Current Monitor Data Acquisition System Using Embedded Processors]
+This is based on the following technical report: [http://permalink.lanl.gov/object/tr?what=info:lanl-repo/lareport/LA-UR-15-26344]
 
 You can greatly increase the low-frequency response by adjusting two items:
 
 * Change capacitor C33
 * Remove solder jumper SJ1
 
-See the linked report above for details.
+See the linked report for details.
 
 [[Category: Tips]]
