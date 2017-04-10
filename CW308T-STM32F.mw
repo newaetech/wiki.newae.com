@@ -69,7 +69,26 @@ The STM32F21x, and STM32F41x/43x have hardware crypto modules (AES, DES, TDES) a
 
 == Programming Connection ==
 
-The 20-pin JTAG port (J6 on CW308 Board) can be used with the [https://www.digikey.com/product-detail/en/stmicroelectronics/ST-LINK-V2/497-10484-ND/2214535 ST-LINK/V2] which is a low-cost JTAG programmer. Other JTAG programmers (such as OpenOCD) may work.
+The 20-pin JTAG port (J6 on CW308 Board) can be used with the [https://www.digikey.com/product-detail/en/stmicroelectronics/ST-LINK-V2/497-10484-ND/2214535 ST-LINK/V2] which is a low-cost JTAG programmer. 
+
+It is also possible to use other JTAG programmers such as OpenOCD. The following command worked with an Olimex OpenOCD programmer and their [https://www.olimex.com/Products/ARM/JTAG/ARM-USB-OCD-H/ OpenOCD for Windows] software:
+<pre>
+openocd 
+  -f path/to/board/files/cw308.cfg 
+  -c init 
+  -c targets 
+  -c "halt" 
+  -c "flash write_image erase path/to/firmware.hex"       
+  -c "verify_image path/to/firmware.hex"        
+  -c "reset run" 
+  -c shutdown
+</pre>
+where the contents of <code>cw308.cfg</code> are
+<pre>
+source [find interface/olimex-arm-usb-ocd-h.cfg]
+source [find target/stm32f4x.cfg]
+reset_config srst_only
+</pre>
 
 == Schematic ==
 [[File:CW308T_STM32F_02.png|1100px]]
