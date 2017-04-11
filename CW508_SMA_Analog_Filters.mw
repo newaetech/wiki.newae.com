@@ -4,7 +4,7 @@ Low frequency noise often comes from switch-mode power supplies, which typically
 
 These filters can simply be screwed onto the front of the ChipWhisperer capture device:
 
-
+[[File:cw508_cwpro.jpg|400px]]
 
 == HPF 500 KHz Response ==
 
