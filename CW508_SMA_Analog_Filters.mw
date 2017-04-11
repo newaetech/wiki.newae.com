@@ -2,6 +2,10 @@ The CW508 Analog Filters provide an easily method of filtering out noise at both
 
 Low frequency noise often comes from switch-mode power supplies, which typically operate at 50-500kHz.
 
+These filters can simply be screwed onto the front of the ChipWhisperer capture device:
+
+
+
 == HPF 500 KHz Response ==
 
 [[File:500khzhpf_50khz_5mhz.png|800px]]
