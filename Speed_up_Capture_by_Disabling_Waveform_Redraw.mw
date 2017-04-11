@@ -1,0 +1,7 @@
+When performing many captures, you can improve speed by disabling waveform redraw. This is done under the "Results" tab, by setting the "Trace Output Plot" option of "Input" to "None":
+
+[[File:cwspeedup.png|500px]]
+
+You can change this option during an active capture, so start the capture to ensure things are working, then turn off the waveform.
+
+[[Category: Tips]]
