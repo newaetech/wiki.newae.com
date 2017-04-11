@@ -20,8 +20,12 @@ The MPC5748G target uses the NXP MPC5748G device, which is a triple-core PowerPC
 
 [[File:mpc5748g_web.jpg]]
 
-=== HSM Support ===
+== HSM Support ==
 
 Details forthcoming.
+
+== Programming ==
+
+The device is designed to use an external programmer, but does come with a basic serial bootloader. Details forthcoming.
 
 [[Category: CW308 Targets]]
