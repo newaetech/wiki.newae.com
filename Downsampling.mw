@@ -9,7 +9,7 @@ Caution: be careful using the ChipWhisperer Pro's SAD trigger! The discarded ADC
 
 The following shows the standard AES, captured on the CW-Lite at 1:128 downsampling (with a 29.538 MS/s ADC, giving effective sample rate of 230.77 KS/s):
 
-[[File:cwlite-longcapture.png|600px]]
+[[File:cwlite-longcapture.png]]
 
 This capture remains synchronous to the target device still, despite the huge downsampling factor. This allows attacks to succeed at surprisingly low sample rates (this sample rate is probably a little extreme, but you can see the 100 mS capture time).
 
