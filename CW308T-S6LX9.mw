@@ -1,3 +1,18 @@
+{{Infobox cw308target
+|name                   = CW308T-S6LX9
+|image                  = File:spartan6_target.jpg
+|caption                = 
+|Target Device          = Spartan 6 LX9
+|Target Architecture    = FPGA
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+|Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/spartan6lx9 GITHub link]
+
+[https://oshpark.com/shared_projects/ECbBlx58 OSH Park PCBs]
+|Supported Applications =
+|Programmer             = Xilinx JTAG
+|Status                 = Beta
+}}
 
 [[File:spartan6_target.jpg|500px]]
 
