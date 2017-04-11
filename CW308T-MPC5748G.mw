@@ -12,9 +12,16 @@
 |Supported Applications =
 }}
 
+The MPC5748G target uses the NXP MPC5748G device, which is a triple-core PowerPC microcontroller for automotive applications. This target board has a number of interesting features including:
+
+* Two CAN interfaces, with with DB9.
+* Two serial ports (usable as LIN).
+* Various solder jumpers for variety of power analysis options.
+
+[[File:mpc5748g_web.jpg]]
 
 === HSM Support ===
 
-
+Details forthcoming.
 
 [[Category: CW308 Targets]]
