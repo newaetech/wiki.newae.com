@@ -62,7 +62,7 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |A
 |}
 
-*The F0 variant has a slightly different pinout, as has less VCC/GND pins and more I/O pins than other devices. The result is several I/O pins cannot be used as they are tied to VCC/GND. This will NOT affect regular usage.
+*: The F0 variant has a slightly different pinout, as has less VCC/GND pins and more I/O pins than other devices. The result is several I/O pins cannot be used as they are tied to VCC/GND. This will NOT affect regular usage. See details below.
 
 === VCC-Int Supply ===
 Several devices (F2, F4) have internal core voltage regulators. By default the CW308 board attempts to provide power for these pins, but the voltage may not be high enough to cause the internal regulator to disable itself. In this case you can use the VADJ regulator to ensure the internal regulator is disabled. See [[Targets with Internal Regulators]] for details.
