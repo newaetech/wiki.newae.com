@@ -67,6 +67,12 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 === VCC-Int Supply ===
 Several devices (F2, F4) have internal core voltage regulators. By default the CW308 board attempts to provide power for these pins, but the voltage may not be high enough to cause the internal regulator to disable itself. In this case you can use the VADJ regulator to ensure the internal regulator is disabled. See [[Targets with Internal Regulators]] for details.
 
+=== Pin-outs across TQFP Devices ===
+
+The following shows differences in pinouts between three groups of devices. The left-most is the STM32F0, which uses the same 3.3V VCORE as the STM32F1/F3. It has fewer VCC pins, so the I/O occupying that are VCC/GND pins on the STM32F1 (such as PF6/PF7) are tied to GND/VCC. The right-most part is the pinout of the STM32F2/F4. It has an internal regulator, where the VCAP pins are the output of this regulator (and input to the internal core logic).
+
+[[File:power_diffstm32.png|800px]]
+
 == Hardware AES ==
 
 The STM32F21x, and STM32F41x/43x have hardware crypto modules (AES, DES, TDES) along with hardware hash (SHA1, MD5).
