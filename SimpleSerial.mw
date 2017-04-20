@@ -18,7 +18,7 @@ SimpleSerial is the name given to the default communication protocol used by New
 |-
 |k
 |k2b7e151628aed2a6abf7158809cf4f3c\n
-|
+|Set encryption key; possibly trigger key scheduling
 |In
 |Y
 |Y
