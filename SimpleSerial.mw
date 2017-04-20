@@ -52,8 +52,8 @@ SimpleSerial is the name given to the default communication protocol used by New
 |Y
 |-
 |v
-|v\n
-|Select protocol version (0 = original, 1 = 1.1)
+|v01\n
+|Select protocol version (00 = original, 01 = 1.1)
 |In
 |
 |
