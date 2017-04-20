@@ -10,7 +10,7 @@ SimpleSerial is the name given to the default communication protocol used by New
 !AUTH
 |-
 |h
-|h0\n
+|h00\n
 |Select stack / hardware to use (if supported).
 |In
 |M
@@ -24,7 +24,7 @@ SimpleSerial is the name given to the default communication protocol used by New
 |Y
 |-
 |m
-|m0\n
+|m00\n
 |Select cipher mode (if supported)
 |In
 |M
