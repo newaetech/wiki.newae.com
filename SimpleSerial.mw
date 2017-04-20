@@ -66,8 +66,8 @@ SimpleSerial is the name given to the default communication protocol used by New
 |Y
 |-
 |z
-|z\n
-|ACK - Command processing done
+|z00\n
+|ACK - Command processing done (with optional status code)
 |Out
 |Y
 |Y
