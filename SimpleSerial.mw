@@ -80,7 +80,7 @@ M = MAYBE, Command may be supported depending on build target.
 
 == Encryption Application ==
 The encryption application provides a simple method to encrypt a plaintext into a ciphertext. This application was the original "simple serial". The following operations are performed:
-# Load encryption key with 'k' command (for example, k2b7e151628aed2a6abf7158809cf4f3c\n sets key to k2b7e151628aed2a6abf7158809cf4f3c).
+# Load encryption key with 'k' command (for example, k2b7e151628aed2a6abf7158809cf4f3c\n sets key to 2b7e151628aed2a6abf7158809cf4f3c).
 # Set input text to encryption module with 'p' command. Device encrypts input text, and toggles the I/O trigger line during the encryption operation.
 # The ciphertext is returned with the 'r' command.
 
