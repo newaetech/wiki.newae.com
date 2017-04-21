@@ -69,9 +69,11 @@ Several devices (F2, F4) have internal core voltage regulators. By default the C
 
 === Pin-outs across TQFP Devices ===
 
-The following shows differences in pinouts between three groups of devices. The left-most is the STM32F0, which uses the same 3.3V VCORE as the STM32F1/F3. It has fewer VCC pins, so the I/O occupying that are VCC/GND pins on the STM32F1 (such as PF6/PF7) are tied to GND/VCC. The right-most part is the pinout of the STM32F2/F4. It has an internal regulator, where the VCAP pins are the output of this regulator (and input to the internal core logic).
+The following shows differences in pinouts between three groups of devices. The left-most is the STM32F051RB, which uses the same 3.3V VCORE as the STM32F1/F3. It has fewer VCC pins, so the I/O occupying that are VCC/GND pins on the STM32F1 (such as PF6/PF7) are tied to GND/VCC. The right-most part is the pinout of the STM32F2/F4. It has an internal regulator, where the VCAP pins are the output of this regulator (and input to the internal core logic).
 
 [[File:power_diffstm32.png|800px]]
+
+Note for the devices with a 3.3V VCORE, you should not mount decoupling capacitors C5/C6/C7/C8. You will still get some leakage with those capacitors mounted, but a stronger signal is present without them.
 
 == Hardware AES ==
 
