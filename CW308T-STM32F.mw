@@ -28,9 +28,9 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |-
 |F0
 |TQFP-64
-|
-|
-|
+|STM32F071RBT6
+|No
+|Yes
 |B*
 |-
 |F1
