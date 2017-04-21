@@ -52,7 +52,13 @@ See GIT Repo for gerber files.
 
 Note NO ANTENNA is provided as the board is sold only as a sub-assembly and not designed to be used as a radio transmitter. Mounting a 2.4 GHz radio antenna (SMA, NOT reverse-polarity SMA) like Digi-Key P/N 1475-1014-ND could potentially require you to meet FCC/CE guidelines for RF emissions and is UNSUPPORTED USAGE.
 
-== Historical Note ==
+== Errata ==
+
+=== -02 Version ===
+
+Balun pinout is incorrect and will not work.
+
+=== -01 Version ===
 
 The following is the original (-01) schematic. The -01 PCBs were never publicly released and used during development only. The following changes were made in -02:
 
