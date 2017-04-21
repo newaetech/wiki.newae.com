@@ -86,7 +86,7 @@ The encryption application provides a simple method to encrypt a plaintext into 
 
 == Authentication Application ==
 The authentication application does not expose the result of the encryption. Instead, the result is used only in authentication mode, where the following operations are performed:
-# Load encryption key with 'k' command (for example, k2b7e151628aed2a6abf7158809cf4f3c\n sets key to k2b7e151628aed2a6abf7158809cf4f3c).
+# Load encryption key with 'k' command (for example, k2b7e151628aed2a6abf7158809cf4f3c\n sets key to 2b7e151628aed2a6abf7158809cf4f3c).
 # Set the authentication challenge with 't' command.
 # Set input text to encryption module with 'p' command. Device encrypts input text, and toggles the I/O trigger line during the encryption operation.
 # Device compares the resulting ciphertext with the challenge set with 't'.
