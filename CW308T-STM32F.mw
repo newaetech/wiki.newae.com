@@ -104,7 +104,7 @@ reset_config srst_only
 
 == Example Projects ==
 
-WARNING: The current example projects are built for the -01 rev of the PCB. The only change is the trigger pin has changed, you will need to modify the stm32f4 HAL file to reflect the trigger is now PA12 (-02 version) instead of PA11 (-01 version).
+SimpleSerial builds for each of the STM32Fx Devices.
 
 == Schematic ==
 [[File:CW308T_STM32F_02.png|1100px]]
