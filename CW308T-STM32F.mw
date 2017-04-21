@@ -109,7 +109,14 @@ reset_config srst_only
 
 == Example Projects ==
 
-SimpleSerial builds for each of the STM32Fx Devices.
+SimpleSerial builds for each of the STM32Fx Devices. Each device is a separate HAL, these HAL's have been copied from ST's HAL (not the CUBE) and greatly reduced in size by deleting unused files (such as headers for unused devices), and combining several C-source files into a single low-level C-file.
+
+=== Building ST Example on Command Line ===
+
+
+=== Building ST Example via GUI ===
+
+=== Running ST Example ===
 
 == Schematic ==
 [[File:CW308T_STM32F_02.png|1100px]]
