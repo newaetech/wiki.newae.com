@@ -124,7 +124,7 @@ If all goes well, this command will finish by printing the output file size and 
 === Running ST Example with ST-Link ===
 Once you've built a binary to load onto the target, you're ready to program it. Plug your programmer into the 20 pin JTAG connector (J6 on the UFO board):
 
-[[File:Stm32-jtag.jpg]]
+[[File:Stm32-jtag.jpg|600px]]
 
 Then, the details of this step will depend on your programmer. If you're using an ST-Link programmer, open the ST-Link utility and connect to the device:
 
