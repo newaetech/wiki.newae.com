@@ -109,10 +109,17 @@ reset_config srst_only
 
 == Example Projects ==
 
-SimpleSerial builds for each of the STM32Fx Devices. Each device is a separate HAL, these HAL's have been copied from ST's HAL (not the CUBE) and greatly reduced in size by deleting unused files (such as headers for unused devices), and combining several C-source files into a single low-level C-file.
+SimpleSerial builds for each of the STM32Fx Devices. Each device is a separate HAL. These HAL modules have been copied from ST's HAL (not the CUBE) and greatly reduced in size by deleting unused files (such as headers for unused devices), and combining several C-source files into a single low-level C-file.
 
 === Building ST Example on Command Line ===
+The regular firmware build process works with the STM32 devices. For example, to build `simpleserial-aes`, navigate to the folder `chipwhisperer\hardware\victims\firmware\simpleserial-aes` and run the following command on the command line:
 
+<code>
+make PLATFORM=CW308_STM32F0 CRYPTO_TARGET=TINYAES128C
+</code>
+
+If all goes well, this command will finish by printing the output file size and the platform:
+[[File:Stm32-make.png]]
 
 === Building ST Example via GUI ===
 
