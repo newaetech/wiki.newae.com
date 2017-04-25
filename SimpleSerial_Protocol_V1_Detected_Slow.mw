@@ -1,13 +1,15 @@
 When capturing traces, you may notice a message printed about detection of protocol type:
 
- INFO - SimpleSerial: protocol V1.0 detected
- INFO - Capture completed.
- INFO - SimpleSerial: protocol V1.0 detected
- INFO - Capture completed.
- INFO - SimpleSerial: protocol V1.0 detected
- INFO - Capture completed.
- INFO - SimpleSerial: protocol V1.0 detected
- INFO - Capture completed.
+<syntaxhighlight>
+INFO - SimpleSerial: protocol V1.0 detected
+INFO - Capture completed.
+INFO - SimpleSerial: protocol V1.0 detected
+INFO - Capture completed.
+INFO - SimpleSerial: protocol V1.0 detected
+INFO - Capture completed.
+INFO - SimpleSerial: protocol V1.0 detected
+INFO - Capture completed.
+</syntaxhighlight>
 
 This happens with the basic SimpleSerial protocol. There are two versions of this protocol: V1.0 does not have acknowledgements, and V1.1 does. By default the system will look for an ACK to a basic message, and if no ACK is found falls back to the V1.0 protocol.
 
