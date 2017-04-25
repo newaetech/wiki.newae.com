@@ -137,6 +137,9 @@ Load your `.hex` file and program the device with the Program and Verify button:
 After this, you're ready to go - you can use the ChipWhisperer terminal to talk to your target. You might need to reset the target before you do anything else.
 
 === Building and Debugging via ST's System Workbench ===
+It's also possible to work on the example projects using [http://www.st.com/en/development-tools/sw4stm32.html ST's System Workbench IDE]. This IDE also supports debugging, which is helpful for working out all the kinks in your firmware.
+
+(TODO: details)
 
 == Schematic ==
 [[File:CW308T_STM32F_02.png|1100px]]
