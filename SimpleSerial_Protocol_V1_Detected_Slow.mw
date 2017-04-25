@@ -1,0 +1,22 @@
+When capturing traces, you may notice a message printed about detection of protocol type:
+
+<syntaxhighlight>
+INFO - SimpleSerial: protocol V1.0 detected
+INFO - Capture completed.
+INFO - SimpleSerial: protocol V1.0 detected
+INFO - Capture completed.
+INFO - SimpleSerial: protocol V1.0 detected
+INFO - Capture completed.
+INFO - SimpleSerial: protocol V1.0 detected
+INFO - Capture completed.
+</syntaxhighlight>
+
+This happens with the basic SimpleSerial protocol. There are two versions of this protocol: V1.0 does not have acknowledgements, and V1.1 does. By default the system will look for an ACK to a basic message, and if no ACK is found falls back to the V1.0 protocol.
+
+If the system detects an ACK in response to the first message, it will use V1.1 protocol. Because you may be hot-swapping target boards, this check is done on each "Capture 1" (but only at the start of a "Capture M", since you wouldn't change targets mid-capture).
+
+There is a slight delay during this version check. You can speed up the response by manually selecting the protocol version:
+
+[[File:ss_version.png|400px]]
+
+[[Category: Tips]]
