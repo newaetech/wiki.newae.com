@@ -123,12 +123,15 @@ If all goes well, this command will finish by printing the output file size and 
 
 === Running ST Example with ST-Link ===
 Once you've built a binary to load onto the target, you're ready to program it. Plug your programmer into the 20 pin JTAG connector (J6 on the UFO board):
-[[File:]]
+
+[[File:Stm32-jtag.jpg]]
 
 Then, the details of this step will depend on your programmer. If you're using an ST-Link programmer, open the ST-Link utility and connect to the device:
+
 [[File:Stm32-connect.png]]
 
 Load your `.hex` file and program the device with the Program and Verify button:
+
 [[File:Stm32-program.png]]
 
 After this, you're ready to go - you can use the ChipWhisperer terminal to talk to your target. You might need to reset the target before you do anything else.
