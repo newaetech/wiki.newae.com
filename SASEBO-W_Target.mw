@@ -1,3 +1,6 @@
+{{Warningbox|The SASEBO-W is no longer supported, as the OpenADC build had considerable reliability issues. You can instead use a separate ChipWhisperer capture hardware with the SASEBO-W.}}
+
+
 [[File:SASEBO-W.jpg|800px]]
 
 = Using the SASEBO-W With the OpenADC =
