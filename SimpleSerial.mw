@@ -52,14 +52,14 @@ SimpleSerial is the name given to the default communication protocol used by New
 |Y
 |-
 |v
-|v01\n
-|Select protocol version (00 = original, 01 = 1.1)
+|v\n
+|Check protocol version (no reply on v1.0; ACK on v1.1)
 |In
-|
-|
+|Y
+|Y
 |-
 |x
-|xxxxx\n
+|x\n
 |Clears Buffers (resets to 'IDLE' state), does not clear any variables.
 |In
 |Y
