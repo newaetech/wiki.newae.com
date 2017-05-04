@@ -2,7 +2,7 @@ The CW1200 (ChipWhisperer Pro) is an upgraded version of the ChipWhisperer Lite 
 
 Check out a [https://youtu.be/qS6JwX4SBOI sneak peek of the CW-Pro].
 
-[[File:cwpro_invisible.png|width=400px]]
+[[File:cwpro_invisible.png|width=100px]]
 
 = Power Supply =
 The ChipWhisperer Pro can only be powered through its 5 V jack. It cannot be powered through the USB port - internally, there are no connections to the USB port's 5 V rail. This limitation is primarily due to the high current draw of the Pro: while powering the touchscreen running and an external target, it would be easy to exceed the USB current limit, causing all sorts of issues.
