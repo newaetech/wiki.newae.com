@@ -13,7 +13,7 @@ Assuming you ''actually'' read that, it should be apparent that there is a few t
 
 == Setting Up the Project ==
 
-It is assumed you are experienced with Python development, or have at least run a Python program! If you are on Windows you'll probably use IDLE for as a code editor, although you can use any code editor you wish.
+It is assumed you are experienced with Python development, or have at least run a Python program! If you are on Windows you'll probably use IDLE as a code editor, although you can use any code editor you wish.
 
 Initially, we'll be using Python interactively. This means to just run <code>python</code> at the command prompt, and enter commands into the window. Later we'll move onto writing a simple script which executes these commands.
 
