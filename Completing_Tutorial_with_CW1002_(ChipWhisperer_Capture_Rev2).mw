@@ -1,7 +1,3 @@
-= Completing Tutorial with CW1002 (ChipWhisperer Capture Rev2) =
-
-Note the following is only applicable to the use of the ChipWhisperer-Capture Rev 2 hardware (aka the CW1002). See [[#Completing_Tutorial_with_CW1173/CW1200]] if you are not using this hardware.
-
 == Setting up the Hardware ==
 
 This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. This hardware is the standard setup for all basic tutorials.
