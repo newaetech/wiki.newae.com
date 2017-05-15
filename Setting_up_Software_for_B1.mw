@@ -1,0 +1,76 @@
+It is assumed that you've already followed the guide in [[Installing_ChipWhisperer]]. Thus it is assumed you are able to communicate with the ChipWhisperer CW1173 hardware (or whatever capture hardware you are using). Note in particular you must have configured the FPGA bitstream in the ChipWhisperer-Capture software, all part of the description in the [[Installing_ChipWhisperer]] guide.
+
+Assuming this setup is complete, you can confirm you are able to communicate with the hardware by running the example capture of traces given in the [[CW1173_ChipWhisperer-Lite]] quick-start.
+
+== Programming the Example ==
+
+Note with the CW1173 you need to configure a clock before programming of the device will succeed. Programming of the target device will be done as part of the CW-Capture software setup, discussed next.
+
+== Communicating from CW-Capture Software ==
+
+Next, open the CW-Capture software. Then perform the following steps:
+
+[[File:genericsetup.png|image]]
+
+# Switch to the ''General Settings'' tab.
+# As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option.
+# As the ''Target Module'', select the ''Simple Serial'' option.
+
+Next, you'll have to configure the scope device in use.
+
+[[File:cw1173_scopesetup.png|image]]
+
+<ol start="4" style="list-style-type: decimal;">
+<li>Switch to the ''Scope Settings'' tab.</li>
+<li>As the ''connection'', select the ''ChipWhisperer Lite'' protocol.</li></ol>
+
+Next, you'll have to configure the target module:
+
+[[File:cw1173_targetsetup.png|image]]
+
+<ol start="6" style="list-style-type: decimal;">
+<li>Switch to the ''Target Settings'' tab</li>
+<li>As the ''connection'', select the ''NewAE USB (CWLite/CW1200)'' option</li></ol>
+
+[[File:connect.png|image]]
+
+<ol start="8" style="list-style-type: decimal;">
+<li>Press the button labeled ''Master: DIS'', where DIS has a circle around it. If it works, it will switch to green and say ''CON''.</li></ol>
+
+We will now need to configure the clock to the XMEGA target device.
+
+[[File:cw1173_freqoutput1.png|image]]
+
+<ol start="9" style="list-style-type: decimal;">
+<li>Switch to the ''Scope Settings'' tab.</li>
+<li><p>Scroll down to the CLKGEN section, and enter the ''Desired Frequency'' as ''7.37 MHz''. Hit <code>&lt;enter&gt;</code> and you should see the multiply and divide settings change. Be careful of the units - you may need to click just on the numbers and enter that. You can also check the frequency settings using the ''Frequency Counter'' - to use this switch the ''Freq Counter Src'' to be ''CLKGEN''. It should read 7.37 MHz.</p>
+<p>We now need to feed this generated clock to an output pin.</p></li></ol>
+
+[[File:cw1173_freqoutput2.png|image]]
+
+<ol start="11" style="list-style-type: decimal;">
+<li><p>Scroll further down until you find the ''Target HS IO-Out'' function, set this to ''CLKGEN''. The clock is now being sent on the ''Target-IO HS2'' pin, which is used by the XMEGA as the input clock.</p>
+<p>For dumb historical reasons the XMEGA and AVR have opposite TX/RX pinouts (on the original multi-target board, the AVR and XMEGA are designed such they can communicate, which required opposite TX/RX connections). Anyway you now need to switch the IO1 and IO2 functions from default:</p></li></ol>
+
+[[File:cw1173_txrx.png|image]]
+
+<ol start="12" style="list-style-type: decimal;">
+<li>Change the ''Target IO1'' function to be ''RXD''.</li>
+<li>Change the ''Target IO2'' function to be ''TXD''.</li>
+<li><p>You can now program the XMEGA device! To do so, open the XMEGA Programmer from the ''Tools'' menu:</p>
+<p>[[File:cw1173_xmegaproga.png|image]]</p></li>
+<li><p>Hit the ''Check Signature'' button and confirm the device is detected. If not you may have issues with the clock setup.</p>
+<p>[[File:cw1173_xmegaprogb.png|image]]</p></li>
+<li><p>Using the ''Find'' button, navigate to the <code>simpleserial-base.hex</code> which you built earlier with the <code>make</code> command. You can then press the ''Erase/Program/Verify'' button, and confirm the file is programmed into the XMEGA device:</p>
+<p>[[File:cw1173_xmegaprogc.png|image]]</p>
+<p>Note the programmer dialog not only shows the successful programming status, but also shows when the <code>.hex</code> file was last modified. Always confirm this matches with when you last remember compiling the program -- if it is widely different this suggests you have selected the wrong file!</p>
+
+<p>Finally we can check communications with the programmed file:</p></li></ol>
+
+[[File:Cw1173_connectrun.png|image]]
+
+<ol start="17" style="list-style-type: decimal;">
+<li>Close the XMEGA programmer dialog.</li>
+<li>Open the status monitor under <i>Tools > Encryption Status Monitor</i>.</li>
+<li>Resize the monitor window. The monitor will show sent &amp; received data to the target.</li>
+<li>Hit the ''Run 1'' button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. Note that each byte of the ''Text In'' is incremented in the ''Text Out'' field.</li></ol>
