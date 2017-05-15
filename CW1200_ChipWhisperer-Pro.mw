@@ -54,7 +54,9 @@ The basic features on the Pro are exactly the same as the ChipWhisperer Lite. Th
 
 {{CollapsibleSection
 |intro = = Touchscreen =
-|content= CW1200 ChipWhisperer-Pro/Touchscreen}}
+|content= CW1200 ChipWhisperer-Pro/Touchscreen
+|default = CW1200 ChipWhisperer-Pro/Touchscreen
+}}
 
 {{Template:Hardware}}
 
