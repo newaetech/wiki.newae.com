@@ -96,7 +96,7 @@ SUBSYSTEM==&quot;usb&quot;, ATTRS{idVendor}==&quot;2b3e&quot;, ATTRS{idProduct}=
 <li><p>From the &quot;Scripts&quot; directory, run the <code>ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script:</p>
 <p>[[File:cwlite_simpleserial.png|image]]</p>
 <p>This should connect to the ChipWhisperer-Lite, program the FPGA, and run a few captures. Your screen should look something like this now:</p>
-<p>[[File:cwdemo_normal.png|image]]</p></li>
+<p>[[File:Step Connection Quick Start 05 02.PNG|1000px|image]]</p></li>
 <li><p>If the previous step fails, you may need to set the path for the &quot;firmware&quot;. This is done by going to the &quot;Tools&quot; menu and selecting the &quot;Config CW Firmware&quot; option. Note on MAC OS X a special command is required instead sometimes, see [[MacOSX_Installation]].</p>
 <p>From there, hit the &quot;FIND&quot; button beside the &quot;FPGA .zip (Release)&quot; option. Point it to the file located at <code>chipwhisperer/hardware/capture/chipwhisperer-lite/cwlite_firmware.zip</code> on your filesystem.</p></li>
 <li>Your ChipWhisperer-Lite is now connected. See the next section for details of the demo attack.</li></ol>
