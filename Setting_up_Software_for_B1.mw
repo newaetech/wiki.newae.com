@@ -2,84 +2,75 @@ It is assumed that you've already followed the guide in [[Installing_ChipWhisper
 
 Assuming this setup is complete, you can confirm you are able to communicate with the hardware by running the example capture of traces given in the [[CW1173_ChipWhisperer-Lite]] quick-start.
 
-<h2> Programming the Example </h2>
+== Programming the Example ==
 
 Note with the CW1173 you need to configure a clock before programming of the device will succeed. Programming of the target device will be done as part of the CW-Capture software setup, discussed next.
 
-<h2> Communicating from CW-Capture Software </h2>
+== Communicating from CW-Capture Software ==
 
 Next, open the CW-Capture software. Then perform the following steps:
 
-[[File:cwsetup_scriptselection.png|889x889px]]
+[[File:genericsetup.png|image]]
 
-# Switch to the ''Python Console'' tab.
-# The script selection window (2) lists available example scripts. Scroll down to "connect_cwlite_simpleserial.py" and click on it.
-# You will see the script contents appear in the "Script Preview" window (3). You can either hit the "Run" button or double-click the filename of the script to execute it. Do either of those now.
+# Switch to the ''General Settings'' tab.
+# As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option.
+# As the ''Target Module'', select the ''Simple Serial'' option.
 
-The window should change to indicate the connect succeeded:
+Next, you'll have to configure the scope device in use.
 
-[[File:cwsetup_scriptselection_cwliterun.png|889x889px]]
+[[File:cw1173_scopesetup.png|image]]
 
 <ol start="4" style="list-style-type: decimal;">
-<li>The console lists the exact script that is executed. Note you could have manually executed the script commands line-by-line in this console.</li>
-<li>The "Scope" and "Target" buttons will show as connected.</li>
-<li>The Status Bar will show a connection.</li>
-</ol>
+<li>Switch to the ''Scope Settings'' tab.</li>
+<li>As the ''connection'', select the ''ChipWhisperer Lite'' protocol.</li></ol>
 
-Note in previous software versions, this tutorial took you through manual setup. This can still be done (using the GUI), but instead now the API has been made more powerful, so the example configuration script will be used instead.
+Next, you'll have to configure the target module:
 
-To do so, simply scroll down and select the "setup_cwlite_xmega_aes.py" file:
+[[File:cw1173_targetsetup.png|image]]
 
-[[File:cwsetup_scriptselection_xmegaconfig_cwliterun.png]]
+<ol start="6" style="list-style-type: decimal;">
+<li>Switch to the ''Target Settings'' tab</li>
+<li>As the ''connection'', select the ''NewAE USB (CWLite/CW1200)'' option</li></ol>
 
-You'll notice the contents of the script contain the following setup:<syntaxhighlight lang="python" line="1">
-scope.gain.gain = 45
-scope.adc.samples = 3000
-scope.adc.offset = 1250
-scope.adc.basic_mode = "rising_edge"
-scope.clock.clkgen_freq = 7370000
-scope.clock.adc_src = "clkgen_x4"
-scope.trigger.triggers = "tio4"
-scope.io.tio1 = "serial_rx"
-scope.io.tio2 = "serial_tx"
-scope.io.hs2 = "clkgen"
-</syntaxhighlight>This configuration block does the following (for lines 1 through 10):
+[[File:connect.png|image]]
 
-Line 1: Sets the input ADC gain
+<ol start="8" style="list-style-type: decimal;">
+<li>Press the button labeled ''Master: DIS'', where DIS has a circle around it. If it works, it will switch to green and say ''CON''.</li></ol>
 
-Line 2: Sets the number of samples to record as 3000 samples long (this is normally used for the AES algorithm).
+We will now need to configure the clock to the XMEGA target device.
 
-Line 3: Sets an offset of 1250 samples from the trigger to when we start recording samples.
+[[File:cw1173_freqoutput1.png|image]]
 
-Line 4: Sets the trigger as being a "rising edge" trigger.
+<ol start="9" style="list-style-type: decimal;">
+<li>Switch to the ''Scope Settings'' tab.</li>
+<li><p>Scroll down to the CLKGEN section, and enter the ''Desired Frequency'' as ''7.37 MHz''. Hit <code>&lt;enter&gt;</code> and you should see the multiply and divide settings change. Be careful of the units - you may need to click just on the numbers and enter that. You can also check the frequency settings using the ''Frequency Counter'' - to use this switch the ''Freq Counter Src'' to be ''CLKGEN''. It should read 7.37 MHz.</p>
+<p>We now need to feed this generated clock to an output pin.</p></li></ol>
 
-Line 5: Sets the internal clock generator to 7.37MHz
+[[File:cw1173_freqoutput2.png|image]]
 
-Line 6: Sets the ADC as running at 4x that clock (so 29.48MHz)
+<ol start="11" style="list-style-type: decimal;">
+<li><p>Scroll further down until you find the ''Target HS IO-Out'' function, set this to ''CLKGEN''. The clock is now being sent on the ''Target-IO HS2'' pin, which is used by the XMEGA as the input clock.</p>
+<p>For dumb historical reasons the XMEGA and AVR have opposite TX/RX pinouts (on the original multi-target board, the AVR and XMEGA are designed such they can communicate, which required opposite TX/RX connections). Anyway you now need to switch the IO1 and IO2 functions from default:</p></li></ol>
 
-Line 7: Sets the trigger pin as GPIO4 (we previously set the trigger condition as rising edge, so this pin will be the one a rising edge is expected on).
+[[File:cw1173_txrx.png|image]]
 
-Line 8: Configures GPIO1 as the RX (Input). This is what the XMEGA target expects.
-
-Line 9: Configures GPIO2 as the TX (Output). This is what the XMEGA target expects.
-
-Line 10: Sets the "High-Speed 2" (HS2) pin as having the 7.37MHz clock output. 
-
-<ol start="14" style="list-style-type: decimal;">
+<ol start="12" style="list-style-type: decimal;">
+<li>Change the ''Target IO1'' function to be ''RXD''.</li>
+<li>Change the ''Target IO2'' function to be ''TXD''.</li>
 <li><p>You can now program the XMEGA device! To do so, open the XMEGA Programmer from the ''Tools'' menu:</p>
 <p>[[File:cw1173_xmegaproga.png|image]]</p></li>
 <li><p>Hit the ''Check Signature'' button and confirm the device is detected. If not you may have issues with the clock setup.</p>
 <p>[[File:cw1173_xmegaprogb.png|image]]</p></li>
-<li><p>Using the ''Find'' button, navigate to the <code>simpleserial-base-cw303.hex</code> which you built earlier with the <code>make</code> command. You can then press the ''Erase/Program/Verify'' button, and confirm the file is programmed into the XMEGA device:</p>
+<li><p>Using the ''Find'' button, navigate to the <code>simpleserial-base.hex</code> which you built earlier with the <code>make</code> command. You can then press the ''Erase/Program/Verify'' button, and confirm the file is programmed into the XMEGA device:</p>
 <p>[[File:cw1173_xmegaprogc.png|image]]</p>
 <p>Note the programmer dialog not only shows the successful programming status, but also shows when the <code>.hex</code> file was last modified. Always confirm this matches with when you last remember compiling the program -- if it is widely different this suggests you have selected the wrong file!</p>
 
 <p>Finally we can check communications with the programmed file:</p></li></ol>
 
-[[File:09_Cw1173_connectrun.png|image]]
+[[File:Cw1173_connectrun.png|image]]
 
 <ol start="17" style="list-style-type: decimal;">
 <li>Close the XMEGA programmer dialog.</li>
 <li>Open the status monitor under <i>Tools > Encryption Status Monitor</i>.</li>
 <li>Resize the monitor window. The monitor will show sent &amp; received data to the target.</li>
-<li>Hit the ''Run 1'' button ([[File:Capture One Button.PNG|image]]). You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. Note that each byte of the ''Text In'' is incremented in the ''Text Out'' field.</li></ol>
+<li>Hit the ''Run 1'' button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. Note that each byte of the ''Text In'' is incremented in the ''Text Out'' field.</li></ol>
