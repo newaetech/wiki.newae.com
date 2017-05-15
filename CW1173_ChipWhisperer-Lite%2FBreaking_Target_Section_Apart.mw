@@ -24,6 +24,6 @@ You may wish to break the target section apart from the main capture board. This
 </blockquote>
 You can see a [http://www.youtube.com/watch?v=8sIrvG5jqiQ&hd=1 Video] of the process here:
 
-[[File:cw1173breakvideo.png|YouTubeCW1173Break]]_
+[[File:cw1173breakvideo.png|link=http://www.youtube.com/watch?v=8sIrvG5jqiQ&hd=1]]
 
 Applying even pressure will help prevent damage to the ChipWhisperer-Lite main section. Flexing the PCB too much may cause damage to solder joints, but by holding the entire board flat against the edge this is prevented.
