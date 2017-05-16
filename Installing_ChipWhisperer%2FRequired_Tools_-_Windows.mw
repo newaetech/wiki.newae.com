@@ -50,14 +50,13 @@ To build the code, you'll need to install avr-gcc on Windows (if using the Virtu
 
 To test the code build, follow these steps:
 
-<ol style="list-style-type: decimal;">
-<li><p><code>cd</code> to the directory with the avr-serial example, and run <code>make</code>:</p>
+<p><code>cd</code> to the directory with the avr-serial example, and run <code>make</code>:</p>
 <pre>cd c:\chipwhisperer\hardware\victims\firmware\simpleserial-aes
 make</pre>
 <p>If this is successful, you'll see an output like the following:</p>
 <p>[[File:Avr-build-ok.png|image]]</p>
 <p>If instead you get an error something like <code>make: *** No rule to make target `simpleserial.elf', needed by `elf'.  Stop.</code>, this means a required file was missing.</p></li>
-<li>Programming the target AVR is accomplished in one of two methods depending on your hardware. The ChipWhisperer Capture Rev 2 uses the external "AVR Studio" program, whereas the CW1173 and CW1200 use a programmer menu from the ChipWhisperer-Capture software. 
+Programming the target AVR is accomplished in one of two methods depending on your hardware. The ChipWhisperer Capture Rev 2 uses the external "AVR Studio" program, whereas the CW1173 and CW1200 use a programmer menu from the ChipWhisperer-Capture software. 
 
 For details about programming the targets, see [[Tutorial B1 Building a SimpleSerial Project]].
 
