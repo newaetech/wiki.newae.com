@@ -41,20 +41,20 @@ Next, you'll have to configure the target module:
 
 We will now need to configure the clock to the XMEGA target device.
 
-[[File:cw1173_freqoutput1.png|image]]
+[[File:06_cw1173_freqoutput1.png|image]]
 
 <ol start="9" style="list-style-type: decimal;">
 <li>Switch to the ''Scope Settings'' tab.</li>
 <li><p>Scroll down to the CLKGEN section, and enter the ''Desired Frequency'' as ''7.37 MHz''. Hit <code>&lt;enter&gt;</code> and you should see the multiply and divide settings change. Be careful of the units - you may need to click just on the numbers and enter that. You can also check the frequency settings using the ''Frequency Counter'' - to use this switch the ''Freq Counter Src'' to be ''CLKGEN''. It should read 7.37 MHz.</p>
 <p>We now need to feed this generated clock to an output pin.</p></li></ol>
 
-[[File:cw1173_freqoutput2.png|image]]
+[[File:07_cw1173_freqoutput2.png|image]]
 
 <ol start="11" style="list-style-type: decimal;">
 <li><p>Scroll further down until you find the ''Target HS IO-Out'' function, set this to ''CLKGEN''. The clock is now being sent on the ''Target-IO HS2'' pin, which is used by the XMEGA as the input clock.</p>
 <p>For dumb historical reasons the XMEGA and AVR have opposite TX/RX pinouts (on the original multi-target board, the AVR and XMEGA are designed such they can communicate, which required opposite TX/RX connections). Anyway you now need to switch the IO1 and IO2 functions from default:</p></li></ol>
 
-[[File:cw1173_txrx.png|image]]
+[[File:08_cw1173_txrx.png|image]]
 
 <ol start="12" style="list-style-type: decimal;">
 <li>Change the ''Target IO1'' function to be ''RXD''.</li>
