@@ -2,6 +2,8 @@ Dynamic Time Warp gives the ability to automatically resyncronize traces. This u
 
 [[File:alignfull.gif]]
 
+The DTW algorithm has one parameter that can be adjusted. The ''radius'' describes how wide the search should be: with a larger radius, the DTW process will allow larger gaps in the synchronized traces. The maximum allowed gap does not increase one-to-one with the radius, but in general a larger radius will produce a better match with a slightly longer processing time.
+
 == Important Notes ==
 
 Every time the redraw happens, the entire realignment is run. To avoid this you should set the [[Trace Cache]] module as a preprocessing module immediately after the "Dynamic Time Warp". Be sure to enable that module first on the ''Preprocessing Module'' tab. The results should be the DTW is only run when needed, and not EVERY time you redraw traces.
