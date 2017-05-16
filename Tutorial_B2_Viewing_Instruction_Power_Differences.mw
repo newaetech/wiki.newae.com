@@ -122,12 +122,12 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 
 At this point you've completed the same amount of information as the previous tutorial. The following section describes how to setup the analog capture hardware, which is new (to you). The following is entirely done in the ''Scope Settings'' tab:
 
-[[File:cap1.png|image]]
+[[File:01_trigger_setupxcf.PNG|image]]
 
 <ol start="11" style="list-style-type: decimal;">
 <li>Under ''Trigger Setup'' set the ''Mode'' to ''rising edge''. This means the system will trigger on a rising edge logic level:</li></ol>
 
-[[File:cap2.png|image]]
+[[File:02_CW_Extra.PNG|image]]
 
 <ol start="12" style="list-style-type: decimal;">
 <li>For the CW1002 (ChipWhisperer Capture Rev 2) hardware only, perform the following:</li></ol>
