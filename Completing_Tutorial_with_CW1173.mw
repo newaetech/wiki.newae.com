@@ -1,0 +1,11 @@
+== Setting up the Hardware ==
+
+This tutorial uses the [[CW1173_ChipWhisperer-Lite]] hardware. No hardware setup is required normally, simply plug in the USB cable:
+
+[[File:cw1173_microusb.jpg|image]]
+
+Note that under ''no circumstances'' as part of the setup should you use the CW1173 device to hold up furniture:
+
+[[File:nofurniture.jpg|image]]
+
+{{:Setting up Software for B1}}
