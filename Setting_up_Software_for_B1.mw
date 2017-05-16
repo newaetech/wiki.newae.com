@@ -32,7 +32,7 @@ Next, you'll have to configure the target module:
 <li>Switch to the ''Target Settings'' tab</li>
 <li>As the ''connection'', select the ''NewAE USB (CWLite/CW1200)'' option</li></ol>
 
-[[File:connect.png|image]]
+[[File:04_connect.png|image]]
 
 <ol start="8" style="list-style-type: decimal;">
 <li>Press the button labeled ''Master: DIS'', where DIS has a circle around it. If it works, it will switch to green and say ''CON''.</li></ol>
