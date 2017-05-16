@@ -1,4 +1,4 @@
-== Python ==
+=== Python ===
 For any of the other installation methods, you'll need to have Python 2 installed on your computer. If you already a recent version of Python installed (2.7.x), you can skip this step. Note that Python 3.x will not work with this codebase. There's also a bit of setup that's needed to get other tools and prepare other drivers.
 
 The recommend method of installing Python is to use a distribution called [http://winpython.github.io/ WinPython]. This setup avoids installing Python globally, and includes most of the software you will need. In addition it makes it possible to install 32-bit and 64-bit Python on the same system with minimal problems. This can be very useful as the 64-bit version is handy for doing analysis on large data sets.
