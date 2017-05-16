@@ -1,4 +1,4 @@
-== Setting up the Hardware ==
+<h2> Setting up the Hardware </h2>
 
 This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. This hardware is the standard setup for all basic tutorials.
 
