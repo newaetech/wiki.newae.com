@@ -1,5 +1,3 @@
-Test
-
 == Python ==
 For any of the other installation methods, you'll need to have Python 2 installed on your computer. If you already a recent version of Python installed (2.7.x), you can skip this step. Note that Python 3.x will not work with this codebase. There's also a bit of setup that's needed to get other tools and prepare other drivers.
 
