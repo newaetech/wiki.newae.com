@@ -1,22 +1,7 @@
-<h2> Setting up the Hardware </h2>
+== Setting up the Hardware ==
 
 This tutorial uses the [[CW1200_ChipWhisperer-Pro]] hardware. 
 
-# Remove the ChipWhisperer-Pro main capture hardware, UFO Board, and SMA cable from the ChipWhisperer-Pro case.
-# Attached the UFO board to the ChipWhisperer-Pro with the 20-pin cable, and connect the '''VOUT''' SMA connector to the '''MEASURE''' input.
-# Power up the ChipWhisperer-Pro with the 5V DC power adapter, and connect the USB cable to the computer.
-# If this the first time powering up, you will need to install the drivers (see [[CW1200_ChipWhisperer-Pro]]).
-
-[[File:cwpro_setup.jpg]]
-
-Note if you have modified the UFO board the jumpers may no longer be at default locations. The jumper settings required are:
-
-[[File:cwpro_ufo_setup.jpg]]
-
-# XMEGA Target board mounted
-# J3 routes HS2/OUT to CLKIN
-# J1 set to "J5-VREF" (right two pins shorted)
-# J14 set to "FILT" (left two pins shorted)
-# "3.3V SRC" switch set to "J1/CW"
+TODO: add in extra hardware steps for CW 1200
 
 {{:Setting up Software for B1}}
