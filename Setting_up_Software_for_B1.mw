@@ -10,7 +10,7 @@ Note with the CW1173 you need to configure a clock before programming of the dev
 
 Next, open the CW-Capture software. Then perform the following steps:
 
-[[File:genericsetup.png|image]]
+[[File:01_genericsetup.png|image]]
 
 # Switch to the ''General Settings'' tab.
 # As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option.
@@ -18,7 +18,7 @@ Next, open the CW-Capture software. Then perform the following steps:
 
 Next, you'll have to configure the scope device in use.
 
-[[File:cw1173_scopesetup.png|image]]
+[[File:02_cw1173_scopesetup.png|image]]
 
 <ol start="4" style="list-style-type: decimal;">
 <li>Switch to the ''Scope Settings'' tab.</li>
@@ -26,7 +26,7 @@ Next, you'll have to configure the scope device in use.
 
 Next, you'll have to configure the target module:
 
-[[File:cw1173_targetsetup.png|image]]
+[[File:03_cw1173_targetsetup.png|image]]
 
 <ol start="6" style="list-style-type: decimal;">
 <li>Switch to the ''Target Settings'' tab</li>
