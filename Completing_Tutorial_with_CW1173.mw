@@ -1,4 +1,4 @@
-<h2> Setting up the Hardware </h2>
+== Setting up the Hardware ==
 
 This tutorial uses the [[CW1173_ChipWhisperer-Lite]] hardware. No hardware setup is required normally, simply plug in the USB cable:
 
