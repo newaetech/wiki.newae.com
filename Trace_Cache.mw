@@ -1,6 +1,6 @@
 The trace cache avoids issues with needing to rerun any computationally expensive preprocessing module every time data changes. The "trace cache" currently writes all traces to a big "cache file" that is memory-mapped in.
 
-The trace cache is set as a preprocessing module, and will cache traces at the location in the preprocessing chain. This allows you to specifically cache the output of a slow module (such as the [Dynamic Time Warp] module), while not invalidating the trace cache if you change settings of another module that appears after the slow one.
+The trace cache is set as a preprocessing module, and will cache traces at the location in the preprocessing chain. This allows you to specifically cache the output of a slow module (such as the [[Dynamic Time Warp]] module), while not invalidating the trace cache if you change settings of another module that appears after the slow one.
 
 The module detects any change of settings for modules feeding into it. It does this by storing a hash of the settings for each trace in the cache - this means it does not invalidate the entire cache when any settings change, but instead knows for example when it can reuse previously calculated results if you change a setting and then change it back.
 
