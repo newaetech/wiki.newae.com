@@ -37,6 +37,8 @@ Next, you'll have to configure the target module:
 <ol start="8" style="list-style-type: decimal;">
 <li>Press the button labeled ''Master: DIS'', where DIS has a circle around it. If it works, it will switch to green and say ''CON''.</li></ol>
 
+[[File:05_connection buttons.PNG|image]]
+
 We will now need to configure the clock to the XMEGA target device.
 
 [[File:cw1173_freqoutput1.png|image]]
