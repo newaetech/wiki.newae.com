@@ -108,7 +108,7 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 <li><p>For the CW1173/CW1180/Cw1200 (ChipWhisperer-Lite/Pro based systems), perform the following:</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
 <li>Set the ''CLKGEN'' frequency to ''7.37 MHz''</li>
-<li>Set the*Target HS-IO Out* as ''CLKGEN''</li></ol>
+<li>Set the ''Target HS-IO Out'' as ''CLKGEN''</li></ol>
 </blockquote></li>
 <li>If targetting an XMEGA board (either the ChipWhisperer-Lite XMEGA default target, or the XMEGA on the multi-target board), perform the following:
 <ol style="list-style-type: lower-alpha;">
