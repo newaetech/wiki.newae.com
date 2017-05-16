@@ -4,18 +4,21 @@
 this si a cool section about AVR Programmer
 |content= CW1173_ChipWhisperer-Lite/AVR Programmer
 }}
+
 {{CollapsibleSection
 |intro = =AVR Programmer=
 this si a cool section about AVR Programmer
 |content= CW1173_ChipWhisperer-Lite/AVR Programmer
 |indentation = 30
 }}
+
 {{CollapsibleSection
 |intro = ===XMEGA Programmer===
 this si a cool section about XMEGA 
 |content= CW1173_ChipWhisperer-Lite/XMEGA Programmer
 |indentation = 50
 }}
+
 ==Infobox==
 {{Infobox item
 |name                   = Some name
