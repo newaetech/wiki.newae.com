@@ -98,8 +98,12 @@ trigger_low();
 <li>Rebuild the example using the <code>make</code> command. Remember you can press the up arrow on the keyboard to get recently typed commands in most OSes.</li></ol>
 
 {{CollapsibleSection
-|intro = = Completing Tutorial with CW1173/CW1200 =
-|content= Completing Tutorial with CW1173/CW1200}}
+|intro = = Completing Tutorial with CW1173 (Lite) =
+|content= Completing Tutorial with CW1173}}
+
+{{CollapsibleSection
+|intro = = Completing Tutorial with CW1200 (Pro) =
+|content= Completing Tutorial with CW1200}}
 
 {{CollapsibleSection
 |intro = = Completing Tutorial with CW1002 (ChipWhisperer Capture Rev2) =
