@@ -101,7 +101,7 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 <ol style="list-style-type: decimal;">
 <li>Start ChipWhisperer-Capture</li>
 <li>Under ''Generic Settings'', as the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option.</li>
-<li>Under ''Generic Settings'', ss the ''Target Module'', select the ''Simple Serial'' option.</li>
+<li>Under ''Generic Settings'', as the ''Target Module'', select the ''Simple Serial'' option.</li>
 <li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer'' (for CW1002) or ''NewAE USB (CWLite/CW1200)'' (for ChipWhisperer Lite/Pro).</li>
 <li>Switch to the ''Scope Settings'' tab, and ensure the ''connection'' is set to either ''ChipWhisperer'' (for CW1002) or ''NewAE USB (CWLite/CW1200)'' (for ChipWhisperer Lite/Pro).</li>
 <li>Run the master connect (click the button labeled ''Master: DIS''). Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
