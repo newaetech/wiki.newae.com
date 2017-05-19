@@ -1,6 +1,6 @@
 This tutorial will introduce you to the 'simpleserial' communications system. It will show you how to perform different operations on data based on input from the ChipWhisperer software. This can be used for building your own system which you wish to 'break'.
 
-= What is SimpleSerial =
+<h1> What is SimpleSerial </h1>
 
 [[SimpleSerial]] is the communications protocol used for almost all of the ChipWhisperer demo project. It's a very basic serial protocol which can be easily implemented on most systems. This system communicates using a standard asyncronous serial protocol, 38400 baud, 8-N-1.
 
@@ -17,7 +17,7 @@ The following message types are defined:
 ; <code>rCBBD4A2B34F2571758FF6A797E09859D\\n</code>
 : This is the response from the system. If data has been encrypted with a 'p' for example, the system will respond with the 'r' sequence automatically. So sending the earlier example means the result of the encryption was <code>cbbd4a2b34f2571758ff6a797e09859d</code>.
 
-= Building the Basic Example =
+<h1> Building the Basic Example </h1>
 
 You'll need to have installed avr-gcc and avr-libc. You may have already done this by following the installation guide, or if using the ChipWhisperer-VM it comes prepared with avr-gcc already setup. See the [[Installing_ChipWhisperer]] guide for details.
 
@@ -58,7 +58,7 @@ Built for platform CW-Lite XMEGA
 Ensure that the "Built for platform ___" matches your target device.
 </ol>
 
-= Modifying the Basic Example =
+</h1> Modifying the Basic Example </h1>
 
 At this point we want to modify the system to perform 'something' with the data, such that we can confirm the system is working. To do so, open the file <code>simpleserial-base.c</code> with a code editor such as ''Programmer's Notepad'' (which ships with WinAVR).
 
@@ -109,13 +109,13 @@ trigger_low();
 |intro = = Completing Tutorial with CW1002 (ChipWhisperer Capture Rev2) =
 |content= Completing Tutorial with CW1002 (ChipWhisperer Capture Rev2)}}
 
-= Conclusion =
+<h1> Conclusion </h1>
 
 In this tutorial you have learned how to build a custom program for the microcontroller on the ChipWhisperer target board. You have programmed the built .hex file into the microcontroller, and confirmed communications with the ChipWhisperer device.
 
 In future labs you will build on this knowledge to attack specific instructions.
 
-= Troubleshooting =
+<h1> Troubleshooting </h1>
 
 Issues with compilation:
 
