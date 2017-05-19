@@ -1,4 +1,4 @@
-== Python ==
+<h2> Python </h2>
 For any of the other installation methods, you'll need to have Python 2 installed on your computer. If you already a recent version of Python installed (2.7.x), you can skip this step. Note that Python 3.x will not work with this codebase. There's also a bit of setup that's needed to get other tools and prepare other drivers.
 
 The recommend method of installing Python is to use a distribution called [http://winpython.github.io/ WinPython]. This setup avoids installing Python globally, and includes most of the software you will need. In addition it makes it possible to install 32-bit and 64-bit Python on the same system with minimal problems. This can be very useful as the 64-bit version is handy for doing analysis on large data sets.
@@ -11,7 +11,7 @@ Go to your installation directory for WinPython, and run the shortcut called '''
 
 ''Optional'': You can add the python.exe you just installed to your PATH. To do so navigate to your installation folder, and run the '''WinPython Control Panel.exe''' program. Then select ''Advanced -> Register distribution...''. If you do not do this, you will have to run all commands in this document via the '''WinPython Command Prompt.exe'''. If you plan on running both 32-bit and 64-bit Python, you should not register them. Instead explicitly call the correct Python by always running the '''WinPython Command Prompt.exe''', and then calling specific programs (such as CW Capture or Analyzer) from that command prompt.
 
-== Python Packages ==
+<h2> Python Packages </h2>
 There are a number of packages that the ChipWhisperer project uses. You'll need to install these so that the software can run. Note that the PyPi install process should automatically install these, so you shouldn't need to manually install everything there.
 
 Run the following commands to get the needed packages:
@@ -35,11 +35,11 @@ This package will also require you to install the [http://www.ftdichip.com/Drive
 
 '''PYSCARD:''' If planning on using a PS/SC smartcard reader (i.e. standard USB-connected reader), you will need to install [https://sourceforge.net/projects/pyscard/files/pyscard/ pyscard].
 
-== Installing Hardware Drivers ==
+<h2> Installing Hardware Drivers </h2>
 
 Details of driver installation are on specific pages for supported hardware (such as cwcapturerev2 and naecw1173_cwlite). Drivers are available from [http://chipwhisperer.com ChipWhisperer] release section.
 
-== Getting AVR Compiler Toolchain ==
+<h2> Getting AVR Compiler Toolchain </h2>
 
 The following section is not required for your first attack - you can jump right to the tutorial if you wish. However you'll ultimately wish to modify the code of the device under test, and these instructions tell you how. You should first follow the tutorial to confirm your system is working before modifying the code however!
 
@@ -60,7 +60,7 @@ Programming the target AVR is accomplished in one of two methods depending on yo
 
 For details about programming the targets, see [[Tutorial B1 Building a SimpleSerial Project]].
 
-=== WinAVR Path Settings ===
+<h3> WinAVR Path Settings </h3>
 
 By default, WinAVR is added to your system path. This means you can run avr-gcc, make and other programs from your normal Windows command line. You may not want this on certain systems where you already have similar tools installed. In which case either uncheck the Add WinAVR to Path option, or edit your system path to remove the WinAVR directories.
 
