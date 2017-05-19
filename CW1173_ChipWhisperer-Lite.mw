@@ -38,7 +38,7 @@ SUBSYSTEM==&quot;usb&quot;, ATTRS{idVendor}==&quot;2b3e&quot;, ATTRS{idProduct}=
 <li>No special installation required - must ensure you have installed libusb via homebrew (see instructions at [[MacOSX_Installation]]).</li></ul>
 </dd></dl>
 </li>
-<li><p>Run ChipWhisperer-Capture. This can be done from one of three ways:</p>
+<li><p>To quickly check for a successful installation Run ChipWhisperer-Capture. This can be done from one of three ways:</p>
 <blockquote><ul>
 <li>Double-click on <code>CWCapture.pyw</code> in the <code>chipwhisperer\software</code> folder. You must have installed Python into your path for this to work.</li>
 <li>run <code>python CWCapture.pyw</code> from the <code>chipwhisperer\software</code> folder using a command prompt with Python in the path.</li>
