@@ -12,7 +12,7 @@ You can see a [http://www.youtube.com/watch?v=MJmkYqA-LeM&hd=1 Video] of the qui
 
 == Connection Quick-Start ==
 <ol>
-<li>Follow the [[Installing ChipWhisperer|Installing ChipWhisperer]] instructions for the ChipWhisperer software and its prerequisites.</li>
+<li>Follow the [[Installing ChipWhisperer]] instructions for the ChipWhisperer software and its prerequisites.</li>
 <li>Connect ChipWhisperer-Lite, install USB Drivers:
 <dl>
 <dt>Windows:</dt>
