@@ -11,54 +11,8 @@ You can see a [http://www.youtube.com/watch?v=MJmkYqA-LeM&hd=1 Video] of the qui
 [[File:cwlite_demo_video.png|link=http://www.youtube.com/watch?v=MJmkYqA-LeM&hd=1]]
 
 == Connection Quick-Start ==
-
-<ol style="list-style-type: decimal;">
-<li>Install Python and Dependancies
-<dl>
-<dt>Windows:</dt>
-<dd><ul>
-<li>Install Python distribution (such as WinPython), see [[Installing_WinPython]]</li>
-<li><p>Using the Python Command Prompt, use pip to install the following:</p>
-<pre>pip install pyside
-pip install configobj
-pip install pyusb
-pip install pyqtgraph </pre></li></ul>
-
-<blockquote><p>What is included in releases varies. If you get a message saying it is already installed you can simply continue with this tutorial.</p></blockquote></dd>
-<dt>Linux:</dt>
-<dd><ul>
-<li><p>Python should come pre-installed. If so you'll also need to install the following from your package manager:</p>
-<blockquote><ul>
-<li>pyside</li>
-<li>configobj</li>
-<li>scipy</li>
-<li>numpy</li></ul>
-
-<p>For example the following shows the install command for Ubuntu:</p>
-<pre>sudo apt-get install python2.7 python2.7-dev python2.7-libs python-numpy python-scipy python-pyside python-configobj python-setuptools python-pip</pre></blockquote></li>
-<li><p>Some packages may require installation via 'pip', as they are not always in your package manager repo:</p>
-<pre>$pip install pyusb
-$pip install pyqtgraph         </pre></li></ul>
-</dd>
-<dt>Mac OS-X:</dt>
-<dd><ul>
-<li>Install homebrew, pyside, libusb, along with required Python modules.</li>
-<li>See [[MacOSX_Installation]] for full details.</li></ul>
-</dd></dl>
-</li>
-<li><p>Download and install ChipWhisperer</p>
-<ul>
-<li>Download the latest release linked from ChipWhisperer.com</li>
-<li>Unzip the file somewhere. Generally 'somewhere' will become your ChipWhisperer working directory. These examples assume you've chosen <code>C:\chipwhisperer</code> as your working directory.</li>
-<li><p>Open a Python terminal (again if using WinPython be sure to run the specific Python command prompt), and run the following, adjusting paths as needed to refelct your working directory:</p>
-<pre>cd c:\chipwhisperer\openadc\controlsw\python
-python setup.py develop
-cd c:\chipwhisperer\software
-python setup.py develop</pre></li></ul>
-
-<blockquote><p>If you wish to confirm the installation worked, you can run ChipWhispererAnalyzer in the same terminal:</p>
-<pre>cd c:\chipwhisperer\software\chipwhisperer
-python CWAnalyzer.pyw</pre></blockquote></li>
+<ol>
+<li>Follow the [[Installing ChipWhisperer|Installing ChipWhisperer]] instructions for the ChipWhisperer software and its prerequisites.</li>
 <li>Connect ChipWhisperer-Lite, install USB Drivers:
 <dl>
 <dt>Windows:</dt>
