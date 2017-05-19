@@ -153,7 +153,7 @@ At this point you've completed the same amount of information as the previous tu
 <ol start="13" style="list-style-type: decimal;">
 <li>Hit the '''Reset ADC DCM''' button.</li>
 
-[[File:04_ADC_Clock_2.PNG|image]]</ol>
+[[File:04_ADC_Clock_2_1.png|image]]</ol>
 
 <ol start="14" style="list-style-type: decimal;">
 <li>The ''ADC Freq'' should show 29.5 MHz (which is 4x 7.37 MHz), and the ''DCM Locked'' checkbox __MUST__ be checked. If the ''DCM Locked'' checkbox is NOT checked, try hitting the ''Reset ADC DCM'' button again.</li>
