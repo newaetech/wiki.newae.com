@@ -8,7 +8,7 @@ There are four ways to set up ChipWhisperer:
 * '''PyPi Package:''' <code>pip install chipwhisperer</code>. Only includes the software - doesn't come with the hardware source files.
 * '''Git Repository:''' Get the latest, bleeding-edge features and bugs. Recommended if you're an experienced developer and you want to contribute to ChipWhisperer.
 
-__TOC__
+{{TOC|limit=3}}
 
 {{CollapsibleSection
 |intro = = Using VMWare Virtual Machine =
