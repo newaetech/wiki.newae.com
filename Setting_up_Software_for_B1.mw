@@ -2,11 +2,11 @@ It is assumed that you've already followed the guide in [[Installing_ChipWhisper
 
 Assuming this setup is complete, you can confirm you are able to communicate with the hardware by running the example capture of traces given in the [[CW1173_ChipWhisperer-Lite]] quick-start.
 
-== Programming the Example ==
+<h2> Programming the Example </h2>
 
 Note with the CW1173 you need to configure a clock before programming of the device will succeed. Programming of the target device will be done as part of the CW-Capture software setup, discussed next.
 
-== Communicating from CW-Capture Software ==
+<h2> Communicating from CW-Capture Software </h2>
 
 Next, open the CW-Capture software. Then perform the following steps:
 
