@@ -129,15 +129,15 @@ At this point you've completed the same amount of information as the previous tu
 
 [[File:02_CW_Extra.PNG|image]]
 
+{{Warningbox|Beginning of a hardware specific section for CW1002}}
 
-{{Warningbox|For the CW1002 (ChipWhisperer Capture Rev 2) hardware only, perform the following:}}
-
-<blockquote><ol start = "12" style="list-style-type: lower-alpha;">
+<blockquote><ol start="12" style="list-style-type: decimal"><li>For the CW1002 (ChipWhisperer Capture Rev 2) hardware only, perform the following:</li>
+<ol style="list-style-type: lower-alpha;">
 <li>Under the ''Trigger Pins'' unselect the ''Front Panel A'' as an option, and select ''Target IO4 (Trigger Line)''. This will mean only the trigger pin coming from the AVR target is used to trigger the capture.</li>
 <li><p>In the same area, select the ''Clock Source'' as being from ''Target IO-IN''</p>
 <p>[[File:cap3.png|image]]</p></li>
 <li>You can monitor the ''Freq Counter'' option, which measures the frequency being used on the ''EXTCLK'' input. This should be 7.37 MHz, which is the oscillator on the multi-target board.</li>
-<li>Change the ''ADC Clock'' ''source'' as being ''EXTCLK x4 via DCM''. This routes the external clock through a 4x multiplier, and routes it to the ADC.</li></ol>
+<li>Change the ''ADC Clock'' ''source'' as being ''EXTCLK x4 via DCM''. This routes the external clock through a 4x multiplier, and routes it to the ADC.</li></ol></ol>
 </blockquote>
 
 {{Warningbox|End of CW1002 (ChipWhisperer Capture Rev 2) specific section}}
