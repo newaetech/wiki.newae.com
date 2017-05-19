@@ -37,7 +37,7 @@ This package will also require you to install the [http://www.ftdichip.com/Drive
 
 == Installing Hardware Drivers ==
 
-Details of driver installation are on specific pages for supported hardware (such as hwcapturerev2 and naecw1173_cwlite). Drivers are available from [http://chipwhisperer.com ChipWhisperer] release section.
+Details of driver installation are on specific pages for supported hardware (such as cwcapturerev2 and naecw1173_cwlite). Drivers are available from [http://chipwhisperer.com ChipWhisperer] release section.
 
 == Getting AVR Compiler Toolchain ==
 
