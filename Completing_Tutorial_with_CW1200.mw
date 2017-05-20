@@ -2,6 +2,12 @@
 
 This tutorial uses the [[CW1200_ChipWhisperer-Pro]] hardware. 
 
-<b>TODO: add in extra hardware steps for CW 1200</b>
+
+# Remove the ChipWhisperer-Pro main capture hardware, UFO Board, and SMA cable from the ChipWhisperer-Pro case.
+#
+
+
+
+
 
 {{:Setting up Software for B1}}
