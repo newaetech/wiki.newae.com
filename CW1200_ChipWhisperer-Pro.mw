@@ -5,6 +5,7 @@ Check out a [https://youtu.be/qS6JwX4SBOI sneak peek of the CW-Pro].
 [[File:cwpro_invisible.png|500x500px]]
 
 = Connection Quick-Start =
+
 <ol>
 <li>Follow the [[Installing ChipWhisperer]] instructions for the ChipWhisperer software and its prerequisites.</li>
 <li>Connect ChipWhisperer-Lite, install USB Drivers:
