@@ -38,9 +38,12 @@ SUBSYSTEM==&quot;usb&quot;, ATTRS{idVendor}==&quot;2b3e&quot;, ATTRS{idProduct}=
 <li>Double-click on <code>CWCapture.pyw</code> in the <code>chipwhisperer\software</code> folder. You must have installed Python into your path for this to work.</li>
 <li>run <code>python CWCapture.pyw</code> from the <code>chipwhisperer\software</code> folder using a command prompt with Python in the path.</li>
 <li>run <code>python CWCaptureGUI.py</code> from the <code>chipwhisperer\software\chipwhisperer\capture\ui</code> directory.</li></ul>
+
+<p>The last option is the most reliable, in that it should always work on all platforms. If it doesn't start look for possible missing modules or other useful errors.</p>
+</blockquote>
+<li>Your ChipWhisperer-Lite is now connected. See the Tutorial B-1 for details of the demo attack.</li>
 </li></ol>
 
-See tutorial B-1 to continue.
 
 = Power Supply =
 The ChipWhisperer Pro can only be powered through its 5 V jack. It cannot be powered through the USB port - internally, there are no connections to the USB port's 5 V rail. This limitation is primarily due to the high current draw of the Pro: while powering the touchscreen running and an external target, it would be easy to exceed the USB current limit, causing all sorts of issues.
