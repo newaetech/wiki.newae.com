@@ -4,6 +4,45 @@ Check out a [https://youtu.be/qS6JwX4SBOI sneak peek of the CW-Pro].
 
 [[File:cwpro_invisible.png|500x500px]]
 
+= Connection Quick-Start =
+<ol>
+<li>Follow the [[Installing ChipWhisperer]] instructions for the ChipWhisperer software and its prerequisites.</li>
+<li>Connect ChipWhisperer-Lite, install USB Drivers:
+<dl>
+<dt>Windows:</dt>
+<dd><ul>
+<li>Plug micro-USB cable into ChipWhisperer-Lite</li>
+<li>If the &quot;New Hardware Found&quot; wizard doesn't prompt you for drivers, go to the control panel and find the &quot;ChipWhisperer-Pro&quot; device, and select "Update Drivers".</li>
+<li>You can find drivers in <code>c:\chipwhisperer\hardware\capture\chipwhisperer-cw1200\</code>. You will likely need to extract them from the <code>cw1200_usbdriver.zip</code> file. If so simply extract them somewhere (i.e. your desktop), and then point the new hardware found wizard to that location.</li></ul>
+</dd>
+<dt>Linux:</dt>
+<dd><ul>
+<li><p>Driver installation is not required, but if you do not update the 'udev' system, you will be unable to run ChipWhisperer-Capture as a regular user. To update the udev system, first make sure the ChipWhisperer-Lite is Make a file called <code>/etc/udev/rules.d/99-cwlite.rules</code> . The contents of this file should be:</p>
+<pre># allow users to claim the device
+SUBSYSTEM==&quot;usb&quot;, ATTRS{idVendor}==&quot;2b3e&quot;, ATTRS{idProduct}==&quot;ace3&quot;, MODE=&quot;0664&quot;, GROUP=&quot;plugdev&quot;</pre></li>
+<li><p>Add your username to the plugdev group:</p>
+<pre>$ sudo usermod -a -G plugdev YOUR-USERNAME</pre></li>
+<li><p>And reset the udev system:</p>
+<pre>$ sudo udevadm control --reload-rules</pre></li>
+<li>Finally log out &amp; in again for the group change to take effect.</li>
+<li>Connect the USB-A cable, and DC power cable</li></ul>
+</dd>
+<dt>MAC:</dt>
+<dd><ul>
+<li>No special installation required - must ensure you have installed libusb via homebrew (see instructions at [[MacOSX_Installation]]).</li></ul>
+</dd></dl>
+</li>
+<li><p>To check for a successful installation Run ChipWhisperer-Capture. This can be done from one of three ways:</p>
+<blockquote><ul>
+<li>Double-click on <code>CWCapture.pyw</code> in the <code>chipwhisperer\software</code> folder. You must have installed Python into your path for this to work.</li>
+<li>run <code>python CWCapture.pyw</code> from the <code>chipwhisperer\software</code> folder using a command prompt with Python in the path.</li>
+<li>run <code>python CWCaptureGUI.py</code> from the <code>chipwhisperer\software\chipwhisperer\capture\ui</code> directory.</li></ul>
+
+<p>The last option is the most reliable, in that it should always work on all platforms. If it doesn't start look for possible missing modules or other useful errors.</p>
+<blockquote><p>'''hint'''</p>
+
+See tutorial B-1 to continue.
+
 = Power Supply =
 The ChipWhisperer Pro can only be powered through its 5 V jack. It cannot be powered through the USB port - internally, there are no connections to the USB port's 5 V rail. This limitation is primarily due to the high current draw of the Pro: while powering the touchscreen running and an external target, it would be easy to exceed the USB current limit, causing all sorts of issues.
 
