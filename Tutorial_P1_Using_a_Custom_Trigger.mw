@@ -1,0 +1,64 @@
+{{Warningbox|This page is in progress}}
+This tutorial will explore the ChipWhisperer Pro's custom trigger and stream features. 
+
+{{TOC|limit=1}}
+
+<h1>Prerequisites</h1>
+<p>
+
+This tutorial can only be completed using the [[CW1200_ChipWhisperer-Pro]]. The ChipWhisperer software and its prerequisites should be installed. If not, this is the page for you: [[Installing ChipWhisperer]]. This tutorial is an extension of [[Tutorial B1 Building a SimpleSerial Project]] and [[Tutorial B5 Breaking AES (Straightforward)]], which should be completed first for better understanding.
+</p>
+
+<h1>Introduction</h1>
+<p>
+Unique to the [[CW1200_ChipWhisperer-Pro]]'s more advanced FPGA, the stream feature allows continuous power measurement data streaming, removing the upper limit (due to a smaller FPGA) of total samples possible. This allows to you to continuously stream data for a time period in which you can manually send data to the target to record the power response. You can later find the subsection of sample points in the streamed power trace that correspond to the encryption of data. You can now use a subsection of 128 sample points to create a custom trigger using the sum of differences (TODO: link to subsequent section). This eliminates the need for the target to have a code that signals the ChipWhisperer when encryption begins. The subset of points for triggering is chosen by you, so anything is possible... We will explore one possibility in this tutorial.
+</p>
+
+<h1>Building the Target Code</h1>
+<p>
+We will begin by modifying the <code>simpleserial-aes.c</code> code with a editor of your choice.
+</p>
+<ol>
+<li>Navigate to the ChipWhisperer installation directory and find the <code>simpleserial-aes</code> folder, the folder is in the <code>...\chipwhisperer\hardware\victims\firmware</code> directory. The beginning of the file path may be different depending on the installation directory.
+</li>
+<li>
+Copy the <code>simpleserial-aes</code> folder into the same directory and rename it as you see fit. For example: <code>simpleserial-aes-stream</code>.
+</li>
+<li>
+Now open the <code>simpleserial-aes-stream</code> folder and rename the <code>simpleserial-aes.c</code> file to match the directory name change. For example: <code>simpleserial-aes-stream.c</code>
+</li>
+<li>
+Open the <code>simpleserial-aes-stream.c</code> file in the text editor of your choice and find this section of the code near the top.
+<syntaxhighlight lang="c">
+/**********************************
+ * Start user-specific code here. */
+uint8_t get_pt(uint8_t* pt)
+{
+	trigger_high();
+	aes_indep_enc(pt); /* encrypting the data block */
+	trigger_low();
+	simpleserial_put('r', 16, pt);
+	return 0x00;
+}
+/* End user-specific code here. *
+ ********************************/
+</syntaxhighlight>
+</li>
+<li>
+Modify this code by commenting out the <code>trigger_high();</code> and <code>trigger_low();</code> to remove the signal produced by the target to tell the ChipWhisperer it is starting the encryption process. Your c ocde should look like this:
+<syntaxhighlight lang="c">
+/**********************************
+ * Start user-specific code here. */
+uint8_t get_pt(uint8_t* pt)
+{
+	//trigger_high();
+	aes_indep_enc(pt); /* encrypting the data block */
+	//trigger_low();
+	simpleserial_put('r', 16, pt);
+	return 0x00;
+}
+/* End user-specific code here. *
+ ********************************/
+</syntaxhighlight>
+</li>
+</ol>
