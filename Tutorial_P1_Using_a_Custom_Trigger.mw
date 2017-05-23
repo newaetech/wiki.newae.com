@@ -45,7 +45,7 @@ uint8_t get_pt(uint8_t* pt)
 </syntaxhighlight>
 </li>
 <li>
-Modify this code by commenting out the <code>trigger_high();</code> and <code>trigger_low();</code> to remove the signal produced by the target to tell the ChipWhisperer it is starting the encryption process. Your c ocde should look like this:
+Modify this code by commenting out the <code>trigger_high();</code> and <code>trigger_low();</code> to remove the signal produced by the target to tell the ChipWhisperer it is starting the encryption process. Your c code should look like this:
 <syntaxhighlight lang="c">
 /**********************************
  * Start user-specific code here. */
