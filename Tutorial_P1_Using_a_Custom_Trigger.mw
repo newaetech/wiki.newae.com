@@ -81,11 +81,16 @@ Change the <code>TARGET = simpleserial-aes</code> line to <code>TARGET = simples
 <li>
 Open your command line in the <code>simpleserial-aes-stream</code> directory and run the <code>make</code> command for the correct target. For example: for the XMEGA run <code>make PLATFORM=CW303</code>. This will create a <code>.hex</code> file in the same directory. This step requires avr-gcc to be set-up and added to your system path. If you have not done this go back to [[Installing ChipWhisperer]] under the <b>Required Tools</b> dropdown.
 </li>
+</ol>
+
+<h1>Setting up Stream Mode</h1>
+
+<ol>
 <li>
 Next open the ChipWhisperer software. Hopefully you know how to do this by now.
 </li>
 <li>
-Run the <code>Project>Example Scripts>ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script. We will modify some of the settings.
+Run the <code>Project > Example Scripts > ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script. We will modify some of the settings.
 </li>
 The modifications to the settings will allow us the use stream mode while manually sending a plain text for encryption. We will then look at the stream data and identify where the encryption takes place and what it looks like.
 <li>
@@ -95,10 +100,78 @@ Under the <b>Scope Settings</b> find the <b>ADC Clock</b> section. Here change t
 </li>
 <li>
 Under the <b>Scope Settings</b> find the <b>Trigger Setup</b> section. Enable <b>Stream Mode</b>. The <b>Mode</b> field needs to be set to <code>low</code> so the sample capture starts right away because the target does not set the trigger line to high anymore during encryption.
+<br>
+[[File:Trigger Setup_1.PNG]]
 </li>
 <li>
 Under the same section change the <b>Total Samples</b> field to <code>11000000</code>. This will give use a window of approximately 1.5 seconds to send a plain text and capture the power measurements during encryption.
 </li>
 Note: The <b>Timeout (secs)</b> field needs to be set greater than the time it needs to stream the samples and a little additional time to allow for hardware communication. For example: 11 million samples take about 1.5 seconds at the sampling rate of 7.3MS/s so this field should be set to <code>2</code> seconds. You can set it higher if needed.
-
+<br>
+[[File:Trigger Setup_2.PNG]]
 </ol>
+
+<h1>Capturing the Encryption Process</h1>
+
+<ol>
+<li>
+Now open the terminal inside the Chipwhisperer Capture Software: <code>Tools > Terminal</code> and inside the Terminal window press <b>Connect</b>.
+<br>
+[[File:terminal.PNG]]
+</li>
+<li>
+We will now send a plain text to the target for encryption to test everything is working. For example: <code>pAABBCCDDEEFF00112233445566778899</code>. The target should respond with encrypted text.
+<br>
+[[File:target response.PNG]]
+</li>
+<li>
+Repeat the previous step but before you send a plaintext press capture [[File:Capture One Button.PNG]] and then within one second send the plain text to the target for encryption. Hint: It is easier to do when you already have the plain text ready to send in the terminal and all you have to do is press send. The captured wave form should look like the following:
+<br>
+[[File:Stream Capture.PNG|1000px]]
+</li>
+Note: When pressing capture [[File:Capture One Button.PNG]], the ChipWhisperer automatically sends a plain text to the target. The plain text and response will show up in the terminal window but we are going to ignore this and focus on our manually sent plain text.
+</li>
+Looking at the wave form capture you can see that towards the end there is a series of power spikes in the sample data.
+<br>
+[[File:Identifying the Encryption.PNG|800px]]
+</li>
+<li>
+Zoom into this area and take a closer look at the power measurements. The sample data should look something like this.
+<br>
+[[File:Encryption Process.PNG|800px]]
+<br>
+Here the <span style="color:rgb(0,0,255)>blue</span> box represent the power usage during the communication and transferring of data too and from the target. The left <span style="color:rgb(0,0,255)>blue</span> box encompasses the power measurements when the target receives the plain text and the right <span style="color:rgb(0,0,255)>blue</span> box when the target sends back the encrypted text. The <span style="color:rgb(0,180,0)>green</span> box encompasses the encryption process. 
+</li>
+<li>
+Zoom into the sample points that represent the encryption process. There should be a pattern that repeats ten times, one for each round of the AES-128 encryption.
+<br>
+[[File:Encryption_2.PNG|800px]]
+</ol>
+
+<h1>Creating a Custom Trigger</h1>
+
+We are going to use this repeating pattern to allow the [[CW1200_ChipWhisperer-Pro]] to identify when the encryption process occurs and use this to trigger our capture process. We can then use these traces to break the AES-128 encryption exactly the same as in [[Tutorial B5 Breaking AES (Straightforward)]].
+<br>
+[[File:Trigger Choice.PNG|800px]]
+<br>
+We will choose the highlighted spike and the surrounding area as our trigger as it is a unique feature that is close to the beginning of the encryption process.
+<ol>
+<li>
+Under <b>Scope Settings</b> find the <b>SAD Trigger Module</b> section. Here choose the 128 data point range that will be used as the trigger. Hint: You can type in a number that is close to the desired location and then click and drag the range selection box to the final position. The position numbers will be different from the ones in this tutorial because the numbers depend on when the plain text was manually sent. So just adjust the numbers as needed.
+[[File:Dragging Selection.PNG|800px]]
+<br>
+</li>
+<li>
+When you are satisfied with the position of your trigger points press <b>Set SAD Reference from Current Trace</b> to set the currently selected points to be used for the sum of absolute differences comparison carried out to activate the trigger.
+</li>
+</ol>
+Note: The Sum of Absolute Differences is carried out during the measurement process and when the total sum of absolute differences of all 128 sample points is below the threshold, the trigger is set to high to start the capture of a trace. This was a specific pattern can be chosen to initiate the capture process without any other data from the target. The SAD equation is as follows:
+<br>
+<math>
+SAD 
+= \sum_{i=1}^{128} |x_{ADC,i} - x_{pattern,i}|
+</math>
+
+<ol start="3">
+<li>
+Once you have chosen the points that initialize the trigger you can drag the selection box around and take note of the <b>SAD Reference vs. Cursor</b> value and how it changes. Choose a threshold
