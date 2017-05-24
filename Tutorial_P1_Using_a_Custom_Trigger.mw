@@ -87,7 +87,18 @@ Next open the ChipWhisperer software. Hopefully you know how to do this by now.
 <li>
 Run the <code>Project>Example Scripts>ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script. We will modify some of the settings.
 </li>
+The modifications to the settings will allow us the use stream mode while manually sending a plain text for encryption. We will then look at the stream data and identify where the encryption takes place and what it looks like.
 <li>
-Under the <b>Scope Settings</b> find the <b>ADC Clock</b> section. Here change the <b>Source</b> setting to <b>CLKGEN x1 via DCM</b>
+Under the <b>Scope Settings</b> find the <b>ADC Clock</b> section. Here change the <b>Source</b> setting to <code>CLKGEN x1 via DCM</code>. The <b>ADC Sample Rate</b> field should auto-populate to <b>7.3846 MS/s</b> or a number approximately equal. If the sampling rate is above 10 MS/s the streaming mode will not work as the buffer in the FPGA will overflow.
+<br>
+[[File:ADC Clock.PNG]]
 </li>
+<li>
+Under the <b>Scope Settings</b> find the <b>Trigger Setup</b> section. Enable <b>Stream Mode</b>. The <b>Mode</b> field needs to be set to <code>low</code> so the sample capture starts right away because the target does not set the trigger line to high anymore during encryption.
+</li>
+<li>
+Under the same section change the <b>Total Samples</b> field to <code>11000000</code>. This will give use a window of approximately 1.5 seconds to send a plain text and capture the power measurements during encryption.
+</li>
+Note: The <b>Timeout (secs)</b> field needs to be set greater than the time it needs to stream the samples and a little additional time to allow for hardware communication. For example: 11 million samples take about 1.5 seconds at the sampling rate of 7.3MS/s so this field should be set to <code>2</code> seconds. You can set it higher if needed.
+
 </ol>
