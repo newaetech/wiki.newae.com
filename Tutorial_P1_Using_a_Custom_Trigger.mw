@@ -6,7 +6,7 @@ This tutorial will explore the ChipWhisperer Pro's custom trigger and stream fea
 <h1>Prerequisites</h1>
 <p>
 
-This tutorial can only be completed using the [[CW1200_ChipWhisperer-Pro]]. The ChipWhisperer software and its prerequisites should be installed. If not, this is the page for you: [[Installing ChipWhisperer]]. This tutorial is an extension of [[Tutorial B1 Building a SimpleSerial Project]] and [[Tutorial B5 Breaking AES (Straightforward)]], which should be completed first for better understanding.
+This tutorial can only be completed using the [[CW1200_ChipWhisperer-Pro]]. The ChipWhisperer software and its prerequisites should be installed and the [[CW1200_ChipWhisperer-Pro]] and hardware should be connected to each other and your computer. If not, this is the page for you: [[Installing ChipWhisperer]]. This tutorial is an extension of [[Tutorial B1 Building a SimpleSerial Project]] and [[Tutorial B5 Breaking AES (Straightforward)]], which should be completed first for better understanding.
 </p>
 
 <h1>Introduction</h1>
@@ -64,5 +64,30 @@ uint8_t get_pt(uint8_t* pt)
 /* End user-specific code here. *
  ********************************/
 </syntaxhighlight>
+</li>
+<li>
+Save this code, and then find the <code>makefile</code> file and open it in a text editor of your choice. Find this piece of code near the top:
+<pre>
+# Target file name (without extension). 
+# This is the base name of the compiled .hex file.
+TARGET = simpleserial-aes
+
+# List C source files here.
+# Header files (.h) are automatically pulled in.
+SRC += simpleserial-aes.c 
+</pre>
+Change the <code>TARGET = simpleserial-aes</code> line to <code>TARGET = simpleserial-aes-stream</code> and the <code>SRC += simpleserial-aes.c</code> line to <code>SRC += simpleserial-aes-stream.c</code>
+</li>
+<li>
+Open your command line in the <code>simpleserial-aes-stream</code> directory and run the <code>make</code> command for the correct target. For example: for the XMEGA run <code>make PLATFORM=CW303</code>. This will create a <code>.hex</code> file in the same directory. This step requires avr-gcc to be set-up and added to your system path. If you have not done this go back to [[Installing ChipWhisperer]] under the <b>Required Tools</b> dropdown.
+</li>
+<li>
+Next open the ChipWhisperer software. Hopefully you know how to do this by now.
+</li>
+<li>
+Run the <code>Project>Example Scripts>ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script. We will modify some of the settings.
+</li>
+<li>
+Under the <b>Scope Settings</b> find the <b>ADC Clock</b> section. Here change the <b>Source</b> setting to <b>CLKGEN x1 via DCM</b>
 </li>
 </ol>
