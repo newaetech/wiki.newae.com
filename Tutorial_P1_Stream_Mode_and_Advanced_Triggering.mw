@@ -148,7 +148,7 @@ Zoom into the sample points that represent the encryption process. There should 
 [[File:Encryption_2.PNG|800px]]
 </ol>
 
-<h1>Using a Power Pattern to Activate the Trigger</h1>
+<h1>Using a Power Pattern to Activate the Sum of Absolute Differences Trigger</h1>
 
 We are going to use this repeating pattern to allow the [[CW1200_ChipWhisperer-Pro]] to identify when the encryption process occurs and use this to trigger our capture process. We can then use these traces to break the AES-128 encryption exactly the same as in [[Tutorial B5 Breaking AES (Straightforward)]].
 <br>
