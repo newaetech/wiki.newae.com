@@ -1,0 +1,212 @@
+{{Warningbox|This page is in progress}}
+This tutorial will explore the ChipWhisperer Pro's custom trigger and stream features. 
+
+{{TOC|limit=1}}
+
+<h1>Prerequisites</h1>
+<p>
+
+This tutorial can only be completed using the [[CW1200_ChipWhisperer-Pro]]. The ChipWhisperer software and its prerequisites should be installed and the [[CW1200_ChipWhisperer-Pro]] and hardware should be connected to each other and your computer. If not, this is the page for you: [[Installing ChipWhisperer]]. This tutorial is an extension of [[Tutorial B1 Building a SimpleSerial Project]] and [[Tutorial B5 Breaking AES (Straightforward)]], which should be completed first for better understanding.
+</p>
+
+<h1>Introduction</h1>
+<p>
+Unique to the [[CW1200_ChipWhisperer-Pro]]'s more advanced FPGA, the stream feature allows continuous power measurement data streaming, removing the upper limit (due to a smaller FPGA) of total samples possible. This allows to you to continuously stream data for a time period in which you can manually send data to the target to record the power response. You can later find the subsection of sample points in the streamed power trace that correspond to the encryption of data. You can now use a subsection of 128 sample points to create a custom trigger using the sum of differences (TODO: link to subsequent section). This eliminates the need for the target to have a code that signals the ChipWhisperer when encryption begins. The subset of points for triggering is chosen by you, so anything is possible... We will explore one possibility in this tutorial.
+</p>
+
+<h1>Building the Target Code</h1>
+<p>
+We will begin by modifying the <code>simpleserial-aes.c</code> code with a editor of your choice.
+</p>
+<ol>
+<li>Navigate to the ChipWhisperer installation directory and find the <code>simpleserial-aes</code> folder, the folder is in the <code>...\chipwhisperer\hardware\victims\firmware</code> directory. The beginning of the file path may be different depending on the installation directory.
+</li>
+<li>
+Copy the <code>simpleserial-aes</code> folder into the same directory and rename it as you see fit. For example: <code>simpleserial-aes-stream</code>.
+</li>
+<li>
+Now open the <code>simpleserial-aes-stream</code> folder and rename the <code>simpleserial-aes.c</code> file to match the directory name change. For example: <code>simpleserial-aes-stream.c</code>
+</li>
+<li>
+Open the <code>simpleserial-aes-stream.c</code> file in the text editor of your choice and find this section of the code near the top.
+<syntaxhighlight lang="c">
+/**********************************
+ * Start user-specific code here. */
+
+uint8_t get_pt(uint8_t* pt)
+{
+	trigger_high();
+	aes_indep_enc(pt); /* encrypting the data block */
+	trigger_low();
+	simpleserial_put('r', 16, pt);
+	return 0x00;
+}
+
+/* End user-specific code here. *
+ ********************************/
+</syntaxhighlight>
+</li>
+<li>
+Modify this code by commenting out the <code>trigger_high();</code> and <code>trigger_low();</code> to remove the signal produced by the target to tell the ChipWhisperer it is starting the encryption process. Your c code should look like this:
+<syntaxhighlight lang="c">
+/**********************************
+ * Start user-specific code here. */
+
+uint8_t get_pt(uint8_t* pt)
+{
+	//trigger_high();
+	aes_indep_enc(pt); /* encrypting the data block */
+	//trigger_low();
+	simpleserial_put('r', 16, pt);
+	return 0x00;
+}
+
+/* End user-specific code here. *
+ ********************************/
+</syntaxhighlight>
+</li>
+<li>
+Save this code, and then find the <code>makefile</code> file and open it in a text editor of your choice. Find this piece of code near the top:
+<pre>
+# Target file name (without extension). 
+# This is the base name of the compiled .hex file.
+TARGET = simpleserial-aes
+
+# List C source files here.
+# Header files (.h) are automatically pulled in.
+SRC += simpleserial-aes.c 
+</pre>
+Change the <code>TARGET = simpleserial-aes</code> line to <code>TARGET = simpleserial-aes-stream</code> and the <code>SRC += simpleserial-aes.c</code> line to <code>SRC += simpleserial-aes-stream.c</code>
+</li>
+<li>
+Open your command line in the <code>simpleserial-aes-stream</code> directory and run the <code>make</code> command for the correct target. For example: for the XMEGA run <code>make PLATFORM=CW303</code>. This will create a <code>.hex</code> file in the same directory. This step requires avr-gcc to be set-up and added to your system path. If you have not done this go back to [[Installing ChipWhisperer]] under the <b>Required Tools</b> dropdown.
+</li>
+</ol>
+
+<h1>Setting up Stream Mode</h1>
+
+<ol>
+<li>
+Next open the ChipWhisperer software. Hopefully you know how to do this by now.
+</li>
+<li>
+Run the <code>Project > Example Scripts > ChipWhisperer-Lite: AES SimpleSerial on XMEGA</code> script. We will modify some of the settings.
+</li>
+The modifications to the settings will allow us the use stream mode while manually sending a plain text for encryption. We will then look at the stream data and identify where the encryption takes place and what it looks like.
+<li>
+Under the <b>Scope Settings</b> find the <b>ADC Clock</b> section. Here change the <b>Source</b> setting to <code>CLKGEN x1 via DCM</code>. The <b>ADC Sample Rate</b> field should auto-populate to <b>7.3846 MS/s</b> or a number approximately equal. If the sampling rate is above 10 MS/s the streaming mode will not work as the buffer in the FPGA will overflow.
+<br>
+[[File:ADC Clock.PNG]]
+</li>
+<li>
+Under the <b>Scope Settings</b> find the <b>Trigger Setup</b> section. Enable <b>Stream Mode</b>. The <b>Mode</b> field needs to be set to <code>low</code> so the sample capture starts right away because the target does not set the trigger line to high anymore during encryption.
+<br>
+[[File:Trigger Setup_1.PNG]]
+</li>
+<li>
+Under the same section change the <b>Total Samples</b> field to <code>11000000</code>. This will give use a window of approximately 1.5 seconds to send a plain text and capture the power measurements during encryption.
+</li>
+Note: The <b>Timeout (secs)</b> field needs to be set greater than the time it needs to stream the samples and a little additional time to allow for hardware communication. For example: 11 million samples take about 1.5 seconds at the sampling rate of 7.3MS/s so this field should be set to <code>2</code> seconds. You can set it higher if needed.
+<br>
+[[File:Trigger Setup_2.PNG]]
+</ol>
+
+<h1>Capturing the Encryption Process</h1>
+
+<ol>
+<li>
+Now open the terminal inside the Chipwhisperer Capture Software: <code>Tools > Terminal</code> and inside the Terminal window press <b>Connect</b>.
+<br>
+[[File:terminal.PNG]]
+</li>
+<li>
+We will now send a plain text to the target for encryption to test everything is working. For example: <code>pAABBCCDDEEFF00112233445566778899</code>. The target should respond with encrypted text.
+<br>
+[[File:target response.PNG]]
+</li>
+<li>
+Repeat the previous step but before you send a plaintext press capture [[File:Capture One Button.PNG]] and then within one second send the plain text to the target for encryption. Hint: It is easier to do when you already have the plain text ready to send in the terminal and all you have to do is press send. The captured wave form should look like the following:
+<br>
+[[File:Stream Capture.PNG|1000px]]
+</li>
+Note: When pressing capture [[File:Capture One Button.PNG]], the ChipWhisperer automatically sends a plain text to the target. The plain text and response will show up in the terminal window but we are going to ignore this and focus on our manually sent plain text.
+</li>
+Looking at the wave form capture you can see that towards the end there is a series of power spikes in the sample data.
+<br>
+[[File:Identifying the Encryption.PNG|800px]]
+</li>
+<li>
+Zoom into this area and take a closer look at the power measurements. The sample data should look something like this.
+<br>
+[[File:Encryption Process.PNG|800px]]
+<br>
+Here the <span style="color:rgb(0,0,255)>blue</span> box represent the power usage during the communication and transferring of data too and from the target. The left <span style="color:rgb(0,0,255)>blue</span> box encompasses the power measurements when the target receives the plain text and the right <span style="color:rgb(0,0,255)>blue</span> box when the target sends back the encrypted text. The <span style="color:rgb(0,180,0)>green</span> box encompasses the encryption process. 
+</li>
+<li>
+Zoom into the sample points that represent the encryption process. There should be a pattern that repeats ten times, one for each round of the AES-128 encryption.
+<br>
+[[File:Encryption_2.PNG|800px]]
+</ol>
+
+<h1>Using a Power Pattern to Activate the Trigger</h1>
+
+We are going to use this repeating pattern to allow the [[CW1200_ChipWhisperer-Pro]] to identify when the encryption process occurs and use this to trigger our capture process. We can then use these traces to break the AES-128 encryption exactly the same as in [[Tutorial B5 Breaking AES (Straightforward)]].
+<br>
+[[File:Trigger Choice.PNG|800px]]
+<br>
+We will choose the highlighted spike and the surrounding area as our trigger as it is a unique feature that is close to the beginning of the encryption process.
+<ol>
+<li>
+Under <b>Scope Settings</b> find the <b>SAD Trigger Module</b> section. Here choose the 128 data point range that will be used as the trigger. Hint: You can type in a number that is close to the desired location and then click and drag the range selection box to the final position. The position numbers will be different from the ones in this tutorial because the numbers depend on when the plain text was manually sent. So just adjust the numbers as needed.
+[[File:Dragging Selection.PNG|800px]]
+<br>
+</li>
+<li>
+When you are satisfied with the position of your trigger points press <b>Set SAD Reference from Current Trace</b> to set the currently selected points to be used for the sum of absolute differences comparison carried out to activate the trigger.
+</li>
+</ol>
+Note: The Sum of Absolute Differences is carried out during the measurement process and when the total sum of absolute differences of all 128 sample points is below the threshold, the trigger is set to high to start the capture of a trace. This was a specific pattern can be chosen to initiate the capture process without any other data from the target. The SAD equation is as follows:
+<br>
+<math>
+SAD 
+= \sum_{i=1}^{128} |x_{ADC,i} - x_{pattern,i}|
+</math>
+
+<ol start="3">
+<li>
+Once you have chosen the points that initialize the trigger you can drag the selection box around and take note of the <b>SAD Reference vs. Cursor</b> value and how it changes. Notice the when the selection cursor is not in the correct spot the SAD should be around 10000 or more. Choose a <b>SAD Threshold</b> that will trigger only when the selected pattern is observed. For example: 5000 for this example works fine.
+</li>
+<li>
+Under <b>Scope Settings: CW Extra: CW Extra Settings</b> find the <b>Trigger Pins</b> section and set the <b>Trigger Module</b> to <code>SAD Match</code>.
+<br>
+[[File:SAD Trigger.PNG]] 
+<li>
+Now we will navigate back to the <b>Trigger Setup</b> section under the <b>Scope Settings</b> and change the <b>Mode</b> to <code>Rising Edge</code>. The <b>Timeout (secs)</b> can be changed to <code>5</code> just to be safe, the <b>Total Samples</b> can be changed back to <code>20000</code> and the <b>Pre-Trigger Samples</b> can be changed to <code>500</code>. Note: <b>Stream Mode</b> should now be turned off.
+<br>
+[[File:Final Capture Setup.PNG]]
+</li>
+We now have everything setup: The SAD Reference points will set the trigger to high as soon as the SAD is below the SAD Threshold of 5000. The ChipWhisperer will record a total of 20000 samples with 500 before the reference points and 2500 during and after. We can test everything is properly setup by pressing the capture one button. You should see the same repeating pattern you saw before that represents the 10 rounds of encryption process. 
+<li>
+Since we will be attacking the first round of the encryption process we do not need the other nine rounds. So set the <b>Total Samples</b> back to 3000. This will capture the first round and a bit of the second.
+<br>
+[[File:First Round.PNG|800px]]
+<br>
+<b>Right click</b> the graph widget and press <b>View All</b> (Just in case you forgot) and the wave form should look similar to this:
+<br>
+[[File:First Round Zoom.PNG|800px]]
+</li>
+<li>
+Now save the project somewhere where you can open it later and press <b>Capture Many</b> [[File:Capture Many Button.PNG]] button. The default of 50 captured traces should be enough to break the encryption.
+</li>
+</ol>
+
+<h1>Breaking the Encryption</h1>
+
+We will now use the analyzer software to break the AES-128 encryption on the target and figure out the key. This section is analogous to [[Tutorial B5 Breaking AES (Straightforward) #Analyzing the Traces|Analyzing the Traces]] section of Tutorial B5.
+
+<h1>Conclusion</h1>
+
+In this tutorial we have learned to use two of the [[CW1200_ChipWhisperer-Pro]]'s exclusive features stream mode and SAD Trigger. The stream feature allows us the continually stream and manually send plain text to the target to observe the encryption process. Then 128 sample points that make up a unique feature of the encryption process where chosen to activate the trigger during our following traces. These two features together can be used to break the AES encryption of a device without any help from the target.
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
