@@ -202,7 +202,7 @@ Now save the project somewhere where you can open it later and press <b>Capture 
 
 <h1>Breaking the Encryption</h1>
 
-We will now use the analyzer software to break the AES-128 encryption on the target and figure out the key. This section is analogous to [[Tutorial B5 Breaking AES (Straightforward) #Analyzing the Traces|Analyzing the Traces]] section of Tutorial B5.
+We will now use the analyzer software to break the AES-128 encryption on the target and figure out the key. This section is analogous to [[Tutorial B5 Breaking AES (Straightforward) #Analyzing the Traces|Tutorial B5 Breaking AES (Straightforward)]] section of Tutorial B5. We can also use this setup for a profiling attack similar to [[Tutorial B7 Profiling Attacks (with HW Assumption)]].
 
 <h1>Conclusion</h1>
 
