@@ -207,3 +207,6 @@ We will now use the analyzer software to break the AES-128 encryption on the tar
 <h1>Conclusion</h1>
 
 In this tutorial we have learned to use two of the [[CW1200_ChipWhisperer-Pro]]'s exclusive features stream mode and SAD Trigger. The stream feature allows us the continually stream and manually send plain text to the target to observe the encryption process. Then 128 sample points that make up a unique feature of the encryption process where chosen to activate the trigger during our following traces. These two features together can be used to break the AES encryption of a device without any help from the target.
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
