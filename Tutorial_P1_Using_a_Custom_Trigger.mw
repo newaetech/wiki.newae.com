@@ -148,7 +148,7 @@ Zoom into the sample points that represent the encryption process. There should 
 [[File:Encryption_2.PNG|800px]]
 </ol>
 
-<h1>Creating a Custom Trigger</h1>
+<h1>Using a Power Pattern to Activate the Trigger</h1>
 
 We are going to use this repeating pattern to allow the [[CW1200_ChipWhisperer-Pro]] to identify when the encryption process occurs and use this to trigger our capture process. We can then use these traces to break the AES-128 encryption exactly the same as in [[Tutorial B5 Breaking AES (Straightforward)]].
 <br>
@@ -174,4 +174,36 @@ SAD
 
 <ol start="3">
 <li>
-Once you have chosen the points that initialize the trigger you can drag the selection box around and take note of the <b>SAD Reference vs. Cursor</b> value and how it changes. Choose a threshold
+Once you have chosen the points that initialize the trigger you can drag the selection box around and take note of the <b>SAD Reference vs. Cursor</b> value and how it changes. Notice the when the selection cursor is not in the correct spot the SAD should be around 10000 or more. Choose a <b>SAD Threshold</b> that will trigger only when the selected pattern is observed. For example: 5000 for this example works fine.
+</li>
+<li>
+Under <b>Scope Settings: CW Extra: CW Extra Settings</b> find the <b>Trigger Pins</b> section and set the <b>Trigger Module</b> to <code>SAD Match</code>.
+<br>
+[[File:SAD Trigger.PNG]] 
+<li>
+Now we will navigate back to the <b>Trigger Setup</b> section under the <b>Scope Settings</b> and change the <b>Mode</b> to <code>Rising Edge</code>. The <b>Timeout (secs)</b> can be changed to <code>5</code> just to be safe, the <b>Total Samples</b> can be changed back to <code>20000</code> and the <b>Pre-Trigger Samples</b> can be changed to <code>500</code>. Note: <b>Stream Mode</b> should now be turned off.
+<br>
+[[File:Final Capture Setup.PNG]]
+</li>
+We now have everything setup: The SAD Reference points will set the trigger to high as soon as the SAD is below the SAD Threshold of 5000. The ChipWhisperer will record a total of 20000 samples with 500 before the reference points and 2500 during and after. We can test everything is properly setup by pressing the capture one button. You should see the same repeating pattern you saw before that represents the 10 rounds of encryption process. 
+<li>
+Since we will be attacking the first round of the encryption process we do not need the other nine rounds. So set the <b>Total Samples</b> back to 3000. This will capture the first round and a bit of the second.
+<br>
+[[File:First Round.PNG|800px]]
+<br>
+<b>Right click</b> the graph widget and press <b>View All</b> (Just in case you forgot) and the wave form should look similar to this:
+<br>
+[[File:First Round Zoom.PNG|800px]]
+</li>
+<li>
+Now save the project somewhere where you can open it later and press <b>Capture Many</b> [[File:Capture Many Button.PNG]] button. The default of 50 captured traces should be enough to break the encryption.
+</li>
+</ol>
+
+<h1>Breaking the Encryption</h1>
+
+We will now use the analyzer software to break the AES-128 encryption on the target and figure out the key. This section is analogous to [[Tutorial B5 Breaking AES (Straightforward) #Analyzing the Traces|Analyzing the Traces]] section of Tutorial B5.
+
+<h1>Conclusion</h1>
+
+In this tutorial we have learned to use two of the [[CW1200_ChipWhisperer-Pro]]'s exclusive features stream mode and SAD Trigger. The stream feature allows us the continually stream and manually send plain text to the target to observe the encryption process. Then 128 sample points that make up a unique feature of the encryption process where chosen to activate the trigger during our following traces. These two features together can be used to break the AES encryption of a device without any help from the target.
