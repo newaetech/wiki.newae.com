@@ -15,4 +15,5 @@ git checkout <release number>
 For example, <code>git checkout 0.11RC</code> will move back to the 0.11 release. <code>git checkout master</code> will always give you the latest software.
 
 <b>The password for the default account <code>cwuser</code> is <code>cwpassword</code></b>
+
 There's an old [https://www.youtube.com/watch?v=UrtsWAJa0m4&hd=1 Youtube tutorial] of this setup available online.
