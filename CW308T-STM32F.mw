@@ -49,7 +49,7 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |-
 |F3
 |TQFP-64
-|STM32F303R8T6
+|STM32F303RCT7
 |Yes
 |No
 |B
