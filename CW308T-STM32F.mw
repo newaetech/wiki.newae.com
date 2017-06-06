@@ -184,6 +184,39 @@ reset_config srst_only srst_nogate
 '''Caveat''': the I/O register map in the debugger appears to use the last known device (ie: if you debugged an STM32F4 project before your Makefile project, it sticks with F4's registers). Check that the registers' addresses are correct before you trust them!
 
 == Schematic ==
+The following
+{| class="wikitable"
+!Variant
+!U1
+!R3 (VCC-Shunt)
+!R4 (Clock)
+|-
+|F0
+|STM32F071RBT6 
+|33-ohm
+|120-ohm
+|-
+|F1
+|STM32F100RBT6
+|22-ohm
+|51-ohm
+|-
+|F2
+|
+|
+|
+|-
+|F3
+|STM32F303RCT7
+|22-ohm
+|51-ohm
+|-
+|F4
+|
+|
+|
+|}
+
 [[File:CW308T_STM32F_02.png|1100px]]
 
 
