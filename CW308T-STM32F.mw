@@ -222,7 +222,7 @@ The following variants are possible, see the table above for SRAM/FLASH/HW-Crypt
 |22-ohm
 |51-ohm
 |-
-|F2HW
+|F2HWC
 |
 |
 |
@@ -237,7 +237,7 @@ The following variants are possible, see the table above for SRAM/FLASH/HW-Crypt
 |10-ohm
 |51-ohm
 |-
-|F4HW
+|F4HWC
 |
 |
 |
