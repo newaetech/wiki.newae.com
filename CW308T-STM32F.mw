@@ -52,8 +52,8 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |Yes
 |Yes
 |A
-|
-|
+|512KB
+|132KB
 |-
 |F3
 |TQFP-64
@@ -70,8 +70,8 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |Yes
 |Yes
 |A
-|
-|
+|1MB
+|192KB
 |-
 |F4
 |TQFP-64
@@ -79,8 +79,8 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |No
 |Yes
 |A
-|
-|
+|1MB
+|192KB
 |}
 
 === VCC-Int Supply ===
