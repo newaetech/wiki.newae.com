@@ -25,6 +25,8 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 !Hardware AES
 !Tested
 !Jumper
+!Flash
+!SRAM
 |-
 |F0
 |TQFP-64
@@ -32,6 +34,8 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |No
 |Yes
 |B
+|128KB
+|16KB
 |-
 |F1
 |TQFP-64
@@ -39,6 +43,8 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |No
 |Yes
 |B
+|128KB
+|8KB
 |-
 |F2
 |TQFP-64
@@ -46,13 +52,17 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |Yes
 |Yes
 |A
+|
+|
 |-
 |F3
 |TQFP-64
 |STM32F303RCT7
 |Yes
-|No
+|Yes
 |B
+|256KB
+|40KB
 |-
 |F4
 |TQFP-64
@@ -60,6 +70,8 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |Yes
 |Yes
 |A
+|
+|
 |-
 |F4
 |TQFP-64
@@ -67,6 +79,8 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |No
 |Yes
 |A
+|
+|
 |}
 
 === VCC-Int Supply ===
@@ -184,7 +198,7 @@ reset_config srst_only srst_nogate
 '''Caveat''': the I/O register map in the debugger appears to use the last known device (ie: if you debugged an STM32F4 project before your Makefile project, it sticks with F4's registers). Check that the registers' addresses are correct before you trust them!
 
 == Schematic ==
-The following
+The following variants are possible, see the table above for SRAM/FLASH/HW-Crypto status:
 {| class="wikitable"
 !Variant
 !U1
