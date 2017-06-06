@@ -27,6 +27,7 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 !Jumper
 !Flash
 !SRAM
+!NAE P/N
 |-
 |F0
 |TQFP-64
@@ -36,6 +37,7 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |B
 |128KB
 |16KB
+|NAE-CW308T-STM32F0
 |-
 |F1
 |TQFP-64
@@ -45,6 +47,7 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |B
 |128KB
 |8KB
+|NAE-CW308T-STM32F1
 |-
 |F2
 |TQFP-64
@@ -54,15 +57,17 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |A
 |512KB
 |132KB
+|NAE-CW308T-STM32F2HWC
 |-
 |F3
 |TQFP-64
 |STM32F303RCT7
-|Yes
+|No
 |Yes
 |B
 |256KB
 |40KB
+|NAE-CW308T-STM32F3
 |-
 |F4
 |TQFP-64
@@ -72,6 +77,7 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |A
 |1MB
 |192KB
+|NAE-CW308T-STM32F4HWC
 |-
 |F4
 |TQFP-64
@@ -81,6 +87,7 @@ The STM32F board supports several STM32F devices in the TQFP-64 package. Various
 |A
 |1MB
 |192KB
+|NAE-CW308T-STM32F4
 |}
 
 === VCC-Int Supply ===
