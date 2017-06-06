@@ -222,7 +222,7 @@ The following variants are possible, see the table above for SRAM/FLASH/HW-Crypt
 |22-ohm
 |51-ohm
 |-
-|F2
+|F2HW
 |
 |
 |
@@ -236,6 +236,11 @@ The following variants are possible, see the table above for SRAM/FLASH/HW-Crypt
 |STM32F405RGT6
 |10-ohm
 |51-ohm
+|-
+|F4HW
+|
+|
+|
 |}
 
 [[File:CW308T_STM32F_02.png|1100px]]
