@@ -20,6 +20,27 @@ The MPC5748G target uses the NXP MPC5748G device, which is a triple-core PowerPC
 
 [[File:mpc5748g_web.jpg]]
 
+== Offered Variants ==
+The product is available in three main variants. Initially only the "NORMAL" variant will be available to simplify exporting procedures.
+
+* The "NORMAL" variant. This variant has the following setup:
+** HSM is programmed with authentication-only code using hardware AES-128 (i.e., the ciphertext output is NOT available). This simplifies export processing, but the HSM code memory section CANNOT be changed or viewed. The HSM source code is not available due to NDA requirements.
+** The four OTP password groups have been programmed. 3 of them are known passwords you can use for experimentation, 1 is a secret unknown password used to lock the HSM code (NB: we set each device with a unique random password, so could not recover it even if we want to).
+** Device lifecycle is progressed to the "OEM Production" stage. This will prevent you from doing certain updates to the memory, but for most "normal" uses will not prevent reloading of code etc.
+** A simple serial bootloader is present. This bootloader is locked (to prevent overwrite) with one of the known passwords.
+** The demo application is loaded.
+** Device censorship is disabled (this can be turned on using an external programmer).
+** The JTAG port has a known password, but is not locked (this can be turned on using an external programmer).
+
+* The "ENC" variant:
+** This variant is the same as above, BUT the HSM supports encryption (not just authentication).
+** This devices will REQUIRE export documentation which entails an additional cost + a 1-4 week delay.
+ 
+* The "RAW"  variant. This variant has the following setup:
+** HSM is not programmed. We cannot provide details on this usage.
+** A simple serial bootloader is present.
+** The demo application is loaded.
+
 == HSM Support ==
 
 Details forthcoming.
