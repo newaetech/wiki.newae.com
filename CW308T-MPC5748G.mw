@@ -20,11 +20,26 @@ The MPC5748G target uses the NXP MPC5748G device, which is a triple-core PowerPC
 
 [[File:mpc5748g_web.jpg]]
 
+Intended Usage
+
+Overview of Features
+
+Demo Application
+
+The demo application provides examples of:
+* Using serial interface (implements Simple-Serial).
+* Using CAN interface.
+* Enabling all three cores, and communicating between cores with shared memory.
+* Running software AES on main core.
+* Running password-check (XOR) on main core.
+* Setup of clock network for using external clock from ChipWhisperer.
+* Communicating with Hardware Security Module (HSM) using our proprietary library (access to library requires NDA).
+
 == Offered Variants ==
 The product is available in three main variants. Initially only the "NORMAL" variant will be available to simplify exporting procedures.
 
 * The "NORMAL" variant. This variant has the following setup:
-** HSM is programmed with authentication-only code using hardware AES-128 (i.e., the ciphertext output is NOT available). This simplifies export processing, but the HSM code memory section CANNOT be changed or viewed. The HSM source code is not available due to NDA requirements.
+** HSM is programmed with authentication-only code using hardware AES-128 (i.e., the ciphertext output is NOT available). This simplifies export processing, but the HSM code memory section CANNOT be changed or viewed. The HSM source code is not available due to NDA requirements. A special binary-only library is required to communicate with the HSM.
 ** The four OTP password groups have been programmed. 3 of them are known passwords you can use for experimentation, 1 is a secret unknown password used to lock the HSM code (NB: we set each device with a unique random password, so could not recover it even if we want to).
 ** Device lifecycle is progressed to the "OEM Production" stage. This will prevent you from doing certain updates to the memory, but for most "normal" uses will not prevent reloading of code etc.
 ** A simple serial bootloader is present. This bootloader is locked (to prevent overwrite) with one of the known passwords.
@@ -34,16 +49,21 @@ The product is available in three main variants. Initially only the "NORMAL" var
 
 * The "ENC" variant:
 ** This variant is the same as above, BUT the HSM supports encryption (not just authentication).
-** This devices will REQUIRE export documentation which entails an additional cost + a 1-4 week delay.
+** This devices will REQUIRE export documentation which entails an additional cost per order + a 1-6 week delay (dependent on Canadian processing time, normally it's faster). You may have additional restrictions at import but we cannot assist with those.
  
 * The "RAW"  variant. This variant has the following setup:
-** HSM is not programmed. We cannot provide details on this usage.
+** HSM is not programmed. We cannot provide details on this usage without a NDA.
 ** A simple serial bootloader is present.
 ** The demo application is loaded.
+** This devices will REQUIRE export documentation which entails an additional cost per order + a 1-6 week delay (dependent on Canadian processing time, normally it's faster). You may have additional restrictions at import but we cannot assist with those.
+Most users are suggested to use the "NORMAL" variant. This variant allows you to get running immediately with our demo applications, and also program your own code into the device.
 
 == HSM Support ==
 
-Details forthcoming.
+The Hardware Security Module (HSM) is a completely separate core (in addition to the 3 power-PC cores) present in these devices. It has a variety of features to allow secure coding. has been programmed with simple code that allows you to perform the following two operations:
+* Hardware AES using accelerator built into chip.
+* Software AES (for comparison purposes).
+Note details of the HSM are not available. We have programmed the HSM with code to perform the above operations. In order to talk to the HSM you require a separate interface, which we provide in a binary-only "library" (RAM-based functions). This library does not actually contain any details of the HSM core itself (the code in that library runs on the main core).
 
 == Programming ==
 
