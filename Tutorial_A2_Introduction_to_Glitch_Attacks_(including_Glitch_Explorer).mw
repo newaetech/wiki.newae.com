@@ -2,7 +2,7 @@ This advanced tutorial will demonstrate clock glitch attacks using the ChipWhisp
 
 You can follow along with this video for details of this page too:
 
-[[File:youtube-glitch.png|YouTubeGlitch]]_
+[[File:youtube-glitch.png|YouTubeGlitch]]_hardware set
 
 = Background on Clock Glitching =
 
@@ -178,8 +178,8 @@ The AVR is being used as the glitch target. The following figure shows the expec
 <blockquote><ol style="list-style-type: decimal;">
 <li>As the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option</li>
 <li>As the ''Target Module'', select the ''Simple Serial'' option</li>
-<li>Switch to the ''Scope Settings'' tab, and as the ''connection'', select the ''ChipWhisperer Rev2'' or ''ChipWhisperer-Lite'' option</li>
-<li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer Rev2'' or ''ChipWhisperer-Lite'' option</li>
+<li>Switch to the ''Scope Settings'' tab, and as the ''connection'', select the ''NewAE USB (CWLite/CW1200)'' or ''Serial Port (LX9)'' option</li>
+<li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''NewAE USB (CWLite/CW1200)'' or ''Serial Port (LX9)'' option</li>
 <li>Run connect on both the Scope &amp; Target. They should both switch to green circles indicating the system is connected.</li></ol>
 </blockquote></li>
 <li><p>Setup the CLKGEN Module to Generate a 7.37 MHz clock and route it through the Glitch Generator</p>
@@ -212,7 +212,7 @@ The AVR is being used as the glitch target. The following figure shows the expec
 <blockquote><p>'''tip'''</p>
 <p>If you uncheck the ''RX: Show non-ASCII as hex'' you will not see the red text with ASCII values of newline (<code>0a</code>).</p></blockquote>
 <blockquote><p>'''hint'''</p>
-<p>Sometimes the &quot;reset&quot; message won't appear. This happens often on the virtual machine version, or if your host computer is slow or loaded. Generally you can ignore this error, for example in the video version the welcome message is never printed. You will just have to trust the system is reseting correctly.</p></blockquote></li></ol>
+<p>Sometimes the &quot;reset&quot; message won't appear. This happens often on the virtual machine version, or if your host computer is slow or loaded. Generally you can ignore this error, for example in the video version the welcome message is never printed. You will just have to trust the system is resetting correctly.</p></blockquote></li></ol>
 </blockquote></li></ol>
 
 We'll now look at glitching this routine. You should inspect the source code to determine that a simple series of calculations are performed:
