@@ -1,4 +1,9 @@
+== 2015 ==
+
 Belaïd, Sonia, et al. "'''Improved side-channel analysis of finite-field multiplication.'''" ''International Workshop on Cryptographic Hardware and Embedded Systems''. Springer, Berlin, Heidelberg, 2015.
+* Summary: This paper extends previous work on side-channel analysis of the multiplication GF(2^128). This is useful for attack AES-GCM.
 * Usage: ChipWhisperer Capture Hardware with ATMega328P
 * [https://link.springer.com/chapter/10.1007/978-3-662-48324-4_20 Springer Link]
 * [https://eprint.iacr.org/2015/542.pdf PDF Link]
+
+== 2016 ==
