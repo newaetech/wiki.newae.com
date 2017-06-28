@@ -14,18 +14,21 @@ Belaïd, Sonia, et al. "'''Improved side-channel analysis of finite-field multip
 * Summary: This paper investigates the power leakage of a smartcard.
 * Usage: Complete ChipWhisperer kit
 * [https://www.researchgate.net/profile/Ibraheem_Frieslaar/publication/307918229_An_investigation_into_the_signals_leakage_from_a_smartcard_based_on_different_runtime_code/links/57d1996008ae0c0081e04fd5.pdf PDF Link]
-<br>
-Cai, A. K. (2015). '''Comparison of side channel analysis measurement setups.'''
+<br>Cai, A. K. (2015). '''Comparison of side channel analysis measurement setups.'''
 * Summary: This paper presents an evaluation of side channel attacks and countermeasures with several state of the art evaluation metrics proposed recently.
 * Usage: ChipWhisperer Rev-2 and ChipWhisperer-Lite
 * [http://repository.tue.nl/8dca3f2e-45bc-4fe3-b038-ec378c743bd0 Technische Universiteit Eindhoven Repository Link]
 * [https://pure.tue.nl/ws/files/47037126/799538-1.pdf PDF Link]
-<br>
-Nascimento, E., López, J., & Dahab, R. (2015, October). '''Efficient and secure elliptic curve cryptography for 8-bit AVR microcontrollers.''' In ''International Conference on Security, Privacy, and Applied Cryptography Engineering'' (pp. 289-309). Springer, Cham.
+<br>Nascimento, E., López, J., & Dahab, R. (2015, October). '''Efficient and secure elliptic curve cryptography for 8-bit AVR microcontrollers.''' In ''International Conference on Security, Privacy, and Applied Cryptography Engineering'' (pp. 289-309). Springer, Cham.
 * Summary: This paper describes an efficient implementation of ECDH-Curve25519 and EdDSA-Ed25519-SHA512 for the ATmega328P platform.
 * Usage: ChipWhisperer Hardware and ATmega328P Microcontroller
 * [https://link.springer.com/chapter/10.1007/978-3-319-24126-5_17 Springer Link]
-<br>
+
+Yuce, B., Ghalaty, N. F., & Schaumont, P. (2015, September). '''Improving fault attacks on embedded software using RISC pipeline characterization.''' In ''Fault Diagnosis and Tolerance in Cryptography (FDTC), 2015 Workshop on'' (pp. 97-108). IEEE.
+* Summary: This paper explains the methodology, the fault injection setup, and the fault analysis on the embedded software design of AES.
+* Usage: Partial reconfiguration approach introduced by the glitch module of ChipWhisperer 
+* [http://ieeexplore.ieee.org/abstract/document/7426156/ IEEE Link]
+* [https://pdfs.semanticscholar.org/0698/e6a83ec0404c67d83d6e3a4f14d3a692c1cc.pdf PDF Link]
 
 == 2016 ==
 
@@ -33,30 +36,31 @@ Deshpande, C., Yuce, B., Ghalaty, N. F., Ganta, D., Schaumont, P., & Nazhandali,
 * Summary: This paper proposes a cycle-accurate monitor that can efficiently detect timing violation based fault attacks.
 * Usage: FPGA code from the ChipWhisperer code base on the clock glitcher module implemented on the control FPGA (Spartan XC6SLX9)
 * [http://ieeexplore.ieee.org/abstract/document/7560241/ IEEE Link]
-<br>
-Dofe, J., Frey, J., & Yu, Q. (2016, May). '''Hardware security assurance in emerging IoT applications.''' In ''Circuits and Systems (ISCAS), 2016 IEEE International Symposium on'' (pp. 2050-2053). IEEE.
+<br>Dofe, J., Frey, J., & Yu, Q. (2016, May). '''Hardware security assurance in emerging IoT applications.''' In ''Circuits and Systems (ISCAS), 2016 IEEE International Symposium on'' (pp. 2050-2053). IEEE.
 * Summary: This paper proposes a low-cost dynamic permutation method for IoT devices where sophisticated cryptographic algorithms and authentication protocols are not suitable due to iot devices often having limited computational power and having the need to be energy efficient.
 * Usage: ChipWhisperer software to capture power traces for  side-channel analysis
 * [http://ieeexplore.ieee.org/abstract/document/7538981/ IEEE Link]
-<br>
-Dofe, J., Pahlevanzadeh, H., & Yu, Q. (2016). '''A comprehensive FPGA-based assessment on fault-resistant AES against correlation power analysis attack.''' ''Journal of Electronic Testing'', ''32''(5), 611-624.
+<br>Dofe, J., Pahlevanzadeh, H., & Yu, Q. (2016). '''A comprehensive FPGA-based assessment on fault-resistant AES against correlation power analysis attack.''' ''Journal of Electronic Testing'', ''32''(5), 611-624.
 * Summary: This paper uses a FPGA-based platform to investigate whether and how the FA countermeasure can influence the efficiency of the correlation power analysis (CPA) attack and propose a new countermeasure that integrates dynamic masking and error deflection to simultaneously thwart CPA and FA attacks.
 * Usage: ChipWhisperer software to perform power trace capturing and analysis with the ChipWhisperer Capture Hardware SAKURA-G
 * [http://link.springer.com/article/10.1007/s10836-016-5598-9 Springer Link]
-<br>
-Ahn, H., & Han, D. G. '''Multilateral White-Box Cryptanalysis.'''
+<br>Ahn, H., & Han, D. G. '''Multilateral White-Box Cryptanalysis.'''
 * Summary: This paper proposes a DPA-based attack that directly exploits the intermediate values of WB-AES computation without the requirement of utilizing memory data.
 * Usage: ChipWhisperer-Lite to capture power traces for analysis
 * [http://eprint.iacr.org/2016/807.pdf PDF Link]
-<br>
-Maghrebi, H., Portigliatti, T., & Prouff, E. (2016, December). '''Breaking Cryptographic Implementations Using Deep Learning Techniques.''' In ''International Conference on Security, Privacy, and Applied Cryptography Engineering'' (pp. 3-26). Springer International Publishing.
+<br>Maghrebi, H., Portigliatti, T., & Prouff, E. (2016, December). '''Breaking Cryptographic Implementations Using Deep Learning Techniques.''' In ''International Conference on Security, Privacy, and Applied Cryptography Engineering'' (pp. 3-26). Springer International Publishing.
 * Summary: This paper proposes to continue a recent line of research of profiling approaches using machine learning techniques, by applying more sophisticated profiling techniques based on deep learning.
 * Usage: Attacks on an AES Implementation on the ChipWhisperer-Rev2
 * [https://link.springer.com/chapter/10.1007/978-3-319-49445-6_1 Springer Link]
 * [http://eprint.iacr.org/2016/921.pdf PDF Link]
-<br>
-Nascimento, E., Chmielewski, L., Oswald, D., & Schwabe, P. (2016). '''Attacking embedded ECC implementations through cmov side channels.''' ''IACR Cryptology ePrint Archive'', ''2016'', 923.
+<br>Nascimento, E., Chmielewski, L., Oswald, D., & Schwabe, P. (2016). '''Attacking embedded ECC implementations through cmov side channels.''' ''IACR Cryptology ePrint Archive'', ''2016'', 923.
 * Summary: This paper demonstrates that attacks that require only a single trace and directly target a conditional move (cmov) are indeed possible for ECC software running on AVR ATmega microcontrollers, using a protected version of the popular µNaCl library as an example.
 * Usage: ChipWhisperer Software using ATmega328P 8-bit microcontroller placed on the ChipWhisperer hardware target board.
 * [http://pure-oai.bham.ac.uk/ws/files/29531942/SAC_2016_paper.pdf PDF Link]
+
+Pahlevanzadeh, H., Dofe, J., & Yu, Q. (2016, January). '''Assessing CPA resistance of AES with different fault tolerance mechanisms.''' In ''Design Automation Conference (ASP-DAC), 2016 21st Asia and South Pacific'' (pp. 661-666). IEEE.
+* Summary: This paper considers three different fault detection (FD) methods, double modular redundancy (DMR), inverse function (inverse), and parity check code (parity) and performs FPGA-based systematic analysis to investigate FD schemes on the correlation power analysis (CPA) resistance of a complete AES implementation.
+* Usage: ChipWhisperer Software and Hardware for Capture and Analysis
+* [http://ieeexplore.ieee.org/abstract/document/7428087/ IEEE Link]
+* [https://www.researchgate.net/profile/Jaya_Dofe/publication/299132768_Assessing_CPA_resistance_of_AES_with_different_fault_tolerance_mechanisms/links/572f88ea08ae744151904aa1.pdf PDF Link]
 <br>
