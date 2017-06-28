@@ -5,14 +5,12 @@ Belaïd, Sonia, et al. "'''Improved side-channel analysis of finite-field multip
 * Usage: ChipWhisperer Capture Hardware with the ATMega328P
 * [https://link.springer.com/chapter/10.1007/978-3-662-48324-4_20 Springer Link]
 * [https://eprint.iacr.org/2015/542.pdf PDF Link]
-<br>
-Cagli, E., Dumas, C., & Prouff, E. (2015, November). '''Enhancing dimensionality reduction methods for side-channel attacks.''' In ''International Conference on Smart Card Research and Advanced Applications'' (pp. 15-33). Springer, Cham.
+<br>Cagli, E., Dumas, C., & Prouff, E. (2015, November). '''Enhancing dimensionality reduction methods for side-channel attacks.''' In ''International Conference on Smart Card Research and Advanced Applications'' (pp. 15-33). Springer, Cham.
 * Summary: This paper makes use of dimensionality reduction techniques to reduce both the memory and timing complexity of advanced side-channel attacks.
 * Usage:  ChipWhisperer Capture Hardware with the 8-bit AVR microprocessor Atmega328P
 * [http://link.springer.com/chapter/10.1007/978-3-319-31271-2_2 Springer Link]
 * [https://hal.archives-ouvertes.fr/hal-01399580/document PDF Link]
-<br>
-Frieslaar, I., & Irwin, B. (2015). '''An investigation into the signals leakage from a smartcard based on different runtime code.'''
+<br>Frieslaar, I., & Irwin, B. (2015). '''An investigation into the signals leakage from a smartcard based on different runtime code.'''
 * Summary: This paper investigates the power leakage of a smartcard.
 * Usage: Complete ChipWhisperer kit
 * [https://www.researchgate.net/profile/Ibraheem_Frieslaar/publication/307918229_An_investigation_into_the_signals_leakage_from_a_smartcard_based_on_different_runtime_code/links/57d1996008ae0c0081e04fd5.pdf PDF Link]
