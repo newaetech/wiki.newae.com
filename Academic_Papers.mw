@@ -1,38 +1,8 @@
-You can always see the latest [https://scholar.google.ca/scholar?hl=en&q=chipwhisperer Google Scholar Search] for more recent papers!
+You can always see the latest [https://scholar.google.ca/scholar?scisbd=2&q=chipwhisperer&hl=en&as_sdt=0,5 Google Scholar Search] for more recent papers!
 
-== 2015 ==
+== 2017 ==
 
-Belaïd, Sonia, et al. "'''Improved side-channel analysis of finite-field multiplication.'''" ''International Workshop on Cryptographic Hardware and Embedded Systems''. Springer, Berlin, Heidelberg, 2015.
-* Summary: This paper extends previous work on side-channel analysis of the multiplication GF(2^128). This is useful for attack AES-GCM.
-* Usage: ChipWhisperer Capture Hardware with the ATMega328P
-* [https://link.springer.com/chapter/10.1007/978-3-662-48324-4_20 Springer Link]
-* [https://eprint.iacr.org/2015/542.pdf PDF Link]
-<br>Cagli, E., Dumas, C., & Prouff, E. (2015, November). '''Enhancing dimensionality reduction methods for side-channel attacks.''' In ''International Conference on Smart Card Research and Advanced Applications'' (pp. 15-33). Springer, Cham.
-* Summary: This paper makes use of dimensionality reduction techniques to reduce both the memory and timing complexity of advanced side-channel attacks.
-* Usage:  ChipWhisperer Capture Hardware with the 8-bit AVR microprocessor Atmega328P
-* [http://link.springer.com/chapter/10.1007/978-3-319-31271-2_2 Springer Link]
-* [https://hal.archives-ouvertes.fr/hal-01399580/document PDF Link]
-<br>Frieslaar, I., & Irwin, B. (2015). '''An investigation into the signals leakage from a smartcard based on different runtime code.'''
-* Summary: This paper investigates the power leakage of a smartcard.
-* Usage: Complete ChipWhisperer kit
-* [https://www.researchgate.net/profile/Ibraheem_Frieslaar/publication/307918229_An_investigation_into_the_signals_leakage_from_a_smartcard_based_on_different_runtime_code/links/57d1996008ae0c0081e04fd5.pdf PDF Link]
-<br>
-Cai, A. K. (2015). '''Comparison of side channel analysis measurement setups.'''
-* Summary: This paper presents an evaluation of side channel attacks and countermeasures with several state of the art evaluation metrics proposed recently.
-* Usage: ChipWhisperer Rev-2 and ChipWhisperer-Lite
-* [http://repository.tue.nl/8dca3f2e-45bc-4fe3-b038-ec378c743bd0 Technische Universiteit Eindhoven Repository Link]
-* [https://pure.tue.nl/ws/files/47037126/799538-1.pdf PDF Link]
-<br>
-Nascimento, E., López, J., & Dahab, R. (2015, October). '''Efficient and secure elliptic curve cryptography for 8-bit AVR microcontrollers.''' In ''International Conference on Security, Privacy, and Applied Cryptography Engineering'' (pp. 289-309). Springer, Cham.
-* Summary: This paper describes an efficient implementation of ECDH-Curve25519 and EdDSA-Ed25519-SHA512 for the ATmega328P platform.
-* Usage: ChipWhisperer Hardware and ATmega328P Microcontroller
-* [https://link.springer.com/chapter/10.1007/978-3-319-24126-5_17 Springer Link]
-<br>
-Yuce, B., Ghalaty, N. F., & Schaumont, P. (2015, September). '''Improving fault attacks on embedded software using RISC pipeline characterization.''' In ''Fault Diagnosis and Tolerance in Cryptography (FDTC), 2015 Workshop on'' (pp. 97-108). IEEE.
-* Summary: This paper explains the methodology, the fault injection setup, and the fault analysis on the embedded software design of AES.
-* Usage: Partial reconfiguration approach introduced by the glitch module of ChipWhisperer 
-* [http://ieeexplore.ieee.org/abstract/document/7426156/ IEEE Link]
-* [https://pdfs.semanticscholar.org/0698/e6a83ec0404c67d83d6e3a4f14d3a692c1cc.pdf PDF Link]
+
 
 == 2016 ==
 
@@ -73,5 +43,40 @@ Pahlevanzadeh, H., Dofe, J., & Yu, Q. (2016, January). '''Assessing CPA resistan
 * [http://ieeexplore.ieee.org/abstract/document/7428087/ IEEE Link]
 * [https://www.researchgate.net/profile/Jaya_Dofe/publication/299132768_Assessing_CPA_resistance_of_AES_with_different_fault_tolerance_mechanisms/links/572f88ea08ae744151904aa1.pdf PDF Link]
 <br>
+
+
+== 2015 ==
+
+Belaïd, Sonia, et al. "'''Improved side-channel analysis of finite-field multiplication.'''" ''International Workshop on Cryptographic Hardware and Embedded Systems''. Springer, Berlin, Heidelberg, 2015.
+* Summary: This paper extends previous work on side-channel analysis of the multiplication GF(2^128). This is useful for attack AES-GCM.
+* Usage: ChipWhisperer Capture Hardware with the ATMega328P
+* [https://link.springer.com/chapter/10.1007/978-3-662-48324-4_20 Springer Link]
+* [https://eprint.iacr.org/2015/542.pdf PDF Link]
+<br>Cagli, E., Dumas, C., & Prouff, E. (2015, November). '''Enhancing dimensionality reduction methods for side-channel attacks.''' In ''International Conference on Smart Card Research and Advanced Applications'' (pp. 15-33). Springer, Cham.
+* Summary: This paper makes use of dimensionality reduction techniques to reduce both the memory and timing complexity of advanced side-channel attacks.
+* Usage:  ChipWhisperer Capture Hardware with the 8-bit AVR microprocessor Atmega328P
+* [http://link.springer.com/chapter/10.1007/978-3-319-31271-2_2 Springer Link]
+* [https://hal.archives-ouvertes.fr/hal-01399580/document PDF Link]
+<br>Frieslaar, I., & Irwin, B. (2015). '''An investigation into the signals leakage from a smartcard based on different runtime code.'''
+* Summary: This paper investigates the power leakage of a smartcard.
+* Usage: Complete ChipWhisperer kit
+* [https://www.researchgate.net/profile/Ibraheem_Frieslaar/publication/307918229_An_investigation_into_the_signals_leakage_from_a_smartcard_based_on_different_runtime_code/links/57d1996008ae0c0081e04fd5.pdf PDF Link]
+<br>
+Cai, A. K. (2015). '''Comparison of side channel analysis measurement setups.'''
+* Summary: This paper presents an evaluation of side channel attacks and countermeasures with several state of the art evaluation metrics proposed recently.
+* Usage: ChipWhisperer Rev-2 and ChipWhisperer-Lite
+* [http://repository.tue.nl/8dca3f2e-45bc-4fe3-b038-ec378c743bd0 Technische Universiteit Eindhoven Repository Link]
+* [https://pure.tue.nl/ws/files/47037126/799538-1.pdf PDF Link]
+<br>
+Nascimento, E., López, J., & Dahab, R. (2015, October). '''Efficient and secure elliptic curve cryptography for 8-bit AVR microcontrollers.''' In ''International Conference on Security, Privacy, and Applied Cryptography Engineering'' (pp. 289-309). Springer, Cham.
+* Summary: This paper describes an efficient implementation of ECDH-Curve25519 and EdDSA-Ed25519-SHA512 for the ATmega328P platform.
+* Usage: ChipWhisperer Hardware and ATmega328P Microcontroller
+* [https://link.springer.com/chapter/10.1007/978-3-319-24126-5_17 Springer Link]
+<br>
+Yuce, B., Ghalaty, N. F., & Schaumont, P. (2015, September). '''Improving fault attacks on embedded software using RISC pipeline characterization.''' In ''Fault Diagnosis and Tolerance in Cryptography (FDTC), 2015 Workshop on'' (pp. 97-108). IEEE.
+* Summary: This paper explains the methodology, the fault injection setup, and the fault analysis on the embedded software design of AES.
+* Usage: Partial reconfiguration approach introduced by the glitch module of ChipWhisperer 
+* [http://ieeexplore.ieee.org/abstract/document/7426156/ IEEE Link]
+* [https://pdfs.semanticscholar.org/0698/e6a83ec0404c67d83d6e3a4f14d3a692c1cc.pdf PDF Link]
 
 [[Category:Research]]
