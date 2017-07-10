@@ -1,2 +1,136 @@
 == RSA Attack Theory ==
-We won't go into what RSA is, see the [[wikipedia:RSA_(cryptosystem)|RSA Wikipedia]] article for a quick background. What we really care about is the following pieces of sudocode used in decrypting a message, given the private key:
+We won't go into what RSA is, see the [[wikipedia:RSA_(cryptosystem)|RSA Wikipedia]] article for a quick background. What we really care about is the following pieces of sudocode from that article used in decrypting a message:
+
+<syntaxhighlight lang="C">
+/**
+ * Decrypt
+ *
+ * @param   {c} int / bigInt: the 'message' to be decoded (encoded with RSA.encrypt())
+ * @param   {d} int / bigInt: d value returned from RSA.generate() aka private key
+ * @param   {n} int / bigInt: n value returned from RSA.generate() aka public key (part I)
+ * @returns {bigInt} decrypted message
+ */
+RSA.decrypt = function(c, d, n){
+	return bigInt(c).modPow(d, n);   
+};
+</syntaxhighlight>
+
+The most critical piece of information is that value **d**. It contains the private key, which if leaked would mean a compromise of the entire system. So let's assume we can monitor a target device while it decrypts any message (we don't even care what the message is). Our objective is to recover d.
+
+Let's consider our actual target code, which will be the RSA implementation in avr-crypto-lib. This has been copied over to be part of the ChipWhisperer repository, and you can see the implementation [https://github.com/newaetech/chipwhisperer/blob/master/hardware/victims/firmware/crypto/avrcryptolib/rsa/rsa_basic.c#L163|in rsa_basic.c of rsa_dec()]. The function in question looks like this:
+
+<syntaxhighlight lang="C">
+uint8_t rsa_dec(bigint_t* data, const rsa_privatekey_t* key){
+	if(key->n == 1){
+		bigint_expmod_u(data, data, &(key->components[0]), &key->modulus);
+		return 0;
+	}
+	if(key->n == 5){
+		if (rsa_dec_crt_mono(data, key)){
+			return 3;
+		}
+		return 0;
+	}
+	if(key->n<8 || (key->n-5)%3 != 0){
+		return 1;
+	}
+	//rsa_dec_crt_multi(data, key, (key->n-5)/3);
+	return 2;
+}
+</syntaxhighlight>
+
+We'll consider the case where ''key->n == 5'', so we have the ''rsa_dec_crt_mono()'' to attack. You can see that function [https://github.com/newaetech/chipwhisperer/blob/master/hardware/victims/firmware/crypto/avrcryptolib/rsa/rsa_basic.c#L53|at Line 53 of that same file]. I've removed all the debug code in the following so you can better see the program flow:
+
+<syntaxhighlight lang="C">
+uint8_t rsa_dec_crt_mono(bigint_t* data, const rsa_privatekey_t* key){
+	bigint_t m1, m2;
+	m1.wordv = malloc((key->components[0].length_B /* + 1 */) * sizeof(bigint_word_t));
+	m2.wordv = malloc((key->components[1].length_B /* + 1 */) * sizeof(bigint_word_t));
+	if(!m1.wordv || !m2.wordv){
+		//Out of memory error
+		free(m1.wordv);
+		free(m2.wordv);
+		return 1;
+	}
+	bigint_expmod_u(&m1, data, &(key->components[2]), &(key->components[0]));
+	bigint_expmod_u(&m2, data, &(key->components[3]), &(key->components[1]));
+	bigint_sub_s(&m1, &m1, &m2);
+	while(BIGINT_NEG_MASK & m1.info){
+		bigint_add_s(&m1, &m1, &(key->components[0]));
+	}
+
+	bigint_reduce(&m1, &(key->components[0]));
+	bigint_mul_u(data, &m1, &(key->components[4]));
+	bigint_reduce(data, &(key->components[0]));
+	bigint_mul_u(data, data, &(key->components[1]));
+	bigint_add_u(data, data, &m2);
+	free(m2.wordv);
+	free(m1.wordv);
+	return 0;
+}
+</syntaxhighlight>
+
+
+Note all the calls to <code>bigint_expmod_u()</code> with the private key material. If we could attack that function, all would be lost. These functions are elsewhere - it's in the [https://github.com/newaetech/chipwhisperer/blob/master/hardware/victims/firmware/crypto/avrcryptolib/bigint/bigint.c#L812 bigint.c file at Line 812]. Again we can see the source code here:
+
+<syntaxhighlight lang="C">
+oid bigint_expmod_u(bigint_t* dest, const bigint_t* a, const bigint_t* exp, const bigint_t* r){
+	if(a->length_B==0 || r->length_B==0){
+		return;
+	}
+
+	bigint_t res, base;
+	bigint_word_t t, base_b[MAX(a->length_B,r->length_B)], res_b[r->length_B*2];
+	uint16_t i;
+	uint8_t j;
+	res.wordv = res_b;
+	base.wordv = base_b;
+	bigint_copy(&base, a);
+	bigint_reduce(&base, r);
+	res.wordv[0]=1;
+	res.length_B=1;
+	res.info = 0;
+	bigint_adjust(&res);
+	if(exp->length_B == 0){
+		bigint_copy(dest, &res);
+		return;
+	}
+	uint8_t flag = 0;
+	t=exp->wordv[exp->length_B - 1];
+	for(i=exp->length_B; i > 0; --i){
+		t = exp->wordv[i - 1];
+		for(j=BIGINT_WORD_SIZE; j > 0; --j){
+			if(!flag){
+				if(t & (1<<(BIGINT_WORD_SIZE-1))){
+					flag = 1;
+				}
+			}
+			if(flag){
+				bigint_square(&res, &res);
+				bigint_reduce(&res, r);
+				if(t & (1<<(BIGINT_WORD_SIZE-1))){
+					bigint_mul_u(&res, &res, &base);
+					bigint_reduce(&res, r);
+				}
+			}
+			t<<=1;
+		}
+	}
+
+	SET_POS(&res);
+	bigint_copy(dest, &res);
+}
+</syntaxhighlight>
+
+Within that file, the part is the loop at the end. This is actually going through and doing the required ''a**exp % r '' function. If you look closely into that loop, you can see there is a variable <code>t</code>, which is set to the value <code>t = exp->wordv[i - 1];</code>. After each run through the loop it is shifted left one. That <code>t</code> variable contains the private key, and the reason it is shifted left is the following piece of code is checking if the MSB is '0' or '1':
+
+<syntaxhighlight lang="C">
+bigint_square(&res, &res);
+bigint_reduce(&res, r);
+if(t & (1<<(BIGINT_WORD_SIZE-1))){
+	bigint_mul_u(&res, &res, &base);
+	bigint_reduce(&res, r);
+}
+</syntaxhighlight>
+
+What does this mean? While there is data-dependent code execution! If we could determine the program flow, we could simply *read the private key off one bit at a time*. This will be our attack on RSA that we perform in this tutorial.
