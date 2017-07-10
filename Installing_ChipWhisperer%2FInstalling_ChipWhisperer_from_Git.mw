@@ -8,7 +8,8 @@ python setup.py develop
 You may also want the OpenADC software, which is necessary to build new firmware for the ChipWhisperer FPGA. This is unnecessary for most users. If you need it:
 <pre>
 cd ..
-git clone git://git.assembla.com/openadc.git
+git submodule init
+git submodule update
 cd openadc/controlsw/python
 python setup.py develop
 </pre>
