@@ -134,3 +134,11 @@ if(t & (1<<(BIGINT_WORD_SIZE-1))){
 </syntaxhighlight>
 
 What does this mean? While there is data-dependent code execution! If we could determine the program flow, we could simply '''read the private key off one bit at a time'''. This will be our attack on RSA that we perform in this tutorial.
+
+== Hardware Setup ==
+
+== Building Example ==
+
+== Finding SPA Leakage ==
+
+== Automating Attack ==
