@@ -1,1 +1,2 @@
 == RSA Attack Theory ==
+We won't go into what RSA is, see the [[wikipedia:RSA_(cryptosystem)|RSA Wikipedia]] article for a quick background. What we really care about is the following pieces of sudocode used in decrypting a message, given the private key:
