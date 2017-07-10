@@ -15,7 +15,7 @@ RSA.decrypt = function(c, d, n){
 };
 </syntaxhighlight>
 
-The most critical piece of information is that value **d**. It contains the private key, which if leaked would mean a compromise of the entire system. So let's assume we can monitor a target device while it decrypts any message (we don't even care what the message is). Our objective is to recover d.
+The most critical piece of information is that value ''d''. It contains the private key, which if leaked would mean a compromise of the entire system. So let's assume we can monitor a target device while it decrypts any message (we don't even care what the message is). Our objective is to recover d.
 
 Let's consider our actual target code, which will be the RSA implementation in avr-crypto-lib. This has been copied over to be part of the ChipWhisperer repository, and you can see the implementation [https://github.com/newaetech/chipwhisperer/blob/master/hardware/victims/firmware/crypto/avrcryptolib/rsa/rsa_basic.c#L163|in rsa_basic.c of rsa_dec()]. The function in question looks like this:
 
@@ -133,4 +133,6 @@ if(t & (1<<(BIGINT_WORD_SIZE-1))){
 }
 </syntaxhighlight>
 
-What does this mean? While there is data-dependent code execution! If we could determine the program flow, we could simply *read the private key off one bit at a time*. This will be our attack on RSA that we perform in this tutorial.
+What does this mean? While there is data-dependent code execution! If we could determine the program flow, we could simply '''read the private key off one bit at a time'''. This will be our attack on RSA that we perform in this tutorial.<syntaxhighlight lang="c">
+Test
+</syntaxhighlight>
