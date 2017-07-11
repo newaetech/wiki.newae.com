@@ -16,23 +16,23 @@ There are five ways to set up ChipWhisperer:
 |content= Installing ChipWhisperer/Using VMWare Virtual Machine}}
 
 {{CollapsibleSection
-|intro = = Using Windows Installer =
+|intro = = Automatic Windows Installer =
 |content= Installing ChipWhisperer/Windows Installer}}
 
 {{CollapsibleSection
-|intro= = Required Tools - Windows =
+|intro= = Manual Install - Windows =
 |content= Installing ChipWhisperer/Required Tools - Windows}}
 
 {{CollapsibleSection
-|intro= = Required Tools - Windows =
+|intro= = Manual Install - Windows =
 |content= Installing ChipWhisperer/Required Tools - Windows}}
 
 {{CollapsibleSection
-|intro= = Required Tools - Linux =
+|intro= = Manual Install - Linux =
 |content= Installing ChipWhisperer/Required Tools - Linux}}
 
 {{CollapsibleSection
-|intro= = Required Tools - Mac OS X =
+|intro= = Manual Install - Mac OS X =
 |content= Installing ChipWhisperer/Required Tools - Mac OS X}}
 
 {{CollapsibleSection
