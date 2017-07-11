@@ -2,10 +2,11 @@
 
 This page describes how to install the ChipWhisperer software. 
 
-There are four ways to set up ChipWhisperer:
+There are five ways to set up ChipWhisperer:
 * '''VMWare Virtual Machine:''' Get a pre-prepared virtual machine image with all of the required tools already installed. ''Recommended for beginners.''
+* '''Windows Installer''' Get a Windows binary that installs the ChipWhisperer repository to your computer. Does not include WinAVR compiler.
 * '''ChipWhisperer Releases:''' Get a zip file with the latest stable ChipWhisperer code and run it on your own environment. 
-* '''PyPi Package:''' <code>pip install chipwhisperer</code>. Only includes the software - doesn't come with the hardware source files.
+* '''PyPi Package:''' <code>pip install chipwhisperer</code>. Only includes the software - doesn't come with the hardware source files, drivers, or example firmware.
 * '''Git Repository:''' Get the latest, bleeding-edge features and bugs. Recommended if you're an experienced developer and you want to contribute to ChipWhisperer.
 
 {{TOC|limit=3}}
@@ -13,6 +14,14 @@ There are four ways to set up ChipWhisperer:
 {{CollapsibleSection
 |intro = = Using VMWare Virtual Machine =
 |content= Installing ChipWhisperer/Using VMWare Virtual Machine}}
+
+{{CollapsibleSection
+|intro = = Using Windows Installer =
+|content= Installing ChipWhisperer/Windows Installer}}
+
+{{CollapsibleSection
+|intro= = Required Tools - Windows =
+|content= Installing ChipWhisperer/Required Tools - Windows}}
 
 {{CollapsibleSection
 |intro= = Required Tools - Windows =
