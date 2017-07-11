@@ -1,0 +1,8 @@
+Start with ChipWhisperer v3.5.1 there is a 32-bit and 64-bit Windows installer. This installer packages together:
+
+* ChipWhisperer directory (same as in GIT).
+* Python binary & required libraries.
+* Windows USB drivers.
+* GIT too for updates.
+
+This will install ChipWhisperer to a location on your hard drive. Note it must be somewhere you can edit, as you may need to change or rebuild firmware files as part of the tutorials.
