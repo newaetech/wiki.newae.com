@@ -1,4 +1,4 @@
-Starting with ChipWhisperer v3.5.1 there is a 32-bit and 64-bit Windows installer. This installer packages together:
+Start with ChipWhisperer v3.5.1 there is a 32-bit and 64-bit Windows installer. This installer packages together:
 
 * ChipWhisperer directory (same as in GIT).
 * Python binary & required libraries.
