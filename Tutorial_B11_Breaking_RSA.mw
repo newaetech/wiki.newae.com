@@ -194,3 +194,19 @@ Our objectives are to do the following:
 # Find a suitable reference pattern.
 
 # Using the reference pattern, find the timing information and break the RSA power trace.
+<syntaxhighlight lang="python">
+from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+from matplotlib.pylab import *
+import numpy as np
+
+cwapi = CWCoreAPI()
+cwapi.openProject(r'c:\examplelocation\rsa_test.cwp')
+
+tm = cwapi.project().traceManager()
+ntraces = tm.numTraces()
+
+#Reference trace
+trace_ref = tm.getTrace(0)
+
+plot(trace_ref)
+</syntaxhighlight>
