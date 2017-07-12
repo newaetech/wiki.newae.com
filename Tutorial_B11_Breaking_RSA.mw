@@ -184,3 +184,5 @@ Walking back from the right, you can see this almost directly matches bit number
 == Automating Attack ==
 
 The final step is to automate this attack. There are a few ways to do this - we'll demonstrate a basic method, that you can extend to do a complete attack. In this example we're going to use a repeatable sequence, and look for the delay between this sequence. If we see a larger delay we know a square-multiply has occurred, otherwise it was only a square.
+
+We'll simply define a "reference" sequence, and look for this sequence in the rest of the power trace. The following will be done in regular old Python, so start up your favorite Python editor to finish off the tutorial.
