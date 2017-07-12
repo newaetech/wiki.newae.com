@@ -167,9 +167,14 @@ And you can see the power trace change drastically, as below:
 
 [[File:B11_RSA_example8000.png|400px]]
 
-Finally, let's flip another bit. Change the input plaintext as follows, such that bit #4 in the final bit is set HIGH. We can plot the two power traces on top of each other, and you see that they are differing at a point in time:
+Finally, let's flip another bit. Change the input plaintext as follows, such that bit #4 in the final bit is set HIGH. We can plot the two power traces on top of each other, and you see that they are differing at a specific point in time:
 
 [[File:B11_RSA_bit4diff.png|400px]]
+
+Walking back from the right, you can see this almost directly matches bit numbering for those last two bytes:
+
+[[File:B11_RSA_example8010_annotated.png|400px]]
+
 
 
 
