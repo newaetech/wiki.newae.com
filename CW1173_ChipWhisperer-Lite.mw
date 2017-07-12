@@ -127,6 +127,9 @@ The following lists jumpers on the ChipWhisperer-Lite / Target Section:
 
 {{CollapsibleSection
 |intro = = Schematic =
+[https://github.com/newaetech/chipwhisperer/blob/master/hardware/capture/chipwhisperer-lite/pcb/cw-lite-main.pdf Link to PDF]
+
+(Expand for inline images of schematic)
 |content= CW1173_ChipWhisperer-Lite/Schematic 
 }}
 
