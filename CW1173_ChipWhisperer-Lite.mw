@@ -125,7 +125,7 @@ The following lists jumpers on the ChipWhisperer-Lite / Target Section:
 
 </span>
 
-== Schematic ==
+= Schematic =
 
 [https://github.com/newaetech/chipwhisperer/blob/master/hardware/capture/chipwhisperer-lite/pcb/cw-lite-main.pdf Link to PDF]
 
