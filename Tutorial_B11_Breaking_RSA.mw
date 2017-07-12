@@ -176,10 +176,11 @@ Walking back from the right, you can see this almost directly matches bit number
 [[File:B11_RSA_example8010_annotated.png|400px]]
 
 
-
-
 [[File:B11_plaintext_setting.png|400px]]
 
 [[File:B11_acqsetting.png|400px]]
 
+
 == Automating Attack ==
+
+The final step is to automate this attack. There are a few ways to do this - we'll demonstrate a basic method, that you can extend to do a complete attack. In this example we're going to use a repeatable sequence, and look for the delay between this sequence. If we see a larger delay we know a square-multiply has occurred, otherwise it was only a square.
