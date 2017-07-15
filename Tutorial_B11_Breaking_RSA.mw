@@ -145,6 +145,10 @@ We'll now get into experimenting with the SPA leakage. To do so we'll use the "S
 
 Run the SPA setup script.
 
+Under the XXX tab, leave only the "Go Command", and delete the other commands. The RSA demo does not support sending a key, and instead will use the plaintext as a fake-key.
+
+[[File:B11_plaintext_setting.png|400px]]
+
 Change the CLKGEN to be CLKGEN x1 via DCM
 
 [[File:B11_clkgenx1.png|400px]]
@@ -155,9 +159,9 @@ Change the length of the trigger to be 24000 samples:
 
 If you are using Capture V3.5.2 or later you will have support for the length of the trigger output being high reported back to you. If you run capture-1 for example you'll see the trigger was high for XX cycles:
 
-This is way too long! You won't be able to capture the entire trace in your 24000 length sample buffer. Instead we'll make the demo even shorter - in our case looking at the source code you can see there is a "flag" which is set high only AFTER the first 1 is received. Thus using a fixed plaintext, change the input plaintext to be 
+This is way too long! You won't be able to capture the entire trace in your 24000 length sample buffer. Instead we'll make the demo even shorter - in our case looking at the source code you can see there is a "flag" which is set high only AFTER the first 1 is received. Thus using a fixed plaintext, change the input plaintext to be all 00's (<code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</code):
 
-  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[[File:B11_acqsetting.png|400px]]
 
 We'll only be able to change the LAST TWO bytes, everything else will be too slow. So change the input plaintext to 
 
@@ -175,10 +179,7 @@ Walking back from the right, you can see this almost directly matches bit number
 
 [[File:B11_RSA_example8010_annotated.png|400px]]
 
-
-[[File:B11_plaintext_setting.png|400px]]
-
-[[File:B11_acqsetting.png|400px]]
+With a bit of setup done, we can now perform a few captures.
 
 == Acquiring Example Data ==
 
@@ -191,7 +192,9 @@ Assuming you have a working example, the next step is the easiest. We will recor
 
 We record 2x traces for each sequence to provide us with a 'reference' trace and another 'test' trace (in case we want to confirm a template match is working without using the exact same trace).
 
-The third trace with the <code>AB E2</code> key will be the most interesting, as we will use that to demonstrate a working attack.
+The third trace with the <code>AB E2</code> key will be the most interesting, as we will use that to demonstrate a working attack. To acquire the traces required in the following section perform the following:
+
+#
 
 == Automating Attack ==
 
