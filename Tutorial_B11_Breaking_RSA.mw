@@ -185,7 +185,7 @@ Walking back from the right, you can see this almost directly matches bit number
 
 The final step is to automate this attack. There are a few ways to do this - we'll demonstrate a basic method, that you can extend to do a complete attack. In this example we're going to use a repeatable sequence, and look for the delay between this sequence. If we see a larger delay we know a square-multiply has occurred, otherwise it was only a square.
 
-We'll simply define a "reference" sequence, and look for this sequence in the rest of the power trace. The following will be done in regular old Python, so start up your favorite Python editor to finish off the tutorial.
+We'll simply define a "reference" sequence, and look for this sequence in the rest of the power trace. The following will be done in regular old Python, so start up your favorite Python editor to finish off the tutorial!
 
 Our objectives are to do the following:
 
@@ -194,6 +194,9 @@ Our objectives are to do the following:
 # Find a suitable reference pattern.
 
 # Using the reference pattern, find the timing information and break the RSA power trace.
+
+Loading the trace can be done with the ChipWhisperer software. Let's first do a few steps to load the data, as follows:
+
 <syntaxhighlight lang="python">
 from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
 from matplotlib.pylab import *
@@ -210,3 +213,50 @@ trace_ref = tm.getTrace(0)
 
 plot(trace_ref)
 </syntaxhighlight>
+
+This should plot the example trace which might look something like this:
+
+[[File:B11_plotreftrace.png|400px]]
+
+So what's a good reference location? This is a little arbitrary, we will just define it as a suitable-sounding piece of information. You could get a reference pattern with something like the following:
+
+<syntaxhighlight lang="python">
+start = 3600
+rsa_ref_pattern = trace_ref[start:(start+500)]
+</syntaxhighlight>
+
+
+Finally, let's compare the reference plot. 
+
+<syntaxhighlight lang="python">
+from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
+from matplotlib.pylab import *
+import numpy as np
+
+cwapi = CWCoreAPI()
+cwapi.openProject(r'c:\users\colin\chipwhisperer_projects\tmp\rsa_test_16byte_80.cwp')
+
+tm = cwapi.project().traceManager()
+ntraces = tm.numTraces()
+
+#Reference trace
+trace_ref = tm.getTrace(0)
+
+#plot(trace_ref)
+
+start = 3600
+rsa_one = trace_ref[start:(start+500)]
+        
+diffs = []
+
+for i in range(0, 22999):
+    
+    diff = tm.getTrace(1)[i:(i+len(rsa_one))] - rsa_one    
+    diffs.append(np.sum(abs(diff)))
+
+plot(diffs)
+</syntaxhighlight>
+
+The result should be a difference plot. Note the "difference" falls close to zero at a number of times. Depending on which trace you compare this with the exact pattern might vary, but you should see something roughly like the following:
+
+[[File:B11_diff_plot.png|400px]]
