@@ -325,7 +325,7 @@ rsa_one = trace_ref[start:(start+500)]
         
 diffs = []
 
-for i in range(0, 22999):
+for i in range(0, 23499):
     
     diff = tm.getTrace(target_trace_number)[i:(i+len(rsa_one))] - rsa_one    
     diffs.append(np.sum(abs(diff)))
@@ -443,7 +443,7 @@ rsa_one = trace_ref[start:(start+500)]
         
 diffs = []
 
-for i in range(0, 22999):
+for i in range(0, 23499):
     
     diff = tm.getTrace(target_trace_number)[i:(i+len(rsa_one))] - rsa_one    
     diffs.append(np.sum(abs(diff)))
