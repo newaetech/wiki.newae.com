@@ -540,7 +540,7 @@ As an example, using the above simplified example we can see the delay pattern i
 [[File:B11_picoscope.png|800px]]
 
 
-Note the trigger out is very short (one ADC cycle), so a reasonably fast capture speed may be needed to ensure no edges are lost, or a pulse stretcher used on the pulse output.
+Note the trigger out is very short (one ADC cycle), so a reasonably fast capture speed may be needed to ensure no edges are lost, or a pulse stretcher used on the pulse output. The 1's in the above waveform are indicated by the longer delay between successive edges, as the square-multiply operation has a longer delay than a square only.
 
 {{Template:Tutorials}}
 [[Category:Tutorials]]
