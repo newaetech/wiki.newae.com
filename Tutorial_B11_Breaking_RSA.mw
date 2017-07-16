@@ -539,10 +539,14 @@ As an example, using the above simplified example we can see the delay pattern i
 
 [[File:B11_picoscope.png|800px]]
 
+There are three possible delay values in the trigger out pulses: <math>\Delta t_a</math>, <math>\Delta t_b</math>, and <math>\Delta t_c</math>.
 
-Note the trigger out is very short (one ADC cycle), so a reasonably fast capture speed may be needed to ensure no edges are lost, or a pulse stretcher used on the pulse output. The 1's in the above waveform are indicated by the longer delay between successive edges, as the square-multiply operation has a longer delay than a square only.
 
-The ChipWhisperer-Pro trigger also makes it easier to attach the real RSA implementation, as it does not required storing an extremely long analog data trace and then postprocessing it.
+Note the trigger out is very short (one ADC cycle), so a reasonably fast capture speed may be needed to ensure no edges are lost, or a pulse stretcher used on the pulse output.
+
+The 1's in the above waveform are indicated by the longer delay between successive edges (<math>\Delta t_a</math> and <math>\Delta t_c</math>), as the square-multiply operation has a longer delay than a square only (<math>\Delta t_b</math>). The first delay <math>\Delta t_a</math> is longer only due the fact this is the first 1 processed, other ones will have the delay <math>\Delta t_c</math>. A small variation in delay will also be noticed when moving between words of the RSA processing.
+
+The ChipWhisperer-Pro trigger also makes it easier to attach the real RSA implementation, as it does not required storing an extremely long analog data trace and then postprocessing it. This is especially interesting as it does not require even knowing when the RSA implementation will be running.
 
 {{Template:Tutorials}}
 [[Category:Tutorials]]
