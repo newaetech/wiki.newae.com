@@ -225,11 +225,29 @@ The third trace with the <code>AB E2</code> key will be the most interesting, as
 
 <ol>
 <li>
-
-TODO
-
+Set the number of traces per capture to 2:<br>
+[[File:B11_traces2.png|400px]]
 </li>
-
+<br>
+<li>
+Save the project file as rsa_test.cwp.
+</li>
+<br>
+<li>
+Set the fixed plaintext to <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 00</code>, press "Capture M".
+</li>
+<br>
+<li>
+Set the fixed plaintext to <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 81 40</code>, press "Capture M".
+</li>
+<br>
+<li>
+Set the fixed plaintext to <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 AB E2</code>, press "Capture M".
+</li>
+<br>
+<li>
+Set the fixed plaintext to <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 AB E3</code>, press "Capture M".
+</li>
 </ol>
 
 == Automating Attack ==
