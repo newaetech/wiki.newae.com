@@ -159,7 +159,7 @@ Change the length of the trigger to be 24000 samples:
 
 If you are using Capture V3.5.2 or later you will have support for the length of the trigger output being high reported back to you. If you run capture-1 for example you'll see the trigger was high for XX cycles:
 
-This is way too long! You won't be able to capture the entire trace in your 24000 length sample buffer. Instead we'll make the demo even shorter - in our case looking at the source code you can see there is a "flag" which is set high only AFTER the first 1 is received. Thus using a fixed plaintext, change the input plaintext to be all 00's (<code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</code):
+This is way too long! You won't be able to capture the entire trace in your 24000 length sample buffer. Instead we'll make the demo even shorter - in our case looking at the source code you can see there is a "flag" which is set high only AFTER the first 1 is received. Thus using a fixed plaintext, change the input plaintext to be all 00's (<code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</code>):
 
 [[File:B11_acqsetting.png|400px]]
 
