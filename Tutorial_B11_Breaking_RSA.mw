@@ -518,7 +518,7 @@ The previous tutorial is a basic attack on the core RSA algorithm. There are sev
 
 You can also try performing this attack on longer key lengths -- this is made much easier with the ChipWhisperer-Pro, as it can use "streaming mode" to recover an extremely long key, or even capture the entire RSA algorithm.
 
-The ChipWhisperer-Lite & Pro both have a "downsample" capability to fit a longer capture into your buffer. You may need an external low-pass filter in some cases.
+The ChipWhisperer-Lite & Pro both have a "downsample" capability to fit a longer capture into your buffer. You may need an external low-pass filter in some cases, as downsampling below the speed of the device clock means you might lose synchronization after the code-dependent delay section runs.
 
 The ChipWhisperer-Pro has a unique analog trigger feature. This can also be used to break the RSA algorithm by simply performing the pattern match in real-time, and measuring the time delay of trigger locations. This is demonstrated in the next section.
 
