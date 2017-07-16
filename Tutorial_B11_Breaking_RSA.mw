@@ -205,9 +205,7 @@ We'll simply define a "reference" sequence, and look for this sequence in the re
 Our objectives are to do the following:
 
 # Load the trace file.
-
 # Find a suitable reference pattern.
-
 # Using the reference pattern, find the timing information and break the RSA power trace.
 
 === Loading the Trace ===
