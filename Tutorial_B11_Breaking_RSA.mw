@@ -149,6 +149,37 @@ The example code is present in <code>hardware\victims\firmware\simpleserial-rsa<
 
 Where the CW303 is the XMEGA target on the ChipWhisperer-Lite / UFO target. Note an existing binary is present in the repository, if using a release you can simply use that existing .hex-file.
 
+=== Firmware Description ===
+
+The example firmware file (<code>simpleserial-rsa.c</code>) pulls in a RSA implementation from avr-crypto-lib.
+
+The main firmware file defines two functions:
+
+    simpleserial_addcmd('t', 0,  real_dec);
+    simpleserial_addcmd('p', 16, get_pt);
+
+The <code>real_dec</code> function performs a real RSA decryption. The input plaintext and key are fixed, and loaded internally in the software.
+
+<syntaxhighlight lang="c">
+/* Perform a real RSA decryption, be aware this is VERY SLOW on AVR/XMEGA. At 7.37MHz using the default
+   1024 byte key it takes about 687 seconds (over 10 mins). */
+uint8_t real_dec(uint8_t * pt)
+{
+    /* Load encrypted message */
+    load_bigint_from_os(&cp, ENCRYPTED, sizeof(ENCRYPTED));
+
+    //Do an encryption on constant data
+    trigger_high();
+    if (rsa_dec(&cp, &priv_key)){
+        putch('F');
+    }
+    trigger_low();
+    return 0;
+}
+</syntaxhighlight>
+
+The VERY slow encryption can be seen by simply sending a <code>t</code> command. You will see a series of dots printed to the console as the RSA algorithm is running. Instead we will use the second function which performs a much smaller operation on a 16-byte key. The exact same code is used, only it runs on a MUCH smaller key that can be easily captured. The end of the tutorial will discuss how you could apply this to the full algorithm.
+
 == Finding SPA Leakage ==
 
 We'll now get into experimenting with the SPA leakage. To do so we'll use the "SPA Setup" script, then make a few modifications.
