@@ -143,26 +143,33 @@ What does this mean? While there is data-dependent code execution! If we could d
 
 We'll now get into experimenting with the SPA leakage. To do so we'll use the "SPA Setup" script, then make a few modifications.
 
+<ol>
+<li>
 Run the SPA setup script.
-
+[[File:B11_SPAScript.png|400px]]
+</li>
+<li>
 Under the XXX tab, leave only the "Go Command", and delete the other commands. The RSA demo does not support sending a key, and instead will use the plaintext as a fake-key.
-
 [[File:B11_plaintext_setting.png|400px]]
-
+</li>
+<li>
 Change the CLKGEN to be CLKGEN x1 via DCM
-
 [[File:B11_clkgenx1.png|400px]]
-
+</li>
+<li>
 Change the length of the trigger to be 24000 samples:
-
 [[File:B11_settriglen.png|400px]]
-
+</li>
+<li>
 If you are using Capture V3.5.2 or later you will have support for the length of the trigger output being high reported back to you. If you run capture-1 for example you'll see the trigger was high for XX cycles:
 
+</li>
+<li>
 This is way too long! You won't be able to capture the entire trace in your 24000 length sample buffer. Instead we'll make the demo even shorter - in our case looking at the source code you can see there is a "flag" which is set high only AFTER the first 1 is received. Thus using a fixed plaintext, change the input plaintext to be all 00's (<code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</code>):
 
 [[File:B11_acqsetting.png|400px]]
-
+</li>
+<li>
 We'll only be able to change the LAST TWO bytes, everything else will be too slow. So change the input plaintext to 
 
   00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 00
@@ -171,6 +178,8 @@ And you can see the power trace change drastically, as below:
 
 [[File:B11_RSA_example8000.png|600px]]
 
+</li>
+<li>
 Finally, let's flip another bit. Change the input plaintext as follows, such that bit #4 in the final bit is set HIGH. We can plot the two power traces on top of each other, and you see that they are differing at a specific point in time:
 
 [[File:B11_RSA_bit4diff.png|600px]]
@@ -180,6 +189,8 @@ Walking back from the right, you can see this almost directly matches bit number
 [[File:B11_RSA_example8010_annotated.png|600px]]
 
 With a bit of setup done, we can now perform a few captures.
+</li>
+</ol>
 
 == Acquiring Example Data ==
 
@@ -192,9 +203,16 @@ Assuming you have a working example, the next step is the easiest. We will recor
 
 We record 2x traces for each sequence to provide us with a 'reference' trace and another 'test' trace (in case we want to confirm a template match is working without using the exact same trace).
 
-The third trace with the <code>AB E2</code> key will be the most interesting, as we will use that to demonstrate a working attack. To acquire the traces required in the following section perform the following:
+The third trace with the <code>AB E2</code> key will be the most interesting, as we will use that to demonstrate a working attack. To acquire the traces required in the following section, perform the following:
 
-#
+<ol>
+<li>
+
+TODO
+
+</li>
+
+</ol>
 
 == Automating Attack ==
 
