@@ -139,6 +139,12 @@ What does this mean? While there is data-dependent code execution! If we could d
 
 == Building Example ==
 
+The example code is present in <code>hardware\victims\firmware\simpleserial-rsa</code>. You can run the standard make command with your applicable platform:
+
+   make PLATFORM=CW303
+
+Where the CW303 is the XMEGA target on the ChipWhisperer-Lite / UFO target. Note an existing binary is present in the repository, if using a release you can simply use that existing .hex-file.
+
 == Finding SPA Leakage ==
 
 We'll now get into experimenting with the SPA leakage. To do so we'll use the "SPA Setup" script, then make a few modifications.
