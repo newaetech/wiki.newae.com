@@ -226,7 +226,7 @@ The third trace with the <code>AB E2</code> key will be the most interesting, as
 <ol>
 <li>
 Set the number of traces per capture to 2:<br>
-[[File:B11_traces2.png|400px]]
+[[File:B11_traces2.png]]
 </li>
 <li>
 Save the project file as rsa_test_2bytes.cwp .
@@ -248,7 +248,7 @@ Save the project.
 </li>
 <li>
 Use the trace manager to check the acquisitions are as expected:<br>
-[[File:B11_tracemanager.png|400px]]
+[[File:B11_tracemanager.png]]
 </li>
 </ol>
 
