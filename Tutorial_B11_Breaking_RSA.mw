@@ -146,18 +146,22 @@ We'll now get into experimenting with the SPA leakage. To do so we'll use the "S
 <ol>
 <li>
 Run the SPA setup script.
+
 [[File:B11_SPAScript.png|400px]]
 </li>
 <li>
 Under the XXX tab, leave only the "Go Command", and delete the other commands. The RSA demo does not support sending a key, and instead will use the plaintext as a fake-key.
+
 [[File:B11_plaintext_setting.png|400px]]
 </li>
 <li>
 Change the CLKGEN to be CLKGEN x1 via DCM
+
 [[File:B11_clkgenx1.png|400px]]
 </li>
 <li>
 Change the length of the trigger to be 24000 samples:
+
 [[File:B11_settriglen.png|400px]]
 </li>
 <li>
