@@ -529,10 +529,18 @@ Performing the capture & post-processing of data may be difficult on a long capt
 This will require you to:
 
 # Perform an example capture to program the SAD block.
-# Configure the trigger out to be routed to an I/O pin.
+# Configure the trigger out to be routed to the "AUX Out" pin.
+# Set the trigger in the ChipWhisperer-Pro as coming from the SAD block (otherwise the external trigger out will only duplicate the trigger-in pin state).
+# Configure the SAD reference waveform as some unique sequence with the square/multiply function.
 # Using an external device (logic analyzer, scope, etc) record the trigger pattern.
 # From the trigger pattern, directly read off the RSA secret key.
 
+As an example, using the above simplified example we can see the delay pattern in our picoscope software used to measure the timing of the output trigger, where the BLUE trace is the trigger out from the XMEGA (i.e., it is HIGH during the processing of data), and yellow is the "Trigger Out" from the ChipWhisperer-Pro, indicating where the SAD pattern match block has indicated a matching analog sequence:
+
+[[File:B11_picoscope.png|800px]]
+
+
+Note the trigger out is very short (one ADC cycle), so a reasonably fast capture speed may be needed to ensure no edges are lost.
 
 {{Template:Tutorials}}
 [[Category:Tutorials]]
