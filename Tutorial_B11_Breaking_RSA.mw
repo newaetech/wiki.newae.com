@@ -187,8 +187,8 @@ Assuming you have a working example, the next step is the easiest. We will recor
 
 # 2x traces with secret key of <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 00</code>
 # 2x traces with secret key of <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 81 40</code>
-# 2x traces with secret key of <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 AB E2>/code>
-# 2x traces with secret key of <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 AB E3>/code>
+# 2x traces with secret key of <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 AB E2</code>
+# 2x traces with secret key of <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 AB E3</code>
 
 We record 2x traces for each sequence to provide us with a 'reference' trace and another 'test' trace (in case we want to confirm a template match is working without using the exact same trace).
 
