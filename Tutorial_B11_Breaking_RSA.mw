@@ -137,6 +137,10 @@ What does this mean? While there is data-dependent code execution! If we could d
 
 == Hardware Setup ==
 
+The hardware setup is as in previous tutorials. The following will use the XMEGA example target, allowing you to complete this tutorial on the ChipWhisperer-Lite, the ChipWhisprer-Lite 2-Part Version target, or the UFO Board with the XMEGA target board.
+
+You will only need the MEASURE input for performing power analysis, we will not be using the GLITCH output.
+
 == Building Example ==
 
 The example code is present in <code>hardware\victims\firmware\simpleserial-rsa</code>. You can run the standard make command with your applicable platform:
