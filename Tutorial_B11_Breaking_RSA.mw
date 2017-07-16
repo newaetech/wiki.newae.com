@@ -532,3 +532,7 @@ This will require you to:
 # Configure the trigger out to be routed to an I/O pin.
 # Using an external device (logic analyzer, scope, etc) record the trigger pattern.
 # From the trigger pattern, directly read off the RSA secret key.
+
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
