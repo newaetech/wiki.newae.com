@@ -397,23 +397,22 @@ for t,d in enumerate(diffs):
 
 Which should give you an output like the following (specific numbers will vary):
 
-<syntaxhighlight>
-1855
-1275
-1275
-1275
-1275
-1275
-1275
-1286
-1275
-1275
-1275
-1528
-1275
-1275
-1275
-</syntaxhighlight>
+  1855
+  1275
+  1275
+  1275
+  1275
+  1275
+  1275
+  1286
+  1275
+  1275
+  1275
+  1528
+  1275
+  1275
+  1275
+
 
 Not there is a pretty long delay in the first run through, but later runs have roughly a constant time. There is three possible delays used in later bits:
 
