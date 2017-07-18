@@ -9,7 +9,7 @@ To access the bootloader you can perform these steps:
 # Select the
 #: [[File:arm_programmer.png]]
 # Mount a jumper between the H1/H2 pins on the UFO board:
-#:
+#: [[File:samjumper.png|400px]]
 # Reset the ARM device either by pressing the reset button (newer UFO boards only), or by toggling power:
 #: [[File:arm_togglepower.png]]
 # Select the hex-file and press the "Program/Verify" button.
