@@ -61,7 +61,7 @@ Built for platform CW-Lite XMEGA
 Ensure that the "Built for platform ___" matches your target device.
 </ol>
 
-</h1> Modifying the Basic Example </h1>
+<h1> Modifying the Basic Example </h1>
 
 At this point we want to modify the system to perform 'something' with the data, such that we can confirm the system is working. To do so, open the file <code>simpleserial-base.c</code> with a code editor such as ''Programmer's Notepad'' (which ships with WinAVR).
 
