@@ -6,6 +6,186 @@ This tutorial is ONLY possible if you have an ARM target. For example the UFO Bo
 
 A 32-bit machine can operate on 32-bit words, so it seems wasteful to use the same 8-bit operations. Indeed we can speed up the AES operation considerably by generating several tables (called T-Tables), as was described in the book [http://www.springer.com/gp/book/9783540425809 The Design of Rijndael] which was published by the authors of AES.
 
+In order to take advantage of our 32 bit machine, we can examine a typical round of AES. With the exception of the final round, each round looks like:
+
+<math>
+\mathbf{a} = \text{Round Input}
+</math>
+
+<math>
+\mathbf{b} = \text{SubBytes}(\mathbf{a})
+</math>
+
+<math>
+\mathbf{c} = \text{ShiftRows}(\mathbf{b})
+</math>
+
+<math>
+\mathbf{d} = \text{MixColumns}(\mathbf{c})
+</math>
+
+<math>
+\mathbf{a'} = \text{AddRoundKey}(d) = \text{Round Output}
+</math>
+
+We'll leave AddRoundKey the way it is. The other operations are:
+
+<math>
+b_{i,j} = \text{sbox}[a_{i,j}]
+</math>
+
+<math>
+\begin{bmatrix}
+c_{0,j}	\\
+c_{1,j}	\\
+c_{2,j}	\\
+c_{3,j}	
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_{0, j+0} \\
+b_{1, j+1} \\
+b_{2, j+2} \\
+b_{3, j+3}
+\end{bmatrix}
+</math>
+
+<math>
+\begin{bmatrix}
+d_{0,j}	\\
+d_{1,j}	\\
+d_{2,j}	\\
+d_{3,j}	
+\end{bmatrix}
+=
+\begin{bmatrix}
+02 & 03 & 01 & 01 \\
+01 & 02 & 03 & 01 \\
+01 & 01 & 02 & 03 \\
+03 & 01 & 01 & 02
+\end{bmatrix}
+\times
+\begin{bmatrix}
+c_{0,j}	\\
+c_{1,j}	\\
+c_{2,j}	\\
+c_{3,j}	
+\end{bmatrix}
+</math>
+
+Note that the ShiftRows operation <math>b_{i, j+c}</math> is a cyclic shift and the matrix multiplcation in MixColumns denotes the xtime operation in GF(<math>2^8</math>). 
+
+It's possible to combine all three of these operations into a single line. We can write 4 bytes of <math>d</math> as the linear combination of four different 4 byte vectors:
+
+<math>
+\begin{bmatrix}
+d_{0,j}	\\
+d_{1,j}	\\
+d_{2,j}	\\
+d_{3,j}	
+\end{bmatrix}
+=
+\begin{bmatrix}
+02 \\
+01 \\
+01 \\
+03
+\end{bmatrix}
+\text{sbox}[a_{0,j+0}]\ 
+
+\oplus
+
+\begin{bmatrix}
+03 \\
+02 \\
+01 \\
+01
+\end{bmatrix}
+\text{sbox}[a_{1,j+1}]\ 
+
+\oplus
+
+\begin{bmatrix}
+01 \\
+03 \\
+02 \\
+01
+\end{bmatrix}
+\text{sbox}[a_{2,j+2}]\ 
+
+\oplus
+
+\begin{bmatrix}
+01 \\
+01 \\
+03 \\
+02
+\end{bmatrix}
+\text{sbox}[a_{3,j+3}]
+</math>
+
+Now, for each of these four components, we can tabulate the outputs for every possible 8-bit input:
+
+<math>
+T_0[a] = 
+\begin{bmatrix}
+02 \times \text{sbox}[a] \\
+01 \times \text{sbox}[a] \\
+01 \times \text{sbox}[a] \\
+03 \times \text{sbox}[a] \\
+\end{bmatrix}
+</math>
+
+<math>
+T_1[a] = 
+\begin{bmatrix}
+03 \times \text{sbox}[a] \\
+02 \times \text{sbox}[a] \\
+01 \times \text{sbox}[a] \\
+01 \times \text{sbox}[a] \\
+\end{bmatrix}
+</math>
+
+<math>
+T_2[a] = 
+\begin{bmatrix}
+01 \times \text{sbox}[a] \\
+03 \times \text{sbox}[a] \\
+02 \times \text{sbox}[a] \\
+01 \times \text{sbox}[a] \\
+\end{bmatrix}
+</math>
+
+<math>
+T_3[a] = 
+\begin{bmatrix}
+01 \times \text{sbox}[a] \\
+01 \times \text{sbox}[a] \\
+03 \times \text{sbox}[a] \\
+02 \times \text{sbox}[a] \\
+\end{bmatrix}
+</math>
+
+These tables have 2^8 different 32-bit entries, so together the tables take up 4 kB. Finally, we can quickly compute one round of AES by calculating
+
+<math>
+\begin{bmatrix}
+d_{0,j}	\\
+d_{1,j}	\\
+d_{2,j}	\\
+d_{3,j}	
+\end{bmatrix}
+=
+T_0[a_0,j+0] \oplus
+T_1[a_1,j+1] \oplus
+T_2[a_2,j+2] \oplus
+T_3[a_3,j+3]
+</math>
+
+All together, with AddRoundKey at the end, a single round now takes 16 table lookups and 16 32-bit XOR operations. This arrangement is much more efficient than the traditional 8-bit implementation. There are a few more tradeoffs that can be made: for instance, the tables only differ by 8-bit shifts, so it's also possible to store only 1 kB of lookup tables at the expense of a few rotate operations.
+
+Note that T-tables don't have a big effect on AES from a side-channel analysis perspective. The SubBytes output is still buried in the T-tables and the other operations are linear, so it's still possible to attack 32-bit AES using the same 8-bit attack methods.
+
 == Building Firmware ==
 
 You will have to build with the <code>PLATFORM</code> set to one of the ARM targets (such as <code>CW308_STM32F0</code> for the STM32F0 victim, or <code>CW308_STM32F3</code> for the STM32F3 victim). If you haven't setup the ARM build environment see the page [[CW308T-STM32F#Example_Projects]]. Assuming your build environment is OK, you can build it as follows:
