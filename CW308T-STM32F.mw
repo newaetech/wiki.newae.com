@@ -148,6 +148,8 @@ make PLATFORM=CW308_STM32F0 CRYPTO_TARGET=TINYAES128C
 If all goes well, this command will finish by printing the output file size and the platform:
 [[File:Stm32-make.png]]
 
+=== Programming via ChipWhisperer Bootloader ===
+
 === Running ST Example with ST-Link ===
 Once you've built a binary to load onto the target, you're ready to program it. Plug your programmer into the 20 pin JTAG connector (J6 on the UFO board):
 
