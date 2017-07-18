@@ -150,7 +150,7 @@ If all goes well, this command will finish by printing the output file size and 
 
 === Programming via ChipWhisperer Bootloader ===
 
-{{CW308T-STM32F/ChipWhisperer_Bootloader}}
+{{:CW308T-STM32F/ChipWhisperer_Bootloader}}
 
 === Running ST Example with ST-Link ===
 If instead of using the bootloader, you want to use a ST-Link you can instead plug your programmer into the 20 pin JTAG connector (J6 on the UFO board):
