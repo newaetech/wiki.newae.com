@@ -1,4 +1,10 @@
-The STM32Fx devices have a built-in bootloader, and the ChipWhisperer software as of 3.5.2 includes support for this bootloader. To access the bootloader you can perform these steps:
+The STM32Fx devices have a built-in bootloader, and the ChipWhisperer software as of 3.5.2 includes support for this bootloader.
+
+Important notes before we begin:
+* You MUST setup a clock and the serial lines for the chip. This is easily done by selecting a start-up script such as the "AES SimpleSerial on XMEGA" startup script.
+* On the STM32F1, you MUST adjust the clock frequency to by 8MHz. The bootloader does not work with our usual 7.37 MHz clock frequency.
+
+To access the bootloader you can perform these steps:
 
 # Select the
 #: [[File:arm_programmer.png]]
@@ -12,7 +18,3 @@ The STM32Fx devices have a built-in bootloader, and the ChipWhisperer software a
 # Remove the jumper between the H1/H2 pins.
 # Reset the ARM device either by pressing the reset button (newer UFO boards only), or by toggling power:
 #: [[File:arm_togglepower.png]]
-
-Important notes:
-# You MUST confirm a clock for the chip. This is easily done by selecting a start-up script such as the "AES SimpleSerial on XMEGA" startup script.
-# On the STM32F1, you MUST adjust the clock frequency to by 8MHz. The bootloader does not work with our usual 7.37 MHz clock frequency.
