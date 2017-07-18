@@ -1,0 +1,7 @@
+Most of our previous tutorials were running on 8-bit modes of operation. We can target typical implementation on ARM devices which actually looks a little different.
+
+This tutorial is ONLY possible if you have an ARM target. For example the UFO Board with the STM32F3 target (or similar).
+
+== Background ==
+
+A 32-bit machine can operate on 32-bit words, so it seems wasteful to use the same 8-bit operations. Indeed we can speed up the AES operation considerably by generating several tables (called T-Tables), as was described in the book [http://www.springer.com/gp/book/9783540425809 The Design of Rijndael] which was published by the authors of AES.
