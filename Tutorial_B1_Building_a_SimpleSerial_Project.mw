@@ -26,12 +26,13 @@ You'll need to have installed avr-gcc and avr-libc. You may have already done th
 Once you have a working compiler (check by typing 'avr-gcc' at the command line - if using Windows you may need to setup a special batch file to provide you with a avr-gcc command prompt).
 
 <ol style="list-style-type: decimal;">
-<li>We want to use the existing SimpleSerial firmware as a base for our project, but we don't want to edit the existing firmware. Instead, we'll make a new project with a copy of this firmware. Copy the directory <code>simpleserial-base</code> which is found at <code>chipwhisperer\hardware\victims\firmware\</code> of the chipwhisperer release to a new directory called <code>simpleserial-base-lab1</code>. You must keep it in the same directory, as it will reference other files within that directory for the build process.</li>
+<li>We want to use the existing SimpleSerial firmware as a base for our project, but we don't want to edit the existing firmware. Instead, we'll make a new project with a copy of this firmware. Copy the directory <code>simpleserial-base</code> which is found at <code>chipwhisperer/hardware/victims/firmware/</code> of the chipwhisperer release to a new directory called <code>simpleserial-base-lab1</code>. You must keep it in the same directory, as it will reference other files within that directory for the build process.</li>
 <li><dl>
 <dt>Open a terminal with avr-gcc in the path. If using Windows the sidebar on the [[Installing_ChipWhisperer]] page - you can either add WinAVR to your system path, or you can run the 'winavr.bat' file suggested.</dt></dl>
 </li>
 <li><p>Change the terminal to the newly copied directory. For example:</p>
-<pre>cd c:\chipwhisperer\hardware\victims\firmware\simpleserial-base-lab1</pre></li>
+Windows:<pre>cd c:\chipwhisperer\hardware\victims\firmware\simpleserial-base-lab1</pre>
+Linux/macOS:<pre>cd chipwhisperer/hardware/victims/firmware/simpleserial-base-lab1</pre></li>
 <li><p>Then, run <code>make</code> to build the system. Make sure you specify which platform you're using as your target. For example, for the ChipWhisperer Lite target, run</p>
 <pre>make PLATFORM=CW303</pre>
 <p>Which should have the following output:</p>
