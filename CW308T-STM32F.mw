@@ -146,6 +146,7 @@ make PLATFORM=CW308_STM32F0 CRYPTO_TARGET=TINYAES128C
 </code>
 
 If all goes well, this command will finish by printing the output file size and the platform:
+
 [[File:Stm32-make.png]]
 
 === Programming via ChipWhisperer Bootloader ===
