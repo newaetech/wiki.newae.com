@@ -151,7 +151,7 @@ If all goes well, this command will finish by printing the output file size and 
 === Programming via ChipWhisperer Bootloader ===
 
 === Running ST Example with ST-Link ===
-Once you've built a binary to load onto the target, you're ready to program it. Plug your programmer into the 20 pin JTAG connector (J6 on the UFO board):
+If instead of using the bootloader, you want to use a ST-Link you can instead plug your programmer into the 20 pin JTAG connector (J6 on the UFO board):
 
 [[File:Stm32-jtag.jpg|600px]]
 
