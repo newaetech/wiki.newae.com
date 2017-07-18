@@ -51,3 +51,7 @@ The capture process is similar to previous setups. After running the setup scrip
 The attach is ran in the same manner as previous AES attacks, we use the same leakage assumptions as we don't actually care about the T-Table implementation. The resulting output vs. point location will look a little "messier", as shown here:
 
 [[File:A8_outputvspoint.png]]
+
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
