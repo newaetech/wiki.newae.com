@@ -35,4 +35,12 @@ If this works you should get something like the following:
 
 == Capturing Traces ==
 
+The capture process is similar to previous setups. After running the setup script, adjust the following settings:
+
+# Set the offset to by 0 samples:
+#: [[File:A8_offset.png|400px]]
+# Adjust the gain upward to get a good signal - note it will look VERY different from previous encryption examples:
+#: [[File:A8_traceexample.png|400px]]
+#Capture a larger (~500) number of traces.
+
 == Running Attack ==
