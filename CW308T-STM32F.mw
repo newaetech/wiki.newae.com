@@ -107,6 +107,12 @@ The STM32F21x, and STM32F41x/43x have hardware crypto modules (AES, DES, TDES) a
 
 == Programming Connection ==
 
+=== ChipWhisperer Programmer via Bootloader ===
+
+
+
+=== JTAG Programmer ===
+
 The 20-pin JTAG port (J6 on CW308 Board) can be used with the [https://www.digikey.com/product-detail/en/stmicroelectronics/ST-LINK-V2/497-10484-ND/2214535 ST-LINK/V2] which is a low-cost JTAG programmer. 
 
 It is also possible to use other JTAG programmers such as OpenOCD. The following command worked with an Olimex OpenOCD programmer and their [https://www.olimex.com/Products/ARM/JTAG/ARM-USB-OCD-H/ OpenOCD for Windows] software:
