@@ -18,3 +18,5 @@ To access the bootloader you can perform these steps:
 # Remove the jumper between the H1/H2 pins.
 # Reset the ARM device either by pressing the reset button (newer UFO boards only), or by toggling power:
 #: [[File:arm_togglepower.png]]
+
+{{Warningbox|If you get verify errors, it's possible the shunt resistor is causing power to dip too low. This can be solved by mounting a jumper between the "SH-" and "SH+" pins at J16 (to the left of the SMA connector) on the UFO board. Retry programming with the jumper mounted. }}
