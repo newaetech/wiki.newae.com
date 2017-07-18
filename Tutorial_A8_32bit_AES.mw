@@ -28,9 +28,9 @@ If this works you should get something like the following:
 == Hardware Setup ==
 
 # Using a UFO board, connect your desired STM32Fx target:
-#:
+#: [[File:A8_hwsetup.jpg|600px]]
 # Before finishing the hardware setup, you should connect to the target device. To do this you can use one of the standard setup scripts. This will provide a clock & setup TX/RX lines as expected for the STM32F, which is required for the programmer to work.
-#:
+#: 
 
 === Programming STM32F Device ===
 
