@@ -228,18 +228,14 @@ Thus change (a) the plaintext to be FIXED (by default it will be random), and th
 </li>
 <br>
 <li>
-We'll only be able to change the LAST TWO bytes, everything else will be too slow. So change the input plaintext to 
-
-  00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 00
-
-And you can see the power trace change drastically, as below:
+We'll only be able to change the LAST TWO bytes, everything else will be too slow. So change the input plaintext to <code>00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 00</code> and you can see the power trace change drastically, as below:
 <br>
 [[File:B11_RSA_example8000.png|600px]]
 
 </li>
 <br>
 <li>
-Finally, let's flip another bit. Change the input plaintext as follows, such that bit #4 in the final bit is set HIGH. We can plot the two power traces on top of each other, and you see that they are differing at a specific point in time:
+Finally, let's flip another bit. Change the input plaintext to <code> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 80 10</code>, such that bit #4 in the final bit is set HIGH. We can plot the two power traces on top of each other, and you see that they are differing at a specific point in time:
 <br>
 [[File:B11_RSA_bit4diff.png|600px]]
 <br>
