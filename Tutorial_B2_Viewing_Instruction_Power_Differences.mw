@@ -117,8 +117,7 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 </li>
 <li>Open the status monitor (<i>Tools > Encryption Status Monitor</i>).</li></ol>
 
-; 10. Hit the ''Run 1'' [[File:Capture One Button.PNG|image]] button. You may have to hit it a few times, as the very first serial data is often lost. You should see
-: data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.
+; 10. Hit the ''Run 1'' [[File:Capture One Button.PNG|image]] button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.
 
 At this point you've completed the same amount of information as the previous tutorial. The following section describes how to setup the analog capture hardware, which is new (to you). The following is entirely done in the ''Scope Settings'' tab:
 
