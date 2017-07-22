@@ -320,6 +320,7 @@ ntraces = tm.numTraces()
 trace_ref = tm.getTrace(0)
 
 plot(trace_ref)
+show()
 </syntaxhighlight>
 
 This should plot the example trace which might look something like this:
