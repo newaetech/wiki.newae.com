@@ -354,6 +354,7 @@ ntraces = tm.numTraces()
 trace_ref = tm.getTrace(0)
 
 #plot(trace_ref)
+#show()
 
 #The target trace we will attack
 target_trace_number = 3
@@ -369,6 +370,7 @@ for i in range(0, 23499):
     diffs.append(np.sum(abs(diff)))
 
 plot(diffs)
+show()
 </syntaxhighlight>
 
 The result should be a difference plot. Note the "difference" falls close to zero at a number of times. Depending on which trace you compare this with the exact pattern might vary, but you should see something roughly like the following:
