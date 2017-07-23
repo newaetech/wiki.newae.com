@@ -154,9 +154,10 @@ If we modified this script directly, it would be very easy for us to accidentall
 ##: [[File:resyncsad.png|image]]
 ## Enable the module and configure the input points. To start, set the reference points to (9063, 9177) and the input window to (9010, 9080), but don't be afraid to change these ranges:
 ##: [[File:resyncsad2.png|image]]
-##: You may have to adjust the reference points & input window ranges - the objective is to get a nice aligned trace on the second part.
 ## Redraw the traces and confirm we now have synchronization on the second half:
 ##: [[File:resyncsad3.png|image]]
+
+{{warningbox|Make sure you get a nice aligned last section of the traces, as in the above figure. You may need to adjust the "input window" or "reference points" slightly. If you do not see the nice alignment the remaining attack will fail!}}
 
 Now, we are ready to make a copy of this script:
 # Click on the auto-generated script
