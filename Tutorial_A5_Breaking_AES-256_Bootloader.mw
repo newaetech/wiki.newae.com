@@ -105,7 +105,7 @@ We can attack the 14th round key with a standard, no-frills CPA attack:
 # Open the ChipWhisperer Analyzer program and load the <code>.cwp</code> file with the 13th and 14th round traces. This can be either the <code>aes256_round1413_key0_100.cwp</code> file downloaded or the capture you performed.
 # View and manipulate the trace data with the following steps:
 ## Switch to the ''Trace Output Plot'' tab
-## Switch to the ''General'' parameter setting tab
+## Switch to the ''Results'' parameter setting tab
 ## Choose the traces to be plotted and press the ''Redraw'' button to draw them
 ## Right-click on the waveform to change options, or left-click and drag to zoom
 ## Use the toolbar to quickly reset the zoom back to original
