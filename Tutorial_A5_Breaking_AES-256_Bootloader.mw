@@ -173,7 +173,8 @@ from chipwhisperer.analyzer.attacks.models.AES128_8bit import AESLeakageHelper, 
 class AES256_Model(AESLeakageHelper):
     name = 'Our model'
     def leakage(self, pt, ct, guess, bnum):
-        knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
+        knownkey = <PUT YOUR 14TH ROUND KEY YOU RECOVERED HERE>
+        #For example: knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
         xored = [knownkey[i] ^ pt[i] for i in range(0, 16)]
         block = xored
         block = self.inv_shiftrows(block)
@@ -196,7 +197,7 @@ The last step is to perform the attack using this model:
 
 Note you can check [[#Appendix C AES-256 13th Round Key Script]] for the complete contents of the attack script.
 
-Finally, we need to convert this hypothetical key into the actual value of the 13th round key. We can do this by passing the key through ShiftRows and MixColumns to remove the effect of these two functions. This is easy to do in the Python console:
+Finally, we need to convert this hypothetical key into the actual value of the 13th round key. We can do this by passing the key through ShiftRows and MixColumns to remove the effect of these two functions. This is easy to do in the Python console (assuming we had the recovered key <code>C6 BD 4E 50 AB CA 75 77 79 87 96 CA 1C 7F C5 82</code>, if you recovered a different key replace the <code>knownkey</code> value with yours):
 
 <pre>
 >>> from chipwhisperer.analyzer.attacks.models.aes.funcs import shiftrows,mixcolumns
