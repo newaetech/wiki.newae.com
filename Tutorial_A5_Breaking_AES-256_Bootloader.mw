@@ -127,6 +127,8 @@ However, the correct key will still rise to the top even if the wrong bytes are 
 
 [[File:Tutorial-A5-Results-Wrong-Key.PNG|image]]
 
+{{warningbox|The default capture stores the WRONG knownkey, so you will have highlighted bytes that are not the correct key. We are looking instead for a large delta between the best-guess and all other guesses. For example for Byte 0 we have the most likely as 0.8141, and 2nd best guess as 0.3551. If our best guess was 0.8141 and 2nd best guess was 0.7981 this would indicate we likely haven't broken the key.}}
+
 Finally, the ''Output vs Point Plot'' shows the correlation against all of the sample points. The spikes on this plot show exactly where the attack was successful (ie: where the sensitive data was leaked):
 
 [[File:Aes14round points.png|image]]
@@ -152,6 +154,7 @@ If we modified this script directly, it would be very easy for us to accidentall
 ##: [[File:resyncsad.png|image]]
 ## Enable the module and configure the input points. To start, set the reference points to (9063, 9177) and the input window to (9010, 9080), but don't be afraid to change these ranges:
 ##: [[File:resyncsad2.png|image]]
+##: {{warningbox| You may have to adjust the reference points & input window ranges - the objective is to get a nice aligned trace on the second part.}}
 ## Redraw the traces and confirm we now have synchronization on the second half:
 ##: [[File:resyncsad3.png|image]]
 
