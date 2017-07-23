@@ -1,10 +1,10 @@
 Follow the same procedure as in : [[Tutorial B5 Breaking AES (Straightforward)]], but:
-* Flashing the DES firmware to the target device (i.e. chipwhisperer/hardware/victims/firmware/simpleserial-des/simpleserial-des-xmega.hex), instead;
+* Flashing the DES firmware to the target device (e.g. chipwhisperer/hardware/victims/firmware/simpleserial-des/simpleserial-des-xmega.hex), instead;
 
 and:
-* Setting an appropriate 'Total Samples' and 'Offset' in the ''Scope Settings'';
+* Setting an appropriate 'Total Samples' (e.g. 3500) and 'Offset' (e.g. 15500) in the ''Scope Settings'';
 * Setting the 'Key Length (Bytes)', 'Input Length (Bytes)' and 'Output Length (Bytes)' to 8 bytes in the ''Target Settings'';
-* Setting an appropriate 8 bytes Key in the ''Generic Settings''.
+* Setting an appropriate 8 bytes Key in the ''Generic Settings (e.g. 2B 7E 15 16 28 AE D2 A6)''.
 
 * Or, alternatively, execute the script "ChipWhisperer-Lite: DES SimpleSerial on XMEGA" to do the above steps automatically in this platform.
 
