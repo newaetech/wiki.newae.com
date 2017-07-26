@@ -21,7 +21,7 @@ If you want more advanced setups, you will have to configure the capture environ
 # Switch to the "Target Settings" tab and setup your target connection (e.g., selecting 'NewAE USB (CWLite/CW1200)').
 # Connect to the desired scope/target pair, using the toolbar buttons. The master button connects to both at the same time.
 #* At this point, you may want to flash the desired firmware to the target, using the Programmer option in the Tools' menu.
-# Once connected, both the "Scope Settings" and "Target Settings" list of parameters may expand, giving access to more advanced settings. You will have to setup these parameters which depend on what you want to capture. It usually involves setting the following parameters:
+# Once connected, both the "Scope Settings" and "Target Settings" list of parameters may expand, giving access to more advanced settings. You will have to set these parameters which depend on what you want to capture. It usually involves setting the following parameters:
 #* Trigger Pins
 #* Target IOn Pins
 #* Target HS IO-Out
