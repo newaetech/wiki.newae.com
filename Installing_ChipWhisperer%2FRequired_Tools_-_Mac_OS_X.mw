@@ -5,6 +5,8 @@ The following have been tested on Mac OS X Yosemite (10.10) - earlier versions m
 <li>Ensure your user account has a password. In order for the 'sudo' command to work it requires you to type your password, so if you don't have one enabled be sure to set a temporary password now.</li>
 <li><p>Install the 'homebrew' system, see [http://brew.sh brew.sh] for details. Briefly, you can install it by pasting the following in a terminal:</p>
 <pre>$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</pre></li>
+<li><p>As PySide is based on Qt 4, which is not officially supported by Homebrew, you will need to load the [https://github.com/cartr/homebrew-qt4 homebrew-qt4 tap]:</p>
+<pre>$ brew tap cartr/qt4</pre></li>
 <li><p>Install PySide using homebrew:</p>
 <pre>$ brew install pyside</pre>
 <p>The install will probably print a message like this:</p>
