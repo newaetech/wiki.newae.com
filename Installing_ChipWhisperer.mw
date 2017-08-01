@@ -24,10 +24,6 @@ There are five ways to set up ChipWhisperer:
 |content= Installing ChipWhisperer/Required Tools - Windows}}
 
 {{CollapsibleSection
-|intro= = Manual Install - Windows =
-|content= Installing ChipWhisperer/Required Tools - Windows}}
-
-{{CollapsibleSection
 |intro= = Manual Install - Linux =
 |content= Installing ChipWhisperer/Required Tools - Linux}}
 
