@@ -240,7 +240,7 @@ The following variants are possible, see the table above for SRAM/FLASH/HW-Crypt
 |-
 |F3
 |STM32F303RCT7
-|22-ohm
+|12-ohm
 |51-ohm
 |-
 |F4
