@@ -41,7 +41,7 @@ And reset the udev system:
 <pre>$ sudo udevadm control --reload-rules</pre>
 Finally log out &amp; in again for the group change to take effect.
 
-You can always find the latest version of this file in [https://app.assembla.com/spaces/chipwhisperer/git/source/master/hardware/99-newae.rules GIT].
+You can always find the latest version of this file in [https://github.com/newaetech/chipwhisperer/blob/master/hardware/99-newae.rules GIT].
 
 
 <h2> FTDI Hardware Driver (SASEBO-W, SAKURA-G, SASEBO-GII) </h2>
