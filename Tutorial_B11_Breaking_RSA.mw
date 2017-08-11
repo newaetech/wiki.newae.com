@@ -8,8 +8,6 @@
 |Target Architecture    = XMEGA
 |Hardware Crypto        = No
 |Purchase Hardware      = 
-|ChipWhisperer Software Release = [[{{PAGENAME}}|V3]]
-[[{{PAGENAME}}|V4]]
 }}
 
 == RSA Attack Theory ==
