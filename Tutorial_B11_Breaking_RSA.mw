@@ -5,10 +5,11 @@
 |software versions      =
 |capture hardware       =
 |Target Device          = 
-|Target Architecture    = 8-bit 8051
+|Target Architecture    = XMEGA
 |Hardware Crypto        = No
 |Purchase Hardware      = 
-|Design Files           = 
+|ChipWhisperer Software Release = [[{{PAGENAME}}|V3]]
+[[{{PAGENAME}}|V4]]
 }}
 
 == RSA Attack Theory ==
