@@ -1,3 +1,16 @@
+{{Infobox tutorial
+|name                   = B11: Breaking RSA
+|image                  = 
+|caption                = 
+|software versions      =
+|capture hardware       =
+|Target Device          = 
+|Target Architecture    = 8-bit 8051
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+|Design Files           = 
+}}
+
 == RSA Attack Theory ==
 We won't go into what RSA is, see the [[wikipedia:RSA_(cryptosystem)|RSA Wikipedia]] article for a quick background. What we really care about is the following pieces of sudocode from that article used in decrypting a message:
 
