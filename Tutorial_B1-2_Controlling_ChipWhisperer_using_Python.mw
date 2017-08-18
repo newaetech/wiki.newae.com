@@ -1,0 +1,66 @@
+This tutorial is an introduction to the ChipWhisperer's Python API. While it is possible to use all of the ChipWhisperer devices' features without writing any code, controlling them with Python makes them much more powerful, allowing capture settings to be prepared and power traces to be recorded automatically. 
+
+{{TOC|limit=3}}
+
+<h1> The ChipWhisperer package </h1>
+The ChipWhisperer Python package contains the high-level API used to control and communicate with ChipWhisperer devices. This package can be imported in any Python interpreter as
+<pre>
+import chipwhisperer as cw
+</pre>
+
+ChipWhisperer is a relatively large package that contains many features ranging from low-level control of USB devices to a PyQt GUI program, and it's possible to access all of these components through the package. However, for most users, only a small subset of the package is important. For these tutorials, there are five main concepts to understand:
+<ul>
+<li> A <b>scope</b> object represents a connection to a ChipWhisperer device, such as a CW-Lite or CW1200. Scopes have a large number of settings related to clock frequencies, ADC levels, trigger logic, IO lines, and glitch output - the same parameters that are accessed under the "Scope Settings" tab. </li>
+<li> A <b>target</b> object represents a connection to a target (or <i>victim</i>) board. The target classes describe how the ChipWhisperer program can communicate with a target board to cause encryptions, password checks, or other operations of interest. As with the scope, the "Target Settings" tab contains the same settings as a target object. </li>
+<li> A <b>project</b> object is in charge of saving recorded power traces along with some auxiliary data. There are multiple project classes that save data in different formats - for example, it's possible to save power traces to make them compatible with DPAContest v3. </li>
+<li> An <b>aux_list</b> object keeps track of some extra functions that can be run during a capture. For example, one aux function could reset the target board immediately before capturing a power trace to show a power trace of the device's boot process. </li>
+<li> A <b>ktp</b> (short for <i>key-text pattern</i>) controls what data is sent to the target during a capture. For example, the basic KTP object can be configured to send many encryption inputs with a fixed key for side-channel analysis. </li>
+</ul> 
+
+Outside of these objects, the main function for capturing power traces is <code>captureN()</code>. Generally, this function requires a scope, target, project, aux_list, and ktp, along with the number of traces to be captured. However, some of these parameters can be left out. For example, the call
+<pre>
+captureN(scope, target, None, aux_list, ktp, 1)
+</pre>
+will capture a single power trace without saving the data to a project. This is similar to the Capture 1 button in the GUI, which is helpful for testing the ChipWhisperer's settings.
+
+To find more details about any of these objects, try running <code>help(cw)</code> or <code>help(x)</code> on a scope/target/etc object. 
+
+<h1> The Python Console</h1>
+<h2> Interpreter </h2>
+The ChipWhisperer Capture program includes a Python interpreter to give users an interface to the program. This is a full-featured Python console: any installed packages can be imported and used as if Python was run from the command line. 
+
+This console also has a few special objects that provide access to the objects from the GUI. In this console, <code>self</code> is a special object that refers to the CWCapture GUI. This object contains a scope, target, project, aux_list, and ktp, and changes to these objects are linked to the settings shown in the sidebar. For example, with a connected CW-Lite, the line
+<pre>
+self.scope.clock.clkgen_freq = 7370000
+</pre>
+is equivalent to changing the CLKGEN frequency in the Scope Settings tab. By working with these special objects, it's possible to recreate the entire scope setup process in Python, removing all the hard work of preparing these settings by hand.
+
+{{Warningbox|Caution: The built-in Python console runs in the program's main thread to give it access to the program's scope, target, and other objects. Unfortunately, this means that it's very possible to lock up CWCapture with the console. We've taken a few precautions to avoid lockups: Ctrl-C can stop a running script, and the GUI regains control for a moment every time the interpreter prints to the output field. However, code like <code>while True: pass</code> will certainly stop CWCapture in its tracks. Be careful! }}
+
+<h2> Script Browser </h2>
+Alongside the Python console, ChipWhisperer Capture has a file browser and a text preview window. These widgets are used to run pre-written scripts in the console. The file browser has three tabs:
+<ul>
+<li> The <b>ChipWhisperer</b> tab has its root in the <code>chipwhisperer/software/chipwhisperer</code> directory. This tab is provided for convenience - it saves the trouble of digging through folders to find the ChipWhisperer folder to run a script. </li>
+<li> The <b>Hard Drive</b> tab has its root at the root of the computer's file system. </li>
+<li> The <b>Recent</b> tab shows the 10 most recently run scripts. It also allows useful scripts to be pinned to the top of the list or removed using the right-click menu. To save space, the full paths aren't shown in this tab - to see it, hold your mouse over a file and the tooltip will show the entire path. </li>
+</ul>
+To get you started, the ChipWhisperer repository contains a number of scripts in the <code>capture/scripts</code> folder. These pre-written Python files perform a number of tasks ranging from connecting to a ChipWhisperer to setting up auxiliary modules. Of course, you're encouraged to copy and edit these scripts however you like for your own projects.
+
+On the side, the preview window shows the selected script. To run it, double-click a script in the browser or press the Run button: the Python console will show the line
+<pre>
+execfile("path/to/script.py")
+</pre>
+which runs the file as if its contents were pasted into the input. The preview window is read-only, but the Edit button opens the selected file in an external editor. By default, the system's regular Python file editor is used, but you can select any executable as the editor under <i>File > Preferences</i>.
+
+{{Warningbox|Caution: The script preview doesn't automatically update when a file is modified. Don't worry - if you press Run, the most recent copy of the file will be executed! This is just a cosmetic issue. }}
+
+<h1> Repeating Tutorial B1 </h1>
+Let's re-run the Tutorial B1 setup. Run the following two scripts:
+<ul>
+<li> <code>capture/scripts/connect_cwlite_simpleserial.py</code>: Connect to a ChipWhisperer-Lite/Pro and a SimpleSerial target </li>
+<li> <code>capture/scripts/setup_cwlite_xmega_spa</code>: Configure the ChipWhisperer's ADC/clock/IO settings for SPA (<i>simple power analysis</i>) on the XMEGA target board </li>
+</ul>
+That's it! If all went well, you can capture power traces as if you worked through the previous tutorial. These scripts will come in handy for the rest of the tutorials.
+
+{{Template:Tutorials}}
+[[Category:Tutorials]]
