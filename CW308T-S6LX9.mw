@@ -5,7 +5,7 @@
 |Target Device          = Spartan 6 LX9
 |Target Architecture    = FPGA
 |Hardware Crypto        = No
-|Purchase Hardware      = 
+|Purchase Hardware      = [http://store.newae.com/spartan-6-lx9-fpga-target-for-cw308/ Webstore]
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/spartan6lx9 GITHub link]
 
 [https://oshpark.com/shared_projects/ECbBlx58 OSH Park PCBs]
