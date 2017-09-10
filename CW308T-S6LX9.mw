@@ -28,6 +28,9 @@ The FPGA pins are connected to the various headers on the board. The JTAG header
 
 The GIT repo includes an example Xilinx ISE project, located at [https://github.com/newaetech/chipwhisperer/tree/develop/hardware/victims/cw308_ufo_target/spartan6lx9/ss_aes_ise hardware/victims/cw308_ufo_target/spartan6lx9/ss_aes_ise].
 
+{{Warningbox| There appears to be occasional jitter on the default AES core, so you might need to use re-synchronization on the power traces. See the [https://github.com/newaetech/chipwhisperer/issues/72 GITHub issue track].}}
+
+
 == Known Issues ==
 
 Note the -02 Revision of the PCB has swapped the markings of the CLKIN/CLKOUT. The correct pinout is:
