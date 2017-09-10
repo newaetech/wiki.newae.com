@@ -1,8 +1,6 @@
-{{Warningbox|This is a BETA target and not yet available. This wiki page will continue to be updated until release. Gerbers are available in the GIT repo if you live dangerously. }}
-
 {{Infobox cw308target
 |name                   = CW308T-D2000
-|image                  = 
+|image                  = d2000_topdown.png
 |caption                = 
 |Target Device          = Intel Quark D2000
 |Target Architecture    = x86
@@ -15,7 +13,7 @@
 |Supported Applications =
 }}
 
-[[File:d2000_render.png|400px]]
+[[File:d2000_topdown.png|400px]]
 
 == Programming ==
 
@@ -31,4 +29,5 @@ See GIT Repo for PDF of schematic.
 
 See GIT Repo for gerber files.
 
+{{Template:Hardware}}
 [[Category:CW308 Targets]]
