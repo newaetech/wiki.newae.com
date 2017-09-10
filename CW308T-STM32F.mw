@@ -5,7 +5,11 @@
 |Target Device          = ST STM32F
 |Target Architecture    = Cortex M0,M3,M4
 |Hardware Crypto        = Possible
-|Purchase Hardware      = 
+|Purchase Hardware      = [http://store.newae.com/stm32f0-target-for-cw308-arm-cortex-m0-128kb-flash-8kb-sram/ Webstore, F0]
+                          [http://store.newae.com/stm32f1-target-for-cw308-arm-cortex-m3-128kb-flash-8kb-sram/ Webstore, F1]
+                          [http://store.newae.com/stm32f3-target-for-cw308-arm-cortex-m4-256kb-flash-40kb-sram/ Webstore, F3]
+                          [http://store.newae.com/stm32f4-target-for-cw308-arm-cortex-m4-1mb-flash-192kb-sram/ Webstore, F4]
+                          [http://store.newae.com/blank-pcb-stm32fx-cw308-target/ Webstore PCB]
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/stm32f GITHub Link]
 
 [https://wiki.newae.com/CW308T-STM32F OSH Park PCBs]
