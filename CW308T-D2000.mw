@@ -1,6 +1,6 @@
 {{Infobox cw308target
 |name                   = CW308T-D2000
-|image                  = d2000_topdown.png
+|image                  = d2000_topdown.jpg
 |caption                = 
 |Target Device          = Intel Quark D2000
 |Target Architecture    = x86
@@ -13,7 +13,7 @@
 |Supported Applications =
 }}
 
-[[File:d2000_topdown.png|400px]]
+[[File:d2000_topdown.jpg|400px]]
 
 == Programming ==
 
