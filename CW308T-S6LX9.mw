@@ -9,12 +9,23 @@
 |Design Files           = [https://github.com/newaetech/chipwhisperer/tree/master/hardware/victims/cw308_ufo_target/spartan6lx9 GITHub link]
 
 [https://oshpark.com/shared_projects/ECbBlx58 OSH Park PCBs]
-|Supported Applications =
+|Supported Applications = [[SimpleSerial | Simple Serial Enc]]
 |Programmer             = Xilinx JTAG
-|Status                 = Beta
+|Status                 = Released
 }}
 
 [[File:spartan6_target.jpg|500px]]
+
+== Example Project ==
+
+== Known Issues ==
+
+Note the -02 Revision of the PCB has swapped the markings of the CLKIN/CLKOUT. The correct pinout is:
+
+* CLKIN connects to P84
+* CLKOUT connects to P85
+
+The CLKIN pin is a _N clock pin. If you need the _P clock pin, you can use a jumper on the CW308 board to route the clock input into the CLKOUT pin.
 
 == Programming ==
 
@@ -22,11 +33,13 @@ The ChipWhisperer will eventually support programming this target. Until then, y
 
 [[File:xilinx_jtag_small.jpg|400px]]
 
-You can purchase clone JTAG programmers off AliExpress/E-Bay for low cost (search 'Xilinx JTAG').
+Options for programmers include:
+
+* Xilinx Platform Cable USB or USB-II (Digikey/Mouser).
+* Clone JTAG programmers off AliExpress/E-Bay for low cost (search 'Xilinx JTAG').
+* Digilent Inc HS1/HS2/HS3 Cables (NB: you may need separate jumper wires).
 
 == Schematic ==
-
-NOTE: Schematic is marked as unapproved until hardware has been fully validated. 
 
 See GIT Repo for PDF of schematic.
 
