@@ -16,6 +16,14 @@
 
 [[File:spartan6_target.jpg|500px]]
 
+The S6LX9 target is a low-cost FPGA target. It uses the Xilinx Spartan 6 in TQFP package, and can fit an entire AES core. The example project includes the Simple-Serial interface which allows it to function like any of our other example targets.
+
+== Usage ==
+
+The board includes a single red LED (D1) which is connected to the FPGA "DONE" pin. This pin will be HIGH (and the LED on) when the FPGA is NOT programmed. That is to say immediately on power-on, the LED will be on. Once the FPGA is successfully programmed this LED will go out.
+
+The FPGA pins are connected to the various headers on the board. The JTAG header connects to the FPGA JTAG pins. The "Hx" pins, USART, and SPI connect to arbitrary FPGA pins.
+
 == Example Project ==
 
 == Known Issues ==
