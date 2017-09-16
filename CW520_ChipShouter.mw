@@ -1,0 +1,21 @@
+The CW520 ChipShouter is NewAE Technology Inc.'s first electromagnetic (EM) fault injection tool. This device charges a bank of low-ESR capacitors up to a set voltage, and allows you to discharge it through a probe (think: inductor/coil). This generates a large EM spike.
+
+== Probes ==
+
+Several test probes are included, but you can also customize your own. The test probes have two "polarities" (positive or negative), indicating the polarity of the spike injected into the target device.
+
+The test probes are available in "straight" and "90-degree" format. The right angle (90-degree) probes are useful when using our low-cost XYZ table to position the EM fault injection tool over your target.
+
+== Accessories ==
+
+=== Test Board ===
+
+The CW520 comes with a simple test board. This board allows you to confirm a glitch insertion has occurred. The test board has three modes: 
+
+1) Loop Exit Mode (no trigger connection required)
+2) Counter Mode (no trigger connection required)
+3) Password check (trigger connection required)
+
+=== Calibration Target ===
+
+The CW520 also comes with a calibration target, which can be used to check the glitch shape. Due to variations in temperature and component aging, the glitch parameters will change slightly during use. This calibration board provides a known target which you can easily compare measurements on over time. It contains a PCB transformer, such that a fault waveform is inserted into one side, and the injected waveform can be measured in the other side.
