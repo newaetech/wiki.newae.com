@@ -10,7 +10,7 @@ Note with the CW1173 you need to configure a clock before programming of the dev
 
 Next, open the CW-Capture software. Then perform the following steps:
 
-[[File:cwsetup_scriptselection.png|600px]]
+[[File:cwsetup_scriptselection.png]]
 
 # Switch to the ''Python Console'' tab.
 # The script selection window (2) lists available example scripts. Scroll down to "connect_cwlite_simpleserial.py" and click on it.
@@ -18,7 +18,7 @@ Next, open the CW-Capture software. Then perform the following steps:
 
 The window should change to indicate the connect succeeded:
 
-[[File:cwsetup_scriptselection_cwliterun.png|400px]]
+[[File:cwsetup_scriptselection_cwliterun.png]]
 
 <ol start="4" style="list-style-type: decimal;">
 <li>The console lists the exact script that is executed. Note you could have manually executed the script commands line-by-line in this console.</li>
@@ -29,7 +29,8 @@ The window should change to indicate the connect succeeded:
 Note in previous software versions, this tutorial took you through manual setup. This can still be done (using the GUI), but instead now the API has been made more powerful, so the example configuration script will be used instead.
 
 To do so, simply scroll down and select the "setup_cwlite_xmega_aes.py" file:
-[[File:cwsetup_scriptselection_xmegaconfig_cwliterun.png|400px]]
+
+[[File:cwsetup_scriptselection_xmegaconfig_cwliterun.png]]
 
 You'll nice the contents of the script contain the following setup:
 
