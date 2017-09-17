@@ -118,30 +118,10 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 <li>Check there are no errors on the connection.</li>
 <li>Under the ''Python Console'' tab, find the ''setup_cwlite_xmega.py'' script and double-click.</li>
 <li>Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
-<li>Open the status monitor (<i>Tools > Encryption Status Monitor</i>).</li></ol>
-
-; 10. Hit the ''Run 1'' [[File:Capture One Button.PNG|image]] button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.
+<li>Open the status monitor (<i>Tools > Encryption Status Monitor</i>).</li>
+<li>Hit the ''Run 1'' [[File:Capture One Button.PNG|image]] button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.</li>
 
 At this point you've completed the same amount of information as the previous tutorial. The following section describes how to setup the analog capture hardware, which is new (to you). The following is entirely done in the ''Scope Settings'' tab:
-
-[[File:01_trigger_setupxcf.PNG|image]]
-
-<ol start="11" style="list-style-type: decimal;">
-<li>Under ''Trigger Setup'' set the ''Mode'' to ''rising edge''. This means the system will trigger on a rising edge logic level:</li></ol>
-
-[[File:02_CW_Extra.PNG|image]]
-
-<br>
-
-<ol start="12" style="list-style-type: decimal;">
-
-<li>For the CW1173/CW1180/CW1200 (ChipWhisperer-Lite/Pro based hardware), perform the following:</li></ol>
-
-<blockquote><ol start="4" style="list-style-type: lower-alpha;">
-<li>Change the ''ADC Clock'' ''source'' as being ''CLKGEN x4 via DCM''. This routes the device clock through a 4x multiplier, and routes it to the ADC.</li></ol>
-</blockquote>
-<ol start="13" style="list-style-type: decimal;">
-<li>Hit the '''Reset ADC DCM''' button.</li>
 
 [[File:04_ADC_Clock_2_1.png|image]]</ol>
 
