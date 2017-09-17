@@ -1,3 +1,15 @@
+{{Infobox tutorial
+|name                   = B5: Breaking AES (Straightforward)
+|image                  = 
+|caption                = 
+|software versions      =
+|capture hardware       = CW-Lite, CW-Lite 2-Part, CW-Pro
+|Target Device          = 
+|Target Architecture    = XMEGA
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+}}
+
 This tutorial will take you through a complete attack on a software AES implementation. The specific implementation being attacked is a well-known AES implementation written in C, which is likely to be similar to other implementations used by proprietary systems.
 
 = Capturing =
