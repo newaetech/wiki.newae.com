@@ -125,7 +125,7 @@ At this point you've completed the same amount of information as the previous tu
 
 [[File:04_ADC_Clock_2_1.png|image]]</ol>
 
-<ol start="14" style="list-style-type: decimal;">
+<ol start="8" style="list-style-type: decimal;">
 <li>The ''ADC Freq'' should show 29.5 MHz (which is 4x 7.37 MHz), and the ''DCM Locked'' checkbox __MUST__ be checked. If the ''DCM Locked'' checkbox is NOT checked, try hitting the ''Reset ADC DCM'' button again.</li>
 <li><p>At this point you can hit the ''Capture 1'' button, and see if the system works! You should end up with a window looking like this:</p>
 <p>[[File:05_Low_Gain.PNG|image|1250px]]</p>
@@ -134,7 +134,7 @@ At this point you've completed the same amount of information as the previous tu
 [[File:06_high_gain.PNG|image|1250px]]</ol>
 
 <ol start="16" style="list-style-type: decimal;">
-<li>Under ''Gain Setting'' set the ''Mode'' to ''high''. Increase the ''Gain Setting'' to about 25. You'll be able to adjust this further during experimentations, you may need to increase this depending on your hardware and target device. For the multi-target board with the CW1002 you will probably need to set this around 40.</li>
+<li>Under ''Gain Setting'' set the ''Mode'' to ''high''. Increase the ''Gain Setting'' to about 25. You'll be able to adjust this further during experimentations, you may need to increase this depending on your hardware and target device.</li>
 <li>Under ''Trigger Setup'' set the ''Total Samples'' to ''500''.</li>
 <li>Try a few more ''Capture 1'' traces, and you should see a 'zoomed-in' waveform.</li></ol>
 
