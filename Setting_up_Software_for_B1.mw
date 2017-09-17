@@ -10,7 +10,7 @@ Note with the CW1173 you need to configure a clock before programming of the dev
 
 Next, open the CW-Capture software. Then perform the following steps:
 
-[[File:cwsetup_scriptselection.png]]
+[[File:cwsetup_scriptselection.png|889x889px]]
 
 # Switch to the ''Python Console'' tab.
 # The script selection window (2) lists available example scripts. Scroll down to "connect_cwlite_simpleserial.py" and click on it.
@@ -18,7 +18,7 @@ Next, open the CW-Capture software. Then perform the following steps:
 
 The window should change to indicate the connect succeeded:
 
-[[File:cwsetup_scriptselection_cwliterun.png]]
+[[File:cwsetup_scriptselection_cwliterun.png|889x889px]]
 
 <ol start="4" style="list-style-type: decimal;">
 <li>The console lists the exact script that is executed. Note you could have manually executed the script commands line-by-line in this console.</li>
@@ -32,16 +32,45 @@ To do so, simply scroll down and select the "setup_cwlite_xmega_aes.py" file:
 
 [[File:cwsetup_scriptselection_xmegaconfig_cwliterun.png]]
 
-You'll nice the contents of the script contain the following setup:
+You'll nice the contents of the script contain the following setup:<syntaxhighlight lang="python" line="1">
+scope.gain.gain = 45
+scope.adc.samples = 3000
+scope.adc.offset = 1250
+scope.adc.basic_mode = "rising_edge"
+scope.clock.clkgen_freq = 7370000
+scope.clock.adc_src = "clkgen_x4"
+scope.trigger.triggers = "tio4"
+scope.io.tio1 = "serial_rx"
+scope.io.tio2 = "serial_tx"
+scope.io.hs2 = "clkgen"
+</syntaxhighlight>This configuration block does the following (for lines 1 through 10):
 
-TODO SCRIPT
+Line 1: Sets the input ADC gain
+
+Line 2: Sets the number of samples to record as 3000 samples long (this is normally used for the AES algorithm).
+
+Line 3: Sets an offset of 1250 samples from the trigger to when we start recording samples.
+
+Line 4: Sets the trigger as being a "rising edge" trigger.
+
+Line 5: Sets the internal clock generator to 7.37MHz
+
+Line 6: Sets the ADC as running at 4x that clock (so 29.48MHz)
+
+Line 7: Sets the trigger pin as GPIO4 (we previously set the trigger condition as rising edge, so this pin will be the one a rising edge is expected on).
+
+Line 8: Configures GPIO1 as the RX (Input). This is what the XMEGA target expects.
+
+Line 9: Configures GPIO2 as the TX (Output). This is what the XMEGA target expects.
+
+Line 10: Sets the "High-Speed 2" (HS2) pin as having the 7.37MHz clock output. 
 
 <ol start="14" style="list-style-type: decimal;">
 <li><p>You can now program the XMEGA device! To do so, open the XMEGA Programmer from the ''Tools'' menu:</p>
 <p>[[File:cw1173_xmegaproga.png|image]]</p></li>
 <li><p>Hit the ''Check Signature'' button and confirm the device is detected. If not you may have issues with the clock setup.</p>
 <p>[[File:cw1173_xmegaprogb.png|image]]</p></li>
-<li><p>Using the ''Find'' button, navigate to the <code>simpleserial-base.hex</code> which you built earlier with the <code>make</code> command. You can then press the ''Erase/Program/Verify'' button, and confirm the file is programmed into the XMEGA device:</p>
+<li><p>Using the ''Find'' button, navigate to the <code>simpleserial-base-cw303.hex</code> which you built earlier with the <code>make</code> command. You can then press the ''Erase/Program/Verify'' button, and confirm the file is programmed into the XMEGA device:</p>
 <p>[[File:cw1173_xmegaprogc.png|image]]</p>
 <p>Note the programmer dialog not only shows the successful programming status, but also shows when the <code>.hex</code> file was last modified. Always confirm this matches with when you last remember compiling the program -- if it is widely different this suggests you have selected the wrong file!</p>
 
