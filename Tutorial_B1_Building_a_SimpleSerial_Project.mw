@@ -123,10 +123,6 @@ trigger_low();
 |intro = = Completing Tutorial with CW1200 (Pro) =
 |content= Completing Tutorial with CW1200}}
 
-{{CollapsibleSection
-|intro = = Completing Tutorial with CW1002 (ChipWhisperer Capture Rev2) =
-|content= Completing Tutorial with CW1002 (ChipWhisperer Capture Rev2)}}
-
 <h1> Conclusion </h1>
 
 In this tutorial you have learned how to build a custom program for the microcontroller on the ChipWhisperer target board. You have programmed the built .hex file into the microcontroller, and confirmed communications with the ChipWhisperer device.
