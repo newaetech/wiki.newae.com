@@ -1,3 +1,17 @@
+{{Warningbox|This tutorial has not yet been updated for ChipWhisperer 4.0.0 release. If you are using 3.x.x see the "V3" link in the sidebar.}}
+
+{{Infobox tutorial
+|name                   = B2: Viewing Instruction Power Differences
+|image                  = 
+|caption                = 
+|software versions      =
+|capture hardware       = CW-Lite, CW-Lite 2-Part, CW-Pro
+|Target Device          = 
+|Target Architecture    = XMEGA
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+}}
+
 This tutorial will introduce you to breaking devices by determining when a device is performing certain operations. It will break simple bootloaders which may otherwise seem 'secure' against password attacks. In particular this uses the excellent [http://jtxp.org/tech/tinysafeboot_en.htm TinySafeBoot] bootloader for AVR microcontrollers. The example uses an old release of TinySafeBoot, since newer releases do not have this vulnerability!
 
 This tutorial can only be completed if you have an ATMega328P target - for example the CW301 Multi-Target board, or the CW304 NOTDuino board. It cannot be completed with the XMEGA target, as it relies on a 3rd-party bootloader. It uses the same principles learned in tutorialbasictimingpasswd.
