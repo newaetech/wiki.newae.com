@@ -8,3 +8,68 @@ TODO
 
 == Glitch Explorer ==
 The Glitch Explorer has drastically changed in 4.0.0. Previously the Glitch Explorer used the "Scripting" interface and relied on you specifying some arbitrary data to change. Now instead you define a Python function that changes the glitch parameters, and use the existing "auxiliary" links to execute the functions.
+
+API Changes
+
+The ChipWhisperer is moving towards a "sane" API. This means that now for example you can inspect the value of a "scope" object, and it will print all current settings:<syntaxhighlight lang="python">
+>>> scope
+cwlite Device
+gain = 
+    mode = low
+    gain = 45
+    db   = 22.50390625
+adc = 
+    state      = False
+    basic_mode = rising_edge
+    timeout    = 4.0
+    offset     = 0
+    presamples = 0
+    samples    = 3000
+    decimate   = 1
+    trig_count = 8
+clock = 
+    adc_src       = clkgen_x4
+    adc_phase     = 0
+    adc_freq      = 29538459
+    adc_rate      = 29538459
+    adc_locked    = True
+    freq_ctr      = 0
+    freq_ctr_src  = extclk
+    clkgen_src    = system
+    extclk_freq   = 10000000
+    clkgen_mul    = 2
+    clkgen_div    = 26
+    clkgen_freq   = 7384615
+    clkgen_locked = True
+trigger = 
+    triggers = tio4
+    module   = basic
+io = 
+    tio1       = serial_rx
+    tio2       = serial_tx
+    tio3       = high_z
+    tio4       = high_z
+    pdid       = high_z
+    pdic       = high_z
+    nrst       = high_z
+    glitch_hp  = 0
+    glitch_lp  = 0
+    extclk_src = hs1
+    hs2        = glitch
+    target_pwr = True
+glitch = 
+    clk_src     = clkgen
+    width       = 5.078125
+    width_fine  = 0
+    offset      = -7.03125
+    offset_fine = 0
+    trigger_src = ext_single
+    arm_timing  = after_scope
+    ext_offset  = 20
+    repeat      = 4
+    output      = clock_xor
+</syntaxhighlight>It also allows you to now modify settings via simple set statements:<syntaxhighlight lang="python">
+>>> scope.io.nrst = False
+>>> scope.io.nrst = True
+>>> scope.clock.clkgen_freq = 4E6
+</syntaxhighlight>
