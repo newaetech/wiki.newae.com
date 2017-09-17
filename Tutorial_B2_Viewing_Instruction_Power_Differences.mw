@@ -1,3 +1,17 @@
+{{Warningbox|This tutorial has been updated for ChipWhisperer 4.0.0 release. If you are using 3.x.x see the "V3" link in the sidebar.}}
+
+{{Infobox tutorial
+|name                   = B2: Viewing Instruction Power Differences
+|image                  = 
+|caption                = 
+|software versions      =
+|capture hardware       = CW-Lite, CW-Lite 2-Part, CW-Pro
+|Target Device          = 
+|Target Architecture    = XMEGA
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+}}
+
 This tutorial will introduce you to measuring the power consumption of a device under attack. It will demonstrate how you can view the difference between a 'add' instruction and a 'mul' instruction.
 
 = Prerequisites =
