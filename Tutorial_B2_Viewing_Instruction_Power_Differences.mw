@@ -114,21 +114,10 @@ The basic steps to connect to the ChipWhisperer device are described in [[Tutori
 
 <ol style="list-style-type: decimal;">
 <li>Start ChipWhisperer-Capture</li>
-<li>Under ''Generic Settings'' tab, as the ''Scope Module'', select the ''ChipWhisperer/OpenADC'' option.</li>
-<li>Under ''Generic Settings'' tab, as the ''Target Module'', select the ''Simple Serial'' option.</li>
-<li>Switch to the ''Target Settings'' tab, and as the ''connection'', select the ''ChipWhisperer'' (for CW1002) or ''NewAE USB (CWLite/CW1200)'' (for ChipWhisperer Lite/Pro).</li>
-<li>Switch to the ''Scope Settings'' tab, and ensure the ''connection'' is set to either ''ChipWhisperer'' (for CW1002) or ''NewAE USB (CWLite/CW1200)'' (for ChipWhisperer Lite/Pro).</li>
-<li>Run the master connect (click the button labeled ''Master: DIS''). Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
-<li><p>For the CW1173/CW1180/Cw1200 (ChipWhisperer-Lite/Pro based systems), perform the following:</p>
-<blockquote><ol style="list-style-type: lower-alpha;">
-<li>Set the ''CLKGEN'' frequency to ''7.37 MHz''</li>
-<li>Set the ''Target HS-IO Out'' as ''CLKGEN''</li></ol>
-</blockquote></li>
-<li>If targetting an XMEGA board (either the ChipWhisperer-Lite XMEGA default target, or the XMEGA on the multi-target board), perform the following:
-<ol style="list-style-type: lower-alpha;">
-<li>Set ''Target IO1'' as ''Serial RXD''</li>
-<li>Set ''Target IO2'' as ''Serial TXD''</li></ol>
-</li>
+<li>Under the ''Python Console'' tab, find the ''connect_cwlite_simpleserial.py'' script and double-click.</li>
+<li>Check there are no errors on the connection.</li>
+<li>Under the ''Python Console'' tab, find the ''setup_cwlite_xmega.py'' script and double-click.</li>
+<li>Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
 <li>Open the status monitor (<i>Tools > Encryption Status Monitor</i>).</li></ol>
 
 ; 10. Hit the ''Run 1'' [[File:Capture One Button.PNG|image]] button. You may have to hit it a few times, as the very first serial data is often lost. You should see data populate in the ''Text Out'' field of the monitor window. The ''Text In'' and ''Text Out'' aren't actually used in this example, so you can close the ''Monitor'' dialog.
