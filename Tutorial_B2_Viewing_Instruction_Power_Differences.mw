@@ -80,8 +80,8 @@ asm volatile(
 trigger_low();
 /* End user-specific code here. *
  ********************************/</source></li>
-<li><p>Change the terminal to the directory with your source, and run <code>make</code> to build the system. Remember you can press the up arrow on the keyboard to get recently typed commands in most OSes:</p>
-<pre>make</pre>
+<li><p>Change the terminal to the directory with your source, and run <code>make PLATFORM=CW303</code> to build the system. Remember you can press the up arrow on the keyboard to get recently typed commands in most OSes:</p>
+<pre>make PLATFORM=CW303</pre>
 <p>Which should have the following output, you will '''want to check the build platform is what you expect''':</p>
 <pre>...Bunch of lines removed...
 Creating Extended Listing: simpleserial-base.lss
