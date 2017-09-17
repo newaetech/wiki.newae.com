@@ -1,3 +1,18 @@
+{{Warningbox|This tutorial has been updated for ChipWhisperer 4.0.0 release. If you are using 3.x.x see the "V3" link in the sidebar.}}
+
+{{Infobox tutorial
+|name                   = B1: Building a SimpleSerial Project
+|image                  = 
+|caption                = 
+|software versions      =
+|capture hardware       = CW-Lite, CW-Lite 2-Part, CW-Pro
+|Target Device          = 
+|Target Architecture    = XMEGA
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+}}
+
+
 This tutorial will introduce you to the 'simpleserial' communications system. It will show you how to perform different operations on data based on input from the ChipWhisperer software. This can be used for building your own system which you wish to 'break'.
 
 {{TOC|limit=3}}
