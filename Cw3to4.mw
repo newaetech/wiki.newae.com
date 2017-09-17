@@ -1,1 +1,10 @@
-ChipWhisperer V3.5 to V4.0
+= ChipWhisperer V3.5 to V4.0 =
+ChipWhisperer software release V4.0.0 has drastically changed the API and interface. The V4.0.0 architecture tries to open up the program internals, and force you (the user) to use the API instead of clicking buttons. While it's a little harder to get started, it's MUCH easier to perform complex tasks, or even to use the command line for interactive work.
+
+The "example scripts" and "glitch explorer" have all been replaced with true Python scripts. You write small (or large) snippets of code, and run those code to perform automated tasks.
+
+== Example Scripts ==
+TODO
+
+== Glitch Explorer ==
+The Glitch Explorer has drastically changed in 4.0.0. Previously the Glitch Explorer used the "Scripting" interface and relied on you specifying some arbitrary data to change. Now instead you define a Python function that changes the glitch parameters, and use the existing "auxiliary" links to execute the functions.
