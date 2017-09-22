@@ -1,0 +1,33 @@
+{{Infobox cw308target
+|name                   = CW308T-CC2538
+|image                  =
+|caption                = 
+|Target Device          = CC2538
+|Target Architecture    = ARM
+|Hardware Crypto        = Yes
+|Purchase Hardware      = 
+
+|Supported Applications =
+}}
+
+
+== Programming ==
+
+An external programmer is needed for this target.
+
+== Schematic ==
+
+See GIT Repo for PDF of schematic.
+
+[[File:CW308T-CC2538-01_schematic_Page_1.png|1000px]]
+
+[[File:CW308T-CC2538-01_schematic_Page_2.png|1000px]]
+
+
+
+== Board Layout ==
+
+See GIT Repo for gerber files.
+
+{{Template:Hardware}}
+[[Category:CW308 Targets]]
