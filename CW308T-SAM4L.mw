@@ -1,4 +1,29 @@
-{{Warningbox|This is a BETA target and not yet available. This wiki page will continue to be updated until release.}}
+{{Infobox cw308target
+|name                   = CW308T-SAM4L
+|image                  =
+|caption                = 
+|Target Device          = Atmel SAM4L
+|Target Architecture    = ARM
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+
+|Supported Applications =
+}}
 
 
-[[Category: CW308 Targets]]
+== Programming ==
+
+An external programmer is needed for this target.
+
+== Schematic ==
+
+See GIT Repo for PDF of schematic.
+
+[[File:CW308T-D2000-02_schematic.png|1000px]]
+
+== Board Layout ==
+
+See GIT Repo for gerber files.
+
+{{Template:Hardware}}
+[[Category:CW308 Targets]]
