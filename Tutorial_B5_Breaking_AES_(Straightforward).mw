@@ -123,64 +123,6 @@ To do so, simply scroll down and select the "setup_cwlite_xmega_aes.py" file:
 <li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
 <li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
 
-
-== Capturing with Capture Rev2 + Multi-Target (CW1002 + CW301) ==
-
-=== Hardware Setup ===
-
-This tutorial uses the [[CW1002_ChipWhisperer_Capture_Rev2]] hardware along with the [[CW301_Multi-Target]] board. Note that you '''don't need hardware''' to complete the tutorial. Instead you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site].
-
-This example uses the Atmel AVR in 28-pin DIP programmed with a ''simpleserial'' communications protocol. This is the default firmware programmed into the devices, so you shouldn't need to do anything. If you've erased the device, you can see programming instructions in the [[Installing_ChipWhisperer]] section.
-
-The Multi-Target board should be plugged into the ChipWhisperer Capture Rev2 via the 20-pin target cable. The ''VOUT'' SMA connector is wired to the ''LNA'' input on the ChipWhisperer-Capture Rev2 front panel. The general hardware setup is as follows:
-
-<blockquote>[[File:hw-1.jpg|image]]
-
-# 20-Pin Header connects Multi-Target to Capture Hardware
-# VOUT Connects to SMA Cable
-# SMA Cable connects to 'LNA' on CHA input
-# USB-Mini connects to side (NB: Confirm jumper settings in next section first)
-</blockquote>
-Jumpers on the Multi-Target Victim board are as follows:
-
-<blockquote>[[File:hw-2.jpg|600px|image]]
-
-# NO jumpers mounted in XMEGA Portion or SmartCard Portion (JP10-JP15, JP19, JP7-JP8, JP17)
-# 3.3V IO Level (JP20 set to INT.)
-# The 7.37 MHz oscillator is selected as the CLKOSC source (JP18)
-# The CLKOSC is connected to the AVR CLock Network, along with connected to the FPGAIN pin (JP4)
-# The TXD &amp; RXD jumpers are set (JP5, JP6)
-# Power measurement taken from VCC shunt (JP1)
-# The TRIG jumper is set (JP28) (NOTE: Early revisions of the multi-target board do not have the TRIG jumper and you can ingore this).
-
-For more information on these jumper settings see [[CW301_Multi-Target]] .
-</blockquote>
-=== Setting up the Software ===
-
-It is assumed that you've already followed the guide in [[Installing_ChipWhisperer]]. Thus it is assumed you are able to communicate with the ChipWhisperer Capture Rev2 hardware. Note in particular you must have configured the FPGA bitstream in the ChipWhisperer-Capture software, all part of the description in the [[Installing_ChipWhisperer]] guide.
-
-=== Capturing the Traces ===
-
-This tutorial uses a simple script that ships with the ChipWhisperer Capture software. The easiest method of accomplishing the trace capture is as follows:
-
-<ol style="list-style-type: decimal;">
-<li>Close &amp; reopen the capture software (to clear out any previous connection which may be invalid).</li>
-<li><p>From the ''Project'' menu elect the ''Example Scripts'' and then ''ChipWhisperer-Rev2: SimpleSerial Target''</p>
-<p>[[File:runscript.png|image]]</p></li>
-<li><p>The script will automatically connect to the capture hardware and run 2 example traces. You should see something that looks like the following screen:</p>
-<p>[[File:capture.png|image]]</p>
-<p>To complete the tutorial, follow these steps:</p>
-<blockquote><ol style="list-style-type: decimal;">
-<li>Switch to the ''General Settings'' tab</li>
-<li>If you wish to change the number of traces, do so here. The default of 50 should be sufficient to break AES though!</li>
-<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
-<li>You will see each new trace plotted in the waveform display.</li>
-<li>You'll see the trace count in the status bar. Once it says ''Trace 50 done'' (assuming you requested 50 traces) the capture process is complete.</li></ol>
-</blockquote></li>
-<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
-<li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
-
-
 == Capturing with PicoScope + Multi-Target (CW301) ==
 
 &lt;TODO&gt;
