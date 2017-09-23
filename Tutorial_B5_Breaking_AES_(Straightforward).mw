@@ -71,13 +71,13 @@ The window should change to indicate the connect succeeded:
 
 [[File:cwsetup_scriptselection_cwliterun.png|889x889px]]
 
-
-<ol start="4">
-# The console lists the exact script that is executed. Note you could have manually executed the script commands line-by-line in this console.
-# The "Scope" and "Target" buttons will show as connected.
-# The Status Bar will show a connection.
+<p>
+<ol start="4" style="list-style-type: decimal;">
+<li>The console lists the exact script that is executed. Note you could have manually executed the script commands line-by-line in this console.</li>
+<li>The "Scope" and "Target" buttons will show as connected.</li>
+<li>The Status Bar will show a connection.</li>
 </ol>
-
+</p>
 Note in previous software versions, this tutorial took you through manual setup. This can still be done (using the GUI), but instead now the API has been made more powerful, so the example configuration script will be used instead.
 
 To do so, simply scroll down and select the "setup_cwlite_xmega_aes.py" file:
@@ -85,13 +85,12 @@ To do so, simply scroll down and select the "setup_cwlite_xmega_aes.py" file:
 [[File:cwsetup_scriptselection_xmegaconfig_cwliterun.png]]
 
 <p>To complete the tutorial, follow these steps:</p>
-<blockquote><ol style="list-style-type: decimal;">
+<ol start="7" style="list-style-type: decimal;">
 <li>Switch to the ''General Settings'' tab</li>
 <li>If you wish to change the number of traces, do so here. The default of 50 should be sufficient to break AES though!</li>
 <li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
 <li>You will see each new trace plotted in the waveform display.</li>
-<li>You'll see the trace count in the status bar. Once it says ''Trace 50 done'' (assuming you requested 50 traces) the capture process is complete.</li></ol>
-</blockquote></li>
+<li>You'll see the trace count in the status bar. Once it says ''Trace 50 done'' (assuming you requested 50 traces) the capture process is complete.</li>
 <li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
 <li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
 
