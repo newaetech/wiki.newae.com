@@ -15,10 +15,6 @@
 
 This advanced tutorial will demonstrate clock glitch attacks using the ChipWhisperer system. This will introduce you to many required features of the ChipWhisperer system when it comes to glitching. This will be built on in later tutorials to generate voltage glitching attacks, or when you wish to attack other targets.
 
-You can follow along with this video for details of this page too:
-
-[[File:youtube-glitch.png|YouTubeGlitch]]_hardware set
-
 = Background on Clock Glitching =
 
 Digital hardware devices almost always expect some form of reliable clock. We can manipulate the clock being presented to the device to cause unintended behaviour. We'll be concentrating on microcontrollers here, however other digital devices (e.g. hardware encryption accelerators) can also have faults injected using this technique.
