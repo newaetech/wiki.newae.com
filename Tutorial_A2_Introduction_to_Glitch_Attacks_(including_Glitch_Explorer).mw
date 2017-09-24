@@ -271,11 +271,11 @@ With some background, let's now check some glitches. Assuming you've setup the e
 |-
 | Glitch Width (as % of period)
 | 7.5
-| 10
+| 9.5
 |-
 | Glitch Offset (as % of period)
 | -10
-| 26.6
+| -2
 |-
 | Repeat
 | 5
