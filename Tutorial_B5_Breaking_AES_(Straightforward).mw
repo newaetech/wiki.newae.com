@@ -105,26 +105,18 @@ TODO
 <ol style="list-style-type: decimal;">
 <li>Open the Analyzer software</li>
 <li>From the ''File --> Open Project'' option, navigate to the .cwp file you save previously. Open this file.</li>
-<li><p>Select the ''Project --> Manage Traces'' option to open the dialog, enable the captured traces by adding a check-mark in the box. Close the dialog with `ESC`:</p>
-<p>[[File:tracemanage.png|image]]</p></li>
-<li><p>If you wish to view the trace data, follow these steps:</p>
-
-<ol style="list-style-type: decimal;">
-<li>Switch to the ''Waveform Display'' tab</li>
-<li>Switch to the ''General'' parameter setting tab</li>
-<li>You can choose to plot a specific range of traces</li>
-<li>Hit the ''Redraw'' button when you change the trace plot range</li>
-<li>You can right-click on the waveform to change options, or left-click and drag to zoom</li>
-<li>(oops there is no 6)</li>
-<li>Use the toolbar to quickly reset the zoom back to original</li></ol>
-
-<p>[[File:traceplotting.png|image]]</p></li>
-<li><p>You can view or change the attack options on the ''Attack'' parameter settings tab:</p>
-<ol style="list-style-type: decimal;">
-<li>The ''Hardware Model'' settings are correct for the software AES by default</li>
-<li>The ''Point Setup'' makes the attack faster by looking over a more narrow range of points. Often you might have to characterize your device to determine the location of specific attack points of interest.</li>
-<li>''Traces per Attack'' allows you to use only a subset of capture traces on each attack. Or if you have for example 1000 traces, you could average the results of attacking 50 traces over 200 attack runs.</li>
-<li>''Reporting Interval'' is how often data is generated. A smaller interval generates more useful output data, but greatly increases computational complexity (e.g. slows down attack). If you only care about attacking the system, the reporting interval can be set to the number of traces. In which case the attack runs completely, and you get the results. For this tutorial you can set to a smaller number (such as 5).</li></ol>
+<li>Switch to the ''Trace Output Plot'' tab on the right side.</li>
+<li>Switch to the ''Results'' setting tab on the left side</li>
+<li>Scroll down to the ''Trace Output Plot'' setting, highlighted below:
+<p>
+[[File:v4_tracedraw.png|500px]]
+</p></li>
+<li>You can choose to plot a specific range of traces. For example type '''0-10'' in the '''Trace(s) to plot'' window.</li>
+<li>Hit the ''Redraw'' button when you change the trace plot range.</li>
+<li>You can right-click on the waveform to change options, or left-click and drag to zoom.</li>
+<li>Use the toolbar to quickly reset the zoom back to original.</li>
+<li>Try more advanced plotting options, like '''0(r),4-7(b)''' to plot trace 0 in red, and 4-6 in blue. See a full list of possible commands on the page [[Plotting_Widget]].</li>
+</ol>
 
 <p>[[File:attacksettings.png|image]]</p></li>
 <li><p>Finally run the attack by switching to the ''Results Table'' tab and then hitting the ''Attack'' button:</p>
