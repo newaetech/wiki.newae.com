@@ -96,38 +96,9 @@ To do so, simply scroll down and select the "setup_cwlite_xmega_aes.py" file:
 <li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
 <li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
 
-== Capturing with ChipWhisperer-Lite/Pro with NOTDuino (CW304) ==
+== Capturing with ChipWhisperer-Lite and UFO Board ==
 
-=== Hardware Setup ===
-
-<ol style="list-style-type: decimal;">
-<li>Set jumpers on NOTDuino to default position (see silkscreen on bottom of NOTDuino for default positions).</li>
-<li>Connect the NOTDuino using the SMA cable on the &quot;measure&quot; port, and the 20-pin IDC cable:</li>
-<li><p>Connect the CW1173/CW1200 by USB cable to computer.</p>
-<p>[[File:cw1173_avr_microusb.jpg|image]]</p></li></ol>
-
-=== Capturing the Traces ===
-
-<ol style="list-style-type: decimal;">
-<li>Close &amp; reopen the capture software (to clear out any previous connection which may be invalid).</li>
-<li><p>From the ''Project'' menu elect the ''Example Scripts'' and then ''ChipWhisperer-Lite: AES SimpleSerial on ATMega328P''</p>
-<p>[[File:runscript_cw1173avr.png|image]]</p></li>
-<li><p>The script will automatically connect to the capture hardware and run 2 example traces. You should see something that looks like the following screen:</p>
-<p>[[File:capture.png|image]]</p>
-<p>To complete the tutorial, follow these steps:</p>
-<blockquote><ol style="list-style-type: decimal;">
-<li>Switch to the ''General Settings'' tab</li>
-<li>If you wish to change the number of traces, do so here. The default of 50 should be sufficient to break AES though!</li>
-<li>Hit the ''Capture Many'' button (M in a green triangle) to start the capture process.</li>
-<li>You will see each new trace plotted in the waveform display.</li>
-<li>You'll see the trace count in the status bar. Once it says ''Trace 50 done'' (assuming you requested 50 traces) the capture process is complete.</li></ol>
-</blockquote></li>
-<li>Finally save this project using the ''File --&gt; Save Project'' option, give it any name you want.</li>
-<li>Skip ahead to [[#Analyzing_the_Traces]].</li></ol>
-
-== Capturing with PicoScope + Multi-Target (CW301) ==
-
-&lt;TODO&gt;
+TODO
 
 = Analyzing the Traces =
 
