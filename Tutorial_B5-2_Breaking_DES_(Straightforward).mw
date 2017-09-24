@@ -14,18 +14,26 @@
 
 
 Follow the same procedure as in : [[Tutorial B5 Breaking AES (Straightforward)]], but:
-* Flashing the DES firmware to the target device (e.g. chipwhisperer/hardware/victims/firmware/simpleserial-des/simpleserial-des-xmega.hex), instead;
+# Flashing the DES firmware to the target device (e.g. chipwhisperer/hardware/victims/firmware/simpleserial-des/simpleserial-des-xmega.hex), instead;
+# Setting an appropriate 'Total Samples' (e.g. 3500) and 'Offset' (e.g. 15500) in the ''Scope Settings'';
+# Setting the 'Key Length (Bytes)', 'Input Length (Bytes)' and 'Output Length (Bytes)' to 8 bytes in the ''Target Settings'';
+# Setting an appropriate 8 bytes Key in the ''Generic Settings (e.g. 2B 7E 15 16 28 AE D2 A6)''.
 
-and:
-* Setting an appropriate 'Total Samples' (e.g. 3500) and 'Offset' (e.g. 15500) in the ''Scope Settings'';
-* Setting the 'Key Length (Bytes)', 'Input Length (Bytes)' and 'Output Length (Bytes)' to 8 bytes in the ''Target Settings'';
-* Setting an appropriate 8 bytes Key in the ''Generic Settings (e.g. 2B 7E 15 16 28 AE D2 A6)''.
+* Or, alternatively, execute the script "setup_cwlite_xmega_des.py" to perform steps 2-4 (you still need to perform step 1 yourself).
 
-* Or, alternatively, execute the script "ChipWhisperer-Lite: DES SimpleSerial on XMEGA" to do the above steps automatically in this platform.
+In the Analyzer, you'll need to modify the script to call the DES model instead of the AES model. This will mean:
 
-In the Analyzer, the only difference is to set the 'Crypto Algorithm' to DES in the ''Attack Settings''.
+<pre>
+from chipwhisperer.analyzer.attacks.models.DES import DES, SBox_output
+</pre>
 
-[[File:breaking_des.png|896x896px]]
+And setting:
+
+<pre>
+leak_model = DES(SBox_output)
+</pre>
+
+See the example analyzer script for a complete listing of the required commands.
 
 Note that the attack attemps to recover the [[wikipedia:File:DES-key-schedule.png|first round key]], which only has 48bits ([[wikipedia:File:DES-f-function.png|8 s-boxes x 6 bits each]]), while the original key has 56 significative bits (64 if we count the parity bits that are irrelevant). So, if we map the first round key, obtained after the attack, to the original key (you can use the provided  DES Key Schedule Tool to do it), there will still be 8 bits missing (256 combinations).
 
