@@ -3,6 +3,8 @@ ChipWhisperer software release V4.0.0 has drastically changed the API and interf
 
 The "example scripts" and "glitch explorer" have all been replaced with true Python scripts. You write small (or large) snippets of code, and run those code to perform automated tasks.
 
+If you have used ChipWhisperer before see [[Tutorial_B5_Breaking_AES_(Straightforward)]] for a quick overview of how things changed.
+
 == Analyzer Changes ==
 
 The analyzer interface looks different. Most noteably:
