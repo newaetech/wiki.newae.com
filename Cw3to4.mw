@@ -3,6 +3,14 @@ ChipWhisperer software release V4.0.0 has drastically changed the API and interf
 
 The "example scripts" and "glitch explorer" have all been replaced with true Python scripts. You write small (or large) snippets of code, and run those code to perform automated tasks.
 
+== Analyzer Changes ==
+
+The analyzer interface looks different. Most noteably:
+
+* The "Attack" button is disabled (will be re-enabled once better integrated). Instead you just run a script which explicitly configures things.
+
+* The GUI does not affect the actual script being run. You can view settings from the GUI, but you must manually copy things into the scripts.
+
 == Example Scripts ==
 TODO
 
