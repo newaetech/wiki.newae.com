@@ -102,6 +102,8 @@ TODO
 
 = Analyzing the Traces =
 
+== Opening File & Viewing Traces ==
+
 <ol style="list-style-type: decimal;">
 <li>Open the Analyzer software</li>
 <li>From the ''File --> Open Project'' option, navigate to the .cwp file you save previously. Open this file.</li>
@@ -111,16 +113,66 @@ TODO
 <p>
 [[File:v4_tracedraw.png|500px]]
 </p></li>
-<li>You can choose to plot a specific range of traces. For example type '''0-10'' in the '''Trace(s) to plot'' window.</li>
+<li>You can choose to plot a specific range of traces. For example type '''0-10''' in the ''Trace(s) to plot'' window.</li>
 <li>Hit the ''Redraw'' button when you change the trace plot range.</li>
 <li>You can right-click on the waveform to change options, or left-click and drag to zoom.</li>
 <li>Use the toolbar to quickly reset the zoom back to original.</li>
 <li>Try more advanced plotting options, like '''0(r),4-7(b)''' to plot trace 0 in red, and 4-6 in blue. See a full list of possible commands on the page [[Plotting_Widget]].</li>
 </ol>
 
-<p>[[File:attacksettings.png|image]]</p></li>
-<li><p>Finally run the attack by switching to the ''Results Table'' tab and then hitting the ''Attack'' button:</p>
-<p>[[File:attack.png|image]]</p></li>
+== Running Attack Script ==
+
+In ChipWhisperer V4.0, we now use attack scripts for everything. As in the capture program, switch to the '''Python Console''' tab & find the attack scripts. There may be additional scripts there, but you should find one called "attack_cpa.py". It has the following contents:
+
+<syntaxhighlight lang=python>
+import chipwhisperer as cw
+from chipwhisperer.analyzer.attacks.cpa import CPA
+from chipwhisperer.analyzer.attacks.cpa_algorithms.progressive import CPAProgressive
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, SBox_output
+from chipwhisperer.analyzer.preprocessing.add_noise_random import AddNoiseRandom
+
+#self.project = cw.openProject("2017-mar23-xmega-aes.cwp")
+traces = self.project.traceManager()
+
+#Example: If you wanted to add noise, turn the .enabled to "True"
+self.ppmod[0] = AddNoiseRandom()
+self.ppmod[0].noise = 0.05
+self.ppmod[0].enabled = False
+
+attack = CPA()
+leak_model = AES128_8bit(SBox_output)
+attack.setAnalysisAlgorithm(CPAProgressive, leak_model)
+
+attack.setTraceStart(0)
+attack.setTracesPerAttack(50)
+attack.setIterations(1)
+attack.setReportingInterval(10)
+attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+attack.setTraceSource(self.ppmod[0])
+attack.setPointRange((0, 3000))
+
+self.results_table.setAnalysisSource(attack)
+self.correlation_plot.setAnalysisSource(attack)
+self.output_plot.setAnalysisSource(attack)
+self.pge_plot.setAnalysisSource(attack)
+attack.processTraces()
+</syntaxhighlight>
+
+You can see this script has several sections:
+
+# Imports for needed functions.
+# Loading of project (if using a project from disk) & setting of trace information.
+# Configuration of attack.
+# Connecting output (drawing) widgets to the attack.
+# Running the attack.
+
+If you need to modify the script, you can edit the file in an external editor. You will need to ensure your system is configured to open your preferred editor on ".py" files, OR configure the editor under ''Help --> Preferences''.
+
+The default options should work, but you can modify for example the ''Reporting Interval'' to see more detailed graphs.
+
+<ol style="list-style-type: decimal;">
+<li><p>Finally run the attack by switching to the ''Results Table'' tab and then hitting the ''Run'' button with the script selected:</p>
+<p>[[File:v4_runscript.png|400px]]</p></li>
 <li><p>If you adjusted the ''Reporting Interval'' to a smaller number such as 5, you'll see the progression of attack results as more traces are used. If not you should simply see the final results, which should have the correct key highlighted in red. In the following case the correct key ''was'' recovered:</p>
 <p>[[File:attack-done.png|image]]</p></li>
 <li><p>You can also switch to the ''Output vs Point Plot'' window to see ''where'' exactly the data was recovered:</p>
