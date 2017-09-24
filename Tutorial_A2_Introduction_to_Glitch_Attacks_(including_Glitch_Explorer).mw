@@ -297,18 +297,45 @@ With some background, let's now check some glitches. Assuming you've setup the e
 
 If we are going to start with the target at a pre-determined state, we need to reset the target. There are two ways of automatically performing this. The method used here will use the existing programmer interface to reset the device by performing that &quot;read signature&quot; operation we have already been using. The other method is to toggle a GPIO pin, which is more generic for future use.
 
+This was introduced in [[Tutorial_B3-1_Timing_Analysis_with_Power_for_Password_Bypass#Reset_via_Auxiliary_Module]].
+
 To setup the automatic reset, perform the following:
 
-<ol style="list-style-type: decimal;">
-<li><p>Switch to the ''General Settings'' tab, and select the appropriate &quot;Auxiliary Module&quot;:</p>
-<ol style="list-style-type: lower-alpha;">
-<li>For ChipWhisperer-Lite (CW1173/CW1180), select &quot;Reset AVR/XMEGA via CW-Lite&quot;</li>
-<li>For ChipWhisperer-Capture Rev 2, select &quot;Reset AVR via ISP-MKII&quot;</li></ol>
+<ol>
+<li> Scroll down the list of scripts, and you'll find one labeled "aux_reset_cw1173.py". This script has a simple function of attempting to reset the XMEGA device using the programmer:
+<br>
+[[File:auxreset_test1.png|600px]]
+</li>
+<li>Hit the "Run" button. If you switch to the "Auxilary Module" tab, you'll see it's been added to the list of modules at the specified location.:
+<br>
+[[File:auxreset_test2.png|400px]]
+</li>
+<li>Looking at the code of the script, you can see how this script is using an external module & linking it to a specific auxilary module trigger:
+<syntaxhighlight lang=python>
+from chipwhisperer.capture.auxiliary.ResetCW1173Read import ResetCW1173
 
-<p>[[File:glitching_aux_1.png|image]]</p></li>
-<li><p>Switch to the ''Aux Settings'' tab. Depending on your module you will see different settings here, for example the ChipWhisperer-Lite lets you select between AVR and XMEGA targets. The defaults should be ok:</p>
-<p>[[File:glitching_aux_2.png|image]]</p></li>
-<li>Press the &quot;Test Reset&quot; button. This should reset the AVR target. Confirm this by monitoring the terminal emulator window, and check the startup message (of &quot;hello&quot;) is printed again.</li></ol>
+# GUI compatibility
+try:
+    aux_list = self.aux_list
+except NameError:
+    pass
+
+# Delay between arming and resetting, in ms
+delay_ms = 1000
+
+# Reset XMEGA device
+Resetter = ResetCW1173(xmega=True, delay_ms=delay_ms)
+# Reset AVR
+#Resetter = ResetCW1173(xmega=False, delay_ms=delay_ms)
+
+# Reset before arming - more stable
+aux_list.register(Resetter.resetThenDelay, "before_trace")
+# Reset after arming - scope can catch entire reset
+#aux_list.register(Resetter.delayThenReset, "after_arm")
+</syntaxhighlight>
+<li>You can edit the values required such as reset time & location by changing the script (using an external editor). But an easier method is to insert it into our attack script itself. As a test we'll see if the default values work. We will later integrate this into a full example script.</li>
+</ol>
+
 
 We can now confirm the reset works with the &quot;Capture 1&quot; button. This requires us to disable the normal routing of the output data to a file for analysis, as we want to just dump data to the terminal emulator. To do this:
 
