@@ -20,6 +20,7 @@ This tutorial runs on four different hardware targets. You only need to follow t
 == Capturing with ChipWhisperer-Lite/Pro with default XMEGA Target (CW303) ==
 
 WARNING: This video was recorded with API V3.x, some changes happened so please take note.
+
 NOTE: You can see a Quick-Start Guide and Video for this target on the [[CW1173_ChipWhisperer-Lite]] page:
 
 [[File:Cwlite_demo_video.png|link=http://www.youtube.com/watch?v=MJmkYqA-LeM&hd=1]]
