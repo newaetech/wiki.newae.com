@@ -456,13 +456,13 @@ Now that we can automatically perform the glitching, we can use the ''glitch exp
 
 The main window of the glitch explorer looks like this:
 
-[[File:ge_overview.png|400px]]
+[[File:ge_overview.png]]
 
 Where you can see the following parts
 
 <blockquote>
 # The top part is the output of the system combined with the parameters of the glitch is displayed (the 'output window').
-# In |2| you can adjust general parameters of the glitching system, such as what counts as a successful glitch or not.
+# In the bottom part you can adjust general parameters of the glitching system, such as what counts as a successful glitch or not.
 </blockquote>
 We'll be looking at each of these sections in more detail next.
 
@@ -481,7 +481,6 @@ In order for the glitch explorer to receive the output value, you must insert th
 Details of the main settings:
 
 [[File:ge4_middle.png|image]]
-
 
 The response of the system during normal operation is set at ''Normal response''. This defines what happens when no glitching or unexpected behavior happened.
 
