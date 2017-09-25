@@ -620,39 +620,12 @@ self.aux_list.register(glitch_iterator.reset_glitch_to_default, "before_capture"
 <li><p>With any luck, at least one of the glitches will be successful:</p>
 <p>If you get a reset (prints 'hello' again), you might need to reduce the &quot;repeat&quot; value. If you have no successful glitches, double-check all settings. You can continue to the next step anyway, as in that step we will also tune the &quot;glitch width&quot;.</p></li></ol>
 
-We may also need to tune the &quot;Glitch Width&quot;. We can use knowledge of the successful glitch from the previous step to reduce our search space. In this case, assume we had a successful glitch with a width of 8.0 and offset of 17.5. We'll search around those values to see if we can achieve a more successful glitch performance.
+We may also need to tune the &quot;Glitch Width&quot;. We can use knowledge of the successful glitch from the previous step to reduce our search space. In this case, assume we had a successful glitch with a width of 8.0 and offset of -2. We'll search around those values to see if we can achieve a more successful glitch performance.
 
 To continue the tutorial, the following steps will be taken:
 
 <ol style="list-style-type: decimal;">
-<li>In the ''Glitch Explorer'', set the ''Tuning Parameters'' to ''2''.</li>
-<li><p>Configure the second parameter with the following:</p>
-{| class="wikitable"
-! Option
-! Value
-|-
-| Name
-| Width
-|-
-| Parameter Path
-| ['Glitch Module', 'Glitch Width (as % of period)']
-|-
-| Data Format
-| Float
-|-
-| Range
-| 5 : 15
-|-
-| Value
-| 5
-|-
-| Step
-| 0.5
-|-
-| Repeat
-| 1
-|}
-</li>
+<li>Modify the glitch parameter script to also loop through the Glitch Width. If you get stuck you can look at the example script earlier (in section [[#Parameter_Settings]]).</li>
 <li>Change the ''Range'' of the first parameter ''Glitch Offset'' to span from 1 to 25, since it appeared that negative offsets were never successful in our previous attempts. Be sure to reset the ''Value'' of this parameter to your desired starting point (probably ''1''). This will reduce the search time.</li>
 <li>On the main GUI in the ''Scope Settings'' tab, adjust the ''Glitch Module'' repeat parameter to be 1. We are now attempting to acheive success with a single clock cycle being glitched.</li>
 <li>Still in the main GUI, adjust the number of traces per capture to be 1000. This reflects the number of iterations required to run through both loops (20 x 50).</li>
