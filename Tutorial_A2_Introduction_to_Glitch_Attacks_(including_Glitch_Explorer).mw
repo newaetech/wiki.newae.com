@@ -704,37 +704,7 @@ The following assumes you have already completed the previous steps:
 <li>In the ''Output Format'' field, put <code>$GLITCH$</code> to route the output to the glitch explorer.</li></ol>
 </blockquote></li>
 <li>Open the ''Glitch Explorer'', and press ''Capture 1''. You should see the ''Denied'' message come across.</li>
-<li><p>In the ''Glitch Explorer'', adjust the following settings:</p>
-<blockquote><ol style="list-style-type: lower-alpha;">
-<li>Set ''Tuning Parameters'' to 1</li>
-<li><p>Set Parameter 0 options to:</p>
-{| class="wikitable"
-! Option
-! Value
-|-
-| Name
-| Trigger Offset
-|-
-| Parameter Path
-| ['Glitch Module', 'Ext Trigger Offset']
-|-
-| Data Format
-| Int
-|-
-| Range
-| 0 : 200
-|-
-| Value
-| 0
-|-
-| Step
-| 1
-|-
-| Repeat
-| 1
-|}
-</li></ol>
-</blockquote></li>
+<li>Generate a script to modify the 'offset' parameter in the glitch generator. You can always dump the scope parameters with ''scope'' at the command line in the ChipWhisperer-Capture to see all the fields.</li>
 <li>Set the number of traces on the ''General Settings'' tab to 200.</li>
 <li>On the main GUI, in the ''Scope Settings'' tab, ensure that you have the number of repeats on the ''Glitch Module'' set to 1. We will start with a single clock cycle glitched.</li>
 <li><p>Press ''Capture Multi''. Monitor the glitch outputs, you may see some errors or a successful glitch. Note that sometimes the errors are useful - here is an example where the glitched code actually dumped the password:</p>
