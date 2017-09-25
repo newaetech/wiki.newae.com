@@ -454,7 +454,7 @@ Now that we can automatically perform the glitching, we can use the ''glitch exp
 
 == Glitch Explorer ==
 
-The main window of the glitch explorer looks like this:
+We'll first introduce the Glitch Monitor ("Glitch Explorer") before we go ahead and show you how to use it. The main window of the glitch explorer looks like this:
 
 [[File:ge_overview.png]]
 
