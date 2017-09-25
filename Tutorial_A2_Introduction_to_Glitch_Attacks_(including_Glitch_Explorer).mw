@@ -456,14 +456,13 @@ Now that we can automatically perform the glitching, we can use the ''glitch exp
 
 The main window of the glitch explorer looks like this:
 
-[[File:ge_main.png|image]]
+[[File:ge_overview.png|400px]]
 
 Where you can see the following parts
 
 <blockquote>
-# In |1| the output of the system combined with the parameters of the glitch is displayed (the 'output window').
-# In |2| you can adjust general parameters of the glitching system, such as what counts as a successful glitch or not and how many parameters to fiddle with.
-# In |3| you actually specify the parameters to adjust during the glitching attempts, and what range you would like to adjust them over.
+# The top part is the output of the system combined with the parameters of the glitch is displayed (the 'output window').
+# In |2| you can adjust general parameters of the glitching system, such as what counts as a successful glitch or not.
 </blockquote>
 We'll be looking at each of these sections in more detail next.
 
