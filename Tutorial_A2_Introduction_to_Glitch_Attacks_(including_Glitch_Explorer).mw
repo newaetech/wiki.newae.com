@@ -572,47 +572,51 @@ This example will attempt to break out the loop in <code>glitch1()</code>. Movin
 The next step is to tune the glitch offset to attempt to get a successful clock glitch. These steps are listed as follows:
 
 <ol style="list-style-type: decimal;">
-<li>Change the ''Tuning Parameters'' to be ''1''.</li>
-<li><p>Set the following in Parameter 0 options:</p>
-{| class="wikitable"
-! Option
-! Value
-|-
-| Name
-| Offset
-|-
-| Parameter Path
-| ['Glitch Module', 'Glitch Offset (as % of period)']
-|-
-| Data Format
-| Float
-|-
-| Range
-| -30 : 30
-|-
-| Value
-| -30
-|-
-| Step
-| 0.5
-|-
-| Repeat
-| 1
-|}
+<li>Make a new file called '''ge_adjustment.py'' with these contents:
 
-<p>The ''Parameter Path'' option can be found by manually making an adjustment to the ''Glitch Offset (as % of period)'' in the GUI, and observing the string printed to the ''Script Commands'' tab. The numeric value of the command is not included in the parameter path (i.e., do not copy the value).</p></li>
+<syntaxhighlight lang=python>
+class IterateGlitchParameters(object):
+    def __init__(self, ge_window):
+        self._starting_offset = -10
+        self.ge_window = ge_window
+
+    def reset_glitch_to_default(self, scope, target, project):
+        """ Set glitch settings to defaults. """
+        self.offset = self._starting_offset
+
+    def change_glitch_parameters(self, scope, target, project):
+        """ Example of simple glitch parameter modification function. """
+        # This value is minimum clock offset/width increment
+        self.offset += 0.390625
+
+        if self.offset > 40:
+            self.offset = self._starting_offset
+
+        # Write data to scope
+        scope.glitch.offset = self.offset
+
+        #You MUST tell the glitch explorer about the updated settings
+        if self.ge_window:
+            self.ge_window.add_data("Glitch Offset",scope.glitch.offset)
+
+glitch_iterator = IterateGlitchParameters(self.glitch_explorer)
+self.aux_list.register(glitch_iterator.change_glitch_parameters, "before_trace")
+self.aux_list.register(glitch_iterator.reset_glitch_to_default, "before_capture")
+</syntaxhighlight>
+</li>
+<li><p>Assuming you still have the "Capture" working, you can simply find where you stored that script and hit ''Run''. You should see it execute successfully on the command line.:</p>
+<p>[[File:ge_step1_register.png|1000px]]</p></li>
+<li><p>Confirm you see the modules loaded in the ''Aux Settings'' tab:</p>
+<p>[[File:ge_step2_checkregister.png]]</p></li>
 <li><p>On the main GUI in the ''Scope Settings'' tab, change the following values for the ''Glitch Module'':</p>
 <blockquote><ol style="list-style-type: lower-alpha;">
 <li>''Repeat'' set to 10.</li>
 <li>''Glitch Width (as % of period)'' set to 8.0.</li></ol>
-</blockquote>
 <p>These values will be used during the glitch explorer run. We have not specified anything for the tuning, so they will not be changed from whatever is already in the GUI.</p></li>
 <li><p>On the ''General Settings'' tab:</p>
-<blockquote><ol style="list-style-type: lower-alpha;">
-<li>Ensure the ''Trace Format'' is set to ''None'' (i.e., no traces will be written to disk).</li>
+<ol style="list-style-type: lower-alpha;">
 <li>Set the ''Number of Traces'' to 121.</li></ol>
-</blockquote></li>
-<li>Press the ''Capture Multi'' button. You will get a warning as there is no trace writer, but can just hit ''Continue Anyway'', since we do not want to store traces to disk.</li>
+</li>
 <li><p>With any luck, at least one of the glitches will be successful:</p>
 <p>If you get a reset (prints 'hello' again), you might need to reduce the &quot;repeat&quot; value. If you have no successful glitches, double-check all settings. You can continue to the next step anyway, as in that step we will also tune the &quot;glitch width&quot;.</p></li></ol>
 
