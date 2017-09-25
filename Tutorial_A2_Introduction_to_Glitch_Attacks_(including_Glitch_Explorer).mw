@@ -474,19 +474,18 @@ The output window highlights different types of output. In this example we have 
 
 Glitches can also be flagged as 'normal', in which case there is no highlight as in |2|. Finally the glitch could be flagged as an error, in which case it will be highlighted in red.
 
-In order for the glitch explorer to receive the output value, you must insert the special code <code>$GLITCH$</code> into the ''Target Settings'' --&gt; ''Output Format'' settings. This will mean data is no longer sent to the terminal emulator when using the capture 1 or capture multi buttons, but instead is logged in the glitch explorer window.
+In order for the glitch explorer to receive the output value, you must insert the special code <code>$GLITCH$</code> into the ''Target Settings'' --&gt; ''Output Format'' settings. Data is still sent to the terminal emulator so you can monitor what is happening, but if you don't set the $GLITCH$ special string you won't see it in glitch explorer.
 
 === The Main Settings ===
 
 Details of the main settings:
 
-[[File:ge_middle.png|image]]
+[[File:ge4_middle.png|image]]
 
-The number of tuning parameters is set at |1|. This defines how many different parameters to adjust.
 
-The response of the system during normal operation is set at |2|. This defines what happens when no glitching or unexpected behavior happened.
+The response of the system during normal operation is set at ''Normal response''. This defines what happens when no glitching or unexpected behavior happened.
 
-The desired response of the system if the glitch was successful is set at |3|.
+The desired response of the system if the glitch was successful is set at ''Successful response''.
 
 The expected and desired responses are expected to be Python expressions, where <code>s</code> is a str-type variable which contains the response of the system. The expression must evaulate to <code>True</code> or <code>False</code>. For example, the following shows examples of what you could use as possible expressions:
 
@@ -494,11 +493,11 @@ The expected and desired responses are expected to be Python expressions, where 
 ! Desired Behavior
 ! Parameter Expression
 |-
-| Check for &quot;hellon&quot; exactly.
-| s == &quot;hellon&quot;
+| Check for &quot;hello\n&quot; exactly.
+| s == &quot;hello\n&quot;
 |-
-| Check for &quot;hellon&quot; at end of string.
-| s.endswith(&quot;hellon&quot;)
+| Check for &quot;hello\n&quot; at end of string.
+| s.endswith(&quot;hello\n&quot;)
 |-
 | Check for hex 0xAF in last byte position.
 | ord(s[-1]) == 0xAF
@@ -508,41 +507,52 @@ Note that there is sometimes garbage in the first position. This occurs because 
 
 === Parameter Settings ===
 
-Details of the parameter settings:
+The actual parameters to change are set via a simple Python script. You will register this script to an appropriate section in the system using the "auxiliary module". Using a script makes it easy to define all sorts of various settings you might find of interest.
 
-[[File:ge_bottom.png|image]]
+For example the following script would insert code to cycle through width and offset settings:
 
-The name of the parameter to be tuned is set at |1|. This name will be displayed in the table, so should be some useful reminder of the parameter name.
+<syntaxhighlight lang=python>
+class IterateGlitchWidthOffset(object):
+    def __init__(self, ge_window):
+        self._starting_offset = -40
+        self._starting_width = 5
+        self.ge_window = ge_window
 
-The ''Parameter Path'' at |2| defines what is modified. This string is simply copied from the ''Script Commands'' tab of the main window. This lets you modify ''any'' parameter of the GUI, but most likely you will want to modify some of the glitch settings. The numeric value in this string should be deleted.
+    def reset_glitch_to_default(self, scope, target, project):
+        """ Set glitch settings to defaults. """
+        self.offset = self._starting_offset
+        self.width = self._starting_width
 
-The ''Data Format'' at |3| defines what type of data will be inserted into the parameter. For example for the ''Glitch Offset (as % of period)'' used here, this would need to be set to ''Float'', meaning fractional values such as &quot;4.5&quot; are allowed. The data format should match the data format expected.
+    def change_glitch_parameters(self, scope, target, project):
+        """ Example of simple glitch parameter modification function. """
+        # This value is minimum clock offset/width increment
+        self.offset += 0.390625
 
-The ''Range'' at |4| defines the range from the minimum to maximum that will be swept for the parameter. Valid values depend on the parameter being adjusted. For example if you are adjusting the ''Glitch Offset'' a negative and positive offset makes sense, but if you were adjusting the ''Repeat'' it would only make sense to adjust over the range <code>(1,255)</code>.
+        if self.offset > 40:
+            self.offset = self._starting_offset
+            self.width += 0.390625
 
-The ''Value'' at |5| defines the starting value of the sweep. This is '''NOT''' automatically set to the minimum value of your sweep. If you want to perform the full sweep, you must manually set this to the minimum of the range.
+        if self.width > 40:
+            self.width = self._starting_width
 
-The ''Step'' at |6| defines the amount the value is incremented on each glitch attempt. When the value reaches the maximum defined by the range, it will loop around to the minimum and continue incrementing.
+        # Write data to scope
+        scope.glitch.width = self.width
+        scope.glitch.offset = self.offset
 
-The ''Repeat'' at |7| defines how many times to perform the same value. This can be used to determine the reliability of each glitch value.
+        #You MUST tell the glitch explorer about the updated settings
+        if self.ge_window:
+            self.ge_window.add_data("Glitch Width", scope.glitch.width)
+            self.ge_window.add_data("Glitch Offset",scope.glitch.offset)
 
-If using multiple parameters, they will be looped as shown in this pseudo-code:
+glitch_iterator = IterateGlitchWidthOffset(self.glitch_explorer)
+self.aux_list.register(glitch_iterator.change_glitch_parameters, "before_trace")
+self.aux_list.register(glitch_iterator.reset_glitch_to_default, "before_capture")
 
-<pre>param_value_0 = starting_value_0
-param_value_1 = starting_value_1
+</syntaxhighlight>
 
-while capture_in_progress:
-    while param_value_1 &lt; param_value_1_max:
-
-      while param_value_0 &lt; param_value_0_max:
-          param_value_0 += param_value_0_incr
-          run_glitch_here()
-
-      param_value_0 = param_value_0_min        
-      param_value_1 += param_value_1_incr
-
-    param_value_1 = param_value_1_min</pre>
 Note you can quickly cause very long captures to occur! To run the glitch explorer, you need to set the appropriate number of traces on the ''General Settings'' tab, and use the ''Capture Multi'' to run the glitch explorer.
+
+The ChipWhisperer system has no idea how many iterations are required with your code - it still uses a fixed number of captures by default. Later versions of the API will support an exit signal.
 
 == Example Running the Glitch Explorer ==
 
