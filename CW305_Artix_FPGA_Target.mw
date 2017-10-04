@@ -1,8 +1,19 @@
+{{Infobox cw308target
+|name                   = CW305 Artix FPGA Target
+|image                  = File:Artix_Board.jpg
+|caption                = 
+|Target Device          = Xilinx Artix-7
+|Target Architecture    = Xilinx 7 series
+|Hardware Crypto        = Yes
+|Purchase Hardware      = 
+|Supported Applications = [[SimpleSerial | Simple Serial Enc/Auth]]
+|Programmer             = Integrated
+|Status                 = Released
+}}
 The CW305 is a FPGA target board. It brings features including a simplified USB interface for talking to the FPGA, an external PLL for adjusting frequency response, a programmable VCC-INT supply, and diode protection for use in fault injection environments. Also available with a special BGA socket, giving you the ability to perform tests on multiple FPGA devices - perfect for checking Physically Unclonable Functions (PUFs) under the exact same environmental conditions across multiple FPGAs.
 
 This board requires an external oscilloscope or capture box for performing the power measurement. The board is designed to interface to hardware such as the ChipWhisperer-Lite 2-Part version or the CW1200 (ChipWhisperer-Pro).
 
-[[File:Artix_Board.jpg|800px]]
 
 =Feature Overviews=
 
