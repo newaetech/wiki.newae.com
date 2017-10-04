@@ -15,50 +15,110 @@
 
 {| class="wikitable"
 !CW308 Pin
-!ATXMega Pin
-!Notes
+!CEC1702 Pin
+!Function
 |-
 |GPIO1
-|PC3 (TXD0)
-|Serial OUTPUT from AVR.
+|P104 (TXD0)
+|Serial OUTPUT from CEC1702
 |-
 |GPIO2
-|PC2 (RXD0)
-|Serial INPUT to AVR.
+|P105 (RXD0)
+|Serial INPUT to CEC1702
 |-
 |GPIO3
-|PA1
-|Spare pin.
+|P030
+|GPIO
 |-
 |GPIO4
-|PA0
-|Trigger pin.
+|P017
+|Trigger pin
 |-
 |CLKIN
-|XTAL1
-|
+|XTAL2
+|Optional CLKIN
 |-
 |CLKFB
-|PB3
-|Can output clock on this pin. Useful for synchronizing to internal RC oscillator.
+|P002 (PWM5)
+|Can output 12MHz PWM on this pin. Useful for synchronizing to internal oscillator
+|-
+|J_TRST
+|JTAG_RST
+|JTAG Reset
+|-
+|J_TDI
+|JTAG_TDI
+|JTAG TDI
+|-
+|J_TDO
+|JTAG_TDO
+|JTAG TDO
+|-
+|J_TMS
+|JTAG_TMS
+|JTAG TMS
+|-
+|J_TCK
+|JTAG_CLK
+|JTAG Clock
 |-
 |LED1
-|PA5
-|
+|P156
+|GPIO, Breathing LED0
 |-
 |LED2
-|PA6
-|
+|P157
+|GPIO, Breathing LED1
 |-
 |LED3
 |PA7
+|GPIO, LED
+|-
+|PDIC
 |
+|SPI buffer output enable, drive high to enable SPI programming and sniffing
 |-
-|PDID
-|PDID
-|In-System programming.
+|PDID/CS
+|QSPI0_CS
+|SPI chip select for SPI flash chip 
 |-
-|PDIC/nRST
-|nRST/PDIC
-|In-System programming.
+|H1
+|P040
+|GPIO
+|-
+|H2
+|P031
+|GPIO
+|-
+|H3
+|P026
+|GPIO
+|-
+|H4
+|P053
+|GPIO
+|-
+|H5
+|P054
+|GPIO
+|-
+|H6
+|P027
+|GPIO
+|-
+|H7
+|P107
+|GPIO
+|-
+|H8
+|P120
+|GPIO
+|-
+|H9
+|P112
+|GPIO
+|-
+|H10
+|P113
+|GPIO
 |}
