@@ -1,3 +1,15 @@
+{{Infobox cw308target
+|name                   = CW-Lite XMEGA Target
+|image                  = File:Cwlite-xmega.jpg
+|caption                = 
+|Target Device          = MCHP CEC1702
+|Target Architecture    = ARM Cortex M4F
+|Hardware Crypto        = AES, SHA, RSA
+|Purchase Hardware      = 
+|Supported Applications = []
+|Programmer             = Generic SPI Flash Programmer
+|Status                 = In Development
+}}
 = CW303 Target: CW-Lite XMEGA Target Section =
 
 The ChipWhisperer-Lite board has a break-away target board section. This is officially labeled as a separate target board, but for most users will be present on the development board.
