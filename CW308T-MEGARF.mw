@@ -17,8 +17,6 @@ Atmel ICE (ISP/JTAG)
 
 This target is for the ATMega2564RFR2. This makes a great target for exploring IoT technologies, such as mesh networking protocols.
 
-[[File:meagrf_render_02.png|400px]]
-
 == Usage Notes ==
 
 === Internal / External DVDD Supply ===
