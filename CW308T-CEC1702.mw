@@ -157,3 +157,24 @@ The CW308T-CEC1702 incorporates the main chip with a 16MB SPI flash chip and a b
 
 == Programming Process ==
 Programming the target involves writing an image into the SPI flash chip, the process is detailed below.
+
+==== 1) Writing and Modifying Code ====
+The [http://www.mikroe.com/mikroc/arm MikroC PRO for ARM IDE] supports programming of the CEC1702 and comes with extensive libraries and example code. The CW308T-CEC1702 shares the same SPI configuration as all development boards currently on the market so is largely compatible with code developed on the platform. The IDE allows for editing code in both C and ASM.
+
+==== 2) Building a Valid SPI Image ====
+A special image file must be generated to be compatible with the CEC1702 Boot sequence. The MikroC IDE is capable of building this image automatically but some settings must be configured before running a build. 
+
+'''Project > Edit Project''' 
+
+Select CEC1702 in the MCU Name dropbox, change the MCU Clock Frequency to 48MHz.
+
+'''> General Output Settings ...'''
+
+Make sure '''''Generate BIN image file''''' is checked. Press OK on the window and the previous edit project window.
+
+'''Build > Build'''
+
+The messages dialog should indicate a successful build, and the image binary can now be found in the project output folder. To confirm correct build settings, check the image binary using your SPI flash software or a HEX editor. The image binary should begin with the 8 bytes '''01 00 00 3E 01 00 00 3E''' at offset 000000, and the rest of the program should begin at offset 000100. 
+
+==== 3) Erasing, Loading, and Verifying the SPI Flash ====
+The [http://ww1.microchip.com/downloads/en/DeviceDoc/20005262C.pdf SST26VF016B] flash chip can be programmed by an SPI programmer attached to the SPI pins of the CW308. Attach a jumper to J8 on the CW308, pulling nRST to GND.
