@@ -1,4 +1,15 @@
-[[File:Notduino.jpg|image]]
+{{Infobox cw308target
+|name                   = CW308T-CEC1702
+|image                  = File:Notduino.jpg
+|caption                = 
+|Target Device          = Atmel MEGA328P
+|Target Architecture    = 8-bit RISC
+|Hardware Crypto        = 
+|Purchase Hardware      = 
+|Supported Applications = 
+|Programmer             = CW Integrated (ISP)
+|Status                 = Released
+}}
 
 The Notduino is used as a target for the ChipWhisperer Capture system. This includes interfacing to the CW-Lite (CW1173) and ChipWhisperer Capture Rev 2 (CW1002). The Notduino has the following features/specifications:
 
