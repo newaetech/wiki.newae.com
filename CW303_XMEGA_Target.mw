@@ -9,7 +9,8 @@
 |Supported Applications = [[SimpleSerial | Simple Serial Enc/Auth]]
 |Programmer             = CW Integrated (PDI)
 |Status                 = Released
-}}The ChipWhisperer-Lite board has a break-away target board section. This target can be used attached to the CW-Lite or separated and connected via ribbon cable. The breakaway target board has a slightly different feature set than the CW308T-XMEGA target board. 
+}}
+The ChipWhisperer-Lite board has a break-away target board section. This target can be used attached to the CW-Lite or separated and connected via ribbon cable. The breakaway target board has a slightly different feature set than the CW308T-XMEGA target board. 
 
 == LEDs ==
 
