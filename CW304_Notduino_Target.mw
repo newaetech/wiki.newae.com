@@ -11,8 +11,9 @@
 |Status                 = Released
 }}
 
-The Notduino is used as a target for the ChipWhisperer Capture system. This includes interfacing to the CW-Lite (CW1173) and ChipWhisperer Capture Rev 2 (CW1002). The Notduino has the following features/specifications:
+The Notduino is used as a target for the ChipWhisperer Capture system. This includes interfacing to the CW-Lite (CW1173) and ChipWhisperer Capture Rev 2 (CW1002). 
 
+== Specifications / Feature Set ==
 * 3.3V Operating Voltage
 * Atmel ATMega328P Microcontroller
 * Power analysis on VCC rail
@@ -25,7 +26,7 @@ The Notduino is used as a target for the ChipWhisperer Capture system. This incl
 * USART Lines for communication
 * Header to connect USB-Serial for Arduino bootloader usage
 
-= Board Usage =
+== Board Usage ==
 
 The board is connected to the standard 20-pin target connector used on the ChipWhisperer system. In addition you will require connection of the SMA connector to perform power measurements:
 
