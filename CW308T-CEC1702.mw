@@ -1,6 +1,6 @@
 {{Infobox cw308target
-|name                   = CW308T-STM32F
-|image                  = [File:CEC1702_Wiki.PNG|400px]
+|name                   = CW308T-CEC1702
+|image                  = File:CEC1702_Wiki.PNG
 |caption                = 
 |Target Device          = MCHP CEC1702
 |Target Architecture    = ARM Cortex M4F
