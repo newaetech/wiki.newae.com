@@ -18,8 +18,6 @@ The MPC5748G target uses the NXP MPC5748G device, which is a triple-core PowerPC
 * Two serial ports (usable as LIN).
 * Various solder jumpers for variety of power analysis options.
 
-[[File:mpc5748g_web.jpg]]
-
 Intended Usage
 
 Overview of Features
