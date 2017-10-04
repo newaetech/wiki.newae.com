@@ -10,3 +10,55 @@
 |Programmer             = Generic SPI Flash Programmer
 |Status                 = In Development
 }}
+
+== I/O Connections ==
+
+{| class="wikitable"
+!CW308 Pin
+!ATXMega Pin
+!Notes
+|-
+|GPIO1
+|PC3 (TXD0)
+|Serial OUTPUT from AVR.
+|-
+|GPIO2
+|PC2 (RXD0)
+|Serial INPUT to AVR.
+|-
+|GPIO3
+|PA1
+|Spare pin.
+|-
+|GPIO4
+|PA0
+|Trigger pin.
+|-
+|CLKIN
+|XTAL1
+|
+|-
+|CLKFB
+|PB3
+|Can output clock on this pin. Useful for synchronizing to internal RC oscillator.
+|-
+|LED1
+|PA5
+|
+|-
+|LED2
+|PA6
+|
+|-
+|LED3
+|PA7
+|
+|-
+|PDID
+|PDID
+|In-System programming.
+|-
+|PDIC/nRST
+|nRST/PDIC
+|In-System programming.
+|}
