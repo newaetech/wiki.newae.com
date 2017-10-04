@@ -14,8 +14,6 @@
 |Status                 = Released
 }}
 
-[[File:S6LX9-Tilt.jpg|500px]]
-
 The S6LX9 target is a low-cost FPGA target. It uses the Xilinx Spartan 6 in TQFP package, and can fit an entire AES core. The example project includes the Simple-Serial interface which allows it to function like any of our other example targets.
 
 == Usage ==
@@ -53,7 +51,7 @@ The CLKIN pin is a _N clock pin. If you need the _P clock pin, you can use a jum
 == Programming ==
 
 The ChipWhisperer will eventually support programming this target. Until then, you will need an external programmer. This is connected via JTAG to the pin headers:
-
+[[File:S6LX9-Tilt.jpg|right|500x500px]]
 [[File:xilinx_jtag_small.jpg|400px]]
 
 Options for programmers include:
