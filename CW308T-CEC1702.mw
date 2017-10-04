@@ -125,14 +125,14 @@
 
 == Hardware Cryptography ==
 
-==== '''Multi-purpose AES Cryptographic Engine''' ====
+==== Multi-purpose AES Cryptographic Engine ====
 - Hardware support for ECB, CTR, CBC, and OFB AES modes 
 
 - Support for 128-bit, 192-bit and 256-bit key length 
 
 - DMA interface to SRAM, shared with Hash engine 
 
-==== '''Cryptographic Hash Engine''' ====
+==== Cryptographic Hash Engine ====
 - Support for SHA-1, SHA-256, SHA-512
 
 - DMA interface to SRAM, shared with AES engine
