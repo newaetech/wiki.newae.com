@@ -1,0 +1,12 @@
+{{Infobox cw308target
+|name                   = CW308T-STM32F
+|image                  = 
+|caption                = 
+|Target Device          = MCHP CEC1702
+|Target Architecture    = ARM Cortex M4F
+|Hardware Crypto        = AES, SHA, RSA
+|Purchase Hardware      = 
+|Supported Applications = []
+|Programmer             = Generic SPI Flash Programmer
+|Status                 = In Development
+}}
