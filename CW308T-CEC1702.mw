@@ -137,13 +137,13 @@
 
 - DMA interface to SRAM, shared with AES engine
 
-==== '''Public Key Cryptographic Engine''' ====
+==== Public Key Cryptographic Engine ====
 - Hardware support for RSA and Elliptic Curve public key algorithms
 - RSA keys length from 1024 to 4096 bits
 - ECC Prime Field and Binary Field keys up to 640 bits
 - Microcoded support for standard public key algorithms
 
-==== '''Cryptographic Features''' ====
+==== Cryptographic Features ====
 - True Random Number Generator
 - 1 Kbit FIFO
 - Monotonic Counter  
