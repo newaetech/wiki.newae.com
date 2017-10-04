@@ -9,7 +9,7 @@
 |Supported Applications = []
 |Programmer             = Generic SPI Flash Programmer
 |Status                 = In Development
-}}The CEC1702 is an embedded controller with strong cryptographic support, customized for Internet of Things (IOT) platforms. The chip implements a highly-configurable, mixed signal, advanced I/O controller architecture. The device incorporates a 32-bit ARM Cortex M4F Microcontroller core with closely-coupled SRAM for code and data. A secure boot-loader is used to download the custom firmware image from the system’s shared SPI Flash device, thereby allowing system designers to customize the device’s behavior.<sup><ref name=":0">http://ww1.microchip.com/downloads/en/DeviceDoc/00002207B.pdf</ref></sup>  
+}}The CEC1702 is an embedded controller with strong cryptographic support, customized for Internet of Things (IOT) platforms. The chip implements a highly-configurable, mixed signal, advanced I/O controller architecture. The device incorporates a 32-bit ARM Cortex M4F Microcontroller core with closely-coupled SRAM for code and data. A secure boot-loader is used to download the custom firmware image from the system’s shared SPI Flash device, thereby allowing system designers to customize the device’s behavior.<ref name=":0">http://ww1.microchip.com/downloads/en/DeviceDoc/00002207B.pdf</ref>  
 
 The CW308T-CEC1702 incorporates the main chip with a 16MB SPI flash chip and a bi-directional SPI Buffer. The target board has standard power monitoring, UART serial, and clock In/Out compatibility with the CW308. JTAG pins and many GPIO pins are also exposed for prototyping and testing use. 
 
