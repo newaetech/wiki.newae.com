@@ -60,6 +60,14 @@ Options for programmers include:
 * Clone JTAG programmers off AliExpress/E-Bay for low cost (search 'Xilinx JTAG').
 * Digilent Inc HS1/HS2/HS3 Cables (NB: you may need separate jumper wires).
 
+To use IMPACT:
+
+* Generate a new project.
+* Assign the .bit file to the FPGA (say 'no' to attached SPI flash chips).
+* Program.
+
+[[File:s6lx9_program.png|400px]]
+
 == Schematic ==
 
 See GIT Repo for PDF of schematic.
