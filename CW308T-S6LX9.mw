@@ -28,7 +28,7 @@ The GIT repo includes an example Xilinx ISE project, located at [https://github.
 
 # Build the bitstream (or see the pre-built one in the repo at [https://github.com/newaetech/chipwhisperer/raw/develop/hardware/victims/cw308_ufo_target/spartan6lx9/ss_aes_ise/cw308t_s6lx9_example.bit cw308t_s6lx9_example.bit])
 # Use settings as in the 'Default XMEGA' or 'STM32Fx' targets (i.e., clock jumpers, etc).
-# Ensure you have turned on the 1.8V & 3.3V power supplies to the UFO target.
+# Ensure you have turned on the 1.2V & 3.3V power supplies to the UFO target.
 # Program the bitstream into the FPGA using a programming tool such as Xilinx Impact + USB Programmer cable.
 # Run the 'XMEGA Simple-Serial' script in ChipWhisperer-Capture. This will setup clocks, serial data format, etc as expected.
 # Adjust the trigger offset settings - they should be changed to around ~750, and you can reduce the number of data points to ~128.
