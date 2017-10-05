@@ -14,7 +14,7 @@
 |Status                 = Released
 }}
 
-The S6LX9 target is a low-cost FPGA target. It uses the Xilinx Spartan 6 in TQFP package, and can fit an entire AES core. The example project includes the Simple-Serial interface which allows it to function like any of our other example targets.
+The S6LX9 target is a low-cost FPGA target. It uses the Xilinx Spartan 6 in TQFP package (XC6SLX9-2TQG144C), and can fit an entire AES core. The example project includes the Simple-Serial interface which allows it to function like any of our other example targets.
 
 == Usage ==
 
