@@ -35,7 +35,7 @@ The GIT repo includes an example Xilinx ISE project, located at [https://github.
 
 The waveform should look something like this:
 
-<TODO>
+[[File:s6lx9_waveform.png|400px]]
 
 {{Warningbox|There appears to be occasional jitter on the default AES core, so you might need to use re-synchronization on the power traces. See the [https://github.com/newaetech/chipwhisperer/issues/72 GITHub issue track].}}
 
