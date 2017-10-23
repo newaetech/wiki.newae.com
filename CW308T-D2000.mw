@@ -19,6 +19,24 @@
 
 An external programmer is needed for this target. The Quark D2000 dev-board can be used with jumper wires, or a standard OpenOCD programmer can be used.
 
+=== How to flash D2000 board using OpenOCD ===
+
+TODO - TEMP
+
+Start a command prompt
+C:\IntelSWTools\ISSM_2016.0.027\issm_env.bat
+gdb
+
+target remote :3333
+monitor clk32M 500
+monitor load_image C:\\chipwhisperer\\hardware\\victims\\firmware\\intel_quark\\quark_d2000_rom.bin 0x0
+monitor load_image C:\\chipwhisperer\\hardware\\victims\\firmware\\intel_quark\\simpleserial_example\\release\\quark_d2000\\x86\\bin\\simpleserial_aes.bin 0x00180000
+
+
+
+cd %ISSM_DEBUGGER_ROOT%\openocd
+bin\openocd.exe -f scripts\board\quark_d2000.cfg
+
 == Schematic ==
 
 See GIT Repo for PDF of schematic.
