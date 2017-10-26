@@ -32,4 +32,4 @@ You can easily use brew to install avr-gcc, as decribed at [https://github.com/o
 
  $ brew tap osx-cross/avr
  
- $ brew install avr-libc
+ $ brew install avr-gcc
