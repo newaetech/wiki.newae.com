@@ -3,17 +3,30 @@
 |image                  =
 |caption                = 
 |Target Device          = Atmel SAM4L
-|Target Architecture    = ARM
+|Target Architecture    = ARM Cortex M4
 |Hardware Crypto        = Yes
 |Purchase Hardware      = 
 
-|Supported Applications =
+|Supported Applications = [[SimpleSerial | Simple Serial Enc/Auth]]
+|Status                 = Released
 }}
 
 
+== Hardware AES ==
+
+The SAM4L has a hardware AES module, with optional countermeasures that can be enabled.
+
 == Programming ==
 
-An external programmer is needed for this target.
+An external programmer is needed for this target. The SAM4L has an internal bootloader you can use via an external serial port, which is not yet supported directly by the ChipWhisperer-Capture software.
+
+=== JTAG Programmer ===
+
+The 20-pin JTAG port (J6 on CW308 Board) can be used with the [https://www.digikey.com/product-detail/en/microchip-technology/ATATMEL-ICE/ATATMEL-ICE-ND/4753379 ATATMEL-ICE] which is Atmel's JTAG programmer. You can use any other ARM programmer you might have as well (i.e., OpenOCD, Segger J-Link, etc).
+
+=== Using Atmel SAM-BA ===
+
+Atmel SAM-BA is a built-in bootloader. Not this bootloader is NOT ROM-Resident - if you reprogram the device the bootloader is lost, since it is stored in flash memory.
 
 == Schematic ==
 
