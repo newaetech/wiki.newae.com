@@ -15,6 +15,8 @@
 
 [[File:d2000_topdown.jpg|400px]]
 
+The D2000 target is a bit of an oddball. It's an x86 target, but is really a microcontroller (internal flash etc). 
+
 == Programming ==
 
 An external programmer is needed for this target. The Quark D2000 dev-board can be used with jumper wires, or a standard OpenOCD programmer can be used. The suggested programmer is the [https://mouser.com/ProductDetail/Olimex-Ltd/ARM-USB-OCD-H Olimex ARM-USB-OCD-H] as is available from suppliers such as Mouser and Digi-Key (mouser link provided).
