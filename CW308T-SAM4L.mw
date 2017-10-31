@@ -48,9 +48,9 @@ The SimpleSerial-AES program can be built for this target. This can use either h
 
 If an Atmel ICE is attached as above, you should be able to build and run the example in 'debug' mode:
 
-After this, you 
+[[File:sam4l_ide.png|400px]]
 
-This uses the SAM4L HAL that is part of the build process. An automatically generated makefile can be modified to built in Linux, but currently has not been integrated into the rest of the system.
+An automatically generated makefile can be modified to built in Linux, but currently has not been integrated into the rest of the system. This makefile is checked into the GIT repository.
 
 === Adjusting Hardware AES ===
 
