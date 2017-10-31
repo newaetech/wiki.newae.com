@@ -19,7 +19,14 @@ The Atmel SAM4L has an internal 1.8V regulator. This regulator is not used in th
 
 == Hardware AES ==
 
-The SAM4L has a hardware AES module, with optional countermeasures that can be enabled.
+The SAM4L has a hardware AES module, with optional countermeasures that can be enabled. These countermeasures are described in the SAM4L datasheet as the following options:
+
+ * Type 1: Randomly add one cycle to data processing
+ * Type 2: Randomly add one cycle to data processing (other version)
+ * Type 3: Add a random number of clock cycles to data processing, subject to a maximum of 11 clock cycles for key size of 128 bits
+ * Type 4: Add random spurious power consumption during data processing
+
+Interestingly they can be individually enabled/disabled. This makes the SAM4L a useful training target for power analysis attacks against various hardware countermeasures.
 
 == Programming ==
 
