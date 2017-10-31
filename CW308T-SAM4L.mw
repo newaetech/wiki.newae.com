@@ -31,6 +31,13 @@ The 20-pin JTAG port (J6 on CW308 Board) can be used with the [https://www.digik
 
 Atmel SAM4L has a built-in bootloader. Not this bootloader is NOT ROM-Resident - if you reprogram the device the bootloader is lost, since it is stored in flash memory. It is recommended to use an external JTAG programmer for this target, as since the bootloader is not ROM-resident it can easily be overwritten by accident (i.e., if connecting a JTAG programmer).
 
+== SimpleSerial Program ==
+
+The SimpleSerial-AES program can be built for this target. This can use either hardware crypto or a software AES. This project is currently built via the Atmel Studio IDE, and the project file is located at [https://github.com/newaetech/chipwhisperer/tree/develop/hardware/victims/firmware/simpleserial-aes/ide_projects/asf/sam4l-simpleserial-aes hardware/victims/firmware/simpleserial-aes/ide_projects/asf/sam4l-simpleserial-aes] with the ChipWhisperer release. 
+
+This uses the SAM4L HAL that is part of the build process. An automatically generated makefile can be modified to built in Linux, but currently has not been integrated into the rest of the system.
+
+
 == Schematic ==
 
 See GIT Repo for PDF of schematic.
