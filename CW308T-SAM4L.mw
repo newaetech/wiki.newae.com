@@ -1,6 +1,6 @@
 {{Infobox cw308target
 |name                   = CW308T-SAM4L
-|image                  = SAM4L-top-small.jpg
+|image                  = SAM4L-Top-small.jpg
 |caption                = 
 |Target Device          = Atmel SAM4L
 |Target Architecture    = ARM Cortex M4
@@ -11,6 +11,8 @@
 |Status                 = Released
 }}
 
+
+[[File:SAM4L-Top-small.jpg|400px]]
 
 This board supports the Atmel SAM4L microcontroller. The default build has the Atmel ATSAM4LC2AA-AU, which has 128KB flash and 32KB SRAM.
 
