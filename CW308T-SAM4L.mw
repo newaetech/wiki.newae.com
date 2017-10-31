@@ -6,7 +6,9 @@
 |Target Architecture    = ARM Cortex M4
 |Hardware Crypto        = Yes
 |Purchase Hardware      = 
+|Design Files           = [https://github.com/newaetech/chipwhisperer/tree/develop/hardware/victims/cw308_ufo_target/sam4l GITHub Link]
 
+[https://oshpark.com/projects/Dkr9ybuJ OSH Park PCBs]
 |Supported Applications = [[SimpleSerial | Simple Serial Enc/Auth]]
 |Status                 = Released
 }}
