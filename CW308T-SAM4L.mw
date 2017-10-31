@@ -73,13 +73,12 @@ void aes_init(void)
 Note there are two options shown, where countermeasures can be enabled or disabled. You can see the SAM4L datasheet for a description of the countermeasures. The following compares the power traces with and without countermeasures:
 
 The following shows countermeasures enabled, you can see various execution paths taken during the encryption:
+
 [[File:sam4l_wcountermeasures.png|600px]]
 
 Compare this to the countermeasures disabled:
+
 [[File:sam4l_nocountermeasures.png|600px]]
-
-The following shows no countermeasures enabled, note the consistent execution path:
-
 
 == Schematic ==
 
