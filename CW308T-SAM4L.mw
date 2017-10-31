@@ -26,7 +26,7 @@ The 20-pin JTAG port (J6 on CW308 Board) can be used with the [https://www.digik
 
 === Using Atmel SAM-BA ===
 
-Atmel SAM-BA is a built-in bootloader. Not this bootloader is NOT ROM-Resident - if you reprogram the device the bootloader is lost, since it is stored in flash memory.
+Atmel SAM4L has a built-in bootloader. Not this bootloader is NOT ROM-Resident - if you reprogram the device the bootloader is lost, since it is stored in flash memory.
 
 == Schematic ==
 
