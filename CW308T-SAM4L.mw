@@ -26,6 +26,8 @@ An external programmer is needed for this target. The SAM4L has an internal boot
 
 The 20-pin JTAG port (J6 on CW308 Board) can be used with the [https://www.digikey.com/product-detail/en/microchip-technology/ATATMEL-ICE/ATATMEL-ICE-ND/4753379 ATATMEL-ICE] which is Atmel's JTAG programmer. You can use any other ARM programmer you might have as well (i.e., OpenOCD, Segger J-Link, etc).
 
+[[File:sam_jtag_small.jpg|400px]]
+
 === Using Atmel SAM-BA ===
 
 Atmel SAM4L has a built-in bootloader. Not this bootloader is NOT ROM-Resident - if you reprogram the device the bootloader is lost, since it is stored in flash memory. It is recommended to use an external JTAG programmer for this target, as since the bootloader is not ROM-resident it can easily be overwritten by accident (i.e., if connecting a JTAG programmer).
