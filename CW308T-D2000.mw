@@ -17,25 +17,46 @@
 
 == Programming ==
 
-An external programmer is needed for this target. The Quark D2000 dev-board can be used with jumper wires, or a standard OpenOCD programmer can be used.
+An external programmer is needed for this target. The Quark D2000 dev-board can be used with jumper wires, or a standard OpenOCD programmer can be used. The suggested programmer is the [https://mouser.com/ProductDetail/Olimex-Ltd/ARM-USB-OCD-H Olimex ARM-USB-OCD-H] as is available from suppliers such as Mouser and Digi-Key (mouser link provided).
 
 === How to flash D2000 board using OpenOCD ===
 
-TODO - TEMP
+We'll modify the provided scripts from the Intel ISSM distribution (compiler etc for D2000). First, edit the file C:\IntelSWTools\ISSM_2016.0.027\tools\debugger\openocd\scripts\board\quark_d2000.cfg . We're going to include the reference to the Olimex JTAG device directly into this file to make it easier for us to use it (alternatively, can reference the appropriate interface file)
 
-Start a command prompt
-C:\IntelSWTools\ISSM_2016.0.027\issm_env.bat
-gdb
+Start a Windows command prompt and run the following commands:
 
-target remote :3333
-monitor clk32M 500
-monitor load_image C:\\chipwhisperer\\hardware\\victims\\firmware\\intel_quark\\quark_d2000_rom.bin 0x0
-monitor load_image C:\\chipwhisperer\\hardware\\victims\\firmware\\intel_quark\\simpleserial_example\\release\\quark_d2000\\x86\\bin\\simpleserial_aes.bin 0x00180000
+ C:\IntelSWTools\ISSM_2016.0.027\issm_env.bat
+ cd %ISSM_DEBUGGER_ROOT%\openocd
+ bin\openocd.exe -f scripts\interface\ftdi\olimex-arm-usb-ocd-h.cfg -f scripts\board\quark_d2000.cfg
 
+This should result in an output like the following:
 
+ Open On-Chip Debugger 0.8.0-dev-g7845893 (2015-11-26-18:12)
+ Licensed under GNU GPL v2
+ For bug reports, read
+        http://openocd.sourceforge.net/doc/doxygen/bugs.html
+ Info : only one transport option; autoselect 'jtag'
+ adapter speed: 1000 kHz
+ trst_only separate trst_push_pull
+ flash_rom
+ Info : clock speed 1000 kHz
+ Info : JTAG tap: quark_d2000.cltap tap/device found: 0x0e786013 (mfg: 0x009, part: 0xe786, ver: 0x0)
+ Enabling lmt core tap
+ Info : JTAG tap: quark_d2000.lmt enabled
 
-cd %ISSM_DEBUGGER_ROOT%\openocd
-bin\openocd.exe -f scripts\board\quark_d2000.cfg
+At this point it will hold, waiting for new commands. Open a second command prompt, and run:
+
+ C:\IntelSWTools\ISSM_2016.0.027\issm_env.bat
+ gdb
+
+From within this GDB console, you can run the following:
+
+ target remote :3333
+ monitor clk32M 500
+ monitor load_image C:\\chipwhisperer\\hardware\\victims\\firmware\\intel_quark\\quark_d2000_rom.bin 0x0
+ monitor load_image C:\\chipwhisperer\\hardware\\victims\\firmware\\intel_quark\\simpleserial_example\\release\\quark_d2000\\x86\\bin\\simpleserial_aes.bin 0x00180000
+
+The first load_image is used for the ROM image. This may not be needed as has normally been done already. However you'll have to reload the application any time you wish to reprogram it.
 
 == Schematic ==
 
