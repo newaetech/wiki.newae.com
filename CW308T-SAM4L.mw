@@ -37,7 +37,6 @@ The SimpleSerial-AES program can be built for this target. This can use either h
 
 This uses the SAM4L HAL that is part of the build process. An automatically generated makefile can be modified to built in Linux, but currently has not been integrated into the rest of the system.
 
-
 == Schematic ==
 
 See GIT Repo for PDF of schematic.
