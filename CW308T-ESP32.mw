@@ -10,6 +10,7 @@
 |Supported Applications =
 }}
 
+The ESP32 is a super-low-cost IoT device with Bluetooth & WiFi support. This target board does not break out any of the RF capabilities, and is primarily concerned with testing portions of the device stand-alone (such as secure boot, AES hardware accelerator, etc).
 
 == SPI Buffer ==
 
