@@ -1,6 +1,6 @@
 {{Infobox cw308target
 |name                   = CW308T-ESP32
-|image                  = 
+|image                  = ESP32_topdown_web.jpg
 |caption                = 
 |Target Device          = ESP32
 |Target Architecture    = ARM
@@ -9,3 +9,21 @@
 
 |Supported Applications =
 }}
+
+
+== SPI Buffer ==
+
+This device uses a Texas Instruments XXX as a SPI buffer. This is a bidirectional buffer chip, meaning you can use it in any of the following ways:
+
+* Disable chip, allowing ESP32 to load/program the attached SPI flash chip.
+* Sniff the SPI bus, but with a buffer in-line to prevent your sniffer from affecting the SPI load process (or trigger on SPI packets).
+* Program the SPI chip using external programmer. To do this hold ESP32 in reset.
+* Use an external SPI chip (or emulator) to load the data for the ESP32. To do this you'll have to 
+
+The direction is detected automatically.
+
+== SPI Flash  Device ==
+
+The ESP32 needs an attached SPI flash. The production devices use a W25Q32BVSSIG from Winbond, but this can be difficult to find from regular distributors. If you are building your own device I suggest using ISSI IS25WP032D-JBLE which is more widely available. 
+
+A variety of other devices will not work with the bootloader, meaning you cannot easily program them. It's not known exactly what is needed (they need to support DSPI at least), but for example SST26VF016BT-104I/SN did not work.
