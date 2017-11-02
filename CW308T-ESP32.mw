@@ -30,7 +30,7 @@ A variety of other devices will not work with the bootloader, meaning you cannot
 
 = Example Application =
 
-An example application is provided in the GIT repository in the [firmware/esp32 https://github.com/newaetech/chipwhisperer/tree/develop/hardware/victims/firmware/esp32] directory. Note this hasn't yet been integrated into the full build system. This application uses hardware AES.
+An example application is provided in the GIT repository in the [https://github.com/newaetech/chipwhisperer/tree/develop/hardware/victims/firmware/esp32 firmware/esp32 ] directory. Note this hasn't yet been integrated into the full build system. This application uses hardware AES.
 
 = Schematic =
 
