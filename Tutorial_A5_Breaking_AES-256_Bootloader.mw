@@ -91,6 +91,8 @@ The firmware that implements the bootloader is available inside the ChipWhispere
 
 The firmware is now loaded onto your hardware, and you can continue onto the capture process.
 
+{{Warningbox|Are you following this tutorial at a training event? If so ONLY use the provided hex-file with secret key already embedded, do not rebuild the firmware!}}
+
 = Capturing the Traces =
 Once the hardware is ready, we can capture some traces for our attack using the ChipWhisperer Capture software. If you somehow got to the 5th ''Advanced Tutorial'' without getting this software ready, you can follow the helpful guide at [[Installing ChipWhisperer]].
 
