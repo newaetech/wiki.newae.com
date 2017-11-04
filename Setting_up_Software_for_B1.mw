@@ -32,7 +32,7 @@ To do so, simply scroll down and select the "setup_cwlite_xmega_aes.py" file:
 
 [[File:cwsetup_scriptselection_xmegaconfig_cwliterun.png]]
 
-You'll nice the contents of the script contain the following setup:<syntaxhighlight lang="python" line="1">
+You'll notice the contents of the script contain the following setup:<syntaxhighlight lang="python" line="1">
 scope.gain.gain = 45
 scope.adc.samples = 3000
 scope.adc.offset = 1250
