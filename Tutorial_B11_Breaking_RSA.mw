@@ -236,6 +236,15 @@ Change the length of the trigger to be 24000 samples:
 </li>
 <br>
 <li>
+Rather than do this manually - you can also run the following commands either in the script, or in the command line:
+<syntaxhighlight lang="python">
+target.key_cmd = ""
+target.output_cmd = ""
+scope.clock.adc_src = "clkgen_x1"
+scope.adc.samples = 24000
+</syntaxhighlight>
+</li>
+<li>
 If you are using Capture V3.5.2 or later you will have support for the length of the trigger output being high reported back to you. If you run capture-1 for example you'll see the trigger was high for 177381 cycles:<br>
 [[File:B11_trigger_active.png|400px]]
 </li>
