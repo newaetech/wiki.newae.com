@@ -198,13 +198,20 @@ The VERY slow encryption can be seen by simply sending a <code>t</code> command.
 
 We'll now get into experimenting with the SPA leakage. To do so we'll use the "SPA Setup" script, then make a few modifications.
 
+
+The basic steps to connect to the ChipWhisperer device are described in [[Tutorial_B1_Building_a_SimpleSerial_Project]]. They are repeated here as well, however see [[Tutorial_B1_Building_a_SimpleSerial_Project]] for pictures &amp; mode details.
+
+<ol style="list-style-type: decimal;">
+<li>Start ChipWhisperer-Capture</li>
+<li>Under the ''Python Console'' tab, find the ''connect_cwlite_simpleserial.py'' script and double-click.</li>
+<li>Check there are no errors on the connection.</li>
+<li>Under the ''Python Console'' tab, find the ''setup_cwlite_xmega.py'' script and double-click.</li>
+<li>Both the Target &amp; Scope should switch to ''CON'' and be green circles.</li>
+</ol>
+
+The remaining instructions are now specific to the RSA tutorial:
+
 <ol>
-<li>
-Run the SPA setup script.
-<br>
-[[File:B11_SPAScript.png|400px]]
-</li>
-<br>
 <li>
 If you haven't yet, program the <code>simpleserial-rsa</code> as appropriate. If using the XMEGA target on the ChipWhisperer-Lite/UFO board, this would be called <code>victims/firmware/simpleserial-rsa/simpleserial-rsa-CW303.hex</code>:<br>
 [[File:B11_Programming.png|300px]]
