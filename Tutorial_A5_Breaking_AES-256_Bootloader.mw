@@ -83,6 +83,10 @@ This tutorial uses the [[CW1173 ChipWhisperer-Lite]] hardware. This hardware doe
 Note that you '''don't need hardware''' to complete the tutorial. Instead, you can download [https://www.assembla.com/spaces/chipwhisperer/wiki/Example_Captures example traces from the ChipWhisperer Site]. Just look for the traces titled ''AVR: AES256 Bootloader (ChipWhisperer Tutorial #A5)''.
 
 == Building/Programming the Bootloader ==
+
+{{Warningbox|Are you following this tutorial at a training event? If so ONLY use the provided hex-file with secret key already embedded, do not rebuild the firmware!}}
+
+
 The firmware that implements the bootloader is available inside the ChipWhisperer folder at <code>chipwhisperer\hardware\victims\firmware\bootloader-aes256</code>. If you've uploaded the firmware for any of the other tutorials, the process is identical:
 
 # Open a command prompt/terminal window and navigate to this folder. Enter the command <code>make PLATFORM=X</code>, where X is the name of your target. For instance, use <code>PLATFORM=CW303</code> on the ChipWhisperer Lite. Ensure that the program is successfully compiled. The output should end with a line like
@@ -90,8 +94,6 @@ The firmware that implements the bootloader is available inside the ChipWhispere
 # Open the ChipWhisperer Capture software and connect to your hardware. Open the programmer window (''Tools > CW-Lite XMEGA Programmer''), find the <code>.hex</code> file that you just made, and ''Erase/Program/Verify FLASH''.
 
 The firmware is now loaded onto your hardware, and you can continue onto the capture process.
-
-{{Warningbox|Are you following this tutorial at a training event? If so ONLY use the provided hex-file with secret key already embedded, do not rebuild the firmware!}}
 
 = Capturing the Traces =
 Once the hardware is ready, we can capture some traces for our attack using the ChipWhisperer Capture software. If you somehow got to the 5th ''Advanced Tutorial'' without getting this software ready, you can follow the helpful guide at [[Installing ChipWhisperer]].
