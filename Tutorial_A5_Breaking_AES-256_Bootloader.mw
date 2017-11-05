@@ -533,7 +533,6 @@ import chipwhisperer as cw
 from chipwhisperer.analyzer.attacks.cpa import CPA
 from chipwhisperer.analyzer.attacks.cpa_algorithms.progressive import CPAProgressive
 from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, InvSBox_output
-from chipwhisperer.analyzer.preprocessing.add_noise_random import AddNoiseRandom
 
 #self.project = cw.openProject("2017-mar23-xmega-aes.cwp")
 traces = self.project.traceManager()
