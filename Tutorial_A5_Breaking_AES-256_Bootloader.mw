@@ -526,72 +526,35 @@ scope.io.hs2 = "clkgen"
 </pre>
 
 = Appendix C: AES-256 14th Round Key Script =
-Full attack script, copy/paste into a file then add as active attack script:
+Full attack script, copy/paste into a file then run from within ChipWhisperer-Analyzer:
 
-<pre>
-# AES-256 14th Round Key Attack
-from chipwhisperer.common.scripts.base import UserScriptBase
-# Imports from Preprocessing
-import chipwhisperer.analyzer.preprocessing as preprocessing
-# Imports from Attack
+<syntaxhighlight lang=python>
+import chipwhisperer as cw
 from chipwhisperer.analyzer.attacks.cpa import CPA
 from chipwhisperer.analyzer.attacks.cpa_algorithms.progressive import CPAProgressive
-import chipwhisperer.analyzer.attacks.models.AES128_8bit
-# Imports from utilList
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, InvSBox_output
+from chipwhisperer.analyzer.preprocessing.add_noise_random import AddNoiseRandom
 
-class UserScript(UserScriptBase):
-    name = "Auto-generated"
-    description = "Auto-generated Attack Script"
-    def __init__(self, api):
-        UserScriptBase.__init__(self, api)
-        self.initProject()
-        self.initPreprocessing()
-        self.initAnalysis()
-        self.initReporting()
+#self.project = cw.openProject("2017-mar23-xmega-aes.cwp")
+traces = self.project.traceManager()
 
-    def initProject(self):
-        pass
+attack = CPA()
+leak_model = AES128_8bit(InvSBox_output)
+attack.setAnalysisAlgorithm(CPAProgressive, leak_model)
+attack.setTraceSource(traces)
+attack.setTraceStart(0)
+attack.setTracesPerAttack(-1)
+attack.setIterations(1)
+attack.setReportingInterval(10)
+attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+attack.setPointRange((2900, 3400))
 
-    def initPreprocessing(self):
-        self.traces = self.api.project().traceManager()
-
-    def initAnalysis(self):
-        self.attack = CPA()
-        self.attack.setTraceSource(self.traces, blockSignal=True)
-        self.attack.setAnalysisAlgorithm(CPAProgressive,chipwhisperer.analyzer.attacks.models.AES128_8bit.AES128_8bit,chipwhisperer.analyzer.attacks.models.AES128_8bit.AES128_8bit.LEAK_HW_INVSBOXOUT_FIRSTROUND)
-        self.attack.setTraceStart(0)
-        self.attack.setTracesPerAttack(200)
-        self.attack.setIterations(1)
-        self.attack.setReportingInterval(10)
-        self.attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-        self.attack.setPointRange((0,10991))
-
-    def initReporting(self):
-        # Configures the attack observers (usually a set of GUI widgets)
-        self.api.getResults("Attack Settings").setAnalysisSource(self.attack)
-        self.api.getResults("Correlation vs Traces in Attack").setAnalysisSource(self.attack)
-        self.api.getResults("Output vs Point Plot").setAnalysisSource(self.attack)
-        self.api.getResults("PGE vs Trace Plot").setAnalysisSource(self.attack)
-        self.api.getResults("Results Table").setAnalysisSource(self.attack)
-        self.api.getResults("Save to Files").setAnalysisSource(self.attack)
-        self.api.getResults("Trace Output Plot").setTraceSource(self.traces)
-        self.api.getResults("Trace Recorder").setTraceSource(self.traces)
-
-    def run(self):
-        self.attack.processTraces()
-
-if __name__ == '__main__':
-    from chipwhisperer.common.api.CWCoreAPI import CWCoreAPI
-    import chipwhisperer.analyzer.ui.CWAnalyzerGUI as cwa
-    from chipwhisperer.common.utils.parameter import Parameter
-    app = cwa.makeApplication()     # Comment if you don't need the GUI
-    Parameter.usePyQtGraph = True   # Comment if you don't need the GUI
-    api = CWCoreAPI()               # Instantiate the API
-    gui = cwa.CWAnalyzerGUI(api)    # Comment if you don't need the GUI
-    gui.show()                      # Comment if you don't need the GUI
-    api.runScriptClass(UserScript)  # Run UserScript through the API
-    app.exec_()                     # Comment if you don't need the GUI
-</pre>
+self.results_table.setAnalysisSource(attack)
+self.correlation_plot.setAnalysisSource(attack)
+self.output_plot.setAnalysisSource(attack)
+self.pge_plot.setAnalysisSource(attack)
+attack.processTraces()
+</syntaxhighlight>
 
 = Appendix D: AES-256 13th Round Key Script =
 
