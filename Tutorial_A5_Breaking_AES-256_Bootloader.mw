@@ -168,7 +168,9 @@ Unfortunately, we cannot use the GUI to attack the 13th round key. The system ha
 #: [[File:syncproblems.png|image]]
 # Resynchronize the traces, see the separate 'Preprocessing' tutorial (NB: only in slides right now!)
 
-{{warningbox|Make sure you get a nice aligned last section of the traces, as in the above figure. You may need to adjust the "input window" or "reference points" slightly. If you do not see the nice alignment the remaining attack will fail!}}
+{{warningbox|Make sure you get a nice aligned last section of the traces, as in the below figure. You may need to adjust the "input window" or "reference points" slightly. If you do not see the nice alignment the remaining attack will fail!
+
+[[File:A5_pp_resync_end.png|400px]]}}
 
 The next step is to program our own leakage model. The following Python code models the Hamming weight model of the 13th round S-box:
 
