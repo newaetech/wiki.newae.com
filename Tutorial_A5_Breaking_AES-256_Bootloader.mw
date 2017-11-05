@@ -557,26 +557,18 @@ attack.processTraces()
 
 = Appendix D: AES-256 13th Round Key Script =
 
-<pre>
-# AES-256 13th Round Key Script
-from chipwhisperer.common.scripts.base import UserScriptBase
-# Imports from Preprocessing
-import chipwhisperer.analyzer.preprocessing as preprocessing
-# Imports from Attack
+<syntaxhighlight lang=python>
+import chipwhisperer as cw
 from chipwhisperer.analyzer.attacks.cpa import CPA
 from chipwhisperer.analyzer.attacks.cpa_algorithms.progressive import CPAProgressive
-import chipwhisperer.analyzer.attacks.models.AES128_8bit
-# Imports from utilList
+from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, AESLeakageHelper
+from chipwhisperer.analyzer.preprocessing.resync_sad import ResyncSAD
 
-# Imports for AES256 Attack
-from chipwhisperer.analyzer.attacks.models.base import ModelsBase
-from chipwhisperer.analyzer.attacks.models.AES128_8bit import AESLeakageHelper, AES128_8bit
-
-class AES256_Model(AESLeakageHelper):
-    name = 'Our model'
+class AES256_Round13_Model(AESLeakageHelper):
     def leakage(self, pt, ct, guess, bnum):
-        knownkey = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
-        xored = [knownkey[i] ^ pt[i] for i in range(0, 16)]
+        #You must but YOUR recovered 14th round key here - this example may not be accurate!
+        calc_round_key = [0xea, 0x79, 0x79, 0x20, 0xc8, 0x71, 0x44, 0x7d, 0x46, 0x62, 0x5f, 0x51, 0x85, 0xc1, 0x3b, 0xcb]
+        xored = [calc_round_key[i] ^ pt[i] for i in range(0, 16)]
         block = xored
         block = self.inv_shiftrows(block)
         block = self.inv_subbytes(block)
@@ -585,64 +577,31 @@ class AES256_Model(AESLeakageHelper):
         result = block
         return self.inv_sbox((result[bnum] ^ guess[bnum]))
 
-class UserScript(UserScriptBase):
-    _name = "Auto-generated"
-    _description = "Auto-generated Attack Script"
-    def __init__(self, api):
-        UserScriptBase.__init__(self, api)
-        self.initProject()
-        self.initPreprocessing()
-        self.initAnalysis()
-        self.initReporting()
+traces = self.project.traceManager()
 
-    def initProject(self):
-        pass
+resync_traces = ResyncSAD(traces)
+resync_traces.enabled = True
+resync_traces.ref_trace = 0
+resync_traces.ref_points = (9100, 9300)
+resync_traces.input_window = (8900, 9500)
 
-    def initPreprocessing(self):
-        ppMod0 = preprocessing.resync_sad.ResyncSAD(self.api.project().traceManager())
-        ppMod0.setEnabled(True)
-        ppMod0.setReference(rtraceno=0, refpoints=(9100,9300), inputwindow=(8900,9500))
-        ppMod0.init()
-        self.traces = ppMod0
+attack = CPA()
+leak_model = AES128_8bit(AES256_Round13_Model)
+attack.setAnalysisAlgorithm(CPAProgressive, leak_model)
+attack.setTraceSource(resync_traces)
+attack.setTraceStart(0)
+attack.setTracesPerAttack(-1)
+attack.setIterations(1)
+attack.setReportingInterval(10)
+attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+attack.setPointRange((0, -1))
 
-    def initAnalysis(self):
-        self.attack = CPA()
-        self.attack.setProject(self.api.project())
-        self.attack.setTraceSource(self.traces, blockSignal=True)
-        leakage_object = AES128_8bit(AES256_Model)
-        self.attack.setAnalysisAlgorithm(chipwhisperer.analyzer.attacks.cpa_algorithms.progressive.CPAProgressive,leakage_object)
-        self.attack.setTargetSubkeys([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-        self.attack.setTraceStart(0)
-        self.attack.setTracesPerAttack(150)
-        self.attack.setIterations(1)
-        self.attack.setReportingInterval(10)
-        self.attack.setPointRange((0,10991))
-
-    def initReporting(self):
-        # Configures the attack observers (usually a set of GUI widgets)
-        self.api.getResults("Attack Settings").setAnalysisSource(self.attack)
-        self.api.getResults("Correlation vs Traces in Attack").setAnalysisSource(self.attack)
-        self.api.getResults("Output vs Point Plot").setAnalysisSource(self.attack)
-        self.api.getResults("PGE vs Trace Plot").setAnalysisSource(self.attack)
-        self.api.getResults("Results Table").setAnalysisSource(self.attack)
-        self.api.getResults("Save to Files").setAnalysisSource(self.attack)
-        self.api.getResults("Trace Output Plot").setTraceSource(self.traces)
-        self.api.getResults("Trace Recorder").setTraceSource(self.traces)
-
-    def run(self):
-        self.attack.processTraces()
-
-if __name__ == '__main__':
-    import chipwhisperer.analyzer.ui.CWAnalyzerGUI as cwa
-    from chipwhisperer.common.utils.parameter import Parameter
-    Parameter.usePyQtGraph = True            # Comment if you don't need the GUI
-    api = CWCoreAPI()                        # Instantiate the API
-    app = cwa.makeApplication("Analyzer")    # Comment if you don't need the GUI
-    gui = cwa.CWAnalyzerGUI(api)             # Comment if you don't need the GUI
-    api.runScriptClass(UserScript)           # Run UserScript through the API
-    app.exec_()                              # Comment if you don't need the GUI
-
-</pre>
+self.results_table.setAnalysisSource(attack)
+self.correlation_plot.setAnalysisSource(attack)
+self.output_plot.setAnalysisSource(attack)
+self.pge_plot.setAnalysisSource(attack)
+attack.processTraces()
+</syntaxhighlight>
 
 {{Template:Tutorials}}
 [[Category:Tutorials]]
