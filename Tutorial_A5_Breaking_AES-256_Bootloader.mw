@@ -129,14 +129,19 @@ We can attack the 14th round key with a standard, no-frills CPA attack:
 ## Use the toolbar to quickly reset the zoom back to original
 ##: [[File:Tutorial-A5-Plot-Traces.PNG|image]]
 ##: Notice that the traces are synchronized for the first 7000 samples, but become unsynchronized later. This fact will be important later in the tutorial.
-# Set up the attack in the ''Attack'' settings tab:
-## Leave the Crypto Algorithm set to AES-128. (Remember that we're applying the AES-128 attack to half of the AES-256 key!)
-## Change the Leakage Model to ''HW: AES Inv SBox Output, First Round (Dec)''. 
-## If you're finding the attack very slow, narrow down the attack a bit. Normally, this requires a bit of investigation to determine which ranges of the trace are important. Here, you can use the range from 2900 for 4200. The default settings will also work fine!
-##: [[File:Tutorial-A5-Hardware-Model.PNG|image]]
+# Set up the attack in the ''Attack'' script:
+## Make a copy of the ''attack_cpa.py'' script, call it something new (such as ''attack_aesdec14.py'')
+## Adjust the model from ''SBox_output'' to ''InvSBox_output''. This is done by finding the following line in the script:
+##: <pre>from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, SBox_output</pre>
+##: and change that line to:
+##: <pre>from chipwhisperer.analyzer.attacks.models.AES128_8bit import AES128_8bit, InvBox_output</pre>
+## and then also change this further down where we set the leakage model:
+##: <pre>leak_model = AES128_8bit(InvSBox_output)</pre>
+## If you're finding the attack very slow, narrow down the attack a bit. Normally, this requires a bit of investigation to determine which ranges of the trace are important. Here, you can use the range from 2900 for 4200. The default settings will also work fine! To do this adjust the following line to look as follows:
+##: <pre>attack.setPointRange((2900, 4200))</pre>
 # Note that we do ''not'' know the secret encryption key, so we cannot highlight the correct key automatically. If you want to fix this, the ''Results'' settings tab has a Highlighted Key setting. Change this to Override mode and enter the key <code>ea 79 79 20 c8 71 44 7d 46 62 5f 51 85 c1 3b cb</code>.
-# Finally, run the attack by switching to the ''Results Table'' tab and then hitting the ''Attack'' button.
-
+# Finally, run the attack by switching to the ''Results Table'' tab and then hitting the ''Run'' button while your script is selected.
+#: [[File:A5_run_script_round14.png|400px]]
 There are a few ways to check the results of the attack. First, the results table will show the best guesses for each subkey. With the highlight override enabled, the red bytes should be the best guesses for every single subkey:
 
 [[File:Tutorial-A5-Results-Right-Key.PNG|image]]
