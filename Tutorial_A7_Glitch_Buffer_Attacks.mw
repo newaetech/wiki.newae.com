@@ -1,3 +1,18 @@
+{{Warningbox|This tutorial has been updated for ChipWhisperer 4.0.0 release. If you are using 3.x.x see the "V3" link in the sidebar.}}
+
+{{Infobox tutorial
+|name                   = A7: Glitch Buffer Attacks
+|image                  = 
+|caption                = 
+|software versions      =
+|capture hardware       = CW-Lite
+|Target Device          = 
+|Target Architecture    = XMEGA
+|Hardware Crypto        = No
+|Purchase Hardware      = 
+}}
+
+
 This tutorial discusses a specific type of glitch attack. It shows how a simple printing loop can be abused, causing a target to print some otherwise private information. This attack will be used to recover a plaintext without any knowledge of the encryption scheme being used.
 
 = Background =
