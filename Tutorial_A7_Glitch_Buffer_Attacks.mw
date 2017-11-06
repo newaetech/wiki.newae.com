@@ -195,9 +195,9 @@ scope.io.tio1 = "serial_rx"
 scope.io.tio2 = "serial_tx"
 scope.io.hs2 = "glitch"
 
-target.go_cmd = ""
+target.go_cmd = "p516261276720736265747267206762206f686c207a76797821\\n"
 target.key_cmd = ""
-target.output_cmd = "p516261276720736265747267206762206f686c207a76797821\\n"
+target.output_cmd = ""
 
 </pre>
 
