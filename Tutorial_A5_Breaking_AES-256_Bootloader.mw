@@ -196,7 +196,7 @@ You can look back at the C code of the AES-256 decryption to see how this is imp
 The last step is to perform the attack using this model:
 # Add the above function to your custom script file.
 # Change the <code>setAnalysisAlgorithm</code> in the script to use your custom functions by making the following call:
-#:<pre>leak_model = AES128_8bit(AES256_Model)</pre>
+#:<pre>leak_model = AES128_8bit(AES256_Round13_Model)</pre>
 # As we did in the 14th round attack, reducing the point range can speed up the attack. For example, to use a smaller range of points, try changing the <code>setPointRange()</code> function call to
 #:<pre>self.attack.setPointRange((8000,10990))</pre>
 # Start the attack! Wait for the attack to complete, and you will determine the 13th round key:
