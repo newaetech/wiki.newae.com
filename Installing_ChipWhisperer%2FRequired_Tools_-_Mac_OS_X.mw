@@ -26,6 +26,13 @@ You will also need to follow the instructions as above (inserting the link to th
 
  brew link --overwrite numpy
 
+<h2> libusb </h2>
+libusb is needed for the ChipWhisperer software to communicate with the board.
+
+Again, use brew:
+
+ brew install libusb
+
 <h2> AVR-GCC </h2>
 
 You can easily use brew to install avr-gcc, as decribed at [https://github.com/osx-cross/homebrew-avr/ OSX-Cross Project]:
