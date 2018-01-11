@@ -302,7 +302,7 @@ This was introduced in [[Tutorial_B3-1_Timing_Analysis_with_Power_for_Password_B
 To setup the automatic reset, perform the following:
 
 <ol>
-<li> Scroll down the list of scripts, and you'll find one labeled "aux_reset_cw1173.py". This script has a simple function of attempting to reset the XMEGA device using the programmer:
+<li> Scroll down the list of scripts, and you'll find one labeled "aux_reset_cw1173.py". This script sets up the aux module that attempts to reset the XMEGA device using the programmer. <b>Note: The aux module is only executed after capture is executed.</b>
 <br>
 [[File:auxreset_test1.png|600px]]
 </li>
