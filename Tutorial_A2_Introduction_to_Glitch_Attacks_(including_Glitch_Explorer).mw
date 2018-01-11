@@ -437,7 +437,25 @@ Before doing that, we will actually enable the power analysis capture. To do thi
 <li>Switch the ''Gain Setting'' --&gt; ''Setting'' to be ''40''. You might need to adjust this for different hardware.</li>
 <li><p>Press ''Capture 1'', confirm some waveform is displayed. For example with the XMEGA Target on the ChipWhisperer-Lite, the waveform looks like this:</p>
 <p>[[File:basic_waveform.png|image]]</p></li>
-<li>If this does't work: check the trigger in use is the ''Target IO4'' pin.</li></ol>
+<li>If this does't work: check the trigger in use is the ''Target IO4'' pin.</li>
+<li><p>If this also does not work, and there are timeout issues, causing the trigger to be forced: create a copy of the "aux_reset_cw1173.py" script and change the
+<br></p>
+<pre>
+# Reset before arming - more stable
+aux_list.register(Resetter.resetThenDelay, "before_trace")
+# Reset after arming - scope can catch entire reset
+#aux_list.register(Resetter.delayThenReset, "after_arm")
+</pre>
+to
+<pre>
+# Reset before arming - more stable
+#aux_list.register(Resetter.resetThenDelay, "before_trace")
+# Reset after arming - scope can catch entire reset
+aux_list.register(Resetter.delayThenReset, "after_arm")
+</pre>
+by commenting out the second line and un-commenting out the fourth line changing the chronological position of the reset to after the scope is armed. This should remove the timeout issue as the scope can now detect the trigger as it is armed before the trigger line is activated.
+<b> Use this copy of the script instead of the original version by running the edited script once and disabling the aux module of the original script in ''Aux Settings'' under ''Before Trace''.</b>
+</li></ol>
 
 Finally, we can enable the trigger of the glitch to occur based on this external trigger pin. This can be accomplished by:
 
