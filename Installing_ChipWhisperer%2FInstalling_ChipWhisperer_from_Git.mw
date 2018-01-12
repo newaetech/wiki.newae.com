@@ -2,8 +2,9 @@ If you want the cutting-edge version of ChipWhisperer, you can clone the reposit
 <pre>
 git clone git@github.com:newaetech/chipwhisperer.git
 cd chipwhisperer/software
-python setup.py develop
+python setup.py develop --user
 </pre>
+The user flag installs ChipWhisperer in the user's <b>local</b> python site-packages directory.
 
 You may also want the OpenADC software, which is necessary to build new firmware for the ChipWhisperer FPGA. This is unnecessary for most users. If you need it:
 <pre>
@@ -11,5 +12,5 @@ cd ..
 git submodule init
 git submodule update
 cd openadc/controlsw/python
-python setup.py develop
+python setup.py develop --user
 </pre>
