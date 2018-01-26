@@ -30,11 +30,11 @@ An external programmer is needed for this target. It has currently only been tes
 
 Next, go to Run->Debug Configurations. Right click "Code Composer Studio - Device Debugging" and hit "New".
 
-[[:File:CCS Debug New.png]]
+[[File:CCS Debug New.png]]
 
 Under Main, click "Use default target configuration". Next, go to program, hit "File System", and navigate to your binary. If you built using Chipwhisperer's build system, you want the .elf file from this process. Hit "Apply", then "Debug". If the target does not connect, go to Run->Connect Target. Finally, go to Run->Resume to start the program. Closing CCS should leave the program running on the CC2538.
 
-[[:File:CCS Debug Main Opt.PNG]]
+[[File:CCS Debug Main Opt.PNG]]
 
 
 == Schematic ==
