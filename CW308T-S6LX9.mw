@@ -57,6 +57,8 @@ The ChipWhisperer will eventually support programming this target. Until then, y
 
 [[File:xilinx_jtag_small.jpg|400px]]
 
+{{Warningbox|Connect TDI as well to the TDI pin - this is a MISTAKE in the above photo!}}
+
 Options for programmers include:
 
 * Xilinx Platform Cable USB or USB-II (Digikey/Mouser).
