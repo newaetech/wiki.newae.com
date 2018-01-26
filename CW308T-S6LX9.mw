@@ -22,6 +22,9 @@ The board includes a single red LED (D1) which is connected to the FPGA "DONE" p
 
 The FPGA pins are connected to the various headers on the board. The JTAG header connects to the FPGA JTAG pins. The "Hx" pins, USART, and SPI connect to arbitrary FPGA pins.
 
+'''NB: You MUST enable the 1.2V regulator when using this board. The 1.2V power LED should be ON. This is easily done by toggling the position of the 1.2V LDO switch (to either come from the 3.3V from CW-Lite, or external power depending on your setup).
+'''
+
 == Example Project ==
 
 The GIT repo includes an example Xilinx ISE project, located at [https://github.com/newaetech/chipwhisperer/tree/develop/hardware/victims/cw308_ufo_target/spartan6lx9/ss_aes_ise hardware/victims/cw308_ufo_target/spartan6lx9/ss_aes_ise]. To use this project:
