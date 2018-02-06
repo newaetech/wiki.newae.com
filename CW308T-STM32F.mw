@@ -262,6 +262,17 @@ The following variants are possible, see the table above for SRAM/FLASH/HW-Crypt
 |
 |}
 
+=== Rev -03 Schematic ===
+
+The current revision of the target is -03. The following shows this schematic:
+
+[[File:CW308T_STM32F_03.png|1100px]]
+
+=== Rev -02 Schematic ===
+
+The original board sold was the -02 revision. The revision is part of the part number, for example these boards will be marked STM32F-02. The -02 revision also does not have the CAN connector:
+[[File:cw308_stm32f.jpg|400px]]
+
 [[File:CW308T_STM32F_02.png|1100px]]
 
 
