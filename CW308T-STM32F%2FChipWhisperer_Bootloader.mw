@@ -6,7 +6,7 @@ Important notes before we begin:
 
 To access the bootloader you can perform these steps. They vary based on if you have a "Rev 02" board or a "Rev 03 or Later" board. The revision number is printed on the bottom side as part of the PCB part number (STM32F-03 is Rev -03 for example).
 
-## Rev -03 or Later ##
+== Rev -03 or Later ==
 
 # Select the
 #: [[File:arm_programmer.png]]
@@ -16,7 +16,7 @@ To access the bootloader you can perform these steps. They vary based on if you 
 
 {{Warningbox|If you get verify errors, it's possible the shunt resistor is causing power to dip too low. This can be solved by mounting a jumper between the "SH-" and "SH+" pins at J16 (to the left of the SMA connector) on the UFO board. Retry programming with the jumper mounted. }}
 
-## Rev -02 Boards ##
+== Rev -02 Boards ==
 
 The Rev -02 boards did not have all programming connections present. They require some additional steps:
 
