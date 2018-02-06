@@ -17,6 +17,13 @@
 
 The D2000 target is a bit of an oddball. It's an x86 target, but is really a microcontroller (internal flash etc). 
 
+== Using Board ==
+
+The CW308T-D2000 is used similar to any other CW308 Target Board. It does not accept an external oscillator, instead it outputs it's own oscillator for you to synchronize to. Specific caveats here:
+
+
+
+
 == Programming ==
 
 An external programmer is needed for this target. The Quark D2000 dev-board can be used with jumper wires, or a standard OpenOCD programmer can be used. The suggested programmer is the [https://mouser.com/ProductDetail/Olimex-Ltd/ARM-USB-OCD-H Olimex ARM-USB-OCD-H] as is available from suppliers such as Mouser and Digi-Key (mouser link provided).
