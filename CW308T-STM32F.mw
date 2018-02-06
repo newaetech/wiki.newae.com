@@ -115,7 +115,7 @@ The STM32F21x, and STM32F41x/43x have hardware crypto modules (AES, DES, TDES) a
 
 == CAN Connection ==
 
-A 6-pin header is used for devices which have CAN hardware support (not all devices have this). A CANoodler can be plugged in to provide the physical transceiver.
+A 6-pin header is present for devices which have CAN hardware support (not all devices have this). A CANoodler can be plugged in to provide the physical transceiver. This header is not normally mounted, unless the board is part of an 'automotive bundle'. The header is left unmounted as it can impede sweeping a probe over the surface of the chip.
 
 == Programming Connection ==
 
