@@ -22,7 +22,7 @@ The Rev -02 boards did not have all programming connections present. They requir
 
 # Select the "Serial STM32F Programmer"
 #: [[File:arm_programmer.png]]
-# Mount a jumper between the H1/H2 pins on the UFO board:
+# Mount a jumper between the H1/H2 pins on the UFO board (again this is ONLY for the -02 rev, the -03 and newer revision DO NOT need this jumper as the ChipWhisperer will toggle the pin).
 #: [[File:samjumper.png|400px]]
 # Reset the ARM device either by pressing the reset button (newer UFO boards only), or by toggling power:
 #: [[File:arm_togglepower.png]]
