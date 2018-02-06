@@ -1,6 +1,6 @@
 {{Infobox cw308target
 |name                   = CW308T-STM32F
-|image                  = cw308_stm32f.jpg
+|image                  = STM32F3-Top_Rev03.jpg
 |caption                = 
 |Target Device          = ST STM32F
 |Target Architecture    = Cortex M0,M3,M4
