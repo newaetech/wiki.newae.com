@@ -185,7 +185,7 @@ It's also possible to work on the example projects using [http://www.st.com/en/d
 
 To build the ChipWhisperer examples in System Workbench:
 
-1. Create a ''C Ac6 STM32 MCU Project.'' When you get to Target Configuration, click the Mcu tab and select the microcontroller that you want to target (in this case, the STM32F415RGTx):
+1. Create a new Mcu project by going to ''File > New > C Project'' and selecting ''<nowiki/>'<nowiki/>''Ac6 STM32 MCU Project'''.'' When you get to Target Configuration, click the Mcu tab and select the microcontroller that you want to target:
 
 [[File:STM32 New Project.PNG|400px]]
 
@@ -195,7 +195,7 @@ To build the ChipWhisperer examples in System Workbench:
 
 [[File:STM32 Import.PNG|400px]]
 
-3. Set up the build command. In ''File > Properties'', go to ''C/C++ Build > Behavior'' and remove 'all''<nowiki/>''' from 'Build'. Next, click the ''Builder Settings'' tab and deselect 'Use default build command' and 'Generate Makefiles Automatically'. Enter the command you would normally enter on the command line and change 'Build directory' to the folder you want to build in:
+3. Set up the build command. In ''File > Properties'', go to ''C/C++ Build > Behavior'' and remove 'all''<nowiki/>''' from 'Build' and deselect 'Enable parallel build'. Next, click the ''Builder Settings'' tab and deselect 'Use default build command' and 'Generate Makefiles Automatically'. Enter the command you would normally enter on the command line and change 'Build directory' to the folder you want to build in:
 
 [[File:STM32 Behaviour.PNG|400px]]
 
