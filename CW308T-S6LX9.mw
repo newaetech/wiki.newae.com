@@ -55,9 +55,7 @@ The CLKIN pin is a _N clock pin. If you need the _P clock pin, you can use a jum
 
 The ChipWhisperer will eventually support programming this target. Until then, you will need an external programmer. This is connected via JTAG to the pin headers:
 
-[[File:xilinx_jtag_small.jpg|400px]]
-
-{{Warningbox|Connect TDI as well to the TDI pin - this is a MISTAKE in the above photo!}}
+[[File:s6lx9_jtag.jpg|400px]]
 
 Options for programmers include:
 
