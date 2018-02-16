@@ -30,11 +30,12 @@ An external programmer is needed for this target. The Quark D2000 dev-board can 
 
 === How to flash D2000 board using OpenOCD ===
 
-We'll modify the provided scripts from the Intel ISSM distribution (compiler etc for D2000). Start a Windows command prompt and run the following commands:
+We'll modify the provided scripts from the Intel ISSM distribution (compiler etc for D2000). Start a Windows command prompt and run the following commands. You may have to change the directory of the first command to match your version of Intel ISSM (eg. C:\IntelSWTools\ISSM_2016.0.027\issm_env.bat):
 
- C:\IntelSWTools\ISSM_2016.0.027\issm_env.bat
+ C:\IntelSWTools\ISSM_2016.2.097\issm_env.bat
  cd %ISSM_DEBUGGER_ROOT%\openocd
  bin\openocd.exe -f scripts\interface\ftdi\olimex-arm-usb-ocd-h.cfg -f scripts\board\quark_d2000.cfg
+
 
 Note we specify two script files - the first had the JTAG connection (the olimex-arm-usb-ocd-h.cfg), the second had the D2000. This should result in an output like the following:
 
